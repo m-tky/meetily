@@ -25,7 +25,7 @@ LLMはユーザー指定の **gpt-6-luna / 公式Sign in with ChatGPT OSSプラ�
 
 - 公式auth初回版: Rust check成功、SIWCテスト12件、議事録構造/保存5件成功。Node sidecar mock3件、TypeScript、frontend production build、native build成功。
 - その後の自己reviewで、SSEエラーの**実HTTP status/request ID保持**、model再取得の再試行操作、モデルの無断切り替え防止、host ID紛失時の無断再生成拒否を追加。最終checkpointでSIWC 14件、議事録6件が成功（実Ollama1件ignore）。Node3件、TypeScript、production build、native buildも成功。ログ: `../logs/meetily-checkpoint-build.log`, `meetily-siwc-final-frontend.log`。
-- テストは人工RSA token、temporary directory、localhost mockのみ。**実ユーザーのログイン、scope付与、gpt-6-lunaの実推論はまだ未検証。**
+- テストは人工RSA token、temporary directory、localhost mockのみ。**その後、ユーザー自身が公式browser loginとLuna人工文テストを実行し、「テスト成功」と報告した。** これは実アカウントでの初回推論成功のユーザー確認であり、こちらがtoken内容を調べた確認ではない。latency数値はまだ取得していない。
 - Windows DPAPIのAPI署名は、現行ソースのprotect関数をLinux metadata-only probeでcompileし確認済み（4.75s）。Windows実機・暗号化/復号の実行検証の代わりにはならない。`../logs/dpapi-api-check.log`。
 - 元Murmurのqwen3:1.7b人工文テストは意味誤りで失敗（約65秒、repairを含む）。この結果を弱めない。Meetily移植後の実Ollama再測定はまだしていない。
 - 初回移植testでsha2がbuild-dependenciesにしかない点を見落としcompileが失敗。runtime dependencyへ追加して修正。upstream欠陥とは扱わない。
@@ -64,6 +64,6 @@ raw cargoでは先にllama-helperをbuildしてTauri binariesへstageする。�
 ## 次の境界
 
 1. 新GUIを確認し、scoped commit。Wayland/niriの実desktopで隔離data/configを使うnative GUIとlocalhost dev serverを起動した（録音は開始しない）。
-2. **ユーザー自身による公式browser login**。active accountとgranted plan scopeをアプリUIで確認し、Luna人工文テストを明示実行する。token内容/authorization URLをログやツール出力へ出さない。
+2. **公式browser loginとLuna人工文テストはユーザー報告で成功。** token内容/authorization URLをログやツール出力へ出さない。refresh・再ログイン・remote revocationの実運用検証は別工程。
 3. 未提供/未対応なら公開APIのstatus/code/request IDで診断。旧Codex/private APIへ戻さない。
 4. 公開日本語音声fixtureでWhisper等のCER/latency/RTFを測定し、Linux system audio、speaker identification、incremental/final reconciliation、recovery、note出力へ進む。実際の通話収録は別途許可を得る。

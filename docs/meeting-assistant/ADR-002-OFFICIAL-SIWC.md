@@ -1,6 +1,6 @@
 # ADR-002: 公式Sign in with ChatGPTによるLLM接続
 
-状態: 要件・方式を確認済み。Meetilyに公式フロー/公開API providerの実装と人工fixtureテストを追加。**実ログイン・Luna推論は未検証**（PROGRESS.md）。
+状態: 要件・方式を確認済み。Meetilyに公式フロー/公開API providerの実装と人工fixtureテストを追加。**ユーザーが実ログインとLuna人工文テストの成功を報告**（PROGRESS.md）。実会議の品質・長時間・renewalはまだ未検証。
 
 ユーザーは `gpt-6-luna` の利用とアプリ独立のログインを選択し、その後「非公式のCodex互換認証ではなく、最近公開された公式の方法」を必須とした。土台の再比較後、ユーザーがMeetilyへの切り替えを明示承認した。現在はMeetilyのfeat/live-minutesで実装している。
 
@@ -42,4 +42,4 @@
 
 Murmur由来の `backend-api/codex` 接続は新しい公式フローではない。公式実装を完了したと誤認させないため、Tauriの旧login/model-listとLLMの旧subscription経路をfail-closedで無効化した。既存資格情報には触れていない。新しいauth依存だけを追加して未使用のままにする変更も取り除いた。
 
-Meetilyに新規のsiwc.rsを実装し、旧モジュールは移植していない。Unix owner-only atomic files、Windows user-scope DPAPIを採用。署名・nonce/state・scope・file-lock・SSE途切れ・usage limitの人工テストを実施した。refreshの耐障害性とWindows実機はまだ未検証。次はユーザー自身のbrowser loginとLuna人工文推論で実接続を確認する。
+Meetilyに新規のsiwc.rsを実装し、旧モジュールは移植していない。Unix owner-only atomic files、Windows user-scope DPAPIを採用。署名・nonce/state・scope・file-lock・SSE途切れ・usage limitの人工テストを実施した。refreshの耐障害性とWindows実機はまだ未検証。ユーザー自身のbrowser loginとLuna人工文推論は「テスト成功」の報告を得た。資格情報内容はツールで読んでいない。次は音声品質と運用耐障害性を確認する。
