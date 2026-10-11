@@ -1,0 +1,42 @@
+{
+  "dataset": "google/fleurs",
+  "config": "ja_jp",
+  "split": "validation",
+  "api": "https://datasets-server.huggingface.co/rows?dataset=google/fleurs&config=ja_jp&split=validation&offset=0&length=3",
+  "revision": null,
+  "license": "CC-BY-4.0 (FLEURS dataset card)",
+  "attribution": "Conneau et al., FLEURS (2022)",
+  "rows": [
+    {
+      "id": "fleurs-ja-validation-0-1519",
+      "reference": "多くの場合 海外のギャップイヤーコースに入学することで 帰国後に実際に大学に進学しやすくなります",
+      "audio": "fleurs-ja-validation-0-1519.f32",
+      "samples": 177600,
+      "wav_sha256": "9627b8f5d46806e1a433b443d692fdfb24f26a35c1a47eba26291475fc643d7b",
+      "pcm_sha256": "ef3a1edb5d76d485e206b727520beb58873775a02ba1aeee7f6a887baf6678bf"
+    },
+    {
+      "id": "fleurs-ja-validation-1-1608",
+      "reference": "私は妹やその友人とはぐれてしまったのですが 途中で車椅子に乗った障害者が2人いて 飛び越えて車椅子を押している人たちがいました とアルマン ヴェルサーチさんは語っています",
+      "audio": "fleurs-ja-validation-1-1608.f32",
+      "samples": 365760,
+      "wav_sha256": "9d3eace69bccc6acd08bc42626d86946cd2b39d037f714aac46f167c142799e1",
+      "pcm_sha256": "3a8a2b00302d03aadc910b468a6b9dd4247e862705c5236466a3046ea1da080f"
+    },
+    {
+      "id": "fleurs-ja-validation-2-1607",
+      "reference": "興味をそそられる村を30分ほど散策するのは価値があります",
+      "audio": "fleurs-ja-validation-2-1607.f32",
+      "samples": 127680,
+      "wav_sha256": "88391f365cdecc51a56ef5f9322c441c0107ab8d0c6f7a3a09f2334ffe8c56ff",
+      "pcm_sha256": "cb94173070e8055f9a5915b1183540d60f8d38d91148f38f350cf23e032b0598"
+    },
+    {
+      "id": "synthetic-silence-5s",
+      "reference": "",
+      "audio": "silence.f32",
+      "samples": 80000,
+      "pcm_sha256": "ac2878215ad33205d1732578c89f25ededaad1b676911c540825bcf4baa42d9b"
+    }
+  ]
+}

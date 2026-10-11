@@ -30,6 +30,16 @@ LLMはユーザー指定の **gpt-6-luna / 公式Sign in with ChatGPT OSSプラ�
 - 元Murmurのqwen3:1.7b人工文テストは意味誤りで失敗（約65秒、repairを含む）。この結果を弱めない。Meetily移植後の実Ollama再測定はまだしていない。
 - 初回移植testでsha2がbuild-dependenciesにしかない点を見落としcompileが失敗。runtime dependencyへ追加して修正。upstream欠陥とは扱わない。
 
+## 日本語ASR / Linux内部音声の予備評価（2026-10-12）
+
+- 実会議・マイク・desktop音声は収録せず、公開FLEURS日本語validation先頭3件（41.94秒）+人工5秒無音を、Meetily本体のWhisperProvider/Engineからローカル処理。CLI example、fixture取得/hash検証、CER/RTF計算とテストを追加した。
+- CPU-only debugの予備値: baseのspeech CER 15.48%、RTF 0.848。smallは5.81%、RTF 3.231。3件の読み上げのみなのでモデル採用・会議品質・release速度の保証ではない。base初回はbuildと重なったため探索記録を分離し、build終了後の再実行を主値とした。
+- 無音をASRへ直接入力するとbaseは`。`、smallは`お疲れ様でした。`を生成。VADを通していない試験だが、既知の無音誤生成として保持。正規化で句読点が消えてもraw非空を計測する。
+- Node tests **8件成功**（metrics 5 + sidecar 3）、native example build成功。再取得後のPCM/正解文/model hashes一致を確認。モデル約636MBと音声はrepo外、公開文と測定値/出典/hashのみ `evidence/asr/` に保存。
+- CPALのAlsa host入力にはmonitor名がなく、Pulse側にはmonitorが存在。既存bundle FFmpegにはPulse入力なし。名前の修正だけではこの環境のsystem audioを取得できないことを再確認した。
+- **ユーザーはLinux専用native PulseAudio backendの追加を明示承認。** PipeWireのPulse互換serverからmonitorを選択し、既存pipelineへ接続する方針。mic/Windows CPAL経路は維持。backendの導入・人工null sink capture・stop/reconnect検証は次工程で、実desktop/mic収録の許可とは解釈しない。
+- 詳細と再現: [ASR-LINUX-EVALUATION.md](ASR-LINUX-EVALUATION.md)。このcheckpointの変更は評価tools/docsのみで、appのcapture/ASR設定は変更していない。
+
 ## 明示的な制約
 
 実験版。構造検証は意味の正しさを保証しない。最終stop直後のtail reconciliation、長時間の増分window、manual edit保護、native ASR/diarization品質、録音の障害復旧、notes destinationsは未完了。AI草案をそのまま確定会議録にしない。
