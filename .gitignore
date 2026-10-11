@@ -77,3 +77,6 @@ experiments/
 target/
 
 frontend/src-tauri/binaries/
+
+# App-managed SIWC credentials must never enter source control, even with custom XDG paths.
+**/official-siwc/

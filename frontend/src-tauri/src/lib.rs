@@ -44,6 +44,8 @@ pub mod database;
 pub mod notifications;
 pub mod ollama;
 pub mod onboarding;
+pub mod live_minutes;
+pub mod siwc;
 pub mod openai;
 pub mod anthropic;
 pub mod groq;
@@ -610,6 +612,14 @@ pub fn run() {
             }
         })
         .invoke_handler(tauri::generate_handler![
+            live_minutes::api_update_live_minutes,
+            live_minutes::api_test_live_minutes_fixture,
+            siwc::chatgpt_sign_in,
+            siwc::chatgpt_status,
+            siwc::chatgpt_select_account,
+            siwc::chatgpt_sign_out,
+            siwc::chatgpt_list_models,
+            siwc::chatgpt_open_usage,
             start_recording,
             stop_recording,
             is_recording,

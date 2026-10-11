@@ -21,7 +21,8 @@ pub fn configure_linux_audio(host: &cpal::Host) -> Result<Vec<AudioDevice>> {
                 // Check if it's a monitor source
                 if name.contains("monitor") {
                     devices.push(AudioDevice::new(
-                        format!("{} (System Audio)", name),
+                        // CPAL lookup uses exact names; labels must not alter device identity.
+                        name,
                         DeviceType::Output
                     ));
                 }

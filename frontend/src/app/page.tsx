@@ -11,6 +11,7 @@ import { StatusOverlays } from '@/app/_components/StatusOverlays';
 import Analytics from '@/lib/analytics';
 import { SettingsModals } from './_components/SettingsModal';
 import { TranscriptPanel } from './_components/TranscriptPanel';
+import { LiveMinutesPanel } from '@/components/LiveMinutesPanel';
 import { useModalState } from '@/hooks/useModalState';
 import { useRecordingStateSync } from '@/hooks/useRecordingStateSync';
 import { useRecordingStart } from '@/hooks/useRecordingStart';
@@ -206,6 +207,7 @@ export default function Home() {
         onDelete={deleteRecoverableMeeting}
         onLoadPreview={loadMeetingTranscripts}
       />
+      <LiveMinutesPanel />
       <div className="flex flex-1 overflow-hidden">
         <TranscriptPanel
           isProcessingStop={isProcessingStop}

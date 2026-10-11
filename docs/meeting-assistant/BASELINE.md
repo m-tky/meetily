@@ -81,4 +81,6 @@ Murmurの保存checkpoint: branch `feat/live-minutes`, commit `93b8397`。正式
 
 原upstreamのMeetilyを土台にして、Murmur由来の必要なMIT機能を選択的に取り込む。理由は同じ録音/ASRの基盤が実起動でき、upstream lockで再現でき、今回の目的に不要な派生機能まで抱えずに進められるため。Murmurの話者分離・復旧は有用な参照実装として保持する。
 
-これは品質・速度の優越を実測した結論ではない。日本語ASR・長時間の実証が必要な点は両候補共通。土台の変更はユーザーの明示確認後に実施する。
+これは品質・速度の優越を実測した結論ではない。日本語ASR・長時間の実証が必要な点は両候補共通。
+
+**その後ユーザーがMeetilyへの切り替えを明示承認。** feat/live-minutesへ継続議事録と公式SIWCを実装中。現状はPROGRESS.mdを参照する。
