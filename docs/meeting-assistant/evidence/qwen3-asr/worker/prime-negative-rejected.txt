@@ -1,0 +1,1 @@
+{'asr_calls': 0, 'confirmed': False, 'id': 'noise', 'intervals': [{'end_sample': 8960, 'start_sample': 0}], 'model_loaded': False, 'status': 'vad_only', 'vad_gain': 20.0, 'vad_seconds': 0.038941345}
