@@ -1,0 +1,58 @@
+{
+  "id": "Qwen/Qwen3-ASR-1.7B",
+  "revision": "7278e1e70fe206f11671096ffdd38061171dd6e5",
+  "license": "Apache-2.0",
+  "files": [
+    {
+      "file": "config.json",
+      "sha256": "2e74a751548b8ad7d7526d29365ad8144c345d8b412b1152d25dc6698452712f",
+      "bytes": 6194
+    },
+    {
+      "file": "generation_config.json",
+      "sha256": "1da527824d81e07118facff437e03f2e24a23311e3bdeb2368973fe77e5f275c",
+      "bytes": 142
+    },
+    {
+      "file": "merges.txt",
+      "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "bytes": 1671853
+    },
+    {
+      "file": "model-00001-of-00002.safetensors",
+      "sha256": "a4cd1f1a04d90b757dc7f7dd26254e69a013b19e80efe590a83c6a3bde8608d6",
+      "bytes": 4220320824,
+      "dtypes": [
+        "BF16"
+      ]
+    },
+    {
+      "file": "model-00002-of-00002.safetensors",
+      "sha256": "6e0b9d9e09e2e0238e7ef3cc8a484ab387e91b90f1900bedf88bc92d7929ccfc",
+      "bytes": 478200688,
+      "dtypes": [
+        "BF16"
+      ]
+    },
+    {
+      "file": "model.safetensors.index.json",
+      "sha256": "f994739fe38e5210b9e3e8ce6c6307315e2ceac3cb630e7b7414d69dce520f60",
+      "bytes": 64821
+    },
+    {
+      "file": "preprocessor_config.json",
+      "sha256": "45e120a4eda2c20c5d7f2ea9354e63536bf35e27aa573fb7cdf78017b378770d",
+      "bytes": 330
+    },
+    {
+      "file": "tokenizer_config.json",
+      "sha256": "4942d005604266809309cabc9f4e9cb89ce855d59b14681fdc0e1cc62ea26c4c",
+      "bytes": 12487
+    },
+    {
+      "file": "vocab.json",
+      "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+      "bytes": 2776833
+    }
+  ]
+}

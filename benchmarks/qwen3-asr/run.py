@@ -17,6 +17,7 @@ p.add_argument('--threads', type=int, default=6)
 p.add_argument('--suite', choices=['pilot','accuracy','latency','stream','paced','reconcile'], required=True)
 p.add_argument('--repeats', type=int, default=1)
 p.add_argument('--timeout', type=int, default=1800)
+p.add_argument('--tag',default='',help='Optional unique run label suffix (ASCII letters/digits/hyphen only)')
 p.add_argument('--omp-wait-policy',choices=['ACTIVE','PASSIVE'])
 p.add_argument('--cpu-set', help='Optional comma-separated logical CPUs; applies only to this benchmark child')
 a=p.parse_args()
@@ -50,6 +51,9 @@ if a.cpu_set:
 label=f'{a.engine}-{a.size}-t{a.threads}-{a.suite}-r{a.repeats}'
 if cpus:label+='-cpu'+ '_'.join(map(str,sorted(cpus)))
 if a.omp_wait_policy:label+='-omp-'+a.omp_wait_policy.lower()
+if a.tag:
+    if not all(c.isascii() and (c.isalnum() or c=='-') for c in a.tag):raise RuntimeError('Invalid run tag')
+    label+='-'+a.tag
 out=root/'results';out.mkdir(exist_ok=True)
 inputs=out/f'{label}.tsv'
 inputs.write_text(''.join(f"{r['id']}\t{r['language']}\t{artifacts/r['wav']}\n" for r in rows))
@@ -73,6 +77,7 @@ def limit_address_space():
     # Safety guard on this no-swap desktop. Never run two model processes.
     resource.setrlimit(resource.RLIMIT_AS, (18 * 1024**3, 18 * 1024**3))
     if cpus:os.sched_setaffinity(0,cpus)
+binary_sha256=hashlib.sha256(pathlib.Path(command[0]).read_bytes()).hexdigest()
 started=time.time()
 with (out/f'{label}.jsonl').open('w') as stdout, (out/f'{label}.stderr').open('w') as stderr:
     try:
@@ -80,7 +85,7 @@ with (out/f'{label}.jsonl').open('w') as stdout, (out/f'{label}.stderr').open('w
         exit_code=completed.returncode
     except subprocess.TimeoutExpired:
         exit_code='timeout'
-metadata={'label':label,'model_revision':provenance['revision'],'command':command,'start_unix':started,
+metadata={'binary_sha256':binary_sha256,'label':label,'model_revision':provenance['revision'],'command':command,'start_unix':started,
     'end_unix':time.time(),'exit_code':exit_code,'fixture_ids':[r['id'] for r in rows],
     'address_space_cap_gib':18,'cpu_affinity':sorted(cpus) if cpus else None,'omp_wait_policy':a.omp_wait_policy,
     'note':'No parallel ASR process. CPU desktop not exclusively reserved. Model sizes rechecked; downloader verified publisher SHA256 (Crisp Q4 is a third-party conversion).'}

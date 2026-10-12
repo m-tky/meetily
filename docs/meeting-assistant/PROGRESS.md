@@ -44,11 +44,12 @@ LLMはユーザー指定の **gpt-6-luna / 公式Sign in with ChatGPT OSSプラ�
 
 - ユーザーは5650GE CPUで0.6B/1.7Bを実測し、日本語・英語・タイ語の精度/RTF/RSS/低遅延を比較してから実装するよう依頼。公式BF16非量子化を先に比較し、速度不足時にINT8/INT4も調べる。コードは `benchmarks/qwen3-asr/`、重み/公開音声/engine/venv/build/logはrepo外。既存ASR・録音・app lockfileは変更していない。
 - FLEURS validation各言語先頭10件、speech計319.16秒、2/4/8秒prefix、人工無音を準備・hash検証。Thai APIのscan上限を回避するため同じvalidation Parquetを直接取得して先頭10件を抽出。C、Candle、Rust decoder-INT8、比較用C++ mixed-Q4を実行。読み上げ少数標本であり会議/長時間/Windowsの保証ではない。
-- 独立metricsテスト5件成功。upstream Rust INT8 matvec/argmaxのscalar-referenceテスト2件成功。CPU SIMDはAVX2、OpenBLASのruntime coreはZen、release薄LTO/CGU=1。3/6/12-thread試験も実施。
-- 確認中に重大なABI不一致を発見: NixデフォルトOpenBLASはILP64だが、Rust bindingのCBLAS引数はi32。初期Rust測定を `../runtime/qwen3-asr/results/exploratory/invalid-blas-abi/` へ退避し、推奨根拠から除外した。`blas64=false` でLP64へ揃え、ABIガードとscalar SIMDテスト、INT8/BF16の再ビルド・再測定を進行中。観測上動いたことをABI安全性と取り違えない。
+- 独立metricsテスト5件成功。znver3/LP64 releaseのupstream libテスト32件成功（INT8 matvec/argmaxのscalar-reference含む）。実際の公開fixture warm-upをGDBで止め、AVX2 integer-dot `vpmaddwd`のhit/1命令stepを確認。OpenBLAS runtime core Zen・LP64・実6 threads、release薄LTO/CGU=1を確認。1/3/4/5/6/8/12、交互5/6、affinity、OMP wait挙動も実測。thread数で認識結果も変わるため、速さだけで品質同一としない。
+- 確認中に重大なABI不一致を発見: NixデフォルトOpenBLASはILP64だが、Rust bindingのCBLAS引数はi32。初期Rust測定を `../runtime/qwen3-asr/results/exploratory/invalid-blas-abi/` へ退避し、推奨根拠から除外した。`blas64=false` でLP64へ揃え、ABIガードとscalar SIMDテスト、INT8/BF16の再ビルド・全再測定が完了。旧ILP64 libraryのloadを明示的にモデルload前に拒否する負テストも成功。観測上動いたことをABI安全性と取り違えない。
 - streamingでは32-token budgetによるThai末尾欠落を発見、final budgetを512に増やして再試験。早い仮説をprefix固定すると `海外` が `海岸` のまま残る例もあるため、終了時に同じ全発話をoffline再認識する比較も追加。途中草案は根拠確定扱いにしない。全構成に無音幻覚があり、小Q4は繰り返しが顕著。失敗記録は保持。
 - **ユーザーはINT8を選択し、このCPUで本当に最適化されているかの確認と、16bit比較も追加依頼。** モデルサイズ/本体への接続は未決定。現在のINT8はdecoderのみ、encoder/prefillはF32。16bitはまず公式BF16保存・CPU F32演算で確認し、5650GEで全層ネイティブBF16演算するという意味にはしない。
-- 手順、pinned engine revisions、失敗、再現は [../../benchmarks/qwen3-asr/PLAN.md](../../benchmarks/qwen3-asr/PLAN.md)。計測を確定してから独立worker原型へ進む。PulseAudio、録音、クラウド資格情報には触れていない。
+- 修正済6-threadのweighted RTF: 0.6B BF16/C 0.278 vs decoder-INT8/Rust 0.186（JA CER 8.00% vs9.14%）。1.7Bは0.610 vs0.419（JAは両方3.05%）。RSSはINT8の方が多い。1.7Bのdraft+全発話final再認識は入力終了後6.03–10.29秒、0.6Bは1.85–3.09秒（各言語1clipのみ）。会議やWindowsの成功ではない。
+- 結果、CPU確認、public-only evidence: [QWEN3-ASR-CPU.md](QWEN3-ASR-CPU.md)。pinned engine revisions、失敗、再現は [../../benchmarks/qwen3-asr/PLAN.md](../../benchmarks/qwen3-asr/PLAN.md)。次はモデルサイズを決め、独立worker原型。PulseAudio、録音、クラウド資格情報には触れていない。
 
 ## 明示的な制約
 

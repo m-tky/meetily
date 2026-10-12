@@ -1,0 +1,30 @@
+Temporary breakpoint 1 at 0x779e2
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/nix/store/lm3pknxi0ipypy3lxh1wmm8wvvavdwrn-glibc-2.42-84/lib/libthread_db.so.1".
+cpu_blas_json={"blas_integer_bits":32,"openblas_config":"OpenBLAS 0.3.33 DYNAMIC_ARCH NO_AFFINITY USE_OPENMP Zen MAX_THREADS=64","openblas_core":"Zen","openblas_threads":6,"precision":"decoder-INT8-encoder-F32-prefill-F32","rust_kernel_threads":6}
+QASR_METRIC int8 prefill=0 encoder=0
+[Switching to Thread 0x7fffc55fe6c0 (LWP 424610)]
+
+Thread 3 "qwen-worker-2" hit Temporary breakpoint 1, 0x00005555555cb9e2 in qwen_asr::kernels::avx::matvec_int8 ()
+qwen_asr::kernels::avx::matvec_int8 + 226 in section .text of /home/user/Code/meeting-assistant-research/runtime/qwen3-asr/native-lp64-target/release/qwen-native-bench
+=> 0x5555555cb9e2 <_RNvNtNtCsidqEx7up4z2_8qwen_asr7kernels3avx11matvec_int8+226>:	vpmaddwd %ymm7,%ymm6,%ymm7
+#0  0x00005555555cb9e2 in qwen_asr::kernels::avx::matvec_int8 ()
+#1  0x000055555558868b in qwen_asr::kernels::pool::parallel_region::<qwen_asr::decoder::decoder_forward::{closure#0}>::{closure#0} ()
+#2  0x000055555557eaf3 in std::sys::backtrace::__rust_begin_short_backtrace::<qwen_asr::kernels::pool::ensure_workers::{closure#0}, ()> ()
+#3  0x000055555558c9a4 in <std::thread::lifecycle::spawn_unchecked<qwen_asr::kernels::pool::ensure_workers::{closure#0}, ()>::{closure#1} as core::ops::function::FnOnce<()>>::call_once::{shim:vtable#0} ()
+#4  0x00005555556145da in <std::sys::thread::unix::Thread>::new::thread_start ()
+#5  0x00007ffff5c9ce73 in start_thread () from /nix/store/lm3pknxi0ipypy3lxh1wmm8wvvavdwrn-glibc-2.42-84/lib/libc.so.6
+  Id   Target Id                                            Frame 
+  1    Thread 0x7ffff5e22940 (LWP 424606) "qwen-native-ben" 0x00005555555cb9e2 in qwen_asr::kernels::avx::matvec_int8 ()
+  2    Thread 0x7fffc57ff6c0 (LWP 424609) "qwen-worker-1"   0x00005555555cb9e2 in qwen_asr::kernels::avx::matvec_int8 ()
+* 3    Thread 0x7fffc55fe6c0 (LWP 424610) "qwen-worker-2"   0x00005555555cb9e2 in qwen_asr::kernels::avx::matvec_int8 ()
+  4    Thread 0x7fffc53fd6c0 (LWP 424611) "qwen-worker-3"   0x00005555555cb9e2 in qwen_asr::kernels::avx::matvec_int8 ()
+  5    Thread 0x7fffc51fc6c0 (LWP 424612) "qwen-worker-4"   0x00005555555cb9e2 in qwen_asr::kernels::avx::matvec_int8 ()
+  6    Thread 0x7fffc4ffb6c0 (LWP 424613) "qwen-worker-5"   0x00005555555cb9e2 in qwen_asr::kernels::avx::matvec_int8 ()
+  38   Thread 0x7ffe89dff6c0 (LWP 424650) "qwen-native-ben" 0x00007ffff5e55fa2 in gomp_barrier_wait_end () from /nix/store/604gsr59rj7dzd0nrhp143rpvf7gyiaz-gcc-15.3.0-lib/lib/libgomp.so.1
+  39   Thread 0x7ffe895fe6c0 (LWP 424651) "qwen-native-ben" 0x00007ffff5e55fad in gomp_barrier_wait_end () from /nix/store/604gsr59rj7dzd0nrhp143rpvf7gyiaz-gcc-15.3.0-lib/lib/libgomp.so.1
+  40   Thread 0x7ffe88dfd6c0 (LWP 424652) "qwen-native-ben" 0x00007ffff5e55fa2 in gomp_barrier_wait_end () from /nix/store/604gsr59rj7dzd0nrhp143rpvf7gyiaz-gcc-15.3.0-lib/lib/libgomp.so.1
+  41   Thread 0x7ffe885fc6c0 (LWP 424653) "qwen-native-ben" 0x00007ffff5e55fa6 in gomp_barrier_wait_end () from /nix/store/604gsr59rj7dzd0nrhp143rpvf7gyiaz-gcc-15.3.0-lib/lib/libgomp.so.1
+  42   Thread 0x7ffe87dfb6c0 (LWP 424654) "qwen-native-ben" 0x00007ffff5e55fa6 in gomp_barrier_wait_end () from /nix/store/604gsr59rj7dzd0nrhp143rpvf7gyiaz-gcc-15.3.0-lib/lib/libgomp.so.1
+0x00005555555cb9e6 in qwen_asr::kernels::avx::matvec_int8 ()
+=> 0x5555555cb9e6 <_RNvNtNtCsidqEx7up4z2_8qwen_asr7kernels3avx11matvec_int8+230>:	vpmaddwd %ymm6,%ymm11,%ymm6

@@ -1,0 +1,933 @@
+{
+  "scope": "10 fixed public reading clips per language, no meeting acceptance; timings exclude load/warm-up",
+  "accuracy": [
+    {
+      "engine": "c",
+      "size": "0.6B",
+      "threads": 6,
+      "groups": [
+        {
+          "language": "Japanese",
+          "clips": 10,
+          "expected_clips": 10,
+          "complete": true,
+          "cer": 0.08,
+          "character_errors": 42,
+          "reference_characters": 525,
+          "wer": null,
+          "word_errors": null,
+          "audio_seconds": 138.66,
+          "elapsed_seconds": 30.413977475999996,
+          "rtf": 0.219342113630463
+        },
+        {
+          "language": "English",
+          "clips": 10,
+          "expected_clips": 10,
+          "complete": true,
+          "cer": 0.030066815144766147,
+          "character_errors": 27,
+          "reference_characters": 898,
+          "wer": 0.06857142857142857,
+          "word_errors": 12,
+          "audio_seconds": 79.99999999999999,
+          "elapsed_seconds": 18.546699542000002,
+          "rtf": 0.23183374427500006
+        },
+        {
+          "language": "Thai",
+          "clips": 10,
+          "expected_clips": 10,
+          "complete": true,
+          "cer": 0.06087824351297405,
+          "character_errors": 61,
+          "reference_characters": 1002,
+          "wer": null,
+          "word_errors": null,
+          "audio_seconds": 100.5,
+          "elapsed_seconds": 39.695848106999996,
+          "rtf": 0.3949835632537313
+        }
+      ],
+      "weighted_rtf": 0.2777808156567239,
+      "peak_rss_gib": 2.7106590270996094,
+      "silence": [
+        {
+          "text": "ええ。",
+          "elapsed_seconds": 1.086790067,
+          "character_insertions": 2
+        }
+      ]
+    },
+    {
+      "engine": "c",
+      "size": "1.7B",
+      "threads": 6,
+      "groups": [
+        {
+          "language": "Japanese",
+          "clips": 10,
+          "expected_clips": 10,
+          "complete": true,
+          "cer": 0.030476190476190476,
+          "character_errors": 16,
+          "reference_characters": 525,
+          "wer": null,
+          "word_errors": null,
+          "audio_seconds": 138.66,
+          "elapsed_seconds": 69.60391539300001,
+          "rtf": 0.50197544636521
+        },
+        {
+          "language": "English",
+          "clips": 10,
+          "expected_clips": 10,
+          "complete": true,
+          "cer": 0.024498886414253896,
+          "character_errors": 22,
+          "reference_characters": 898,
+          "wer": 0.05142857142857143,
+          "word_errors": 9,
+          "audio_seconds": 79.99999999999999,
+          "elapsed_seconds": 44.08774319,
+          "rtf": 0.5510967898750001
+        },
+        {
+          "language": "Thai",
+          "clips": 10,
+          "expected_clips": 10,
+          "complete": true,
+          "cer": 0.06087824351297405,
+          "character_errors": 61,
+          "reference_characters": 1002,
+          "wer": null,
+          "word_errors": null,
+          "audio_seconds": 100.5,
+          "elapsed_seconds": 80.964151746,
+          "rtf": 0.8056134502089553
+        }
+      ],
+      "weighted_rtf": 0.6099003958171452,
+      "peak_rss_gib": 6.624149322509766,
+      "silence": [
+        {
+          "text": "はい。",
+          "elapsed_seconds": 2.203434812,
+          "character_insertions": 2
+        }
+      ]
+    },
+    {
+      "engine": "native",
+      "size": "0.6B",
+      "threads": 6,
+      "groups": [
+        {
+          "language": "Japanese",
+          "clips": 10,
+          "expected_clips": 10,
+          "complete": true,
+          "cer": 0.09142857142857143,
+          "character_errors": 48,
+          "reference_characters": 525,
+          "wer": null,
+          "word_errors": null,
+          "audio_seconds": 138.66,
+          "elapsed_seconds": 22.709223833000003,
+          "rtf": 0.1637763149646618
+        },
+        {
+          "language": "English",
+          "clips": 10,
+          "expected_clips": 10,
+          "complete": true,
+          "cer": 0.022271714922048998,
+          "character_errors": 20,
+          "reference_characters": 898,
+          "wer": 0.06857142857142857,
+          "word_errors": 12,
+          "audio_seconds": 79.99999999999999,
+          "elapsed_seconds": 13.680517462,
+          "rtf": 0.17100646827500002
+        },
+        {
+          "language": "Thai",
+          "clips": 10,
+          "expected_clips": 10,
+          "complete": true,
+          "cer": 0.054890219560878244,
+          "character_errors": 55,
+          "reference_characters": 1002,
+          "wer": null,
+          "word_errors": null,
+          "audio_seconds": 100.5,
+          "elapsed_seconds": 22.929419447,
+          "rtf": 0.22815342733333335
+        }
+      ],
+      "weighted_rtf": 0.18586026050256926,
+      "peak_rss_gib": 3.2987289428710938,
+      "silence": [
+        {
+          "text": "はい。",
+          "elapsed_seconds": 0.988609513,
+          "character_insertions": 2
+        }
+      ]
+    },
+    {
+      "engine": "native",
+      "size": "1.7B",
+      "threads": 6,
+      "groups": [
+        {
+          "language": "Japanese",
+          "clips": 10,
+          "expected_clips": 10,
+          "complete": true,
+          "cer": 0.030476190476190476,
+          "character_errors": 16,
+          "reference_characters": 525,
+          "wer": null,
+          "word_errors": null,
+          "audio_seconds": 138.66,
+          "elapsed_seconds": 48.478355709999995,
+          "rtf": 0.34962033542478
+        },
+        {
+          "language": "English",
+          "clips": 10,
+          "expected_clips": 10,
+          "complete": true,
+          "cer": 0.024498886414253896,
+          "character_errors": 22,
+          "reference_characters": 898,
+          "wer": 0.05142857142857143,
+          "word_errors": 9,
+          "audio_seconds": 79.99999999999999,
+          "elapsed_seconds": 33.386051505,
+          "rtf": 0.41732564381250004
+        },
+        {
+          "language": "Thai",
+          "clips": 10,
+          "expected_clips": 10,
+          "complete": true,
+          "cer": 0.06487025948103792,
+          "character_errors": 65,
+          "reference_characters": 1002,
+          "wer": null,
+          "word_errors": null,
+          "audio_seconds": 100.5,
+          "elapsed_seconds": 51.888648428,
+          "rtf": 0.5163049594825871
+        }
+      ],
+      "weighted_rtf": 0.4190783796309061,
+      "peak_rss_gib": 7.300891876220703,
+      "silence": [
+        {
+          "text": "はい。",
+          "elapsed_seconds": 2.049714531,
+          "character_insertions": 2
+        }
+      ]
+    }
+  ],
+  "latency": [
+    {
+      "engine": "c",
+      "size": "0.6B",
+      "prefix_seconds": 2,
+      "count": 9,
+      "inference_median_seconds": 0.878780138,
+      "first_token_median_seconds": 0.645220659
+    },
+    {
+      "engine": "c",
+      "size": "0.6B",
+      "prefix_seconds": 4,
+      "count": 9,
+      "inference_median_seconds": 1.347506001,
+      "first_token_median_seconds": 0.802341224
+    },
+    {
+      "engine": "c",
+      "size": "0.6B",
+      "prefix_seconds": 8,
+      "count": 9,
+      "inference_median_seconds": 2.152346757,
+      "first_token_median_seconds": 1.149173358
+    },
+    {
+      "engine": "c",
+      "size": "1.7B",
+      "prefix_seconds": 2,
+      "count": 9,
+      "inference_median_seconds": 2.100279081,
+      "first_token_median_seconds": 1.51483018
+    },
+    {
+      "engine": "c",
+      "size": "1.7B",
+      "prefix_seconds": 4,
+      "count": 9,
+      "inference_median_seconds": 3.159075787,
+      "first_token_median_seconds": 1.852067913
+    },
+    {
+      "engine": "c",
+      "size": "1.7B",
+      "prefix_seconds": 8,
+      "count": 9,
+      "inference_median_seconds": 4.744613057,
+      "first_token_median_seconds": 2.415785745
+    },
+    {
+      "engine": "native",
+      "size": "0.6B",
+      "prefix_seconds": 2,
+      "count": 9,
+      "inference_median_seconds": 0.67691362,
+      "first_token_median_seconds": 0.535822417
+    },
+    {
+      "engine": "native",
+      "size": "0.6B",
+      "prefix_seconds": 4,
+      "count": 9,
+      "inference_median_seconds": 0.928461217,
+      "first_token_median_seconds": 0.676797749
+    },
+    {
+      "engine": "native",
+      "size": "0.6B",
+      "prefix_seconds": 8,
+      "count": 9,
+      "inference_median_seconds": 1.425937442,
+      "first_token_median_seconds": 0.941837937
+    },
+    {
+      "engine": "native",
+      "size": "1.7B",
+      "prefix_seconds": 2,
+      "count": 9,
+      "inference_median_seconds": 1.778059023,
+      "first_token_median_seconds": 1.465219355
+    },
+    {
+      "engine": "native",
+      "size": "1.7B",
+      "prefix_seconds": 4,
+      "count": 9,
+      "inference_median_seconds": 2.390242619,
+      "first_token_median_seconds": 1.753797601
+    },
+    {
+      "engine": "native",
+      "size": "1.7B",
+      "prefix_seconds": 8,
+      "count": 9,
+      "inference_median_seconds": 3.444199957,
+      "first_token_median_seconds": 2.202391079
+    }
+  ],
+  "paced": [
+    {
+      "id": "fleurs-ja_jp-validation-0-1519",
+      "language": "Japanese",
+      "text": "多くの場合、海外のギャップイヤコースに入学することで、企画後に実際に大学に進学しやすくなります。",
+      "status": "ok",
+      "rep": 0,
+      "engine": "c",
+      "precision": "unquantized-BF16-F32",
+      "mode": "paced",
+      "threads": 6,
+      "audio_seconds": 11.1,
+      "elapsed_seconds": 13.671565078999265,
+      "compute_seconds": 6.703,
+      "first_token_seconds": 9.359010462008882,
+      "load_seconds": 0.5765643499908037,
+      "end_delay_seconds": 2.5715650789992655,
+      "peak_rss_kib": 2748044,
+      "arrival_chunk_seconds": 2,
+      "runtime": "antirez-c",
+      "size": "0.6B"
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "language": "English",
+      "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "status": "ok",
+      "rep": 0,
+      "engine": "c",
+      "precision": "unquantized-BF16-F32",
+      "mode": "paced",
+      "threads": 6,
+      "audio_seconds": 6.54,
+      "elapsed_seconds": 9.962904437998077,
+      "compute_seconds": 4.512,
+      "first_token_seconds": 8.493039395005326,
+      "load_seconds": 0.555895010009408,
+      "end_delay_seconds": 3.422904437998077,
+      "peak_rss_kib": 2748044,
+      "arrival_chunk_seconds": 2,
+      "runtime": "antirez-c",
+      "size": "0.6B"
+    },
+    {
+      "id": "fleurs-th_th-validation-0-1548",
+      "language": "Thai",
+      "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "status": "ok",
+      "rep": 0,
+      "engine": "c",
+      "precision": "unquantized-BF16-F32",
+      "mode": "paced",
+      "threads": 6,
+      "audio_seconds": 8.22,
+      "elapsed_seconds": 12.749897727000643,
+      "compute_seconds": 6.938,
+      "first_token_seconds": 9.670631624001544,
+      "load_seconds": 0.5843222660041647,
+      "end_delay_seconds": 4.529897727000643,
+      "peak_rss_kib": 2748044,
+      "arrival_chunk_seconds": 2,
+      "runtime": "antirez-c",
+      "size": "0.6B"
+    },
+    {
+      "id": "fleurs-ja_jp-validation-0-1519",
+      "language": "Japanese",
+      "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+      "status": "ok",
+      "rep": 0,
+      "engine": "c",
+      "precision": "unquantized-BF16-F32",
+      "mode": "paced",
+      "threads": 6,
+      "audio_seconds": 11.1,
+      "elapsed_seconds": 20.28914319400792,
+      "compute_seconds": 15.622,
+      "first_token_seconds": 12.122646917006932,
+      "load_seconds": 1.3794798409944633,
+      "end_delay_seconds": 9.18914319400792,
+      "peak_rss_kib": 6828740,
+      "arrival_chunk_seconds": 2,
+      "runtime": "antirez-c",
+      "size": "1.7B"
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "language": "English",
+      "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "status": "ok",
+      "rep": 0,
+      "engine": "c",
+      "precision": "unquantized-BF16-F32",
+      "mode": "paced",
+      "threads": 6,
+      "audio_seconds": 6.54,
+      "elapsed_seconds": 15.7794771429908,
+      "compute_seconds": 11.366,
+      "first_token_seconds": 12.282179285990424,
+      "load_seconds": 1.3419602070061956,
+      "end_delay_seconds": 9.2394771429908,
+      "peak_rss_kib": 6828740,
+      "arrival_chunk_seconds": 2,
+      "runtime": "antirez-c",
+      "size": "1.7B"
+    },
+    {
+      "id": "fleurs-th_th-validation-0-1548",
+      "language": "Thai",
+      "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "status": "ok",
+      "rep": 0,
+      "engine": "c",
+      "precision": "unquantized-BF16-F32",
+      "mode": "paced",
+      "threads": 6,
+      "audio_seconds": 8.22,
+      "elapsed_seconds": 20.819430349001777,
+      "compute_seconds": 16.382,
+      "first_token_seconds": 13.641074854996987,
+      "load_seconds": 1.3409072490030667,
+      "end_delay_seconds": 12.599430349001777,
+      "peak_rss_kib": 6828740,
+      "arrival_chunk_seconds": 2,
+      "runtime": "antirez-c",
+      "size": "1.7B"
+    },
+    {
+      "audio_seconds": 11.1,
+      "compute_seconds": 4.995830162000001,
+      "elapsed_seconds": 12.149704369,
+      "end_delay_seconds": 1.0497043690000005,
+      "engine": "native",
+      "first_provisional_seconds": 2.579332307,
+      "first_token_seconds": 7.048262953,
+      "id": "fleurs-ja_jp-validation-0-1519",
+      "language": "Japanese",
+      "load_seconds": 0.552734273,
+      "mode": "paced",
+      "peak_rss_kib": 3407968,
+      "precision": "decoder-INT8-encoder-F32-prefill-F32",
+      "rep": 0,
+      "status": "ok",
+      "stream_final_max_new_tokens": 512,
+      "text": "多くの場合、海外のギャップイヤコースに入学することで、企画後に実際に大学に進学しやすくなります。",
+      "threads": 6,
+      "runtime": "native-rust",
+      "size": "0.6B"
+    },
+    {
+      "audio_seconds": 6.54,
+      "compute_seconds": 2.87699632,
+      "elapsed_seconds": 8.168018821,
+      "end_delay_seconds": 1.6280188210000004,
+      "engine": "native",
+      "first_provisional_seconds": 2.640835772,
+      "first_token_seconds": 7.049161,
+      "id": "fleurs-en_us-validation-0-1548",
+      "language": "English",
+      "load_seconds": 0.552734273,
+      "mode": "paced",
+      "peak_rss_kib": 3408376,
+      "precision": "decoder-INT8-encoder-F32-prefill-F32",
+      "rep": 0,
+      "status": "ok",
+      "stream_final_max_new_tokens": 512,
+      "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "threads": 6,
+      "runtime": "native-rust",
+      "size": "0.6B"
+    },
+    {
+      "audio_seconds": 8.22,
+      "compute_seconds": 4.894087641,
+      "elapsed_seconds": 10.510925905,
+      "end_delay_seconds": 2.290925905,
+      "engine": "native",
+      "first_provisional_seconds": 2.94806851,
+      "first_token_seconds": 7.329623885,
+      "id": "fleurs-th_th-validation-0-1548",
+      "language": "Thai",
+      "load_seconds": 0.552734273,
+      "mode": "paced",
+      "peak_rss_kib": 3408440,
+      "precision": "decoder-INT8-encoder-F32-prefill-F32",
+      "rep": 0,
+      "status": "ok",
+      "stream_final_max_new_tokens": 512,
+      "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "threads": 6,
+      "runtime": "native-rust",
+      "size": "0.6B"
+    },
+    {
+      "audio_seconds": 11.1,
+      "compute_seconds": 6.245013522,
+      "elapsed_seconds": 12.956527131,
+      "end_delay_seconds": 1.856527131,
+      "engine": "native",
+      "first_provisional_seconds": 2.663802584,
+      "first_token_seconds": 7.136299425,
+      "id": "fleurs-ja_jp-validation-0-1519",
+      "language": "Japanese",
+      "load_seconds": 0.567006976,
+      "mode": "reconcile",
+      "peak_rss_kib": 3447368,
+      "precision": "decoder-INT8-encoder-F32-prefill-F32",
+      "rep": 0,
+      "status": "ok",
+      "stream_final_max_new_tokens": null,
+      "text": "多くの場合、海外のギャップイヤコースに入学することで、企画後に実際に大学に進学しやすくなります。",
+      "threads": 6,
+      "runtime": "native-rust",
+      "size": "0.6B"
+    },
+    {
+      "audio_seconds": 6.54,
+      "compute_seconds": 3.164639926,
+      "elapsed_seconds": 8.394845518,
+      "end_delay_seconds": 1.8548455180000003,
+      "engine": "native",
+      "first_provisional_seconds": 2.652031704,
+      "first_token_seconds": 7.113579897,
+      "id": "fleurs-en_us-validation-0-1548",
+      "language": "English",
+      "load_seconds": 0.567006976,
+      "mode": "reconcile",
+      "peak_rss_kib": 3450608,
+      "precision": "decoder-INT8-encoder-F32-prefill-F32",
+      "rep": 0,
+      "status": "ok",
+      "stream_final_max_new_tokens": null,
+      "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "threads": 6,
+      "runtime": "native-rust",
+      "size": "0.6B"
+    },
+    {
+      "audio_seconds": 8.22,
+      "compute_seconds": 5.4543318,
+      "elapsed_seconds": 11.310002317,
+      "end_delay_seconds": 3.0900023169999997,
+      "engine": "native",
+      "first_provisional_seconds": 2.665044301,
+      "first_token_seconds": 7.354955615,
+      "id": "fleurs-th_th-validation-0-1548",
+      "language": "Thai",
+      "load_seconds": 0.567006976,
+      "mode": "reconcile",
+      "peak_rss_kib": 3451892,
+      "precision": "decoder-INT8-encoder-F32-prefill-F32",
+      "rep": 0,
+      "status": "ok",
+      "stream_final_max_new_tokens": null,
+      "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "threads": 6,
+      "runtime": "native-rust",
+      "size": "0.6B"
+    },
+    {
+      "audio_seconds": 11.1,
+      "compute_seconds": 15.798985851999998,
+      "elapsed_seconds": 19.301380112,
+      "end_delay_seconds": 8.201380112,
+      "engine": "native",
+      "first_provisional_seconds": 4.376534148,
+      "first_token_seconds": 9.241696647,
+      "id": "fleurs-ja_jp-validation-0-1519",
+      "language": "Japanese",
+      "load_seconds": 0.880344202,
+      "mode": "paced",
+      "peak_rss_kib": 7584700,
+      "precision": "decoder-INT8-encoder-F32-prefill-F32",
+      "rep": 0,
+      "status": "ok",
+      "stream_final_max_new_tokens": 512,
+      "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+      "threads": 6,
+      "runtime": "native-rust",
+      "size": "1.7B"
+    },
+    {
+      "audio_seconds": 6.54,
+      "compute_seconds": 8.059154365000001,
+      "elapsed_seconds": 11.802284203,
+      "end_delay_seconds": 5.262284202999999,
+      "engine": "native",
+      "first_provisional_seconds": 4.002580268,
+      "first_token_seconds": 8.881936237,
+      "id": "fleurs-en_us-validation-0-1548",
+      "language": "English",
+      "load_seconds": 0.880344202,
+      "mode": "paced",
+      "peak_rss_kib": 7584744,
+      "precision": "decoder-INT8-encoder-F32-prefill-F32",
+      "rep": 0,
+      "status": "ok",
+      "stream_final_max_new_tokens": 512,
+      "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "threads": 6,
+      "runtime": "native-rust",
+      "size": "1.7B"
+    },
+    {
+      "audio_seconds": 8.22,
+      "compute_seconds": 13.23077293,
+      "elapsed_seconds": 16.946628809,
+      "end_delay_seconds": 8.726628809,
+      "engine": "native",
+      "first_provisional_seconds": 3.929165772,
+      "first_token_seconds": 9.606767879,
+      "id": "fleurs-th_th-validation-0-1548",
+      "language": "Thai",
+      "load_seconds": 0.880344202,
+      "mode": "paced",
+      "peak_rss_kib": 7584744,
+      "precision": "decoder-INT8-encoder-F32-prefill-F32",
+      "rep": 0,
+      "status": "ok",
+      "stream_final_max_new_tokens": 512,
+      "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "threads": 6,
+      "runtime": "native-rust",
+      "size": "1.7B"
+    },
+    {
+      "audio_seconds": 11.1,
+      "compute_seconds": 14.571135629,
+      "elapsed_seconds": 18.876728348,
+      "end_delay_seconds": 7.776728348000001,
+      "engine": "native",
+      "first_provisional_seconds": 3.579521036,
+      "first_token_seconds": 8.739832865,
+      "id": "fleurs-ja_jp-validation-0-1519",
+      "language": "Japanese",
+      "load_seconds": 0.856958318,
+      "mode": "reconcile",
+      "peak_rss_kib": 7624920,
+      "precision": "decoder-INT8-encoder-F32-prefill-F32",
+      "rep": 0,
+      "status": "ok",
+      "stream_final_max_new_tokens": null,
+      "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+      "threads": 6,
+      "runtime": "native-rust",
+      "size": "1.7B"
+    },
+    {
+      "audio_seconds": 6.54,
+      "compute_seconds": 8.592498751,
+      "elapsed_seconds": 12.571630719,
+      "end_delay_seconds": 6.031630719,
+      "engine": "native",
+      "first_provisional_seconds": 3.75370346,
+      "first_token_seconds": 9.108897694,
+      "id": "fleurs-en_us-validation-0-1548",
+      "language": "English",
+      "load_seconds": 0.856958318,
+      "mode": "reconcile",
+      "peak_rss_kib": 7631816,
+      "precision": "decoder-INT8-encoder-F32-prefill-F32",
+      "rep": 0,
+      "status": "ok",
+      "stream_final_max_new_tokens": null,
+      "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "threads": 6,
+      "runtime": "native-rust",
+      "size": "1.7B"
+    },
+    {
+      "audio_seconds": 8.22,
+      "compute_seconds": 14.72741589,
+      "elapsed_seconds": 18.508029193,
+      "end_delay_seconds": 10.288029192999998,
+      "engine": "native",
+      "first_provisional_seconds": 3.861398984,
+      "first_token_seconds": 9.557566878,
+      "id": "fleurs-th_th-validation-0-1548",
+      "language": "Thai",
+      "load_seconds": 0.856958318,
+      "mode": "reconcile",
+      "peak_rss_kib": 7631816,
+      "precision": "decoder-INT8-encoder-F32-prefill-F32",
+      "rep": 0,
+      "status": "ok",
+      "stream_final_max_new_tokens": null,
+      "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "threads": 6,
+      "runtime": "native-rust",
+      "size": "1.7B"
+    }
+  ],
+  "pilots": [
+    {
+      "file": "c-0.6B-t12-pilot-r3.jsonl",
+      "inference_seconds": 31.243882183,
+      "cpu_seconds": null,
+      "weighted_rtf": 0.4027311444057747
+    },
+    {
+      "file": "c-0.6B-t3-pilot-r3.jsonl",
+      "inference_seconds": 23.687125746,
+      "cpu_seconds": null,
+      "weighted_rtf": 0.30532515784996134
+    },
+    {
+      "file": "c-0.6B-t6-pilot-r3.jsonl",
+      "inference_seconds": 20.237591229,
+      "cpu_seconds": null,
+      "weighted_rtf": 0.2608609336040216
+    },
+    {
+      "file": "c-1.7B-t12-pilot-r3.jsonl",
+      "inference_seconds": 76.90357338700001,
+      "cpu_seconds": null,
+      "weighted_rtf": 0.9912809150167571
+    },
+    {
+      "file": "c-1.7B-t3-pilot-r3.jsonl",
+      "inference_seconds": 61.286245836999996,
+      "cpu_seconds": null,
+      "weighted_rtf": 0.7899748109951018
+    },
+    {
+      "file": "c-1.7B-t6-pilot-r3.jsonl",
+      "inference_seconds": 49.19682605,
+      "cpu_seconds": null,
+      "weighted_rtf": 0.6341431560969322
+    },
+    {
+      "file": "native-0.6B-t1-pilot-r3.jsonl",
+      "inference_seconds": 34.739464209,
+      "cpu_seconds": 34.580090999999996,
+      "weighted_rtf": 0.4477889173627223
+    },
+    {
+      "file": "native-0.6B-t12-pilot-r3.jsonl",
+      "inference_seconds": 40.001774061,
+      "cpu_seconds": null,
+      "weighted_rtf": 0.515619670804331
+    },
+    {
+      "file": "native-0.6B-t3-pilot-r3.jsonl",
+      "inference_seconds": 17.878305588,
+      "cpu_seconds": null,
+      "weighted_rtf": 0.23044993023975252
+    },
+    {
+      "file": "native-0.6B-t4-pilot-r3.jsonl",
+      "inference_seconds": 15.253694608,
+      "cpu_seconds": 61.144021999999964,
+      "weighted_rtf": 0.19661890445991234
+    },
+    {
+      "file": "native-0.6B-t5-pilot-r3-confirm1.jsonl",
+      "inference_seconds": 14.168047128,
+      "cpu_seconds": 70.61505899999997,
+      "weighted_rtf": 0.18262499520494974
+    },
+    {
+      "file": "native-0.6B-t5-pilot-r3-confirm2.jsonl",
+      "inference_seconds": 14.819478948,
+      "cpu_seconds": 73.547518,
+      "weighted_rtf": 0.19102189930394434
+    },
+    {
+      "file": "native-0.6B-t5-pilot-r3.jsonl",
+      "inference_seconds": 14.565949555,
+      "cpu_seconds": 72.44823600000001,
+      "weighted_rtf": 0.18775392568961072
+    },
+    {
+      "file": "native-0.6B-t6-pilot-r3-confirm1.jsonl",
+      "inference_seconds": 14.235476807,
+      "cpu_seconds": 83.69868700000004,
+      "weighted_rtf": 0.18349415837844804
+    },
+    {
+      "file": "native-0.6B-t6-pilot-r3-confirm2.jsonl",
+      "inference_seconds": 15.303713827,
+      "cpu_seconds": 89.53264899999999,
+      "weighted_rtf": 0.19726364819541117
+    },
+    {
+      "file": "native-0.6B-t6-pilot-r3-cpu0_1_2_3_4_5.jsonl",
+      "inference_seconds": 16.584324784,
+      "cpu_seconds": null,
+      "weighted_rtf": 0.21377062108790926
+    },
+    {
+      "file": "native-0.6B-t6-pilot-r3-omp-active.jsonl",
+      "inference_seconds": 15.862540382999999,
+      "cpu_seconds": 128.74979600000003,
+      "weighted_rtf": 0.20446687784222736
+    },
+    {
+      "file": "native-0.6B-t6-pilot-r3-omp-passive.jsonl",
+      "inference_seconds": 17.077757388,
+      "cpu_seconds": 90.19615900000001,
+      "weighted_rtf": 0.22013092791956687
+    },
+    {
+      "file": "native-0.6B-t6-pilot-r3.jsonl",
+      "inference_seconds": 15.942123851,
+      "cpu_seconds": null,
+      "weighted_rtf": 0.2054927023846352
+    },
+    {
+      "file": "native-0.6B-t8-pilot-r3.jsonl",
+      "inference_seconds": 16.806339492,
+      "cpu_seconds": 128.18580399999993,
+      "weighted_rtf": 0.21663237293116783
+    },
+    {
+      "file": "native-1.7B-t1-pilot-r3.jsonl",
+      "inference_seconds": 85.830308909,
+      "cpu_seconds": 85.441491,
+      "weighted_rtf": 1.1063458224929106
+    },
+    {
+      "file": "native-1.7B-t12-pilot-r3.jsonl",
+      "inference_seconds": 59.037134067,
+      "cpu_seconds": null,
+      "weighted_rtf": 0.7609839400232018
+    },
+    {
+      "file": "native-1.7B-t3-pilot-r3.jsonl",
+      "inference_seconds": 41.695282369,
+      "cpu_seconds": null,
+      "weighted_rtf": 0.5374488575534931
+    },
+    {
+      "file": "native-1.7B-t4-pilot-r3.jsonl",
+      "inference_seconds": 36.953324488,
+      "cpu_seconds": 156.987778,
+      "weighted_rtf": 0.4763253994328435
+    },
+    {
+      "file": "native-1.7B-t5-pilot-r3-confirm1.jsonl",
+      "inference_seconds": 36.272408100999996,
+      "cpu_seconds": 192.669892,
+      "weighted_rtf": 0.4675484416215519
+    },
+    {
+      "file": "native-1.7B-t5-pilot-r3-confirm2.jsonl",
+      "inference_seconds": 34.566155024,
+      "cpu_seconds": 184.33440000000002,
+      "weighted_rtf": 0.4455549758185099
+    },
+    {
+      "file": "native-1.7B-t5-pilot-r3.jsonl",
+      "inference_seconds": 34.94292775,
+      "cpu_seconds": 185.75146199999998,
+      "weighted_rtf": 0.45041154614591394
+    },
+    {
+      "file": "native-1.7B-t6-pilot-r3-confirm1.jsonl",
+      "inference_seconds": 35.667300798,
+      "cpu_seconds": 224.78594799999996,
+      "weighted_rtf": 0.4597486568445476
+    },
+    {
+      "file": "native-1.7B-t6-pilot-r3-confirm2.jsonl",
+      "inference_seconds": 34.01454806,
+      "cpu_seconds": 215.61512799999997,
+      "weighted_rtf": 0.438444806135602
+    },
+    {
+      "file": "native-1.7B-t6-pilot-r3-cpu0_1_2_3_4_5.jsonl",
+      "inference_seconds": 38.8896941,
+      "cpu_seconds": null,
+      "weighted_rtf": 0.5012850489816963
+    },
+    {
+      "file": "native-1.7B-t6-pilot-r3-omp-active.jsonl",
+      "inference_seconds": 36.921111574,
+      "cpu_seconds": 311.485824,
+      "weighted_rtf": 0.47591017754575926
+    },
+    {
+      "file": "native-1.7B-t6-pilot-r3-omp-passive.jsonl",
+      "inference_seconds": 36.944099148,
+      "cpu_seconds": 208.90025299999996,
+      "weighted_rtf": 0.47620648553750966
+    },
+    {
+      "file": "native-1.7B-t6-pilot-r3.jsonl",
+      "inference_seconds": 34.717564649,
+      "cpu_seconds": null,
+      "weighted_rtf": 0.4475066337844806
+    },
+    {
+      "file": "native-1.7B-t8-pilot-r3.jsonl",
+      "inference_seconds": 39.384690261,
+      "cpu_seconds": 317.3713860000001,
+      "weighted_rtf": 0.5076655099381284
+    }
+  ]
+}
