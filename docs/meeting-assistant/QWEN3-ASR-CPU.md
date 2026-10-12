@@ -1,6 +1,6 @@
 # Qwen3-ASR: 5650GE CPU実測と最適化検証
 
-状態: **独立benchmark**。既存Meetily ASR/録音/provider/schema/lockfileは変更なし。ユーザーはINT8方向を選択し、実CPU最適化の確認と16bit比較を追加依頼。モデルサイズ/本体採用は未決定。実マイク、desktop音声、会議、cloud推論は使用していない。
+状態: **独立benchmark**。既存Meetily ASR/録音/provider/schema/lockfileは変更なし。ユーザーはINT8方向を選択し、実CPU最適化の確認と16bit比較を追加依頼。その後ユーザーが **1.7B decoder-INT8** を選択。本体への接続・production採用はまだ未検証。実マイク、desktop音声、会議、cloud推論は使用していない。
 
 ## 測定条件
 
@@ -67,7 +67,7 @@ Nix x86_64のOpenBLASデフォルトは`USE64BITINT` (ILP64)。一方、上流Ru
 
 ## 原型/採用の境界
 
-現時点で本体には接続しない。モデルサイズを決めた後、独立Rust workerでbounded input/queue、request IDs、cancel/timeout/restart、model常駐、draft/utterance-final分離を検証する。2時間、Windows、混在言語、会話/noise、speaker identity、終了tail、手編集保護、録音復旧は別のacceptance。日本語CER3.05%の読上げ試験は会議の意味保証ではない。
+ユーザーは **1.7B decoder-INT8** を選択（「じゃあ、1.7B int8にしようか」）。現時点で本体には接続しない。次はこのモデルの独立Rust workerでbounded input/queue、request IDs、cancel/timeout/restart、model常駐、draft/utterance-final分離を検証する。2時間、Windows、混在言語、会話/noise、speaker identity、終了tail、手編集保護、録音復旧は別のacceptance。日本語CER3.05%の読上げ試験は会議の意味保証ではない。
 
 ## 再現と証拠
 

@@ -47,9 +47,9 @@ LLMはユーザー指定の **gpt-6-luna / 公式Sign in with ChatGPT OSSプラ�
 - 独立metricsテスト5件成功。znver3/LP64 releaseのupstream libテスト32件成功（INT8 matvec/argmaxのscalar-reference含む）。実際の公開fixture warm-upをGDBで止め、AVX2 integer-dot `vpmaddwd`のhit/1命令stepを確認。OpenBLAS runtime core Zen・LP64・実6 threads、release薄LTO/CGU=1を確認。1/3/4/5/6/8/12、交互5/6、affinity、OMP wait挙動も実測。thread数で認識結果も変わるため、速さだけで品質同一としない。
 - 確認中に重大なABI不一致を発見: NixデフォルトOpenBLASはILP64だが、Rust bindingのCBLAS引数はi32。初期Rust測定を `../runtime/qwen3-asr/results/exploratory/invalid-blas-abi/` へ退避し、推奨根拠から除外した。`blas64=false` でLP64へ揃え、ABIガードとscalar SIMDテスト、INT8/BF16の再ビルド・全再測定が完了。旧ILP64 libraryのloadを明示的にモデルload前に拒否する負テストも成功。観測上動いたことをABI安全性と取り違えない。
 - streamingでは32-token budgetによるThai末尾欠落を発見、final budgetを512に増やして再試験。早い仮説をprefix固定すると `海外` が `海岸` のまま残る例もあるため、終了時に同じ全発話をoffline再認識する比較も追加。途中草案は根拠確定扱いにしない。全構成に無音幻覚があり、小Q4は繰り返しが顕著。失敗記録は保持。
-- **ユーザーはINT8を選択し、このCPUで本当に最適化されているかの確認と、16bit比較も追加依頼。** モデルサイズ/本体への接続は未決定。現在のINT8はdecoderのみ、encoder/prefillはF32。16bitはまず公式BF16保存・CPU F32演算で確認し、5650GEで全層ネイティブBF16演算するという意味にはしない。
+- **ユーザーはINT8を選択し、このCPUで本当に最適化されているかの確認と、16bit比較も追加依頼。** その後 **1.7B decoder-INT8** を明示選択し、幻覚の対処方法を質問。本体への接続はまだ行っていない。現在のINT8はdecoderのみ、encoder/prefillはF32。16bitはまず公式BF16保存・CPU F32演算で確認し、5650GEで全層ネイティブBF16演算するという意味にはしない。
 - 修正済6-threadのweighted RTF: 0.6B BF16/C 0.278 vs decoder-INT8/Rust 0.186（JA CER 8.00% vs9.14%）。1.7Bは0.610 vs0.419（JAは両方3.05%）。RSSはINT8の方が多い。1.7Bのdraft+全発話final再認識は入力終了後6.03–10.29秒、0.6Bは1.85–3.09秒（各言語1clipのみ）。会議やWindowsの成功ではない。
-- 結果、CPU確認、public-only evidence: [QWEN3-ASR-CPU.md](QWEN3-ASR-CPU.md)。pinned engine revisions、失敗、再現は [../../benchmarks/qwen3-asr/PLAN.md](../../benchmarks/qwen3-asr/PLAN.md)。次はモデルサイズを決め、独立worker原型。PulseAudio、録音、クラウド資格情報には触れていない。
+- 結果、CPU確認、public-only evidence: [QWEN3-ASR-CPU.md](QWEN3-ASR-CPU.md)。pinned engine revisions、失敗、再現は [../../benchmarks/qwen3-asr/PLAN.md](../../benchmarks/qwen3-asr/PLAN.md)。次は選択済み1.7B INT8の独立worker原型。無音幻覚は既存Silero VADの再利用、speechなし時の推論/flush禁止、短い相槌・語尾を残す境界処理、異常反復検知を候補として公開音声/人工無音/noiseで検証する（まだ未実装・未検証、RMSだけで小声を消さない）。PulseAudio、録音、クラウド資格情報には触れていない。
 
 ## 明示的な制約
 
