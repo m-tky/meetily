@@ -98,3 +98,9 @@ raw cargoでは先にllama-helperをbuildしてTauri binariesへstageする。�
 **品質受入未達、本体統合禁止。** VAD各区間を別認識した試作はJA CER 3.62% / EN WER 5.71% / TH CER 14.27%に悪化。30秒上限内で内部pauseを残す一つの認識windowに変更して全30clip再測定：**2.86% / 6.29% / 10.48%**。選択モデルのungated基準3.05% / 5.14% / 6.49%より英語/タイ語が悪い。無音対策と実音声精度は別であり、境界切出しの対策が次の課題。自然音でのVAD誤検出/追加「はい」は初期試作で観測しraw保持。300ms無音prime案は白色noiseを誤検出し撤回。失敗も保存した。
 
 手順/制約：`benchmarks/qwen3-asr/worker/README.md`。公開evidence：`docs/meeting-assistant/evidence/qwen3-asr/worker/`。主log：親`logs/qwen-worker-window-acceptance.log`。Windows/live draft/実環境noise/二時間運転/本体統合は未実施。次は発話有無gateと認識context境界を分けた比較を行い、短い真の発話・quiet speechの保護を同時に評価する。
+
+### 解決策調査（2026-10-12、未採用）
+
+`QWEN3-ASR-HALLUCINATION-RESEARCH.md` に一次情報と新規診断を保存。embedded Silero ONNXはblob hashでofficial v4.0と一致。しかしRust libraryは480 samples/30msを直接modelへ送り、v4 official wrapperの最低512/trained frame契約と合わない。worker外のforward-only診断でsame weights/PCMの480→512を比較：500ms cropの最大pは0.168→0.574、quiet原音のpositive framesも増加。noise4種は両方zero positive。ただし元日本語冒頭音にも512のほうが強く反応し、false-positive解決を意味しない。真の相槌保護は未受入。現行worker/app policyは変更しない。
+
+タイ語raw CER 65→105 errorsのうち数字3clipが5→58（+53）、その他7clipは60→47（-13）。数字のタイ語綴り化等が大きいため、「文脈切断で発話欠落」という前の説明は不十分。raw scoreを変えず意味/表記/挿入/脱落を別分類する。reference外の冒頭「はい」も実際に話されたか未確認で、純無音の幻覚と混同しない。推奨次比較はofficial互換VAD geometry → 同一workerのpresence-only full PCM vs crop → official現行VAD/auto language比較。モデル交換/語の削除/LLM補正を先に行わない。
