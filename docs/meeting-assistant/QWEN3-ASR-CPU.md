@@ -89,3 +89,7 @@ OPENBLAS_NUM_THREADS=6 OMP_NUM_THREADS=6 python3 benchmarks/qwen3-asr/gdb_probe.
 ```
 
 主要logs (repo外 `../logs/`): `qwen-lp64-validated-comparison.log`, `qwen-5650ge-optimization-screen.log`, `qwen-thread-confirmation.log`, `qwen-runtime-int8-gdb.log`, `qwen-five-thread-confirmed-accuracy.log`, `qwen-ilp64-rejection.stderr`。public-only summary/CPU evidenceは `evidence/qwen3-asr/`。一次JSONL、各run command、SHA256、stderr、assembly全文は `../runtime/qwen3-asr/` に保持。
+
+### 発話gateの独立試作（本体未統合）
+
+`benchmarks/qwen3-asr/worker/README.md` と `evidence/qwen3-asr/worker/` に手順/失敗を保存。無音・人工noise8条件は空文字/ASR0、VAD-only bounded gainで日本語1clipの-40dB先頭取りこぼし改善。Rust11/Python4 tests成功。一方、VADによる認識境界変更は全30clipでJA CER **2.86%** / EN WER **6.29%** / TH CER **10.48%**（各endpoint別認識案はTH **14.27%**）。上のungated基準より英語/タイ語が悪く、**品質受入は未達**。短い真の相槌/実環境noiseは未検証。無音gateの成功をmeeting品質/production採用の根拠にしない。

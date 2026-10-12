@@ -1,0 +1,18 @@
+{
+  "binary_sha256": "40c9f83e73cc9b44845f81775957a1934863c7b72cdf726b1f0fcfc1e6087ab7",
+  "binary": "runtime/qwen3-asr/worker-target/release/qwen-speech-worker",
+  "engine_revision": "37c1e35be333945dc9b5771a6a33fe4b2064533f",
+  "silero_revision_prefix": "26a6460",
+  "dependencies": "benchmarks/qwen3-asr/worker/Cargo.lock",
+  "model_provenance": "parent model-1.7B provenance in evidence/qwen3-asr",
+  "precision": "decoder INT8, encoder/prefill F32",
+  "rustflags": "-C target-cpu=znver3",
+  "profile": "release opt-level 3, thin LTO, codegen-units 1",
+  "threads": 6,
+  "blas_abi": "LP64, guarded before model loading",
+  "max_input_seconds": 30,
+  "audio": "local mono 16kHz PCM16",
+  "quality_accepted": false,
+  "application_integrated": false,
+  "windows_verified": false
+}

@@ -4,8 +4,12 @@
 let blas = pkgs.openblas.override { inherit blas64; }; in
 pkgs.mkShell {
   packages = with pkgs; [ cargo rustc rustfmt gcc gnumake cmake pkg-config blas
-    python312 uv nodejs ffmpeg time git ];
+    python312 uv nodejs ffmpeg time git openssl ];
   LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib blas pkgs.zlib ];
+  # VAD worker uses a declared local ORT library, never ORT build-time downloads.
+  ORT_LIB_LOCATION = "${pkgs.onnxruntime}/lib";
+  ORT_DYLIB_PATH = "${pkgs.onnxruntime}/lib/libonnxruntime.so";
+  ORT_SKIP_DOWNLOAD = "1";
   OPENBLAS_NUM_THREADS = "6";
   OMP_NUM_THREADS = "6";
   MKL_NUM_THREADS = "6";

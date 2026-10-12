@@ -88,3 +88,13 @@ raw cargoでは先にllama-helperをbuildしてTauri binariesへstageする。�
 2. **公式browser loginとLuna人工文テストはユーザー報告で成功。** token内容/authorization URLをログやツール出力へ出さない。refresh・再ログイン・remote revocationの実運用検証は別工程。
 3. 未提供/未対応なら公開APIのstatus/code/request IDで診断。旧Codex/private APIへ戻さない。
 4. 公開日本語音声fixtureでWhisper等のCER/latency/RTFを測定し、Linux system audio、speaker identification、incremental/final reconciliation、recovery、note出力へ進む。実際の通話収録は別途許可を得る。
+
+## 独立1.7B INT8 worker / 発話ゲート試作
+
+ユーザーの「じゃあそれで」で幻覚対策試作を開始。`benchmarks/qwen3-asr/worker/` は既存Meetily ASRと別のLinux-only Rust JSONL worker。モデル常駐・LP64検査・30秒PCM16入力上限・request ID・単一実行・supervisor timeout/kill/restart・新規VAD/認識状態・原PCM時刻・未確定出力/要確認flagを実装。本体capture/provider/schema/既存lockは変更していない。
+
+公開音声/人工音だけで検証。Rust 11 + Python supervisor 4 tests成功。無音（発話前/後）、白色noise4水準、50/440Hz計8条件は空文字/ASR呼出0。VAD-only上限20倍gainで、-40dB化した日本語1clipの先頭取りこぼしは改善（ASRのPCMは原音のまま）。128001sampleの末尾を保持。ただし500ms未整列cropは検出されず、実際の短い相槌の保護は未検証。
+
+**品質受入未達、本体統合禁止。** VAD各区間を別認識した試作はJA CER 3.62% / EN WER 5.71% / TH CER 14.27%に悪化。30秒上限内で内部pauseを残す一つの認識windowに変更して全30clip再測定：**2.86% / 6.29% / 10.48%**。選択モデルのungated基準3.05% / 5.14% / 6.49%より英語/タイ語が悪い。無音対策と実音声精度は別であり、境界切出しの対策が次の課題。自然音でのVAD誤検出/追加「はい」は初期試作で観測しraw保持。300ms無音prime案は白色noiseを誤検出し撤回。失敗も保存した。
+
+手順/制約：`benchmarks/qwen3-asr/worker/README.md`。公開evidence：`docs/meeting-assistant/evidence/qwen3-asr/worker/`。主log：親`logs/qwen-worker-window-acceptance.log`。Windows/live draft/実環境noise/二時間運転/本体統合は未実施。次は発話有無gateと認識context境界を分けた比較を行い、短い真の発話・quiet speechの保護を同時に評価する。

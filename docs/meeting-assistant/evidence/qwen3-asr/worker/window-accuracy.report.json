@@ -1,0 +1,1777 @@
+{
+  "normalization": "CER: NFKC/lower-case/remove Unicode punctuation+whitespace, codepoints (not graphemes); English WER: punctuation removed, whitespace words",
+  "groups": [
+    {
+      "language": "Japanese",
+      "clips": 10,
+      "expected_clips": 10,
+      "complete": true,
+      "cer": 0.02857142857142857,
+      "character_errors": 15,
+      "reference_characters": 525,
+      "wer": null,
+      "word_errors": null,
+      "audio_seconds": 138.66,
+      "elapsed_seconds": 42.175254970999994,
+      "rtf": 0.3041630965743545
+    },
+    {
+      "language": "English",
+      "clips": 10,
+      "expected_clips": 10,
+      "complete": true,
+      "cer": 0.02338530066815145,
+      "character_errors": 21,
+      "reference_characters": 898,
+      "wer": 0.06285714285714286,
+      "word_errors": 11,
+      "audio_seconds": 79.99999999999999,
+      "elapsed_seconds": 32.043048776999996,
+      "rtf": 0.40053810971250003
+    },
+    {
+      "language": "Thai",
+      "clips": 10,
+      "expected_clips": 10,
+      "complete": true,
+      "cer": 0.10479041916167664,
+      "character_errors": 105,
+      "reference_characters": 1002,
+      "wer": null,
+      "word_errors": null,
+      "audio_seconds": 100.5,
+      "elapsed_seconds": 50.566823576,
+      "rtf": 0.5031524733930348
+    }
+  ],
+  "latency": [],
+  "load_seconds": null,
+  "peak_rss_mib": null,
+  "silence": [
+    {
+      "text": "",
+      "elapsed_seconds": 0,
+      "character_insertions": 0
+    }
+  ],
+  "rows": [
+    {
+      "id": "fleurs-ja_jp-validation-0-1519",
+      "language": "Japanese",
+      "audio_seconds": 11.1,
+      "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 3.768875111,
+      "request_seconds": 4.455131804003031,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 8960,
+            "start_sample": 0
+          },
+          {
+            "end_sample": 153440,
+            "start_sample": 24960
+          }
+        ],
+        "id": "corpus-0",
+        "inference_seconds": 3.768875111,
+        "load_seconds": 0.622683614,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 153440,
+            "inference_seconds": 3.560528929,
+            "kind": "window_final",
+            "raw_text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 27
+          }
+        ],
+        "status": "recognized",
+        "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+        "vad_gain": 1,
+        "vad_seconds": 0.06076608
+      },
+      "raw_text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+      "purpose": "accuracy",
+      "reference": "多くの場合 海外のギャップイヤーコースに入学することで 帰国後に実際に大学に進学しやすくなります",
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 46,
+      "word_errors": 3,
+      "reference_words": 3,
+      "rtf": 0.3395382982882883
+    },
+    {
+      "id": "fleurs-ja_jp-validation-1-1608",
+      "language": "Japanese",
+      "audio_seconds": 22.86,
+      "text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が2人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 5.118295235,
+      "request_seconds": 5.2208024129940895,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 251360,
+            "start_sample": 77280
+          },
+          {
+            "end_sample": 299360,
+            "start_sample": 252960
+          }
+        ],
+        "id": "corpus-1",
+        "inference_seconds": 5.118295235,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 299360,
+            "inference_seconds": 4.905515967,
+            "kind": "window_final",
+            "raw_text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が2人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 77280,
+            "text_tokens": 45
+          }
+        ],
+        "status": "recognized",
+        "text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が2人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+        "vad_gain": 1,
+        "vad_seconds": 0.097887908
+      },
+      "raw_text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が2人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+      "purpose": "accuracy",
+      "reference": "私は妹やその友人とはぐれてしまったのですが 途中で車椅子に乗った障害者が2人いて 飛び越えて車椅子を押している人たちがいました とアルマン ヴェルサーチさんは語っています",
+      "cer": 0.024691358024691357,
+      "character_errors": 2,
+      "reference_characters": 81,
+      "word_errors": 5,
+      "reference_words": 5,
+      "rtf": 0.22389742935258092
+    },
+    {
+      "id": "fleurs-ja_jp-validation-2-1607",
+      "language": "Japanese",
+      "audio_seconds": 7.98,
+      "text": "興味をそそられる村を三十分ほど散策するのは価値があります。",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 2.76105788,
+      "request_seconds": 2.80909198000154,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 93920,
+            "start_sample": 27840
+          }
+        ],
+        "id": "corpus-2",
+        "inference_seconds": 2.76105788,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 93920,
+            "inference_seconds": 2.552482418,
+            "kind": "window_final",
+            "raw_text": "興味をそそられる村を三十分ほど散策するのは価値があります。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 27840,
+            "text_tokens": 20
+          }
+        ],
+        "status": "recognized",
+        "text": "興味をそそられる村を三十分ほど散策するのは価値があります。",
+        "vad_gain": 1,
+        "vad_seconds": 0.046177507
+      },
+      "raw_text": "興味をそそられる村を三十分ほど散策するのは価値があります。",
+      "purpose": "accuracy",
+      "reference": "興味をそそられる村を30分ほど散策するのは価値があります",
+      "cer": 0.07142857142857142,
+      "character_errors": 2,
+      "reference_characters": 28,
+      "word_errors": 1,
+      "reference_words": 1,
+      "rtf": 0.3459972280701754
+    },
+    {
+      "id": "fleurs-ja_jp-validation-3-1634",
+      "language": "Japanese",
+      "audio_seconds": 12.12,
+      "text": "日本には約7000の島々があり、その最大は本州列島で世界で7番目に大きい島とされています。",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 3.628924755,
+      "request_seconds": 3.6912911299878033,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 155840,
+            "start_sample": 24000
+          }
+        ],
+        "id": "corpus-3",
+        "inference_seconds": 3.628924755,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 155840,
+            "inference_seconds": 3.419751507,
+            "kind": "window_final",
+            "raw_text": "日本には約7000の島々があり、その最大は本州列島で世界で7番目に大きい島とされています。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 24000,
+            "text_tokens": 30
+          }
+        ],
+        "status": "recognized",
+        "text": "日本には約7000の島々があり、その最大は本州列島で世界で7番目に大きい島とされています。",
+        "vad_gain": 1,
+        "vad_seconds": 0.059760729
+      },
+      "raw_text": "日本には約7000の島々があり、その最大は本州列島で世界で7番目に大きい島とされています。",
+      "purpose": "accuracy",
+      "reference": "日本には約7,000の島々があり その最大は本州列島で 世界で7番目に大きい島とされています",
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 43,
+      "word_errors": 3,
+      "reference_words": 3,
+      "rtf": 0.2994162339108911
+    },
+    {
+      "id": "fleurs-ja_jp-validation-4-1625",
+      "language": "Japanese",
+      "audio_seconds": 9.9,
+      "text": "全国から集まった有名な歌手たちがシュリー・シャムの足元にバジャン成果を捧げました。",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 3.464679945,
+      "request_seconds": 3.5181887759972597,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 9440,
+            "start_sample": 0
+          },
+          {
+            "end_sample": 128480,
+            "start_sample": 25440
+          }
+        ],
+        "id": "corpus-4",
+        "inference_seconds": 3.464679945,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 128480,
+            "inference_seconds": 3.251636932,
+            "kind": "window_final",
+            "raw_text": "全国から集まった有名な歌手たちがシュリー・シャムの足元にバジャン成果を捧げました。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 26
+          }
+        ],
+        "status": "recognized",
+        "text": "全国から集まった有名な歌手たちがシュリー・シャムの足元にバジャン成果を捧げました。",
+        "vad_gain": 1,
+        "vad_seconds": 0.051333171
+      },
+      "raw_text": "全国から集まった有名な歌手たちがシュリー・シャムの足元にバジャン成果を捧げました。",
+      "purpose": "accuracy",
+      "reference": "全国から集まった有名な歌手たちがシュリーシャムの足元にバジャン聖歌を捧げました",
+      "cer": 0.05128205128205128,
+      "character_errors": 2,
+      "reference_characters": 39,
+      "word_errors": 1,
+      "reference_words": 1,
+      "rtf": 0.3499676712121212
+    },
+    {
+      "id": "fleurs-ja_jp-validation-5-1572",
+      "language": "Japanese",
+      "audio_seconds": 9.12,
+      "text": "その後2時間のうちにさらに3つの爆弾が観潮施設の付近で爆発しました。",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 3.22030225,
+      "request_seconds": 3.2705474839895032,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 112160,
+            "start_sample": 25920
+          }
+        ],
+        "id": "corpus-5",
+        "inference_seconds": 3.22030225,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 112160,
+            "inference_seconds": 3.009111153,
+            "kind": "window_final",
+            "raw_text": "その後2時間のうちにさらに3つの爆弾が観潮施設の付近で爆発しました。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 25920,
+            "text_tokens": 26
+          }
+        ],
+        "status": "recognized",
+        "text": "その後2時間のうちにさらに3つの爆弾が観潮施設の付近で爆発しました。",
+        "vad_gain": 1,
+        "vad_seconds": 0.047999444
+      },
+      "raw_text": "その後2時間のうちにさらに3つの爆弾が観潮施設の付近で爆発しました。",
+      "purpose": "accuracy",
+      "reference": "その後2時間のうちに さらに3つの爆弾が官庁施設の付近で爆発しました",
+      "cer": 0.06060606060606061,
+      "character_errors": 2,
+      "reference_characters": 33,
+      "word_errors": 2,
+      "reference_words": 2,
+      "rtf": 0.35310331688596497
+    },
+    {
+      "id": "fleurs-ja_jp-validation-6-1604",
+      "language": "Japanese",
+      "audio_seconds": 29.52,
+      "text": "NSAとしてカーターを補佐し、1978年のキャンプデイビッド合意、1970年代後半の米中関係の正常化、1979年のイラン一人死事件に繋がったイラン革命、1979年のソビエトのアフガニスタン侵攻など、世界問題を外交的に処理した。",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 8.299710914,
+      "request_seconds": 8.428022239997517,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 146720,
+            "start_sample": 46560
+          },
+          {
+            "end_sample": 221120,
+            "start_sample": 147840
+          },
+          {
+            "end_sample": 370880,
+            "start_sample": 223200
+          },
+          {
+            "end_sample": 415520,
+            "start_sample": 373440
+          }
+        ],
+        "id": "corpus-6",
+        "inference_seconds": 8.299710914,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 415520,
+            "inference_seconds": 8.083525741,
+            "kind": "window_final",
+            "raw_text": "NSAとしてカーターを補佐し、1978年のキャンプデイビッド合意、1970年代後半の米中関係の正常化、1979年のイラン一人死事件に繋がったイラン革命、1979年のソビエトのアフガニスタン侵攻など、世界問題を外交的に処理した。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 46560,
+            "text_tokens": 88
+          }
+        ],
+        "status": "recognized",
+        "text": "NSAとしてカーターを補佐し、1978年のキャンプデイビッド合意、1970年代後半の米中関係の正常化、1979年のイラン一人死事件に繋がったイラン革命、1979年のソビエトのアフガニスタン侵攻など、世界問題を外交的に処理した。",
+        "vad_gain": 1,
+        "vad_seconds": 0.121936452
+      },
+      "raw_text": "NSAとしてカーターを補佐し、1978年のキャンプデイビッド合意、1970年代後半の米中関係の正常化、1979年のイラン一人死事件に繋がったイラン革命、1979年のソビエトのアフガニスタン侵攻など、世界問題を外交的に処理した。",
+      "purpose": "accuracy",
+      "reference": "nsaとしてカーターを補佐し 1978年のキャンプ デイビッド合意 1970年代後半の米中関係の正常化 1979年のイラン人質事件につながったイラン革命 1979年のソビエトのアフガニスタン侵攻など 世界問題を外交的に処理した",
+      "cer": 0.037383177570093455,
+      "character_errors": 4,
+      "reference_characters": 107,
+      "word_errors": 7,
+      "reference_words": 7,
+      "rtf": 0.2811555187669377
+    },
+    {
+      "id": "fleurs-ja_jp-validation-7-1607",
+      "language": "Japanese",
+      "audio_seconds": 10.14,
+      "text": "興味をそそられる村を30分ほど散策するのは価値があります。",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 2.859021849,
+      "request_seconds": 2.9149598609947134,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 110240,
+            "start_sample": 35520
+          }
+        ],
+        "id": "corpus-7",
+        "inference_seconds": 2.859021849,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 110240,
+            "inference_seconds": 2.648049485,
+            "kind": "window_final",
+            "raw_text": "興味をそそられる村を30分ほど散策するのは価値があります。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 35520,
+            "text_tokens": 20
+          }
+        ],
+        "status": "recognized",
+        "text": "興味をそそられる村を30分ほど散策するのは価値があります。",
+        "vad_gain": 1,
+        "vad_seconds": 0.053794333
+      },
+      "raw_text": "興味をそそられる村を30分ほど散策するのは価値があります。",
+      "purpose": "accuracy",
+      "reference": "興味をそそられる村を30分ほど散策するのは価値があります",
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 28,
+      "word_errors": 0,
+      "reference_words": 1,
+      "rtf": 0.2819548174556213
+    },
+    {
+      "id": "fleurs-ja_jp-validation-8-1575",
+      "language": "Japanese",
+      "audio_seconds": 14.82,
+      "text": "イスラエルはこの協定が結ばれれば10年間にわたる強国での駐留継続を要求するとしていますが、その一方でパレスチナ自治政府が同意している駐在期間は5年間のみです。",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 5.36072656,
+      "request_seconds": 5.434122284990735,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 211520,
+            "start_sample": 18240
+          }
+        ],
+        "id": "corpus-8",
+        "inference_seconds": 5.36072656,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 211520,
+            "inference_seconds": 5.150310178,
+            "kind": "window_final",
+            "raw_text": "イスラエルはこの協定が結ばれれば10年間にわたる強国での駐留継続を要求するとしていますが、その一方でパレスチナ自治政府が同意している駐在期間は5年間のみです。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 18240,
+            "text_tokens": 54
+          }
+        ],
+        "status": "recognized",
+        "text": "イスラエルはこの協定が結ばれれば10年間にわたる強国での駐留継続を要求するとしていますが、その一方でパレスチナ自治政府が同意している駐在期間は5年間のみです。",
+        "vad_gain": 1,
+        "vad_seconds": 0.070254389
+      },
+      "raw_text": "イスラエルはこの協定が結ばれれば10年間にわたる強国での駐留継続を要求するとしていますが、その一方でパレスチナ自治政府が同意している駐在期間は5年間のみです。",
+      "purpose": "accuracy",
+      "reference": "イスラエルは この協定が結ばれれば10年間にわたる峡谷での駐留継続を要求するとしていますが その一方でパレスチナ自治政府が同意している駐在期間は5年間のみです",
+      "cer": 0.025974025974025976,
+      "character_errors": 2,
+      "reference_characters": 77,
+      "word_errors": 3,
+      "reference_words": 3,
+      "rtf": 0.3617224399460189
+    },
+    {
+      "id": "fleurs-ja_jp-validation-9-1628",
+      "language": "Japanese",
+      "audio_seconds": 11.1,
+      "text": "手工現品は大量生産された類似品よりも歴史は浅いのですが、骨董品と定義されることもあります。",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 3.693660472,
+      "request_seconds": 3.7520465800043894,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 9440,
+            "start_sample": 0
+          },
+          {
+            "end_sample": 147200,
+            "start_sample": 31200
+          }
+        ],
+        "id": "corpus-9",
+        "inference_seconds": 3.693660472,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 147200,
+            "inference_seconds": 3.483994785,
+            "kind": "window_final",
+            "raw_text": "手工現品は大量生産された類似品よりも歴史は浅いのですが、骨董品と定義されることもあります。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 29
+          }
+        ],
+        "status": "recognized",
+        "text": "手工現品は大量生産された類似品よりも歴史は浅いのですが、骨董品と定義されることもあります。",
+        "vad_gain": 1,
+        "vad_seconds": 0.056002486
+      },
+      "raw_text": "手工現品は大量生産された類似品よりも歴史は浅いのですが、骨董品と定義されることもあります。",
+      "purpose": "accuracy",
+      "reference": "手工芸品は 大量生産された類似品よりも歴史は浅いのですが 骨董品と定義されることもあります",
+      "cer": 0.023255813953488372,
+      "character_errors": 1,
+      "reference_characters": 43,
+      "word_errors": 3,
+      "reference_words": 3,
+      "rtf": 0.3327622046846847
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548",
+      "language": "English",
+      "audio_seconds": 6.54,
+      "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 2.835524275,
+      "request_seconds": 2.876211727008922,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 98720,
+            "start_sample": 13920
+          }
+        ],
+        "id": "corpus-10",
+        "inference_seconds": 2.835524275,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 98720,
+            "inference_seconds": 2.6252191590000002,
+            "kind": "window_final",
+            "raw_text": "When you call someone who is thousands of miles away, you are using a satellite.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 13920,
+            "text_tokens": 17
+          }
+        ],
+        "status": "recognized",
+        "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+        "vad_gain": 4.233591556549072,
+        "vad_seconds": 0.039183965
+      },
+      "raw_text": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "purpose": "accuracy",
+      "reference": "when you call someone who is thousands of miles away you are using a satellite",
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 64,
+      "word_errors": 0,
+      "reference_words": 15,
+      "rtf": 0.43356640290519877
+    },
+    {
+      "id": "fleurs-en_us-validation-1-1620",
+      "language": "English",
+      "audio_seconds": 16.38,
+      "text": "Now widely available throughout the archipelago, Japanese cuisine's features an array of simply seasoned dishes. The predominant flavorings the Japanese favor being peanuts, chilies, sugar, especially Japanese coconut sugar, and various aromatic spices.",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 5.529263508,
+      "request_seconds": 5.6079932260036,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 251840,
+            "start_sample": 3360
+          }
+        ],
+        "id": "corpus-11",
+        "inference_seconds": 5.529263508,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 251840,
+            "inference_seconds": 5.318938146,
+            "kind": "window_final",
+            "raw_text": "Now widely available throughout the archipelago, Japanese cuisine's features an array of simply seasoned dishes. The predominant flavorings the Japanese favor being peanuts, chilies, sugar, especially Japanese coconut sugar, and various aromatic spices.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 3360,
+            "text_tokens": 45
+          }
+        ],
+        "status": "recognized",
+        "text": "Now widely available throughout the archipelago, Japanese cuisine's features an array of simply seasoned dishes. The predominant flavorings the Japanese favor being peanuts, chilies, sugar, especially Japanese coconut sugar, and various aromatic spices.",
+        "vad_gain": 8.274747848510742,
+        "vad_seconds": 0.075240916
+      },
+      "raw_text": "Now widely available throughout the archipelago, Japanese cuisine's features an array of simply seasoned dishes. The predominant flavorings the Japanese favor being peanuts, chilies, sugar, especially Japanese coconut sugar, and various aromatic spices.",
+      "purpose": "accuracy",
+      "reference": "now widely available throughout the archipelago javanese cuisine features an array of simply seasoned dishes the predominant flavorings the javanese favor being peanuts chillies sugar especially javanese coconut sugar and various aromatic spices",
+      "cer": 0.023474178403755867,
+      "character_errors": 5,
+      "reference_characters": 213,
+      "word_errors": 5,
+      "reference_words": 33,
+      "rtf": 0.3375618747252747
+    },
+    {
+      "id": "fleurs-en_us-validation-2-1510",
+      "language": "English",
+      "audio_seconds": 7.92,
+      "text": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 3.338396315,
+      "request_seconds": 3.3850578280107584,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 120800,
+            "start_sample": 8160
+          }
+        ],
+        "id": "corpus-12",
+        "inference_seconds": 3.338396315,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 120800,
+            "inference_seconds": 3.127891391,
+            "kind": "window_final",
+            "raw_text": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 8160,
+            "text_tokens": 23
+          }
+        ],
+        "status": "recognized",
+        "text": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+        "vad_gain": 1,
+        "vad_seconds": 0.044539715
+      },
+      "raw_text": "The U.N. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts.",
+      "purpose": "accuracy",
+      "reference": "the u.n. also hopes to finalize a fund to help countries affected by global warming to cope with the impacts",
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 87,
+      "word_errors": 0,
+      "reference_words": 20,
+      "rtf": 0.4215146862373737
+    },
+    {
+      "id": "fleurs-en_us-validation-3-1578",
+      "language": "English",
+      "audio_seconds": 4.14,
+      "text": "Then Lakasang took the lead in singing the pasions.",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 2.4953506770000002,
+      "request_seconds": 2.527530418999959,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 66240,
+            "start_sample": 1920
+          }
+        ],
+        "id": "corpus-13",
+        "inference_seconds": 2.4953506770000002,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 66240,
+            "inference_seconds": 2.282568976,
+            "kind": "window_final",
+            "raw_text": "Then Lakasang took the lead in singing the pasions.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 1920,
+            "text_tokens": 13
+          }
+        ],
+        "status": "recognized",
+        "text": "Then Lakasang took the lead in singing the pasions.",
+        "vad_gain": 17.617204666137695,
+        "vad_seconds": 0.031089663
+      },
+      "raw_text": "Then Lakasang took the lead in singing the pasions.",
+      "purpose": "accuracy",
+      "reference": "then lakkha singh took the lead in singing the bhajans",
+      "cer": 0.2,
+      "character_errors": 9,
+      "reference_characters": 45,
+      "word_errors": 3,
+      "reference_words": 10,
+      "rtf": 0.6027417094202899
+    },
+    {
+      "id": "fleurs-en_us-validation-4-1652",
+      "language": "English",
+      "audio_seconds": 4.92,
+      "text": "The major religion in Moldova is Orthodox Christian.",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 2.2575340649999998,
+      "request_seconds": 2.293658709997544,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 66560,
+            "start_sample": 7200
+          }
+        ],
+        "id": "corpus-14",
+        "inference_seconds": 2.2575340649999998,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 66560,
+            "inference_seconds": 2.034645978,
+            "kind": "window_final",
+            "raw_text": "The major religion in Moldova is Orthodox Christian.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 7200,
+            "text_tokens": 10
+          }
+        ],
+        "status": "recognized",
+        "text": "The major religion in Moldova is Orthodox Christian.",
+        "vad_gain": 13.266396522521973,
+        "vad_seconds": 0.034811651
+      },
+      "raw_text": "The major religion in Moldova is Orthodox Christian.",
+      "purpose": "accuracy",
+      "reference": "the major religion in moldova is orthodox christian",
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 44,
+      "word_errors": 0,
+      "reference_words": 8,
+      "rtf": 0.4588483871951219
+    },
+    {
+      "id": "fleurs-en_us-validation-5-1531",
+      "language": "English",
+      "audio_seconds": 4.44,
+      "text": "The East African Islands are in the Indian Ocean, off the eastern coast of Africa.",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 2.663154252,
+      "request_seconds": 2.697811460995581,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 71040,
+            "start_sample": 0
+          }
+        ],
+        "id": "corpus-15",
+        "inference_seconds": 2.663154252,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 71040,
+            "inference_seconds": 2.442767255,
+            "kind": "window_final",
+            "raw_text": "The East African Islands are in the Indian Ocean, off the eastern coast of Africa.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 17
+          }
+        ],
+        "status": "recognized",
+        "text": "The East African Islands are in the Indian Ocean, off the eastern coast of Africa.",
+        "vad_gain": 20,
+        "vad_seconds": 0.033421886
+      },
+      "raw_text": "The East African Islands are in the Indian Ocean, off the eastern coast of Africa.",
+      "purpose": "accuracy",
+      "reference": "the east african islands are in the indian ocean off the eastern coast of africa",
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 66,
+      "word_errors": 0,
+      "reference_words": 15,
+      "rtf": 0.5998095162162161
+    },
+    {
+      "id": "fleurs-en_us-validation-6-1528",
+      "language": "English",
+      "audio_seconds": 6.84,
+      "text": "Some festivals have special camping areas for families with young children.",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 2.656869387,
+      "request_seconds": 2.699296217993833,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 101600,
+            "start_sample": 8640
+          }
+        ],
+        "id": "corpus-16",
+        "inference_seconds": 2.656869387,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 101600,
+            "inference_seconds": 2.442396243,
+            "kind": "window_final",
+            "raw_text": "Some festivals have special camping areas for families with young children.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 8640,
+            "text_tokens": 12
+          }
+        ],
+        "status": "recognized",
+        "text": "Some festivals have special camping areas for families with young children.",
+        "vad_gain": 1,
+        "vad_seconds": 0.040794431
+      },
+      "raw_text": "Some festivals have special camping areas for families with young children.",
+      "purpose": "accuracy",
+      "reference": "some festivals have special camping areas for families with young children",
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 64,
+      "word_errors": 0,
+      "reference_words": 11,
+      "rtf": 0.3884311969298246
+    },
+    {
+      "id": "fleurs-en_us-validation-7-1595",
+      "language": "English",
+      "audio_seconds": 10.02,
+      "text": "The Tibetan Buddhism is based on the teachings of Buddha, but were extended by the Mayana Path of Love and by a lot of techniques from Indian Yoga.",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 3.846124976,
+      "request_seconds": 3.9022886770108016,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 154880,
+            "start_sample": 4320
+          }
+        ],
+        "id": "corpus-17",
+        "inference_seconds": 3.846124976,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 154880,
+            "inference_seconds": 3.62637536,
+            "kind": "window_final",
+            "raw_text": "The Tibetan Buddhism is based on the teachings of Buddha, but were extended by the Mayana Path of Love and by a lot of techniques from Indian Yoga.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 4320,
+            "text_tokens": 31
+          }
+        ],
+        "status": "recognized",
+        "text": "The Tibetan Buddhism is based on the teachings of Buddha, but were extended by the Mayana Path of Love and by a lot of techniques from Indian Yoga.",
+        "vad_gain": 16.14187240600586,
+        "vad_seconds": 0.053652376
+      },
+      "raw_text": "The Tibetan Buddhism is based on the teachings of Buddha, but were extended by the Mayana Path of Love and by a lot of techniques from Indian Yoga.",
+      "purpose": "accuracy",
+      "reference": "the tibetan buddhism is based on the teachings of buddha but were extended by the mahayana path of love and by a lot of techniques from indian yoga",
+      "cer": 0.016666666666666666,
+      "character_errors": 2,
+      "reference_characters": 120,
+      "word_errors": 1,
+      "reference_words": 28,
+      "rtf": 0.383844807984032
+    },
+    {
+      "id": "fleurs-en_us-validation-8-1559",
+      "language": "English",
+      "audio_seconds": 9.32,
+      "text": "Pronunciation is relatively easy in Italian since most words are pronounced exactly how they are written.",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 3.200404951,
+      "request_seconds": 3.2528636869974434,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 140480,
+            "start_sample": 0
+          }
+        ],
+        "id": "corpus-18",
+        "inference_seconds": 3.200404951,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 140480,
+            "inference_seconds": 2.986032607,
+            "kind": "window_final",
+            "raw_text": "Pronunciation is relatively easy in Italian since most words are pronounced exactly how they are written.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 19
+          }
+        ],
+        "status": "recognized",
+        "text": "Pronunciation is relatively easy in Italian since most words are pronounced exactly how they are written.",
+        "vad_gain": 1,
+        "vad_seconds": 0.050409098
+      },
+      "raw_text": "Pronunciation is relatively easy in Italian since most words are pronounced exactly how they are written.",
+      "purpose": "accuracy",
+      "reference": "pronunciation is relatively easy in italian since most words are pronounced exactly how they are written",
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 89,
+      "word_errors": 0,
+      "reference_words": 16,
+      "rtf": 0.3433910891630901
+    },
+    {
+      "id": "fleurs-en_us-validation-9-1633",
+      "language": "English",
+      "audio_seconds": 9.48,
+      "text": "In this dynamic transport shuttle, everyone is show connected with in supporting a transport system based on private cars.",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 3.220426371,
+      "request_seconds": 3.2703861220070394,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 62720,
+            "start_sample": 8640
+          },
+          {
+            "end_sample": 138560,
+            "start_sample": 68160
+          }
+        ],
+        "id": "corpus-19",
+        "inference_seconds": 3.220426371,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 138560,
+            "inference_seconds": 3.008981704,
+            "kind": "window_final",
+            "raw_text": "In this dynamic transport shuttle, everyone is show connected with in supporting a transport system based on private cars.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 8640,
+            "text_tokens": 21
+          }
+        ],
+        "status": "recognized",
+        "text": "In this dynamic transport shuttle, everyone is show connected with in supporting a transport system based on private cars.",
+        "vad_gain": 11.070270538330078,
+        "vad_seconds": 0.047823392
+      },
+      "raw_text": "In this dynamic transport shuttle, everyone is show connected with in supporting a transport system based on private cars.",
+      "purpose": "accuracy",
+      "reference": "in this dynamic transport shuttle everyone is somehow connected with and supporting a transport system based on private cars",
+      "cer": 0.04716981132075472,
+      "character_errors": 5,
+      "reference_characters": 106,
+      "word_errors": 2,
+      "reference_words": 19,
+      "rtf": 0.3397074231012658
+    },
+    {
+      "id": "fleurs-th_th-validation-0-1548",
+      "language": "Thai",
+      "audio_seconds": 8.22,
+      "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 4.300232177,
+      "request_seconds": 4.347671494004317,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 63200,
+            "start_sample": 16320
+          },
+          {
+            "end_sample": 131520,
+            "start_sample": 105120
+          }
+        ],
+        "id": "corpus-20",
+        "inference_seconds": 4.300232177,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 131520,
+            "inference_seconds": 4.084972215,
+            "kind": "window_final",
+            "raw_text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 16320,
+            "text_tokens": 46
+          }
+        ],
+        "status": "recognized",
+        "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+        "vad_gain": 3.962273359298706,
+        "vad_seconds": 0.045590352
+      },
+      "raw_text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "purpose": "accuracy",
+      "reference": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 86,
+      "word_errors": 0,
+      "reference_words": 2,
+      "rtf": 0.5231426006082724
+    },
+    {
+      "id": "fleurs-th_th-validation-1-1559",
+      "language": "Thai",
+      "audio_seconds": 7.8,
+      "text": "การออกเสียงในภาษาอิตาลีนั้นง่ายพอสมควรเพราะคำส่วนใหญ่จะออกเสียงตรงตามวิธีการเขียน",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 4.042958351,
+      "request_seconds": 4.0883202709956095,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 124800,
+            "start_sample": 3840
+          }
+        ],
+        "id": "corpus-21",
+        "inference_seconds": 4.042958351,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 124800,
+            "inference_seconds": 3.831861837,
+            "kind": "window_final",
+            "raw_text": "การออกเสียงในภาษาอิตาลีนั้นง่ายพอสมควรเพราะคำส่วนใหญ่จะออกเสียงตรงตามวิธีการเขียน",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 3840,
+            "text_tokens": 39
+          }
+        ],
+        "status": "recognized",
+        "text": "การออกเสียงในภาษาอิตาลีนั้นง่ายพอสมควรเพราะคำส่วนใหญ่จะออกเสียงตรงตามวิธีการเขียน",
+        "vad_gain": 11.070270538330078,
+        "vad_seconds": 0.043625328
+      },
+      "raw_text": "การออกเสียงในภาษาอิตาลีนั้นง่ายพอสมควรเพราะคำส่วนใหญ่จะออกเสียงตรงตามวิธีการเขียน",
+      "purpose": "accuracy",
+      "reference": "การออกเสียงในภาษาอิตาลีนั้นง่ายพอสมควรเพราะคำส่วนใหญ่จะออกเสียงตรงตามวิธีการเขียน",
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 82,
+      "word_errors": 0,
+      "reference_words": 1,
+      "rtf": 0.5183279937179488
+    },
+    {
+      "id": "fleurs-th_th-validation-2-1639",
+      "language": "Thai",
+      "audio_seconds": 12.66,
+      "text": "เนื่องจากนักเรียนมักเป็นกลุ่มผู้อ่านที่สำคัญที่สุด ผู้เขียนบล็อกจึงเริ่มที่จะปรับปรุงการเขียนของตนอย่างหนักเพื่อที่จะหลีกเลี่ยงการถูกวิพากวิจาร",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 6.554510733,
+      "request_seconds": 6.618784071994014,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 89600,
+            "start_sample": 8640
+          },
+          {
+            "end_sample": 191840,
+            "start_sample": 91680
+          }
+        ],
+        "id": "corpus-22",
+        "inference_seconds": 6.554510733,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 191840,
+            "inference_seconds": 6.339874877,
+            "kind": "window_final",
+            "raw_text": "เนื่องจากนักเรียนมักเป็นกลุ่มผู้อ่านที่สำคัญที่สุด ผู้เขียนบล็อกจึงเริ่มที่จะปรับปรุงการเขียนของตนอย่างหนักเพื่อที่จะหลีกเลี่ยงการถูกวิพากวิจาร",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 8640,
+            "text_tokens": 83
+          }
+        ],
+        "status": "recognized",
+        "text": "เนื่องจากนักเรียนมักเป็นกลุ่มผู้อ่านที่สำคัญที่สุด ผู้เขียนบล็อกจึงเริ่มที่จะปรับปรุงการเขียนของตนอย่างหนักเพื่อที่จะหลีกเลี่ยงการถูกวิพากวิจาร",
+        "vad_gain": 1.3512578010559082,
+        "vad_seconds": 0.061518188
+      },
+      "raw_text": "เนื่องจากนักเรียนมักเป็นกลุ่มผู้อ่านที่สำคัญที่สุด ผู้เขียนบล็อกจึงเริ่มที่จะปรับปรุงการเขียนของตนอย่างหนักเพื่อที่จะหลีกเลี่ยงการถูกวิพากวิจาร",
+      "purpose": "accuracy",
+      "reference": "เนื่องจากนักเรียนมักเป็นกลุ่มผู้อ่านที่สำคัญที่สุด ผู้เขียนบล็อกจึงเริ่มที่จะปรับปรุงการเขียนของตนอย่างหนักเพื่อที่จะหลีกเลี่ยงการถูกวิพากษ์วิจารณ์",
+      "cer": 0.027210884353741496,
+      "character_errors": 4,
+      "reference_characters": 147,
+      "word_errors": 1,
+      "reference_words": 2,
+      "rtf": 0.5177338651658767
+    },
+    {
+      "id": "fleurs-th_th-validation-3-1571",
+      "language": "Thai",
+      "audio_seconds": 12.06,
+      "text": "นอกจากนี้ชาวอาหรับยังนำศาสนาอิสลามไปสู่ดินแดนต่างๆ และได้รับความนิยมอย่างมากในโคโมโรสและมายอต",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 4.682227404,
+      "request_seconds": 4.745260682000662,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 86240,
+            "start_sample": 10560
+          },
+          {
+            "end_sample": 125600,
+            "start_sample": 92640
+          },
+          {
+            "end_sample": 144800,
+            "start_sample": 130080
+          },
+          {
+            "end_sample": 155360,
+            "start_sample": 144960
+          },
+          {
+            "end_sample": 177440,
+            "start_sample": 156480
+          }
+        ],
+        "id": "corpus-23",
+        "inference_seconds": 4.682227404,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 177440,
+            "inference_seconds": 4.468032966,
+            "kind": "window_final",
+            "raw_text": "นอกจากนี้ชาวอาหรับยังนำศาสนาอิสลามไปสู่ดินแดนต่างๆ และได้รับความนิยมอย่างมากในโคโมโรสและมายอต",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 10560,
+            "text_tokens": 47
+          }
+        ],
+        "status": "recognized",
+        "text": "นอกจากนี้ชาวอาหรับยังนำศาสนาอิสลามไปสู่ดินแดนต่างๆ และได้รับความนิยมอย่างมากในโคโมโรสและมายอต",
+        "vad_gain": 2.112701416015625,
+        "vad_seconds": 0.060496442
+      },
+      "raw_text": "นอกจากนี้ชาวอาหรับยังนำศาสนาอิสลามไปสู่ดินแดนต่างๆ และได้รับความนิยมอย่างมากในโคโมโรสและมายอต",
+      "purpose": "accuracy",
+      "reference": "นอกจากนี้ ชาวอาหรับยังนำศาสนาอิสลามไปสู่ดินแดนต่าง ๆ และได้รับความนิยมอย่างมากในคอโมโรสและมายอต",
+      "cer": 0.021505376344086023,
+      "character_errors": 2,
+      "reference_characters": 93,
+      "word_errors": 4,
+      "reference_words": 4,
+      "rtf": 0.38824439502487557
+    },
+    {
+      "id": "fleurs-th_th-validation-4-1634",
+      "language": "Thai",
+      "audio_seconds": 12.24,
+      "text": "ญี่ปุ่นมีเกาะเกือบเจ็ดพันเกาะ ฮอนชูคือเกาะที่ใหญ่ที่สุด ส่งผลให้ญี่ปุ่นเป็นเกาะที่ใหญ่ที่สุดอันดับเจ็ดของโลก",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 5.353530804,
+      "request_seconds": 5.4189670299965655,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 46400,
+            "start_sample": 4800
+          },
+          {
+            "end_sample": 96800,
+            "start_sample": 52800
+          },
+          {
+            "end_sample": 171680,
+            "start_sample": 98880
+          }
+        ],
+        "id": "corpus-24",
+        "inference_seconds": 5.353530804,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 171680,
+            "inference_seconds": 5.142039098,
+            "kind": "window_final",
+            "raw_text": "ญี่ปุ่นมีเกาะเกือบเจ็ดพันเกาะ ฮอนชูคือเกาะที่ใหญ่ที่สุด ส่งผลให้ญี่ปุ่นเป็นเกาะที่ใหญ่ที่สุดอันดับเจ็ดของโลก",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 4800,
+            "text_tokens": 62
+          }
+        ],
+        "status": "recognized",
+        "text": "ญี่ปุ่นมีเกาะเกือบเจ็ดพันเกาะ ฮอนชูคือเกาะที่ใหญ่ที่สุด ส่งผลให้ญี่ปุ่นเป็นเกาะที่ใหญ่ที่สุดอันดับเจ็ดของโลก",
+        "vad_gain": 3.353940725326538,
+        "vad_seconds": 0.062865778
+      },
+      "raw_text": "ญี่ปุ่นมีเกาะเกือบเจ็ดพันเกาะ ฮอนชูคือเกาะที่ใหญ่ที่สุด ส่งผลให้ญี่ปุ่นเป็นเกาะที่ใหญ่ที่สุดอันดับเจ็ดของโลก",
+      "purpose": "accuracy",
+      "reference": "ญี่ปุ่นมีเกาะเกือบ 7,000 เกาะ ฮอนชูคือเกาะที่ใหญ่ที่สุด ส่งผลให้ญี่ปุ่นเป็นเกาะที่ใหญ่ที่สุดอันดับ 7 ของโลก!",
+      "cer": 0.11,
+      "character_errors": 11,
+      "reference_characters": 100,
+      "word_errors": 6,
+      "reference_words": 7,
+      "rtf": 0.43737996764705883
+    },
+    {
+      "id": "fleurs-th_th-validation-5-1529",
+      "language": "Thai",
+      "audio_seconds": 12.12,
+      "text": "ก่อนหน้านี้เจมี่ซิมิโนฟประธานบริษัทของริงกล่าวว่าบริษัทได้เริ่มต้นขึ้นเมื่อตอนที่เขาไม่สามารถได้ยินเสียงกริ่งหน้าประตูของเขาออกจากจากห้องทำงานในโรงรถได้",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 6.334768535,
+      "request_seconds": 6.396057995996671,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 193920,
+            "start_sample": 2880
+          }
+        ],
+        "id": "corpus-25",
+        "inference_seconds": 6.334768535,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 193920,
+            "inference_seconds": 6.120752532,
+            "kind": "window_final",
+            "raw_text": "ก่อนหน้านี้เจมี่ซิมิโนฟประธานบริษัทของริงกล่าวว่าบริษัทได้เริ่มต้นขึ้นเมื่อตอนที่เขาไม่สามารถได้ยินเสียงกริ่งหน้าประตูของเขาออกจากจากห้องทำงานในโรงรถได้",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 2880,
+            "text_tokens": 79
+          }
+        ],
+        "status": "recognized",
+        "text": "ก่อนหน้านี้เจมี่ซิมิโนฟประธานบริษัทของริงกล่าวว่าบริษัทได้เริ่มต้นขึ้นเมื่อตอนที่เขาไม่สามารถได้ยินเสียงกริ่งหน้าประตูของเขาออกจากจากห้องทำงานในโรงรถได้",
+        "vad_gain": 1,
+        "vad_seconds": 0.058661773
+      },
+      "raw_text": "ก่อนหน้านี้เจมี่ซิมิโนฟประธานบริษัทของริงกล่าวว่าบริษัทได้เริ่มต้นขึ้นเมื่อตอนที่เขาไม่สามารถได้ยินเสียงกริ่งหน้าประตูของเขาออกจากจากห้องทำงานในโรงรถได้",
+      "purpose": "accuracy",
+      "reference": "ก่อนหน้านี้ jamie siminoff ประธานบริหารของ ring กล่าวว่า บริษัทได้เริ่มต้นขึ้นเมื่อตอนที่เขาไม่สามารถได้ยินเสียงกริ่งหน้าประตูของเขาจากห้องทำงานในโรงรถได้",
+      "cer": 0.174496644295302,
+      "character_errors": 26,
+      "reference_characters": 149,
+      "word_errors": 7,
+      "reference_words": 7,
+      "rtf": 0.5226706712046205
+    },
+    {
+      "id": "fleurs-th_th-validation-6-1593",
+      "language": "Thai",
+      "audio_seconds": 10.2,
+      "text": "ในที่สุดล้อเหล็กก็มาแทนที่ล้อไม้และในปีหนึ่งพันเจ็ดร้อยหกสิบเจ็ดก็มีการใช้รางเหล็กล้วนเป็นครั้งแรก",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 5.083579298,
+      "request_seconds": 5.137447285000235,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 145760,
+            "start_sample": 8160
+          }
+        ],
+        "id": "corpus-26",
+        "inference_seconds": 5.083579298,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 145760,
+            "inference_seconds": 4.870440571,
+            "kind": "window_final",
+            "raw_text": "ในที่สุดล้อเหล็กก็มาแทนที่ล้อไม้และในปีหนึ่งพันเจ็ดร้อยหกสิบเจ็ดก็มีการใช้รางเหล็กล้วนเป็นครั้งแรก",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 8160,
+            "text_tokens": 60
+          }
+        ],
+        "status": "recognized",
+        "text": "ในที่สุดล้อเหล็กก็มาแทนที่ล้อไม้และในปีหนึ่งพันเจ็ดร้อยหกสิบเจ็ดก็มีการใช้รางเหล็กล้วนเป็นครั้งแรก",
+        "vad_gain": 3.0062384605407715,
+        "vad_seconds": 0.051603275
+      },
+      "raw_text": "ในที่สุดล้อเหล็กก็มาแทนที่ล้อไม้และในปีหนึ่งพันเจ็ดร้อยหกสิบเจ็ดก็มีการใช้รางเหล็กล้วนเป็นครั้งแรก",
+      "purpose": "accuracy",
+      "reference": "ในที่สุดล้อเหล็กก็มาแทนที่ล้อไม้ และในปี 1767 ก็มีการใช้รางเหล็กล้วนเป็นครั้งแรก",
+      "cer": 0.3246753246753247,
+      "character_errors": 25,
+      "reference_characters": 77,
+      "word_errors": 4,
+      "reference_words": 4,
+      "rtf": 0.498390127254902
+    },
+    {
+      "id": "fleurs-th_th-validation-7-1586",
+      "language": "Thai",
+      "audio_seconds": 13.38,
+      "text": "ครั้งแรกของเธอคือการแข่งแบบสลาลมซึ่งเธอไปไม่ถึงเส้นชัยในการลงสนามครั้งแรกผู้เข้าแข่งขันสามสิบหกคนจากหนึ่งร้อยสิบหกคนมีผลการแข่งขันเช่นเดียวกันในการแข่งขันครั้งนั้น",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 7.081076383,
+      "request_seconds": 7.156556161993649,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 202400,
+            "start_sample": 10080
+          }
+        ],
+        "id": "corpus-27",
+        "inference_seconds": 7.081076383,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 202400,
+            "inference_seconds": 6.861933226,
+            "kind": "window_final",
+            "raw_text": "ครั้งแรกของเธอคือการแข่งแบบสลาลมซึ่งเธอไปไม่ถึงเส้นชัยในการลงสนามครั้งแรกผู้เข้าแข่งขันสามสิบหกคนจากหนึ่งร้อยสิบหกคนมีผลการแข่งขันเช่นเดียวกันในการแข่งขันครั้งนั้น",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 10080,
+            "text_tokens": 93
+          }
+        ],
+        "status": "recognized",
+        "text": "ครั้งแรกของเธอคือการแข่งแบบสลาลมซึ่งเธอไปไม่ถึงเส้นชัยในการลงสนามครั้งแรกผู้เข้าแข่งขันสามสิบหกคนจากหนึ่งร้อยสิบหกคนมีผลการแข่งขันเช่นเดียวกันในการแข่งขันครั้งนั้น",
+        "vad_gain": 1,
+        "vad_seconds": 0.072652827
+      },
+      "raw_text": "ครั้งแรกของเธอคือการแข่งแบบสลาลมซึ่งเธอไปไม่ถึงเส้นชัยในการลงสนามครั้งแรกผู้เข้าแข่งขันสามสิบหกคนจากหนึ่งร้อยสิบหกคนมีผลการแข่งขันเช่นเดียวกันในการแข่งขันครั้งนั้น",
+      "purpose": "accuracy",
+      "reference": "ครั้งแรกของเธอคือการแข่งแบบสลาลม ซึ่งเธอไปไม่ถึงเส้นชัยในการลงสนามครั้งแรก ผู้เข้าแข่งขัน 36 คนจาก 116 คนมีผลการแข่งขันเช่นเดียวกันในการแข่งขันครั้งนั้น",
+      "cer": 0.1506849315068493,
+      "character_errors": 22,
+      "reference_characters": 146,
+      "word_errors": 7,
+      "reference_words": 7,
+      "rtf": 0.5292284292227205
+    },
+    {
+      "id": "fleurs-th_th-validation-8-1561",
+      "language": "Thai",
+      "audio_seconds": 8.1,
+      "text": "ในเขตส่วนใหญ่มีรถโดยสารจะเป็นนิสโคลสเตอร์ขนาดเล็กซึ่งสะดวกสบายและมั่นคงคอยให้บริการ",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 4.055438013,
+      "request_seconds": 4.101947307004593,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 123200,
+            "start_sample": 7200
+          }
+        ],
+        "id": "corpus-28",
+        "inference_seconds": 4.055438013,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 123200,
+            "inference_seconds": 3.843151914,
+            "kind": "window_final",
+            "raw_text": "ในเขตส่วนใหญ่มีรถโดยสารจะเป็นนิสโคลสเตอร์ขนาดเล็กซึ่งสะดวกสบายและมั่นคงคอยให้บริการ",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 7200,
+            "text_tokens": 42
+          }
+        ],
+        "status": "recognized",
+        "text": "ในเขตส่วนใหญ่มีรถโดยสารจะเป็นนิสโคลสเตอร์ขนาดเล็กซึ่งสะดวกสบายและมั่นคงคอยให้บริการ",
+        "vad_gain": 1.2926232814788818,
+        "vad_seconds": 0.044691111
+      },
+      "raw_text": "ในเขตส่วนใหญ่มีรถโดยสารจะเป็นนิสโคลสเตอร์ขนาดเล็กซึ่งสะดวกสบายและมั่นคงคอยให้บริการ",
+      "purpose": "accuracy",
+      "reference": "ในเขตส่วนใหญ่มีรถโดยสารแจแปนิสโคสเตอร์ขนาดเล็กซึ่งสะดวกสบายและมั่นคงคอยให้บริการ",
+      "cer": 0.075,
+      "character_errors": 6,
+      "reference_characters": 80,
+      "word_errors": 1,
+      "reference_words": 1,
+      "rtf": 0.5006713596296296
+    },
+    {
+      "id": "fleurs-th_th-validation-9-1515",
+      "language": "Thai",
+      "audio_seconds": 3.72,
+      "text": "นี่เป็น CEP ครั้งที่ห้าของมัลเทลลี่ในรอบสี่ปี",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 3.078501878,
+      "request_seconds": 3.108830972996657,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 59520,
+            "start_sample": 0
+          }
+        ],
+        "id": "corpus-29",
+        "inference_seconds": 3.078501878,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 59520,
+            "inference_seconds": 2.8634701209999998,
+            "kind": "window_final",
+            "raw_text": "นี่เป็น CEP ครั้งที่ห้าของมัลเทลลี่ในรอบสี่ปี",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 29
+          }
+        ],
+        "status": "recognized",
+        "text": "นี่เป็น CEP ครั้งที่ห้าของมัลเทลลี่ในรอบสี่ปี",
+        "vad_gain": 1.2100443840026855,
+        "vad_seconds": 0.029120342
+      },
+      "raw_text": "นี่เป็น CEP ครั้งที่ห้าของมัลเทลลี่ในรอบสี่ปี",
+      "purpose": "accuracy",
+      "reference": "นี่เป็น cep ครั้งที่ห้าของ martelly ในรอบสี่ปี",
+      "cer": 0.21428571428571427,
+      "character_errors": 9,
+      "reference_characters": 42,
+      "word_errors": 3,
+      "reference_words": 5,
+      "rtf": 0.8275542682795698
+    },
+    {
+      "id": "silence-5s",
+      "language": "Japanese",
+      "audio_seconds": 5,
+      "text": "",
+      "status": "ok",
+      "rep": 0,
+      "elapsed_seconds": 0,
+      "request_seconds": 0.03581357799703255,
+      "engine": "vad-gated-native-rust",
+      "mode": "window-final",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "corpus-30",
+        "model_loaded": true,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 1,
+        "vad_seconds": 0.034494954
+      },
+      "raw_text": "",
+      "purpose": "silence",
+      "reference": "",
+      "cer": null,
+      "character_errors": 0,
+      "reference_characters": 0,
+      "word_errors": 0,
+      "reference_words": 0,
+      "rtf": 0
+    }
+  ]
+}
