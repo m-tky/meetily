@@ -6,6 +6,7 @@ All transcripts/references here are public FLEURS reading fixtures or synthetic 
 - `*-t6-accuracy-r1.jsonl`: all 30 speech + direct silence raw measured outputs. Model load / warm-up excluded from inference duration; process max RSS includes both.
 - `native-*-t5-accuracy.report.json`: additional 5-thread complete scorer reports. Thread count changed some recognition output; do not equate faster with identical quality.
 - `fixture-manifest.json`: fixed public references, IDs, durations, SHA256, language and timing-only fixture metadata. Google FLEURS row API did not expose the dataset Git revision; individual downloaded bytes are hashed. Thai validation was extracted from direct Parquet after the API exceeded its scan limit.
+- Display-only trailing whitespace from GDB/objdump is trimmed in committed text; original diagnostic output is retained outside Git. Instruction bytes/text and measured results are unchanged.
 - `cpu-probe.json`, `matvec_int8.asm`: actual LP64 library/header integer width, hardware/topology, library dispatch, flags and AVX2 integer-dot disassembly.
 - `gdb-runtime.txt`: actual Japanese ASR warm-up hits `vpmaddwd` in the INT8 matvec function; one instruction step and active thread snapshot. Diagnostic terminated before completion; NOT timing/accuracy evidence.
 - `qwen-ilp64-rejection.stderr`: controlled negative test of old incompatible library. Refuses before model load.

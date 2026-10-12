@@ -14,7 +14,7 @@ qwen_asr::kernels::avx::matvec_int8 + 226 in section .text of /home/user/Code/me
 #3  0x000055555558c9a4 in <std::thread::lifecycle::spawn_unchecked<qwen_asr::kernels::pool::ensure_workers::{closure#0}, ()>::{closure#1} as core::ops::function::FnOnce<()>>::call_once::{shim:vtable#0} ()
 #4  0x00005555556145da in <std::sys::thread::unix::Thread>::new::thread_start ()
 #5  0x00007ffff5c9ce73 in start_thread () from /nix/store/lm3pknxi0ipypy3lxh1wmm8wvvavdwrn-glibc-2.42-84/lib/libc.so.6
-  Id   Target Id                                            Frame 
+  Id   Target Id                                            Frame
   1    Thread 0x7ffff5e22940 (LWP 424606) "qwen-native-ben" 0x00005555555cb9e2 in qwen_asr::kernels::avx::matvec_int8 ()
   2    Thread 0x7fffc57ff6c0 (LWP 424609) "qwen-worker-1"   0x00005555555cb9e2 in qwen_asr::kernels::avx::matvec_int8 ()
 * 3    Thread 0x7fffc55fe6c0 (LWP 424610) "qwen-worker-2"   0x00005555555cb9e2 in qwen_asr::kernels::avx::matvec_int8 ()

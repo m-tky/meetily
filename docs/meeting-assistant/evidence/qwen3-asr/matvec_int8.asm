@@ -45,7 +45,7 @@ Disassembly of section .text:
    7798b:	c5 e1 ef db          	vpxor  %xmm3,%xmm3,%xmm3
    7798f:	c5 e9 ef d2          	vpxor  %xmm2,%xmm2,%xmm2
    77993:	66 66 66 66 2e 0f 1f 	data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
-   7799a:	84 00 00 00 00 00 
+   7799a:	84 00 00 00 00 00
    779a0:	c4 a2 7d 20 34 1a    	vpmovsxbw (%rdx,%r11,1),%ymm6
    779a6:	c4 a2 7d 20 7c 1d e0 	vpmovsxbw -0x20(%rbp,%r11,1),%ymm7
    779ad:	c4 02 7d 20 5c 1c e0 	vpmovsxbw -0x20(%r12,%r11,1),%ymm11
@@ -84,7 +84,7 @@ Disassembly of section .text:
    77a50:	4d 39 eb             	cmp    %r13,%r11
    77a53:	77 63                	ja     77ab8 <qwen_asr::kernels::avx::matvec_int8+0x1b8>
    77a55:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
-   77a5c:	00 00 00 00 
+   77a5c:	00 00 00 00
    77a60:	c4 e2 7d 20 34 1a    	vpmovsxbw (%rdx,%rbx,1),%ymm6
    77a66:	c4 e2 7d 20 3c 19    	vpmovsxbw (%rcx,%rbx,1),%ymm7
    77a6c:	c4 62 7d 20 0c 18    	vpmovsxbw (%rax,%rbx,1),%ymm9
@@ -156,7 +156,7 @@ Disassembly of section .text:
    77b89:	49 83 ff fc          	cmp    $0xfffffffffffffffc,%r15
    77b8d:	0f 87 05 01 00 00    	ja     77c98 <qwen_asr::kernels::avx::matvec_int8+0x398>
    77b93:	66 66 66 66 2e 0f 1f 	data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
-   77b9a:	84 00 00 00 00 00 
+   77b9a:	84 00 00 00 00 00
    77ba0:	44 0f be 04 1a       	movsbl (%rdx,%rbx,1),%r8d
    77ba5:	0f b6 74 19 03       	movzbl 0x3(%rcx,%rbx,1),%esi
    77baa:	c4 c1 02 2a e0       	vcvtsi2ss %r8d,%xmm15,%xmm4
@@ -176,7 +176,7 @@ Disassembly of section .text:
    77bef:	c4 e2 79 18 e4       	vbroadcastss %xmm4,%xmm4
    77bf4:	c4 c1 79 6e e8       	vmovd  %r8d,%xmm5
    77bf9:	c4 e3 51 20 6c 18 01 	vpinsrb $0x1,0x1(%rax,%rbx,1),%xmm5,%xmm5
-   77c00:	01 
+   77c00:	01
    77c01:	44 0f be 44 1a 02    	movsbl 0x2(%rdx,%rbx,1),%r8d
    77c07:	c4 e2 79 21 ed       	vpmovsxbd %xmm5,%xmm5
    77c0c:	c5 f8 5b ed          	vcvtdq2ps %xmm5,%xmm5
@@ -189,14 +189,14 @@ Disassembly of section .text:
    77c2b:	c4 e2 79 18 e4       	vbroadcastss %xmm4,%xmm4
    77c30:	c4 c1 79 6e e8       	vmovd  %r8d,%xmm5
    77c35:	c4 e3 51 20 6c 18 02 	vpinsrb $0x1,0x2(%rax,%rbx,1),%xmm5,%xmm5
-   77c3c:	01 
+   77c3c:	01
    77c3d:	44 0f be 44 1a 03    	movsbl 0x3(%rdx,%rbx,1),%r8d
    77c43:	c4 e2 79 21 ed       	vpmovsxbd %xmm5,%xmm5
    77c48:	c5 f8 5b ed          	vcvtdq2ps %xmm5,%xmm5
    77c4c:	c5 d8 59 e5          	vmulps %xmm5,%xmm4,%xmm4
    77c50:	c5 f9 6e ee          	vmovd  %esi,%xmm5
    77c54:	c4 e3 51 20 6c 18 03 	vpinsrb $0x1,0x3(%rax,%rbx,1),%xmm5,%xmm5
-   77c5b:	01 
+   77c5b:	01
    77c5c:	48 83 c3 04          	add    $0x4,%rbx
    77c60:	c5 f0 59 e4          	vmulps %xmm4,%xmm1,%xmm4
    77c64:	c5 e8 59 e4          	vmulps %xmm4,%xmm2,%xmm4
@@ -258,7 +258,7 @@ Disassembly of section .text:
    77d4e:	45 31 d2             	xor    %r10d,%r10d
    77d51:	e9 80 00 00 00       	jmp    77dd6 <qwen_asr::kernels::avx::matvec_int8+0x4d6>
    77d56:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
-   77d5d:	00 00 00 
+   77d5d:	00 00 00
    77d60:	c5 e8 57 d2          	vxorps %xmm2,%xmm2,%xmm2
    77d64:	45 31 c0             	xor    %r8d,%r8d
    77d67:	c5 f0 57 c9          	vxorps %xmm1,%xmm1,%xmm1
@@ -289,7 +289,7 @@ Disassembly of section .text:
    77ddd:	4d 39 e8             	cmp    %r13,%r8
    77de0:	77 48                	ja     77e2a <qwen_asr::kernels::avx::matvec_int8+0x52a>
    77de2:	66 66 66 66 66 2e 0f 	data16 data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
-   77de9:	1f 84 00 00 00 00 00 
+   77de9:	1f 84 00 00 00 00 00
    77df0:	c4 a2 7d 20 1c 12    	vpmovsxbw (%rdx,%r10,1),%ymm3
    77df6:	c4 a2 7d 20 24 10    	vpmovsxbw (%rax,%r10,1),%ymm4
    77dfc:	4d 8d 42 20          	lea    0x20(%r10),%r8
@@ -325,7 +325,7 @@ Disassembly of section .text:
    77e7c:	41 83 e0 07          	and    $0x7,%r8d
    77e80:	74 38                	je     77eba <qwen_asr::kernels::avx::matvec_int8+0x5ba>
    77e82:	66 66 66 66 66 2e 0f 	data16 data16 data16 data16 cs nopw 0x0(%rax,%rax,1)
-   77e89:	1f 84 00 00 00 00 00 
+   77e89:	1f 84 00 00 00 00 00
    77e90:	42 0f be 2c 12       	movsbl (%rdx,%r10,1),%ebp
    77e95:	42 0f be 34 10       	movsbl (%rax,%r10,1),%esi
    77e9a:	49 ff c2             	inc    %r10
@@ -340,7 +340,7 @@ Disassembly of section .text:
    77eba:	48 83 fb f8          	cmp    $0xfffffffffffffff8,%rbx
    77ebe:	0f 87 46 01 00 00    	ja     7800a <qwen_asr::kernels::avx::matvec_int8+0x70a>
    77ec4:	66 66 66 2e 0f 1f 84 	data16 data16 cs nopw 0x0(%rax,%rax,1)
-   77ecb:	00 00 00 00 00 
+   77ecb:	00 00 00 00 00
    77ed0:	46 0f be 04 12       	movsbl (%rdx,%r10,1),%r8d
    77ed5:	42 0f be 74 10 07    	movsbl 0x7(%rax,%r10,1),%esi
    77edb:	c4 c1 02 2a d8       	vcvtsi2ss %r8d,%xmm15,%xmm3
