@@ -1,0 +1,14 @@
+{ pkgs ? import <nixpkgs> {}, blas64 ? false }:
+# qwen-asr Rust FFI declares cblas_sgemm dimensions as i32, i.e. LP64.
+# nixpkgs x86_64 defaults to ILP64: never use that with this Rust binding.
+let blas = pkgs.openblas.override { inherit blas64; }; in
+pkgs.mkShell {
+  packages = with pkgs; [ cargo rustc rustfmt gcc gnumake cmake pkg-config blas
+    python312 uv nodejs ffmpeg time git ];
+  LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib blas pkgs.zlib ];
+  OPENBLAS_NUM_THREADS = "6";
+  OMP_NUM_THREADS = "6";
+  MKL_NUM_THREADS = "6";
+  HF_HUB_DISABLE_TELEMETRY = "1";
+  DO_NOT_TRACK = "1";
+}

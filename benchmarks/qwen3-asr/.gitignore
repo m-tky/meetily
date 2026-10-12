@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+*.safetensors
+*.gguf
+*.parquet
+*.f32
+*.pcm
+target/
