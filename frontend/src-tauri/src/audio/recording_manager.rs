@@ -258,6 +258,9 @@ impl RecordingManager {
             ("No System Audio".to_string(), super::device_detection::InputDeviceKind::Unknown)
         };
 
+        self.recording_saver.start_accumulation(auto_save, recording_receiver)
+            .map_err(RecordingStartError::Other)?;
+
         // Start the audio processing pipeline with FFmpeg adaptive mixer
         // Pipeline will: 1) Mix mic+system audio with adaptive buffering, 2) Send mixed to recording_sender,
         // 3) Apply VAD and send speech segments to transcription
@@ -271,12 +274,13 @@ impl RecordingManager {
             mic_kind,
             sys_name,
             sys_kind,
+            microphone_device.is_some(),
+            system_device.is_some(),
         ) {
             self.state.stop_recording();
             return Err(RecordingStartError::TranscriptionRuntime(error));
         }
 
-        self.recording_saver.start_accumulation(auto_save, recording_receiver);
         self.recording_saver.set_device_info(
             microphone_device.as_ref().map(|d| d.name.clone()),
             system_device.as_ref().map(|d| d.name.clone())
@@ -382,7 +386,7 @@ impl RecordingManager {
             }
             Err(e) => {
                 error!("Failed to save recording: {}", e);
-                // Don't fail the stop operation if saving fails
+                return Err(anyhow::anyhow!(e));
             }
         }
 
@@ -421,7 +425,7 @@ impl RecordingManager {
             }
             Err(e) => {
                 error!("Failed to save recording: {}", e);
-                // Don't fail the stop operation if saving fails
+                return Err(anyhow::anyhow!(e));
             }
         }
 
@@ -504,6 +508,10 @@ impl RecordingManager {
         self.state.set_error_callback(callback);
     }
 
+    pub fn set_save_warning_callback(&mut self, callback: impl Fn(String) + Send + Sync + 'static) {
+        self.recording_saver.set_warning_callback(callback);
+    }
+
     /// Check if there's a fatal error
     pub fn has_fatal_error(&self) -> bool {
         self.state.has_fatal_error()
@@ -512,6 +520,10 @@ impl RecordingManager {
     /// Set the meeting name for this recording session
     pub fn set_meeting_name(&mut self, name: Option<String>) {
         self.recording_saver.set_meeting_name(name);
+    }
+
+    pub(crate) fn transcript_sink(&self) -> super::recording_saver::TranscriptSink {
+        self.recording_saver.transcript_sink()
     }
 
     /// Add a structured transcript segment to be saved later

@@ -1,0 +1,1583 @@
+{
+  "quality_accepted": false,
+  "single_speaker_isolated_word_only": true,
+  "modes": [
+    {
+      "recognition_context": "full_input",
+      "windows": 14,
+      "detected": 14,
+      "normalized_exact_matches": 7,
+      "wrong_unflagged": [
+        "iie-both-100ms-full",
+        "iie-both-300ms-full"
+      ]
+    },
+    {
+      "recognition_context": "vad_envelope",
+      "windows": 14,
+      "detected": 14,
+      "normalized_exact_matches": 7,
+      "wrong_unflagged": [
+        "iie-both-300ms-crop"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "id": "iie-clean-full",
+      "source_id": "iie-clean",
+      "language": "Japanese",
+      "condition": "clean",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 0.8666875,
+      "fixture_sha256": "8b24c165bcd01ed2c4c2f8dd82a3a041740e1712e5f2331d334cb393b04c23d2",
+      "text": "いいえ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 0
+          }
+        ],
+        "id": "context-0",
+        "inference_seconds": 1.717183846,
+        "load_seconds": 0.631914624,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.47247116,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "review_required",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.024551681
+      },
+      "elapsed_seconds": 1.717183846,
+      "request_seconds": 2.374100963003002,
+      "status": "ok",
+      "recognition_context": "full_input",
+      "character_errors": 0,
+      "reference_characters": 3,
+      "cer": 0,
+      "word_errors": 0,
+      "reference_words": 1,
+      "normalized_exact_match": true
+    },
+    {
+      "id": "iie-padded-full",
+      "source_id": "iie-padded",
+      "language": "Japanese",
+      "condition": "padded",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 2.8666875,
+      "fixture_sha256": "a3c37911cd5924ad355ebba17d031ff849a1f2eb8cee365a8aae02270031219f",
+      "text": "家。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 30336,
+            "start_sample": 15168
+          }
+        ],
+        "id": "context-1",
+        "inference_seconds": 1.964853786,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 45867,
+            "inference_seconds": 1.719959554,
+            "kind": "window_final",
+            "raw_text": "家。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "家。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.026715443
+      },
+      "elapsed_seconds": 1.964853786,
+      "request_seconds": 1.9924186399875907,
+      "status": "ok",
+      "recognition_context": "full_input",
+      "character_errors": 3,
+      "reference_characters": 3,
+      "cer": 1,
+      "word_errors": 1,
+      "reference_words": 1,
+      "normalized_exact_match": false
+    },
+    {
+      "id": "iie-gain-20dB-full",
+      "source_id": "iie-gain-20dB",
+      "language": "Japanese",
+      "condition": "gain-20dB",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 0.8666875,
+      "fixture_sha256": "7c4c4ef7fc08ec64a242d4f918adb73791ca2d7a177b0fe55cab2d7adfb035e6",
+      "text": "いいえ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 0
+          }
+        ],
+        "id": "context-2",
+        "inference_seconds": 1.713419736,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.448898419,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "review_required",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 2.625641107559204,
+        "vad_seconds": 0.023896346
+      },
+      "elapsed_seconds": 1.713419736,
+      "request_seconds": 1.7377659530029632,
+      "status": "ok",
+      "recognition_context": "full_input",
+      "character_errors": 0,
+      "reference_characters": 3,
+      "cer": 0,
+      "word_errors": 0,
+      "reference_words": 1,
+      "normalized_exact_match": true
+    },
+    {
+      "id": "iie-gain-40dB-full",
+      "source_id": "iie-gain-40dB",
+      "language": "Japanese",
+      "condition": "gain-40dB",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 0.8666875,
+      "fixture_sha256": "112b8b77c651f888ab0446acab3ededea6cec5a0f02230c7ab0bf832f1cd2d12",
+      "text": "いい。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 0
+          }
+        ],
+        "id": "context-3",
+        "inference_seconds": 1.61284622,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.369132524,
+            "kind": "window_final",
+            "raw_text": "いい。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "いい。",
+        "vad_frame_samples": 512,
+        "vad_gain": 20,
+        "vad_seconds": 0.018806344
+      },
+      "elapsed_seconds": 1.61284622,
+      "request_seconds": 1.6320863040018594,
+      "status": "ok",
+      "recognition_context": "full_input",
+      "character_errors": 1,
+      "reference_characters": 3,
+      "cer": 0.3333333333333333,
+      "word_errors": 1,
+      "reference_words": 1,
+      "normalized_exact_match": false
+    },
+    {
+      "id": "iie-white-snr10-full",
+      "source_id": "iie-white-snr10",
+      "language": "Japanese",
+      "condition": "white-snr10",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 0.8666875,
+      "fixture_sha256": "97bc4c628f2813fd018c2fde5e15fe31b4a656bf447df4bd9bb6769683192b9c",
+      "text": "いいえ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 0
+          }
+        ],
+        "id": "context-4",
+        "inference_seconds": 1.7411622420000001,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.493547781,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "review_required",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.019758956
+      },
+      "elapsed_seconds": 1.7411622420000001,
+      "request_seconds": 1.7613761800021166,
+      "status": "ok",
+      "recognition_context": "full_input",
+      "character_errors": 0,
+      "reference_characters": 3,
+      "cer": 0,
+      "word_errors": 0,
+      "reference_words": 1,
+      "normalized_exact_match": true
+    },
+    {
+      "id": "iie-white-snr0-full",
+      "source_id": "iie-white-snr0",
+      "language": "Japanese",
+      "condition": "white-snr0",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 0.8666875,
+      "fixture_sha256": "f334a9f03690b07ca635bc99ad11b9ab8d4131cc52a5e96e9b27aec5d7948d67",
+      "text": "いい。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 2880
+          }
+        ],
+        "id": "context-5",
+        "inference_seconds": 1.691487064,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.449426725,
+            "kind": "window_final",
+            "raw_text": "いい。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "いい。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.020175926
+      },
+      "elapsed_seconds": 1.691487064,
+      "request_seconds": 1.7121072909940267,
+      "status": "ok",
+      "recognition_context": "full_input",
+      "character_errors": 1,
+      "reference_characters": 3,
+      "cer": 0.3333333333333333,
+      "word_errors": 1,
+      "reference_words": 1,
+      "normalized_exact_match": false
+    },
+    {
+      "id": "iie-before-100ms-full",
+      "source_id": "iie-before-100ms",
+      "language": "Japanese",
+      "condition": "before-100ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 0.9666875,
+      "fixture_sha256": "3311ad9508c19dd1d10c9fea2d94cb155bb857f751c56636271ad7d65aac9a9e",
+      "text": "いい。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 15467,
+            "start_sample": 320
+          }
+        ],
+        "id": "context-6",
+        "inference_seconds": 1.6487992230000001,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 15467,
+            "inference_seconds": 1.399279653,
+            "kind": "window_final",
+            "raw_text": "いい。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "いい。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.01992769
+      },
+      "elapsed_seconds": 1.6487992230000001,
+      "request_seconds": 1.6692696269892622,
+      "status": "ok",
+      "recognition_context": "full_input",
+      "character_errors": 1,
+      "reference_characters": 3,
+      "cer": 0.3333333333333333,
+      "word_errors": 1,
+      "reference_words": 1,
+      "normalized_exact_match": false
+    },
+    {
+      "id": "iie-before-300ms-full",
+      "source_id": "iie-before-300ms",
+      "language": "Japanese",
+      "condition": "before-300ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 1.1666875,
+      "fixture_sha256": "d111014b50a9dd157bae5a22eb211d328d6b0dd8d5859886572de055726a1885",
+      "text": "いい。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 18667,
+            "start_sample": 3904
+          }
+        ],
+        "id": "context-7",
+        "inference_seconds": 1.6211384739999999,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 18667,
+            "inference_seconds": 1.3701854980000001,
+            "kind": "window_final",
+            "raw_text": "いい。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "いい。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.021173551
+      },
+      "elapsed_seconds": 1.6211384739999999,
+      "request_seconds": 1.6428552779980237,
+      "status": "ok",
+      "recognition_context": "full_input",
+      "character_errors": 1,
+      "reference_characters": 3,
+      "cer": 0.3333333333333333,
+      "word_errors": 1,
+      "reference_words": 1,
+      "normalized_exact_match": false
+    },
+    {
+      "id": "iie-before-1000ms-full",
+      "source_id": "iie-before-1000ms",
+      "language": "Japanese",
+      "condition": "before-1000ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 1.8666875,
+      "fixture_sha256": "e77fd7a8878b282549c270e10bf0c1cfea3e4180e64651add59d52239b96157f",
+      "text": "いいえ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 29867,
+            "start_sample": 15168
+          }
+        ],
+        "id": "context-8",
+        "inference_seconds": 1.805166394,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 29867,
+            "inference_seconds": 1.543118869,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "review_required",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.024808449
+      },
+      "elapsed_seconds": 1.805166394,
+      "request_seconds": 1.830697550001787,
+      "status": "ok",
+      "recognition_context": "full_input",
+      "character_errors": 0,
+      "reference_characters": 3,
+      "cer": 0,
+      "word_errors": 0,
+      "reference_words": 1,
+      "normalized_exact_match": true
+    },
+    {
+      "id": "iie-after-100ms-full",
+      "source_id": "iie-after-100ms",
+      "language": "Japanese",
+      "condition": "after-100ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 0.9666875,
+      "fixture_sha256": "674791b125eb03cbdaf69767b4bd0c2dc99acc4ac3d77588c3c64ef4eb956091",
+      "text": "いいえ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 15467,
+            "start_sample": 0
+          }
+        ],
+        "id": "context-9",
+        "inference_seconds": 1.752835651,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 15467,
+            "inference_seconds": 1.490154859,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "review_required",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.021841497
+      },
+      "elapsed_seconds": 1.752835651,
+      "request_seconds": 1.7751484489999712,
+      "status": "ok",
+      "recognition_context": "full_input",
+      "character_errors": 0,
+      "reference_characters": 3,
+      "cer": 0,
+      "word_errors": 0,
+      "reference_words": 1,
+      "normalized_exact_match": true
+    },
+    {
+      "id": "iie-after-300ms-full",
+      "source_id": "iie-after-300ms",
+      "language": "Japanese",
+      "condition": "after-300ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 1.1666875,
+      "fixture_sha256": "5842b79fa9376833896209a47153b1c2f4fc5288564ddc845dc984fbd6be128f",
+      "text": "いいえ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 18667,
+            "start_sample": 0
+          }
+        ],
+        "id": "context-10",
+        "inference_seconds": 1.698605191,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 18667,
+            "inference_seconds": 1.456508814,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "recognized",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.021200892
+      },
+      "elapsed_seconds": 1.698605191,
+      "request_seconds": 1.7203315939987078,
+      "status": "ok",
+      "recognition_context": "full_input",
+      "character_errors": 0,
+      "reference_characters": 3,
+      "cer": 0,
+      "word_errors": 0,
+      "reference_words": 1,
+      "normalized_exact_match": true
+    },
+    {
+      "id": "iie-after-1000ms-full",
+      "source_id": "iie-after-1000ms",
+      "language": "Japanese",
+      "condition": "after-1000ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 1.8666875,
+      "fixture_sha256": "5a04e83aff9f91ff8b5697a21a7980269b17df4cb834acfc19c2e3ddee1cee7e",
+      "text": "いいえ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13952,
+            "start_sample": 0
+          }
+        ],
+        "id": "context-11",
+        "inference_seconds": 1.796698069,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 29867,
+            "inference_seconds": 1.5419386259999999,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "review_required",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.023783115
+      },
+      "elapsed_seconds": 1.796698069,
+      "request_seconds": 1.8211975800077198,
+      "status": "ok",
+      "recognition_context": "full_input",
+      "character_errors": 0,
+      "reference_characters": 3,
+      "cer": 0,
+      "word_errors": 0,
+      "reference_words": 1,
+      "normalized_exact_match": true
+    },
+    {
+      "id": "iie-both-100ms-full",
+      "source_id": "iie-both-100ms",
+      "language": "Japanese",
+      "condition": "both-100ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 1.0666875,
+      "fixture_sha256": "c4c30cb961e4ae63bff45a419d2799f636cc48e348c77c358f98f15c8627cfd2",
+      "text": "家。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 17067,
+            "start_sample": 320
+          }
+        ],
+        "id": "context-12",
+        "inference_seconds": 1.753925475,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 17067,
+            "inference_seconds": 1.487876118,
+            "kind": "window_final",
+            "raw_text": "家。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 2
+          }
+        ],
+        "status": "recognized",
+        "text": "家。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.022431812
+      },
+      "elapsed_seconds": 1.753925475,
+      "request_seconds": 1.7768676989944652,
+      "status": "ok",
+      "recognition_context": "full_input",
+      "character_errors": 3,
+      "reference_characters": 3,
+      "cer": 1,
+      "word_errors": 1,
+      "reference_words": 1,
+      "normalized_exact_match": false
+    },
+    {
+      "id": "iie-both-300ms-full",
+      "source_id": "iie-both-300ms",
+      "language": "Japanese",
+      "condition": "both-300ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 1.4666875,
+      "fixture_sha256": "49c56628a25f1ed5fd4359c513a0d1f3cac368976eecdc5765d3d88a2c6fcccc",
+      "text": "いい。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 23467,
+            "start_sample": 3904
+          }
+        ],
+        "id": "context-13",
+        "inference_seconds": 1.727856665,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 23467,
+            "inference_seconds": 1.471788617,
+            "kind": "window_final",
+            "raw_text": "いい。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 2
+          }
+        ],
+        "status": "recognized",
+        "text": "いい。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.023752593
+      },
+      "elapsed_seconds": 1.727856665,
+      "request_seconds": 1.7521929829963483,
+      "status": "ok",
+      "recognition_context": "full_input",
+      "character_errors": 1,
+      "reference_characters": 3,
+      "cer": 0.3333333333333333,
+      "word_errors": 1,
+      "reference_words": 1,
+      "normalized_exact_match": false
+    },
+    {
+      "id": "iie-clean-crop",
+      "source_id": "iie-clean",
+      "language": "Japanese",
+      "condition": "clean",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 0.8666875,
+      "fixture_sha256": "8b24c165bcd01ed2c4c2f8dd82a3a041740e1712e5f2331d334cb393b04c23d2",
+      "text": "いいえ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 0
+          }
+        ],
+        "id": "context-0",
+        "inference_seconds": 1.668956135,
+        "load_seconds": 0.642768836,
+        "model_loaded": true,
+        "recognition_context": "vad_envelope",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.416041961,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "review_required",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.025578698
+      },
+      "elapsed_seconds": 1.668956135,
+      "request_seconds": 2.337761139002396,
+      "status": "ok",
+      "recognition_context": "vad_envelope",
+      "character_errors": 0,
+      "reference_characters": 3,
+      "cer": 0,
+      "word_errors": 0,
+      "reference_words": 1,
+      "normalized_exact_match": true
+    },
+    {
+      "id": "iie-padded-crop",
+      "source_id": "iie-padded",
+      "language": "Japanese",
+      "condition": "padded",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 2.8666875,
+      "fixture_sha256": "a3c37911cd5924ad355ebba17d031ff849a1f2eb8cee365a8aae02270031219f",
+      "text": "い。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 30336,
+            "start_sample": 15168
+          }
+        ],
+        "id": "context-1",
+        "inference_seconds": 1.613643405,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "vad_envelope",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 30336,
+            "inference_seconds": 1.378120911,
+            "kind": "window_final",
+            "raw_text": "い。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 15168,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "い。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.028037098
+      },
+      "elapsed_seconds": 1.613643405,
+      "request_seconds": 1.6425183029932668,
+      "status": "ok",
+      "recognition_context": "vad_envelope",
+      "character_errors": 2,
+      "reference_characters": 3,
+      "cer": 0.6666666666666666,
+      "word_errors": 1,
+      "reference_words": 1,
+      "normalized_exact_match": false
+    },
+    {
+      "id": "iie-gain-20dB-crop",
+      "source_id": "iie-gain-20dB",
+      "language": "Japanese",
+      "condition": "gain-20dB",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 0.8666875,
+      "fixture_sha256": "7c4c4ef7fc08ec64a242d4f918adb73791ca2d7a177b0fe55cab2d7adfb035e6",
+      "text": "いいえ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 0
+          }
+        ],
+        "id": "context-2",
+        "inference_seconds": 1.879036502,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "vad_envelope",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.62713014,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "review_required",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 2.625641107559204,
+        "vad_seconds": 0.019696927
+      },
+      "elapsed_seconds": 1.879036502,
+      "request_seconds": 1.8993014119914733,
+      "status": "ok",
+      "recognition_context": "vad_envelope",
+      "character_errors": 0,
+      "reference_characters": 3,
+      "cer": 0,
+      "word_errors": 0,
+      "reference_words": 1,
+      "normalized_exact_match": true
+    },
+    {
+      "id": "iie-gain-40dB-crop",
+      "source_id": "iie-gain-40dB",
+      "language": "Japanese",
+      "condition": "gain-40dB",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 0.8666875,
+      "fixture_sha256": "112b8b77c651f888ab0446acab3ededea6cec5a0f02230c7ab0bf832f1cd2d12",
+      "text": "いい。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 0
+          }
+        ],
+        "id": "context-3",
+        "inference_seconds": 1.759590662,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "vad_envelope",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.513260584,
+            "kind": "window_final",
+            "raw_text": "いい。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "いい。",
+        "vad_frame_samples": 512,
+        "vad_gain": 20,
+        "vad_seconds": 0.025837604
+      },
+      "elapsed_seconds": 1.759590662,
+      "request_seconds": 1.7860575029917527,
+      "status": "ok",
+      "recognition_context": "vad_envelope",
+      "character_errors": 1,
+      "reference_characters": 3,
+      "cer": 0.3333333333333333,
+      "word_errors": 1,
+      "reference_words": 1,
+      "normalized_exact_match": false
+    },
+    {
+      "id": "iie-white-snr10-crop",
+      "source_id": "iie-white-snr10",
+      "language": "Japanese",
+      "condition": "white-snr10",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 0.8666875,
+      "fixture_sha256": "97bc4c628f2813fd018c2fde5e15fe31b4a656bf447df4bd9bb6769683192b9c",
+      "text": "いいえ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 0
+          }
+        ],
+        "id": "context-4",
+        "inference_seconds": 1.657722037,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "vad_envelope",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.4144302020000001,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "review_required",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.025425015
+      },
+      "elapsed_seconds": 1.657722037,
+      "request_seconds": 1.6836511540022912,
+      "status": "ok",
+      "recognition_context": "vad_envelope",
+      "character_errors": 0,
+      "reference_characters": 3,
+      "cer": 0,
+      "word_errors": 0,
+      "reference_words": 1,
+      "normalized_exact_match": true
+    },
+    {
+      "id": "iie-white-snr0-crop",
+      "source_id": "iie-white-snr0",
+      "language": "Japanese",
+      "condition": "white-snr0",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 0.8666875,
+      "fixture_sha256": "f334a9f03690b07ca635bc99ad11b9ab8d4131cc52a5e96e9b27aec5d7948d67",
+      "text": "いい。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 2880
+          }
+        ],
+        "id": "context-5",
+        "inference_seconds": 1.637205738,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "vad_envelope",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.387802103,
+            "kind": "window_final",
+            "raw_text": "いい。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 2880,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "いい。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.019906141
+      },
+      "elapsed_seconds": 1.637205738,
+      "request_seconds": 1.6575443409965374,
+      "status": "ok",
+      "recognition_context": "vad_envelope",
+      "character_errors": 1,
+      "reference_characters": 3,
+      "cer": 0.3333333333333333,
+      "word_errors": 1,
+      "reference_words": 1,
+      "normalized_exact_match": false
+    },
+    {
+      "id": "iie-before-100ms-crop",
+      "source_id": "iie-before-100ms",
+      "language": "Japanese",
+      "condition": "before-100ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 0.9666875,
+      "fixture_sha256": "3311ad9508c19dd1d10c9fea2d94cb155bb857f751c56636271ad7d65aac9a9e",
+      "text": "いい。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 15467,
+            "start_sample": 320
+          }
+        ],
+        "id": "context-6",
+        "inference_seconds": 1.638231551,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "vad_envelope",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 15467,
+            "inference_seconds": 1.382919042,
+            "kind": "window_final",
+            "raw_text": "いい。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 320,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "いい。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.020162228
+      },
+      "elapsed_seconds": 1.638231551,
+      "request_seconds": 1.658849740997539,
+      "status": "ok",
+      "recognition_context": "vad_envelope",
+      "character_errors": 1,
+      "reference_characters": 3,
+      "cer": 0.3333333333333333,
+      "word_errors": 1,
+      "reference_words": 1,
+      "normalized_exact_match": false
+    },
+    {
+      "id": "iie-before-300ms-crop",
+      "source_id": "iie-before-300ms",
+      "language": "Japanese",
+      "condition": "before-300ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 1.1666875,
+      "fixture_sha256": "d111014b50a9dd157bae5a22eb211d328d6b0dd8d5859886572de055726a1885",
+      "text": "一。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 18667,
+            "start_sample": 3904
+          }
+        ],
+        "id": "context-7",
+        "inference_seconds": 1.7207702980000001,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "vad_envelope",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 18667,
+            "inference_seconds": 1.460177649,
+            "kind": "window_final",
+            "raw_text": "一。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 3904,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "一。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.021672005
+      },
+      "elapsed_seconds": 1.7207702980000001,
+      "request_seconds": 1.7429677350010024,
+      "status": "ok",
+      "recognition_context": "vad_envelope",
+      "character_errors": 3,
+      "reference_characters": 3,
+      "cer": 1,
+      "word_errors": 1,
+      "reference_words": 1,
+      "normalized_exact_match": false
+    },
+    {
+      "id": "iie-before-1000ms-crop",
+      "source_id": "iie-before-1000ms",
+      "language": "Japanese",
+      "condition": "before-1000ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 1.8666875,
+      "fixture_sha256": "e77fd7a8878b282549c270e10bf0c1cfea3e4180e64651add59d52239b96157f",
+      "text": "イ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 29867,
+            "start_sample": 15168
+          }
+        ],
+        "id": "context-8",
+        "inference_seconds": 1.628070482,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "vad_envelope",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 29867,
+            "inference_seconds": 1.3703465320000001,
+            "kind": "window_final",
+            "raw_text": "イ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 15168,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "イ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.025358174
+      },
+      "elapsed_seconds": 1.628070482,
+      "request_seconds": 1.6541146719973767,
+      "status": "ok",
+      "recognition_context": "vad_envelope",
+      "character_errors": 3,
+      "reference_characters": 3,
+      "cer": 1,
+      "word_errors": 1,
+      "reference_words": 1,
+      "normalized_exact_match": false
+    },
+    {
+      "id": "iie-after-100ms-crop",
+      "source_id": "iie-after-100ms",
+      "language": "Japanese",
+      "condition": "after-100ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 0.9666875,
+      "fixture_sha256": "674791b125eb03cbdaf69767b4bd0c2dc99acc4ac3d77588c3c64ef4eb956091",
+      "text": "いいえ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 15467,
+            "start_sample": 0
+          }
+        ],
+        "id": "context-9",
+        "inference_seconds": 1.778420561,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "vad_envelope",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 15467,
+            "inference_seconds": 1.519725406,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "review_required",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.020357723
+      },
+      "elapsed_seconds": 1.778420561,
+      "request_seconds": 1.7992562459985493,
+      "status": "ok",
+      "recognition_context": "vad_envelope",
+      "character_errors": 0,
+      "reference_characters": 3,
+      "cer": 0,
+      "word_errors": 0,
+      "reference_words": 1,
+      "normalized_exact_match": true
+    },
+    {
+      "id": "iie-after-300ms-crop",
+      "source_id": "iie-after-300ms",
+      "language": "Japanese",
+      "condition": "after-300ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 1.1666875,
+      "fixture_sha256": "5842b79fa9376833896209a47153b1c2f4fc5288564ddc845dc984fbd6be128f",
+      "text": "いいえ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 18667,
+            "start_sample": 0
+          }
+        ],
+        "id": "context-10",
+        "inference_seconds": 1.7320918079999998,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "vad_envelope",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 18667,
+            "inference_seconds": 1.471867555,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "recognized",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.0219088
+      },
+      "elapsed_seconds": 1.7320918079999998,
+      "request_seconds": 1.7545386209967546,
+      "status": "ok",
+      "recognition_context": "vad_envelope",
+      "character_errors": 0,
+      "reference_characters": 3,
+      "cer": 0,
+      "word_errors": 0,
+      "reference_words": 1,
+      "normalized_exact_match": true
+    },
+    {
+      "id": "iie-after-1000ms-crop",
+      "source_id": "iie-after-1000ms",
+      "language": "Japanese",
+      "condition": "after-1000ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 1.8666875,
+      "fixture_sha256": "5a04e83aff9f91ff8b5697a21a7980269b17df4cb834acfc19c2e3ddee1cee7e",
+      "text": "いいえ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13952,
+            "start_sample": 0
+          }
+        ],
+        "id": "context-11",
+        "inference_seconds": 1.73966793,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "vad_envelope",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13952,
+            "inference_seconds": 1.474771702,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "review_required",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.026723678
+      },
+      "elapsed_seconds": 1.73966793,
+      "request_seconds": 1.7671877670072718,
+      "status": "ok",
+      "recognition_context": "vad_envelope",
+      "character_errors": 0,
+      "reference_characters": 3,
+      "cer": 0,
+      "word_errors": 0,
+      "reference_words": 1,
+      "normalized_exact_match": true
+    },
+    {
+      "id": "iie-both-100ms-crop",
+      "source_id": "iie-both-100ms",
+      "language": "Japanese",
+      "condition": "both-100ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 1.0666875,
+      "fixture_sha256": "c4c30cb961e4ae63bff45a419d2799f636cc48e348c77c358f98f15c8627cfd2",
+      "text": "いいえ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 17067,
+            "start_sample": 320
+          }
+        ],
+        "id": "context-12",
+        "inference_seconds": 1.7458838989999999,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "vad_envelope",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 17067,
+            "inference_seconds": 1.496617739,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 320,
+            "text_tokens": 3
+          }
+        ],
+        "status": "recognized",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.021213084
+      },
+      "elapsed_seconds": 1.7458838989999999,
+      "request_seconds": 1.7675866950012278,
+      "status": "ok",
+      "recognition_context": "vad_envelope",
+      "character_errors": 0,
+      "reference_characters": 3,
+      "cer": 0,
+      "word_errors": 0,
+      "reference_words": 1,
+      "normalized_exact_match": true
+    },
+    {
+      "id": "iie-both-300ms-crop",
+      "source_id": "iie-both-300ms",
+      "language": "Japanese",
+      "condition": "both-300ms",
+      "reference": "いいえ",
+      "rep": 0,
+      "audio_seconds": 1.4666875,
+      "fixture_sha256": "49c56628a25f1ed5fd4359c513a0d1f3cac368976eecdc5765d3d88a2c6fcccc",
+      "text": "イエ。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 23467,
+            "start_sample": 3904
+          }
+        ],
+        "id": "context-13",
+        "inference_seconds": 1.715174674,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "vad_envelope",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 23467,
+            "inference_seconds": 1.452831645,
+            "kind": "window_final",
+            "raw_text": "イエ。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 3904,
+            "text_tokens": 3
+          }
+        ],
+        "status": "recognized",
+        "text": "イエ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.022605968
+      },
+      "elapsed_seconds": 1.715174674,
+      "request_seconds": 1.7383630460099084,
+      "status": "ok",
+      "recognition_context": "vad_envelope",
+      "character_errors": 3,
+      "reference_characters": 3,
+      "cer": 1,
+      "word_errors": 1,
+      "reference_words": 1,
+      "normalized_exact_match": false
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 "use client";
+import { SavedMinutesPanel } from '../MinutesDocument';
 
 import { MeetingSummary, Summary, Transcript } from '@/types';
 import { BlockNoteSummaryView, BlockNoteSummaryViewRef } from '@/components/AISummary/BlockNoteSummaryView';
@@ -243,6 +244,7 @@ export function SummaryPanel({
 
   return (
     <div className="flex-1 min-w-0 flex flex-col bg-white overflow-hidden h-full w-full @container">
+      {meeting.id !== 'intro-call' && <SavedMinutesPanel key={meeting.id} meetingId={meeting.id} />}
       {/* Top-level actions — always visible, same pattern as TranscriptPanel */}
       <div className="p-4 border-b border-gray-200">
         <div className="flex items-center justify-center w-full min-w-0 gap-2 flex-wrap">

@@ -75,7 +75,7 @@ impl MeetingsRepository {
         if let Some(meeting) = meeting {
             // Get all transcripts for this meeting
             let transcripts =
-                sqlx::query_as::<_, Transcript>("SELECT * FROM transcripts WHERE meeting_id = ?")
+                sqlx::query_as::<_, Transcript>("SELECT * FROM transcripts WHERE meeting_id = ? ORDER BY audio_start_time ASC, rowid ASC")
                     .bind(meeting_id)
                     .fetch_all(&mut *transaction)
                     .await?;
@@ -86,6 +86,7 @@ impl MeetingsRepository {
             let meeting_transcripts = transcripts
                 .into_iter()
                 .map(|t| MeetingTranscript {
+                    speaker: t.speaker,
                     id: t.id,
                     text: t.transcript,
                     timestamp: t.timestamp,
@@ -153,7 +154,7 @@ impl MeetingsRepository {
         let transcripts = sqlx::query_as::<_, Transcript>(
             "SELECT * FROM transcripts
              WHERE meeting_id = ?
-             ORDER BY audio_start_time ASC
+             ORDER BY audio_start_time ASC, rowid ASC
              LIMIT ? OFFSET ?"
         )
         .bind(meeting_id)

@@ -616,9 +616,25 @@ async fn read_callback_request(socket: &mut tokio::net::TcpStream) -> Option<Str
 
 #[tauri::command]
 pub async fn chatgpt_status<R: Runtime>(app: AppHandle<R>) -> Result<Status, String> {
+    status_in_directory(&directory(&app)?).await
+}
+async fn status_in_directory(dir: &Path) -> Result<Status, String> {
     let _guard = STORE_LOCK.lock().await;
-    let store = Store::open(&directory(&app)?)?;
-    Ok(public_status(&store.load()?))
+    Ok(public_status(&Store::open(dir)?.load()?))
+}
+pub(crate) async fn summary_context<R: Runtime>(app: &AppHandle<R>) -> Result<(PathBuf, String), String> {
+    let dir = directory(app)?;
+    let status = status_in_directory(&dir).await?;
+    let account = status.active.filter(|id| status.accounts.iter().any(|a|
+        &a.client_id == id && a.connected && a.plan_enabled))
+        .ok_or("Connect ChatGPT and grant plan access in Settings.")?;
+    Ok((dir, account))
+}
+async fn require_active_account(dir: &Path, account: &str) -> Result<(), String> {
+    let status = status_in_directory(dir).await?;
+    if status.active.as_deref() == Some(account) && status.accounts.iter().any(|a|
+        a.client_id == account && a.connected && a.plan_enabled) { Ok(()) }
+    else { Err("CHATGPT_ACCOUNT_CHANGED: Request or response discarded".into()) }
 }
 #[tauri::command]
 pub async fn chatgpt_select_account<R: Runtime>(
@@ -1106,7 +1122,13 @@ pub async fn generate<R: Runtime>(
     instructions: &str,
     input: &str,
 ) -> Result<String, String> {
-    let token = access(&directory(app)?, account).await?;
+    generate_in_directory(&directory(app)?, account, model, instructions, input).await
+}
+pub(crate) async fn generate_in_directory(
+    dir: &Path, account: &str, model: &str, instructions: &str, input: &str,
+) -> Result<String, String> {
+    require_active_account(dir, account).await?;
+    let token = access(dir, account).await?;
     let client = reqwest::Client::builder()
         .timeout(Duration::from_secs(120))
         .redirect(reqwest::redirect::Policy::none())
@@ -1143,15 +1165,7 @@ pub async fn generate<R: Runtime>(
         }
     }
     let text = sse.finish()?;
-    let status = chatgpt_status(app.clone()).await?;
-    if status.active.as_deref() != Some(account)
-        || !status
-            .accounts
-            .iter()
-            .any(|a| a.client_id == account && a.connected && a.plan_enabled)
-    {
-        return Err("CHATGPT_ACCOUNT_CHANGED: Response discarded".into());
-    }
+    require_active_account(dir, account).await?;
     Ok(text)
 }
 

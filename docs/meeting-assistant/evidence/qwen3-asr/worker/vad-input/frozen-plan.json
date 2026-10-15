@@ -1,0 +1,35 @@
+{
+  "policies": [
+    "none",
+    "peak20",
+    "peak100",
+    "peak300",
+    "slow-rms100"
+  ],
+  "positive": 0.7,
+  "negative": 0.55,
+  "minimum_samples_strictly_greater": 1440,
+  "peak_target": 0.1,
+  "slow_rms_target": 0.02,
+  "slow_gain_cap": 100,
+  "slow_gain_rise_seconds": 1.0,
+  "slow_gain_fall_seconds": 0.05,
+  "slow_peak_guard": 0.95,
+  "slow_initial_gain": 1,
+  "slow_frame_samples": 512,
+  "hard_energy_rejection": false,
+  "seed": 9182029,
+  "retuning": false,
+  "known_windows": 343,
+  "new_transform_windows": 100,
+  "quantization_pair_sources": 33,
+  "attenuation_db": [
+    -40,
+    -60
+  ],
+  "source_holdout": false,
+  "asr_calls": 0,
+  "model_adopted": false,
+  "correction_implemented": false,
+  "cloud_inference": false
+}

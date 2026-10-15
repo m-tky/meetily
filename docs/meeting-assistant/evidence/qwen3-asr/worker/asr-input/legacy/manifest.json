@@ -1,0 +1,452 @@
+{
+  "rows": [
+    {
+      "id": "legacy-0-float32",
+      "path": "/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/diagnostics/float-asr-legacy-r1/legacy-0-float32.f32le",
+      "sha256": "67b072ab82a1aaf359cdc0a54dc38432f9e897982053776dce2582776b02016f",
+      "samples": 15125,
+      "reference": "車",
+      "language": "Japanese",
+      "role": "speech",
+      "suite": "legacy-noise",
+      "representation": "float32",
+      "pair_id": "legacy-0",
+      "gate_detected": true,
+      "gate_speech_samples": 14805,
+      "legacy_wav_sha256": "ee4160c415d499a69d4d8027f8f17562acb83020fc381b7f7bf13421e4b6d4c9",
+      "source_record": {
+        "title": "File:LL-Q5287 (jpn)-葵心-車.wav",
+        "published_reference": "車",
+        "speaker": "葵心",
+        "api": "https://commons.wikimedia.org/w/api.php?action=query&format=json&titles=File%3ALL-Q5287+%28jpn%29-%E8%91%B5%E5%BF%83-%E8%BB%8A.wav&prop=imageinfo%7Crevisions&rvprop=ids&iiprop=url%7Ctimestamp%7Csha1%7Cextmetadata",
+        "page_revision": 949211878,
+        "source_url": "https://commons.wikimedia.org/wiki/File:LL-Q5287_(jpn)-%E8%91%B5%E5%BF%83-%E8%BB%8A.wav",
+        "source_audio_sha1": "4c6807adec1083901f567f97009ab79f5a743996",
+        "source_audio_sha256": "862efd37ca6ca8ee2563aa8d0ce8ec5ef92a3899e86f049e13ad0c3965e456e2",
+        "converted_sha256": "23dbb51f080b9d84c8fff8a39b3d9eb1b56fde4adeb06608baff78f88e8aa2ed",
+        "converted_seconds": 0.9453125,
+        "timestamp": "2024-10-24T09:31:26Z",
+        "extmetadata": {
+          "DateTime": {
+            "value": "2024-10-24 09:31:26",
+            "source": "mediawiki-metadata",
+            "hidden": ""
+          },
+          "ObjectName": {
+            "value": "LL-Q5287 (jpn)-葵心-車",
+            "source": "mediawiki-metadata"
+          },
+          "CommonsMetadataExtension": {
+            "value": 1.2,
+            "source": "extension",
+            "hidden": ""
+          },
+          "Categories": {
+            "value": "CC-Zero|Lingua Libre pronunciation by 葵心|Lingua Libre pronunciation-jpn",
+            "source": "commons-categories",
+            "hidden": ""
+          },
+          "Assessments": {
+            "value": "",
+            "source": "commons-categories",
+            "hidden": ""
+          },
+          "ImageDescription": {
+            "value": "<span class=\"plainlinks\">Audio pronunciation file from the <b><a rel=\"nofollow\" class=\"external text\" href=\"https://lingualibre.org\">Lingua Libre</a></b> <span typeof=\"mw:File\"><a href=\"https://lingualibre.org\" rel=\"nofollow\"><img alt=\"Lingua Libre\" src=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Lingualibre-logo-no-text.svg/40px-Lingualibre-logo-no-text.svg.png?utm_source=commons.wikimedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail\" decoding=\"async\" loading=\"lazy\" width=\"22\" height=\"22\" class=\"mw-file-element\" srcset=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Lingualibre-logo-no-text.svg/60px-Lingualibre-logo-no-text.svg.png?utm_source=commons.wikimedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail 2x\" data-file-width=\"185\" data-file-height=\"185\"></a></span> project. </span>",
+            "source": "commons-desc-page"
+          },
+          "DateTimeOriginal": {
+            "value": "2024-10-24",
+            "source": "commons-desc-page"
+          },
+          "Credit": {
+            "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+            "source": "commons-desc-page"
+          },
+          "Artist": {
+            "value": "<ul><li>Speaker: <a href=\"//lingualibre.org/wiki/Q1392056\" class=\"extiw\" title=\"lingualibre:Q1392056\">葵心</a></li>\n<li>Recorder: <a href=\"//commons.wikimedia.org/w/index.php?title=User:%E8%91%B5%E5%BF%83&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:葵心 (page does not exist)\">葵心</a></li></ul>",
+            "source": "commons-desc-page"
+          },
+          "LicenseShortName": {
+            "value": "CC0",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "UsageTerms": {
+            "value": "Creative Commons Zero, Public Domain Dedication",
+            "source": "commons-desc-page"
+          },
+          "AttributionRequired": {
+            "value": "false",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "LicenseUrl": {
+            "value": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+            "source": "commons-desc-page"
+          },
+          "Copyrighted": {
+            "value": "True",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "Restrictions": {
+            "value": "",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "License": {
+            "value": "cc0",
+            "source": "commons-templates",
+            "hidden": ""
+          }
+        },
+        "license": "CC0",
+        "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "reference_basis": "Published Lingua Libre file transcription; not ASR/not listened",
+        "modifications": "mono16k PCM16, attenuation, silence padding and synthetic white noise"
+      },
+      "common_gain": 1.0
+    },
+    {
+      "id": "legacy-0-pcm16",
+      "path": "/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/diagnostics/float-asr-legacy-r1/legacy-0-pcm16.f32le",
+      "sha256": "a704a612cc7d0b326751d0eedb949b28fe1c3c0962185f9ac6765e6cc7171ea8",
+      "samples": 15125,
+      "reference": "車",
+      "language": "Japanese",
+      "role": "speech",
+      "suite": "legacy-noise",
+      "representation": "pcm16",
+      "pair_id": "legacy-0",
+      "gate_detected": true,
+      "gate_speech_samples": 14805,
+      "legacy_wav_sha256": "ee4160c415d499a69d4d8027f8f17562acb83020fc381b7f7bf13421e4b6d4c9",
+      "source_record": {
+        "title": "File:LL-Q5287 (jpn)-葵心-車.wav",
+        "published_reference": "車",
+        "speaker": "葵心",
+        "api": "https://commons.wikimedia.org/w/api.php?action=query&format=json&titles=File%3ALL-Q5287+%28jpn%29-%E8%91%B5%E5%BF%83-%E8%BB%8A.wav&prop=imageinfo%7Crevisions&rvprop=ids&iiprop=url%7Ctimestamp%7Csha1%7Cextmetadata",
+        "page_revision": 949211878,
+        "source_url": "https://commons.wikimedia.org/wiki/File:LL-Q5287_(jpn)-%E8%91%B5%E5%BF%83-%E8%BB%8A.wav",
+        "source_audio_sha1": "4c6807adec1083901f567f97009ab79f5a743996",
+        "source_audio_sha256": "862efd37ca6ca8ee2563aa8d0ce8ec5ef92a3899e86f049e13ad0c3965e456e2",
+        "converted_sha256": "23dbb51f080b9d84c8fff8a39b3d9eb1b56fde4adeb06608baff78f88e8aa2ed",
+        "converted_seconds": 0.9453125,
+        "timestamp": "2024-10-24T09:31:26Z",
+        "extmetadata": {
+          "DateTime": {
+            "value": "2024-10-24 09:31:26",
+            "source": "mediawiki-metadata",
+            "hidden": ""
+          },
+          "ObjectName": {
+            "value": "LL-Q5287 (jpn)-葵心-車",
+            "source": "mediawiki-metadata"
+          },
+          "CommonsMetadataExtension": {
+            "value": 1.2,
+            "source": "extension",
+            "hidden": ""
+          },
+          "Categories": {
+            "value": "CC-Zero|Lingua Libre pronunciation by 葵心|Lingua Libre pronunciation-jpn",
+            "source": "commons-categories",
+            "hidden": ""
+          },
+          "Assessments": {
+            "value": "",
+            "source": "commons-categories",
+            "hidden": ""
+          },
+          "ImageDescription": {
+            "value": "<span class=\"plainlinks\">Audio pronunciation file from the <b><a rel=\"nofollow\" class=\"external text\" href=\"https://lingualibre.org\">Lingua Libre</a></b> <span typeof=\"mw:File\"><a href=\"https://lingualibre.org\" rel=\"nofollow\"><img alt=\"Lingua Libre\" src=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Lingualibre-logo-no-text.svg/40px-Lingualibre-logo-no-text.svg.png?utm_source=commons.wikimedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail\" decoding=\"async\" loading=\"lazy\" width=\"22\" height=\"22\" class=\"mw-file-element\" srcset=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Lingualibre-logo-no-text.svg/60px-Lingualibre-logo-no-text.svg.png?utm_source=commons.wikimedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail 2x\" data-file-width=\"185\" data-file-height=\"185\"></a></span> project. </span>",
+            "source": "commons-desc-page"
+          },
+          "DateTimeOriginal": {
+            "value": "2024-10-24",
+            "source": "commons-desc-page"
+          },
+          "Credit": {
+            "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+            "source": "commons-desc-page"
+          },
+          "Artist": {
+            "value": "<ul><li>Speaker: <a href=\"//lingualibre.org/wiki/Q1392056\" class=\"extiw\" title=\"lingualibre:Q1392056\">葵心</a></li>\n<li>Recorder: <a href=\"//commons.wikimedia.org/w/index.php?title=User:%E8%91%B5%E5%BF%83&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:葵心 (page does not exist)\">葵心</a></li></ul>",
+            "source": "commons-desc-page"
+          },
+          "LicenseShortName": {
+            "value": "CC0",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "UsageTerms": {
+            "value": "Creative Commons Zero, Public Domain Dedication",
+            "source": "commons-desc-page"
+          },
+          "AttributionRequired": {
+            "value": "false",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "LicenseUrl": {
+            "value": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+            "source": "commons-desc-page"
+          },
+          "Copyrighted": {
+            "value": "True",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "Restrictions": {
+            "value": "",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "License": {
+            "value": "cc0",
+            "source": "commons-templates",
+            "hidden": ""
+          }
+        },
+        "license": "CC0",
+        "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "reference_basis": "Published Lingua Libre file transcription; not ASR/not listened",
+        "modifications": "mono16k PCM16, attenuation, silence padding and synthetic white noise"
+      },
+      "common_gain": 1.0
+    },
+    {
+      "id": "legacy-1-float32",
+      "path": "/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/diagnostics/float-asr-legacy-r1/legacy-1-float32.f32le",
+      "sha256": "35a4e2b06a6fe0b5a991c1104acf821e88b311d51bcad59ba062fe94bc20130c",
+      "samples": 12416,
+      "reference": "本",
+      "language": "Japanese",
+      "role": "speech",
+      "suite": "legacy-noise",
+      "representation": "float32",
+      "pair_id": "legacy-1",
+      "gate_detected": true,
+      "gate_speech_samples": 12416,
+      "legacy_wav_sha256": "10bd02970a138daca5a7d6e53db86406c24d9df587535de564b6180a5b75ac4f",
+      "source_record": {
+        "title": "File:LL-Q5287 (jpn)-Fukujinzuke-本.wav",
+        "published_reference": "本",
+        "speaker": "Fukujinzuke",
+        "api": "https://commons.wikimedia.org/w/api.php?action=query&format=json&titles=File%3ALL-Q5287+%28jpn%29-Fukujinzuke-%E6%9C%AC.wav&prop=imageinfo%7Crevisions&rvprop=ids&iiprop=url%7Ctimestamp%7Csha1%7Cextmetadata",
+        "page_revision": 1283541552,
+        "source_url": "https://commons.wikimedia.org/wiki/File:LL-Q5287_(jpn)-Fukujinzuke-%E6%9C%AC.wav",
+        "source_audio_sha1": "ecf98450707964918c4e9353d5d77a327c52bb25",
+        "source_audio_sha256": "8d894c7f1986c3fab84f2fdd0019062c1d5b984216a9a073c6d7b32ef6fb2555",
+        "converted_sha256": "d1780859bf2d8e3408dbb19280b7d50060844bd7c6f644aea17a1fec45c00209",
+        "converted_seconds": 0.776,
+        "timestamp": "2026-10-05T19:39:20Z",
+        "extmetadata": {
+          "DateTime": {
+            "value": "2026-10-05 19:39:20",
+            "source": "mediawiki-metadata",
+            "hidden": ""
+          },
+          "ObjectName": {
+            "value": "LL-Q5287 (jpn)-Fukujinzuke-本",
+            "source": "mediawiki-metadata"
+          },
+          "CommonsMetadataExtension": {
+            "value": 1.2,
+            "source": "extension",
+            "hidden": ""
+          },
+          "Categories": {
+            "value": "Creative Commons Attribution 4.0 missing SDC copyright license|Creative Commons Attribution missing SDC copyright status|Lingua Libre pronunciation-jpn",
+            "source": "commons-categories",
+            "hidden": ""
+          },
+          "Assessments": {
+            "value": "",
+            "source": "commons-categories",
+            "hidden": ""
+          },
+          "ImageDescription": {
+            "value": "<span class=\"plainlinks\">Audio pronunciation file from the <b><a rel=\"nofollow\" class=\"external text\" href=\"https://lingualibre.org\">Lingua Libre</a></b> <span typeof=\"mw:File\"><a href=\"https://lingualibre.org\" rel=\"nofollow\"><img alt=\"Lingua Libre\" src=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Lingualibre-logo-no-text.svg/40px-Lingualibre-logo-no-text.svg.png?utm_source=commons.wikimedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail\" decoding=\"async\" loading=\"lazy\" width=\"22\" height=\"22\" class=\"mw-file-element\" srcset=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Lingualibre-logo-no-text.svg/60px-Lingualibre-logo-no-text.svg.png?utm_source=commons.wikimedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail 2x\" data-file-width=\"185\" data-file-height=\"185\"></a></span> project. </span>",
+            "source": "commons-desc-page"
+          },
+          "DateTimeOriginal": {
+            "value": "2026-10-05",
+            "source": "commons-desc-page"
+          },
+          "Credit": {
+            "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+            "source": "commons-desc-page"
+          },
+          "Artist": {
+            "value": "<ul><li>Speaker: Fukujinzuke</li>\n<li>Recorder: <a href=\"//commons.wikimedia.org/wiki/User:Fukujinzuke\" title=\"User:Fukujinzuke\">Fukujinzuke</a></li></ul>",
+            "source": "commons-desc-page"
+          },
+          "LicenseShortName": {
+            "value": "CC BY 4.0",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "UsageTerms": {
+            "value": "Creative Commons Attribution 4.0",
+            "source": "commons-desc-page"
+          },
+          "AttributionRequired": {
+            "value": "true",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "LicenseUrl": {
+            "value": "https://creativecommons.org/licenses/by/4.0",
+            "source": "commons-desc-page"
+          },
+          "Copyrighted": {
+            "value": "True",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "Restrictions": {
+            "value": "",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "License": {
+            "value": "cc-by-4.0",
+            "source": "commons-templates",
+            "hidden": ""
+          }
+        },
+        "license": "CC BY 4.0",
+        "license_url": "https://creativecommons.org/licenses/by/4.0",
+        "reference_basis": "Published Lingua Libre file transcription; not ASR/not listened",
+        "modifications": "mono16k PCM16, attenuation, silence padding and synthetic white noise"
+      },
+      "common_gain": 1.0
+    },
+    {
+      "id": "legacy-1-pcm16",
+      "path": "/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/diagnostics/float-asr-legacy-r1/legacy-1-pcm16.f32le",
+      "sha256": "b80d8066f85f25e32454ffce340bc16e3742de82e802f8a644eb6a88a4e02ee5",
+      "samples": 12416,
+      "reference": "本",
+      "language": "Japanese",
+      "role": "speech",
+      "suite": "legacy-noise",
+      "representation": "pcm16",
+      "pair_id": "legacy-1",
+      "gate_detected": true,
+      "gate_speech_samples": 12416,
+      "legacy_wav_sha256": "10bd02970a138daca5a7d6e53db86406c24d9df587535de564b6180a5b75ac4f",
+      "source_record": {
+        "title": "File:LL-Q5287 (jpn)-Fukujinzuke-本.wav",
+        "published_reference": "本",
+        "speaker": "Fukujinzuke",
+        "api": "https://commons.wikimedia.org/w/api.php?action=query&format=json&titles=File%3ALL-Q5287+%28jpn%29-Fukujinzuke-%E6%9C%AC.wav&prop=imageinfo%7Crevisions&rvprop=ids&iiprop=url%7Ctimestamp%7Csha1%7Cextmetadata",
+        "page_revision": 1283541552,
+        "source_url": "https://commons.wikimedia.org/wiki/File:LL-Q5287_(jpn)-Fukujinzuke-%E6%9C%AC.wav",
+        "source_audio_sha1": "ecf98450707964918c4e9353d5d77a327c52bb25",
+        "source_audio_sha256": "8d894c7f1986c3fab84f2fdd0019062c1d5b984216a9a073c6d7b32ef6fb2555",
+        "converted_sha256": "d1780859bf2d8e3408dbb19280b7d50060844bd7c6f644aea17a1fec45c00209",
+        "converted_seconds": 0.776,
+        "timestamp": "2026-10-05T19:39:20Z",
+        "extmetadata": {
+          "DateTime": {
+            "value": "2026-10-05 19:39:20",
+            "source": "mediawiki-metadata",
+            "hidden": ""
+          },
+          "ObjectName": {
+            "value": "LL-Q5287 (jpn)-Fukujinzuke-本",
+            "source": "mediawiki-metadata"
+          },
+          "CommonsMetadataExtension": {
+            "value": 1.2,
+            "source": "extension",
+            "hidden": ""
+          },
+          "Categories": {
+            "value": "Creative Commons Attribution 4.0 missing SDC copyright license|Creative Commons Attribution missing SDC copyright status|Lingua Libre pronunciation-jpn",
+            "source": "commons-categories",
+            "hidden": ""
+          },
+          "Assessments": {
+            "value": "",
+            "source": "commons-categories",
+            "hidden": ""
+          },
+          "ImageDescription": {
+            "value": "<span class=\"plainlinks\">Audio pronunciation file from the <b><a rel=\"nofollow\" class=\"external text\" href=\"https://lingualibre.org\">Lingua Libre</a></b> <span typeof=\"mw:File\"><a href=\"https://lingualibre.org\" rel=\"nofollow\"><img alt=\"Lingua Libre\" src=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Lingualibre-logo-no-text.svg/40px-Lingualibre-logo-no-text.svg.png?utm_source=commons.wikimedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail\" decoding=\"async\" loading=\"lazy\" width=\"22\" height=\"22\" class=\"mw-file-element\" srcset=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/55/Lingualibre-logo-no-text.svg/60px-Lingualibre-logo-no-text.svg.png?utm_source=commons.wikimedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail 2x\" data-file-width=\"185\" data-file-height=\"185\"></a></span> project. </span>",
+            "source": "commons-desc-page"
+          },
+          "DateTimeOriginal": {
+            "value": "2026-10-05",
+            "source": "commons-desc-page"
+          },
+          "Credit": {
+            "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+            "source": "commons-desc-page"
+          },
+          "Artist": {
+            "value": "<ul><li>Speaker: Fukujinzuke</li>\n<li>Recorder: <a href=\"//commons.wikimedia.org/wiki/User:Fukujinzuke\" title=\"User:Fukujinzuke\">Fukujinzuke</a></li></ul>",
+            "source": "commons-desc-page"
+          },
+          "LicenseShortName": {
+            "value": "CC BY 4.0",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "UsageTerms": {
+            "value": "Creative Commons Attribution 4.0",
+            "source": "commons-desc-page"
+          },
+          "AttributionRequired": {
+            "value": "true",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "LicenseUrl": {
+            "value": "https://creativecommons.org/licenses/by/4.0",
+            "source": "commons-desc-page"
+          },
+          "Copyrighted": {
+            "value": "True",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "Restrictions": {
+            "value": "",
+            "source": "commons-desc-page",
+            "hidden": ""
+          },
+          "License": {
+            "value": "cc-by-4.0",
+            "source": "commons-templates",
+            "hidden": ""
+          }
+        },
+        "license": "CC BY 4.0",
+        "license_url": "https://creativecommons.org/licenses/by/4.0",
+        "reference_basis": "Published Lingua Libre file transcription; not ASR/not listened",
+        "modifications": "mono16k PCM16, attenuation, silence padding and synthetic white noise"
+      },
+      "common_gain": 1.0
+    }
+  ],
+  "model_hashes": {
+    "config.json": "2e74a751548b8ad7d7526d29365ad8144c345d8b412b1152d25dc6698452712f",
+    "derived-tokenizer.json": "71fae83983a7fb082b1780e06e72bd4448ef47591960f281f2d6edaa7fc3e6dc",
+    "generation_config.json": "1da527824d81e07118facff437e03f2e24a23311e3bdeb2368973fe77e5f275c",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "model-00001-of-00002.safetensors": "a4cd1f1a04d90b757dc7f7dd26254e69a013b19e80efe590a83c6a3bde8608d6",
+    "model-00002-of-00002.safetensors": "6e0b9d9e09e2e0238e7ef3cc8a484ab387e91b90f1900bedf88bc92d7929ccfc",
+    "model.safetensors.index.json": "f994739fe38e5210b9e3e8ce6c6307315e2ceac3cb630e7b7414d69dce520f60",
+    "preprocessor_config.json": "45e120a4eda2c20c5d7f2ea9354e63536bf35e27aa573fb7cdf78017b378770d",
+    "provenance.json": "e2d47e6b22501af6a87a45c06f407bec46a73708b7b3aa126f7e4aa4ce51e919",
+    "qwen-asr-int8.sidecar": "f3787dab72eaa5881e142a23ecf093a959f0d8431e0d4cf882ed1670f089772d",
+    "tokenizer.json": "bd2a97b55c8f7f9c328c73ee9b9178771037e9f566dfca8e238a063d41cbac92",
+    "tokenizer_config.json": "4942d005604266809309cabc9f4e9cb89ce855d59b14681fdc0e1cc62ea26c4c",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  "exact_legacy_signal": true
+}

@@ -20,6 +20,8 @@ export interface RecordingStoppedPayload {
   message: string;
   folder_path?: string;
   meeting_name?: string;
+  save_succeeded?: boolean;
+  save_error?: string | null;
 }
 
 // Bound the start invoke: > ~40s Bluetooth mic cold-start and ~90s worst-case
@@ -180,6 +182,10 @@ export class RecordingService {
    * @param callback - Function to call when chunks are dropped
    * @returns Promise that resolves to unlisten function
    */
+  async onRecordingSaveWarning(callback: (warning: string) => void): Promise<UnlistenFn> {
+    return listen<string>('recording-save-warning', event => callback(event.payload));
+  }
+
   async onChunkDropWarning(callback: (warning: string) => void): Promise<UnlistenFn> {
     return listen<string>('chunk-drop-warning', (event) => {
       callback(event.payload);

@@ -343,6 +343,7 @@ impl SummaryService {
         custom_prompt: String,
         template_id: String,
         summary_language: Option<String>,
+        bound_provider: Option<LLMProvider>,
     ) {
         let start_time = Instant::now();
         info!(
@@ -351,7 +352,7 @@ impl SummaryService {
         );
 
         // Parse provider
-        let provider = match LLMProvider::from_str(&model_provider) {
+        let provider = match bound_provider.map(Ok).unwrap_or_else(|| LLMProvider::from_str(&model_provider)) {
             Ok(p) => p,
             Err(e) => {
                 Self::fail_and_cleanup(&pool, &meeting_id, started_at, &e).await;
@@ -360,7 +361,7 @@ impl SummaryService {
         };
 
         // Validate and setup api_key, Flexible for Ollama, BuiltInAI, and CustomOpenAI
-        let api_key = if provider == LLMProvider::Ollama || provider == LLMProvider::BuiltInAI || provider == LLMProvider::CustomOpenAI {
+        let api_key = if provider == LLMProvider::Ollama || provider == LLMProvider::BuiltInAI || provider == LLMProvider::CustomOpenAI || matches!(provider, LLMProvider::ChatGptPlan { .. }) {
             // These providers don't require API keys from the standard database column
             String::new()
         } else {

@@ -1,0 +1,55 @@
+{
+  "candidate": {
+    "model_revision": "1e261b036686cd0017d500ee96acd1c4ba572a9d",
+    "gain_policy": "peak20",
+    "positive": 0.7,
+    "negative": 0.55,
+    "minimum_ms_strictly_greater": 90
+  },
+  "controls": [
+    {
+      "model": "v4",
+      "gain_policy": "peak20",
+      "positive": 0.5,
+      "minimum_ms": 90
+    },
+    {
+      "model": "current",
+      "gain_policy": "peak20",
+      "positive": 0.5,
+      "minimum_ms": 90
+    }
+  ],
+  "retuning": false,
+  "seeds": [
+    7212027,
+    7212028
+  ],
+  "source_holdout": false,
+  "unseen_transformations_of_other_26_fleurs": true,
+  "lexical_sources": [
+    [
+      "File:LL-Q5287 (jpn)-葵心-車.wav",
+      "車",
+      "葵心"
+    ],
+    [
+      "File:LL-Q5287 (jpn)-Fukujinzuke-本.wav",
+      "本",
+      "Fukujinzuke"
+    ]
+  ],
+  "conversational_acknowledgements": false,
+  "speech_conditions": [
+    "clean",
+    "gain-20dB",
+    "gain-40dB",
+    "white-snr20",
+    "white-snr10",
+    "white-snr0",
+    "lowpass-snr10",
+    "bursts-snr10"
+  ],
+  "negatives": "2 seeds x white/lowpass/bursts/new-frequency-tones x4RMS +2silences",
+  "scope": "VAD presence only; no ASR rerun/model adoption/app integration"
+}

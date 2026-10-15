@@ -8,6 +8,7 @@ import Analytics from "@/lib/analytics";
 import { invoke } from "@tauri-apps/api/core";
 import { LoaderIcon } from "lucide-react";
 import { useConfig } from "@/contexts/ConfigContext";
+import { useMinutesSettings } from '@/contexts/MinutesSettingsContext';
 import { usePaginatedTranscripts } from "@/hooks/usePaginatedTranscripts";
 import { parseSummaryContent } from "@/lib/summary-content";
 
@@ -26,6 +27,7 @@ function MeetingDetailsContent() {
   const source = searchParams.get('source'); // Check if navigated from recording
   const { setCurrentMeeting, refetchMeetings } = useSidebar();
   const { isAutoSummary } = useConfig(); // Get auto-summary toggle state
+  const { settings: minutesSettings, loaded: minutesLoaded } = useMinutesSettings();
   const router = useRouter();
   const [meetingDetails, setMeetingDetails] = useState<MeetingDetailsResponse | null>(null);
   const [summaryResponse, setSummaryResponse] = useState<SummaryProcessResponse | null>(null);
@@ -65,7 +67,12 @@ function MeetingDetailsContent() {
 
   // Set up auto-generation - respects DB as source of truth
   const setupAutoGeneration = useCallback(async () => {
-    if (hasCheckedAutoGen) return; // Only check once
+    if (hasCheckedAutoGen || !minutesLoaded) return;
+    if (minutesSettings.provider === 'chatgpt_plan') {
+      setShouldAutoGenerate(false);
+      setHasCheckedAutoGen(true);
+      return; // A saved cloud model is not per-meeting upload consent.
+    }
 
     // Only auto-generate if navigated from recording
     if (source !== 'recording') {
@@ -116,7 +123,7 @@ function MeetingDetailsContent() {
     }
 
     setHasCheckedAutoGen(true);
-  }, [hasCheckedAutoGen, checkForGemmaModel, source, isAutoSummary]);
+  }, [hasCheckedAutoGen, checkForGemmaModel, source, isAutoSummary, minutesLoaded, minutesSettings.provider]);
 
   // Sync meeting metadata from pagination hook to meeting details state
   useEffect(() => {

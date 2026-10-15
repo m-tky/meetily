@@ -24,6 +24,8 @@ impl From<NaiveDateTime> for DateTimeUtc {
 // Renamed from TranscriptSegment to Transcript to match the table name
 #[derive(Debug, Clone, FromRow, Serialize, Deserialize)]
 pub struct Transcript {
+    #[serde(default)]
+    pub speaker: Option<String>,
     pub id: String,
     pub meeting_id: String,
     pub transcript: String,

@@ -20,6 +20,9 @@ pub struct AudioChunk {
     pub data: Vec<f32>,
     pub sample_rate: u32,
     pub timestamp: f64,
+    /// Backend-estimated first sample capture time on the pause-adjusted
+    /// session timeline. None is explicitly unknown, never arrival time.
+    pub capture_timestamp: Option<f64>,
     pub chunk_id: u64,
     pub device_type: DeviceType,
 }
@@ -143,10 +146,25 @@ impl RecordingState {
         })
     }
 
+    /// Map a backend-derived monotonic instant onto the recording timeline.
+    /// Call while recording: a paused callback is not valid captured audio.
+    pub fn capture_time_at(&self, at: Instant) -> Option<f64> {
+        if !self.is_active() { return None; }
+        let start = (*self.recording_start.lock().ok()?)?;
+        let elapsed = if at >= start { at.duration_since(start).as_secs_f64() }
+            else { -start.duration_since(at).as_secs_f64() };
+        Some(elapsed - self.total_pause_duration.lock().ok()?.as_secs_f64())
+    }
+
+    pub fn capture_generation(&self) -> u64 { self.total_pause_duration.lock().unwrap().as_nanos() as u64 }
+
     // Recording control
     pub fn start_recording(&self) -> Result<()> {
-        self.is_recording.store(true, Ordering::SeqCst);
         *self.recording_start.lock().unwrap() = Some(Instant::now());
+        *self.total_pause_duration.lock().unwrap() = std::time::Duration::ZERO;
+        *self.pause_start.lock().unwrap() = None;
+        self.is_paused.store(false, Ordering::SeqCst);
+        self.is_recording.store(true, Ordering::SeqCst);
         self.error_count.store(0, Ordering::SeqCst);
         self.recoverable_error_count.store(0, Ordering::SeqCst);
         *self.last_error.lock().unwrap() = None;
@@ -403,6 +421,30 @@ impl Default for RecordingState {
             pause_start: Mutex::new(None),
             total_pause_duration: Mutex::new(std::time::Duration::ZERO),
         }
+    }
+}
+
+#[cfg(test)]
+mod capture_time_tests {
+    use super::*;
+    #[test]
+    fn capture_clock_maps_pre_start_and_pause_adjusted_instants_without_wall_clock() {
+        let state=RecordingState::new(); state.start_recording().unwrap();
+        let epoch=state.recording_start.lock().unwrap().unwrap();
+        assert_eq!(state.capture_time_at(epoch-std::time::Duration::from_millis(10)),Some(-0.01));
+        *state.total_pause_duration.lock().unwrap()=std::time::Duration::from_secs(1);
+        assert_eq!(state.capture_time_at(epoch+std::time::Duration::from_secs(2)),Some(1.0));
+        assert_eq!(state.capture_generation(),1_000_000_000);
+        state.pause_recording().unwrap(); assert!(state.capture_time_at(Instant::now()).is_none());
+        state.stop_recording(); assert!(state.capture_time_at(Instant::now()).is_none());
+    }
+    #[test]
+    fn new_session_resets_old_pause_duration() {
+        let state=RecordingState::new(); state.start_recording().unwrap();
+        *state.total_pause_duration.lock().unwrap()=std::time::Duration::from_secs(5);
+        state.stop_recording(); state.start_recording().unwrap();
+        assert_eq!(state.capture_generation(),0);
+        assert!(state.get_recording_duration().unwrap() < 1.0);
     }
 }
 

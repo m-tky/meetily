@@ -482,6 +482,10 @@ pub async fn api_process_transcript<R: Runtime>(
         &model
     );
 
+    // Freeze the verified account before starting the background/chunk pipeline.
+    let bound_provider = if model == "chatgpt_plan" {
+        Some(crate::summary::LLMProvider::bind_chatgpt(&app, &model_name).await?)
+    } else { None };
     let pool = state.db_manager.pool().clone();
     let final_prompt = custom_prompt.unwrap_or_else(|| "".to_string());
     let final_template_id = template_id.unwrap_or_else(|| "daily_standup".to_string());
@@ -539,6 +543,7 @@ pub async fn api_process_transcript<R: Runtime>(
             final_prompt,
             final_template_id,
             summary_language,
+            bound_provider,
         )
         .await;
     });

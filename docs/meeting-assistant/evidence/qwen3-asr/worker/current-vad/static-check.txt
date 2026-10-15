@@ -1,0 +1,87 @@
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running unittests src/lib.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/deps/qwen_speech_worker-1981b5e748b593fe)
+
+running 13 tests
+test tests::empty_or_nonfinite_audio_rejected ... ok
+test tests::gain_bounded_and_not_silence_gate ... ok
+test tests::overlapping_padding_merged ... ok
+test tests::last_partial_frame_not_lost ... ok
+test tests::no_speech_tail_has_no_interval ... ok
+test tests::recognition_keeps_internal_pause_and_empty_stays_empty ... ok
+test tests::real_acknowledgements_not_blacklisted ... ok
+test tests::repetition_only_flags_and_limit_flags ... ok
+test tests::request_limits_and_eof ... ok
+test vad::tests::endpoint_hysteresis_and_real_tail ... ok
+test vad::tests::invalid_probabilities_and_frame_counts_reject ... ok
+test vad::tests::official_geometry_and_short_speech_at_eof ... ok
+test vad::tests::padding_does_not_authorize_under_minimum_real_speech ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/deps/qwen_speech_worker-1b4a638d38fb99ff)
+
+running 2 tests
+test tests::ids_bounded_and_unique_format ... ok
+test tests::unknown_fields_rejected ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests qwen_speech_worker
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running unittests examples/current_vad_probe.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/examples/current_vad_probe-41957cb0acb10d2d)
+
+running 2 tests
+test tests::incompatible_frames_reject ... ok
+test tests::official_frame_context_and_padding ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+V4 endpoint reference: 306 cases passed (seed 512)
+test_default_scalar_parity (test_gate_diagnostics.Tests.test_default_scalar_parity) ... ok
+test_invalid_probabilities (test_gate_diagnostics.Tests.test_invalid_probabilities) ... ok
+test_threshold_and_real_eof (test_gate_diagnostics.Tests.test_threshold_and_real_eof) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.024s
+
+OK
+test_seeded_unit_rms (test_robustness.Tests.test_seeded_unit_rms) ... ok
+test_snr_and_common_gain (test_robustness.Tests.test_snr_and_common_gain) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.090s
+
+OK
+test_busy_rejects_not_queue (test_worker_client.Tests.test_busy_rejects_not_queue) ... ok
+test_excessive_response (test_worker_client.Tests.test_excessive_response) ... ok
+test_id_mismatch_fails_closed (test_worker_client.Tests.test_id_mismatch_fails_closed) ... ok
+test_timeout_kills_and_restart (test_worker_client.Tests.test_timeout_kills_and_restart) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.177s
+
+OK
+✔ modes remain separate and wrong unflagged text is retained (42.688756ms)
+✔ incorrect crop mode and missing context result reject (68.849287ms)
+✔ incomplete/duplicate ungated repeats reject (73.066525ms)
+✔ English WER uses whitespace words and preserves contractions as one word (2.885954ms)
+✔ Thai keeps combining marks; silence is not mixed into speech CER (0.550324ms)
+✔ prefix-only audio is timing-only; missing accuracy rows are explicit (0.223116ms)
+✔ Candle control separator is not counted as a spoken recognition error; raw output retained (0.220095ms)
+✔ unknown ID, mismatched duration, failures and duplicates reject (0.3956ms)
+✔ missed speech counts full deletion and non-speech insertions remain raw (39.427282ms)
+✔ incomplete and duplicated measurements reject (65.983623ms)
+✔ mismatched fixture hashes reject (38.318914ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 240.359501

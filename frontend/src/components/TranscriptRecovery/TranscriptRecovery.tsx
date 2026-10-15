@@ -154,11 +154,11 @@ export function TranscriptRecovery({
                         </p>
                       </div>
                       {meeting.folderPath ? (
-                        <span title="Audio available">
+                        <span title="Folder path retained; audio not verified">
                           <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
                         </span>
                       ) : (
-                        <span title="No audio">
+                        <span title="No saved folder path">
                           <AlertCircle className="w-4 h-4 text-yellow-500 flex-shrink-0" />
                         </span>
                       )}
@@ -189,12 +189,12 @@ export function TranscriptRecovery({
                       {selectedMeeting.folderPath ? (
                         <span className="flex items-center gap-1 text-green-600">
                           <CheckCircle2 className="w-4 h-4" />
-                          Audio available
+                          Folder path retained (audio unverified)
                         </span>
                       ) : (
                         <span className="flex items-center gap-1 text-yellow-600">
                           <AlertCircle className="w-4 h-4" />
-                          No audio
+                          No saved folder path
                         </span>
                       )}
                     </div>

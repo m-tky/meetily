@@ -1,5 +1,7 @@
 # Qwen3-ASR幻覚/発話保護の調査（2026-10-12）
 
+> 後続の「修正して」で独立workerを修正済み。current512/full-inputの結果は[QWEN3-ASR-WORKER-FIX.md](QWEN3-ASR-WORKER-FIX.md)へ。本書は修正前の調査履歴を保持し、production採用/会議品質の合格を意味しない。
+
 ユーザー依頼：「どうすれば解決できそうかを調べてほしい。」調査・公開fixtureの診断のみ。本体capture/provider、workerの現行gate/認識policy、モデル選択、既存lockは変更しない。選択は1.7B decoder INT8（encoder/prefill F32）のまま。音声をcloudへ送らず、実音声capture/playback/credential参照なし。
 
 ## 結論

@@ -1176,6 +1176,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let segments = vec![
             TranscriptSegment {
+                speaker: None,
                 id: "t-1".to_string(),
                 text: "Hello world".to_string(),
                 timestamp: "2024-01-01T00:00:00Z".to_string(),
@@ -1184,6 +1185,7 @@ mod tests {
                 duration: Some(1.5),
             },
             TranscriptSegment {
+                speaker: None,
                 id: "t-2".to_string(),
                 text: "Second segment".to_string(),
                 timestamp: "2024-01-01T00:00:01Z".to_string(),

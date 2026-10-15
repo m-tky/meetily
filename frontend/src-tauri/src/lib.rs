@@ -612,7 +612,11 @@ pub fn run() {
             }
         })
         .invoke_handler(tauri::generate_handler![
+            live_minutes::document::api_read_live_minutes,
+            live_minutes::document::api_edit_live_minutes,
+            live_minutes::document::api_export_live_minutes,
             live_minutes::api_update_live_minutes,
+            live_minutes::session::api_get_live_minutes_session,
             live_minutes::api_test_live_minutes_fixture,
             siwc::chatgpt_sign_in,
             siwc::chatgpt_status,
@@ -664,6 +668,12 @@ pub fn run() {
             whisper_engine::commands::whisper_cancel_download,
             whisper_engine::commands::whisper_delete_corrupted_model,
             // Parakeet engine commands
+            audio::transcription::qwen_provider::qwen_is_supported,
+            audio::transcription::qwen_provider::qwen_get_settings,
+            audio::transcription::qwen_provider::qwen_save_settings,
+            audio::transcription::qwen_provider::qwen_init,
+            audio::transcription::qwen_provider::qwen_has_available_models,
+            audio::transcription::qwen_provider::qwen_get_available_models,
             parakeet_engine::commands::parakeet_init,
             parakeet_engine::commands::parakeet_get_available_models,
             parakeet_engine::commands::parakeet_load_model,
@@ -708,6 +718,8 @@ pub fn run() {
             audio::recording_commands::get_recording_meeting_name,
             // Playback device detection (Bluetooth warning)
             audio::recording_commands::get_active_audio_output,
+            audio::recording_recovery::api_scan_recording_recovery,
+            audio::recording_recovery::api_restore_recording,
             // Audio recovery commands (for transcript recovery feature)
             audio::incremental_saver::recover_audio_from_checkpoints,
             audio::incremental_saver::cleanup_checkpoints,

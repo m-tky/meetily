@@ -1,0 +1,260 @@
+{
+  "normalization": "Existing CER/WER; no lexical/digit/synonym corrections",
+  "actual_asr_calls_first_pass": 4,
+  "fresh_processes": 2,
+  "repeat_stable_windows": 4,
+  "repeat_unstable_ids": [],
+  "baseline_fleurs_windows": 0,
+  "baseline_fixed_text_mismatch": [],
+  "groups": [
+    {
+      "suite": "legacy-noise",
+      "representation": "float32",
+      "language": "Japanese",
+      "windows": 2,
+      "gate_misses": 0,
+      "actual_asr_calls": 2,
+      "diagnostic_score": {
+        "character_errors": 2,
+        "reference_characters": 2,
+        "cer": 1,
+        "word_errors": null,
+        "reference_words": null,
+        "wer": null
+      },
+      "projected_score": {
+        "character_errors": 2,
+        "reference_characters": 2,
+        "cer": 1,
+        "word_errors": null,
+        "reference_words": null,
+        "wer": null
+      }
+    },
+    {
+      "suite": "legacy-noise",
+      "representation": "pcm16",
+      "language": "Japanese",
+      "windows": 2,
+      "gate_misses": 0,
+      "actual_asr_calls": 2,
+      "diagnostic_score": {
+        "character_errors": 2,
+        "reference_characters": 2,
+        "cer": 1,
+        "word_errors": null,
+        "reference_words": null,
+        "wer": null
+      },
+      "projected_score": {
+        "character_errors": 2,
+        "reference_characters": 2,
+        "cer": 1,
+        "word_errors": null,
+        "reference_words": null,
+        "wer": null
+      }
+    }
+  ],
+  "pairs": [
+    {
+      "pair_id": "legacy-0",
+      "suite": "legacy-noise",
+      "language": "Japanese",
+      "float32_text": "車。",
+      "pcm16_text": "車。",
+      "diagnostic_error_delta_float_minus_pcm16": 0,
+      "projected_error_delta_float_minus_pcm16": 0,
+      "float32_gate": true,
+      "pcm16_gate": true
+    },
+    {
+      "pair_id": "legacy-1",
+      "suite": "legacy-noise",
+      "language": "Japanese",
+      "float32_text": "ほう。",
+      "pcm16_text": "ほう。",
+      "diagnostic_error_delta_float_minus_pcm16": 0,
+      "projected_error_delta_float_minus_pcm16": 0,
+      "float32_gate": true,
+      "pcm16_gate": true
+    }
+  ],
+  "rows": [
+    {
+      "application_policy_changed": false,
+      "asr_calls": 1,
+      "asr_input_gain": 1,
+      "confirmed": false,
+      "gate_detected": true,
+      "id": "legacy-0-float32",
+      "inference_seconds": 1.535685435,
+      "input_samples": 15125,
+      "known_speech_diagnostic_bypass": false,
+      "language": "Japanese",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "recognition_context": "full_original_input",
+      "review_reasons": [
+        "short_speech_uncertain"
+      ],
+      "text": "車。",
+      "text_tokens": 2,
+      "threads": 6,
+      "reference": "車",
+      "fixture_sha256": "67b072ab82a1aaf359cdc0a54dc38432f9e897982053776dce2582776b02016f",
+      "repeat": 0,
+      "suite": "legacy-noise",
+      "representation": "float32",
+      "pair_id": "legacy-0",
+      "gate_missed": false,
+      "raw_text": "車。",
+      "diagnostic_score": {
+        "character_errors": 0,
+        "reference_characters": 1,
+        "word_errors": null,
+        "reference_words": null
+      },
+      "projected_text": "車。",
+      "projected_score": {
+        "character_errors": 0,
+        "reference_characters": 1,
+        "word_errors": null,
+        "reference_words": null
+      },
+      "projection_not_an_additional_actual_call": true
+    },
+    {
+      "application_policy_changed": false,
+      "asr_calls": 1,
+      "asr_input_gain": 1,
+      "confirmed": false,
+      "gate_detected": true,
+      "id": "legacy-0-pcm16",
+      "inference_seconds": 1.5041820590000001,
+      "input_samples": 15125,
+      "known_speech_diagnostic_bypass": false,
+      "language": "Japanese",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "recognition_context": "full_original_input",
+      "review_reasons": [
+        "short_speech_uncertain"
+      ],
+      "text": "車。",
+      "text_tokens": 2,
+      "threads": 6,
+      "reference": "車",
+      "fixture_sha256": "a704a612cc7d0b326751d0eedb949b28fe1c3c0962185f9ac6765e6cc7171ea8",
+      "repeat": 0,
+      "suite": "legacy-noise",
+      "representation": "pcm16",
+      "pair_id": "legacy-0",
+      "gate_missed": false,
+      "raw_text": "車。",
+      "diagnostic_score": {
+        "character_errors": 0,
+        "reference_characters": 1,
+        "word_errors": null,
+        "reference_words": null
+      },
+      "projected_text": "車。",
+      "projected_score": {
+        "character_errors": 0,
+        "reference_characters": 1,
+        "word_errors": null,
+        "reference_words": null
+      },
+      "projection_not_an_additional_actual_call": true
+    },
+    {
+      "application_policy_changed": false,
+      "asr_calls": 1,
+      "asr_input_gain": 1,
+      "confirmed": false,
+      "gate_detected": true,
+      "id": "legacy-1-float32",
+      "inference_seconds": 1.478493813,
+      "input_samples": 12416,
+      "known_speech_diagnostic_bypass": false,
+      "language": "Japanese",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "recognition_context": "full_original_input",
+      "review_reasons": [
+        "short_speech_uncertain"
+      ],
+      "text": "ほう。",
+      "text_tokens": 2,
+      "threads": 6,
+      "reference": "本",
+      "fixture_sha256": "35a4e2b06a6fe0b5a991c1104acf821e88b311d51bcad59ba062fe94bc20130c",
+      "repeat": 0,
+      "suite": "legacy-noise",
+      "representation": "float32",
+      "pair_id": "legacy-1",
+      "gate_missed": false,
+      "raw_text": "ほう。",
+      "diagnostic_score": {
+        "character_errors": 2,
+        "reference_characters": 1,
+        "word_errors": null,
+        "reference_words": null
+      },
+      "projected_text": "ほう。",
+      "projected_score": {
+        "character_errors": 2,
+        "reference_characters": 1,
+        "word_errors": null,
+        "reference_words": null
+      },
+      "projection_not_an_additional_actual_call": true
+    },
+    {
+      "application_policy_changed": false,
+      "asr_calls": 1,
+      "asr_input_gain": 1,
+      "confirmed": false,
+      "gate_detected": true,
+      "id": "legacy-1-pcm16",
+      "inference_seconds": 1.487581737,
+      "input_samples": 12416,
+      "known_speech_diagnostic_bypass": false,
+      "language": "Japanese",
+      "precision": "decoder-INT8-encoder-prefill-F32",
+      "recognition_context": "full_original_input",
+      "review_reasons": [
+        "short_speech_uncertain"
+      ],
+      "text": "ほう。",
+      "text_tokens": 2,
+      "threads": 6,
+      "reference": "本",
+      "fixture_sha256": "b80d8066f85f25e32454ffce340bc16e3742de82e802f8a644eb6a88a4e02ee5",
+      "repeat": 0,
+      "suite": "legacy-noise",
+      "representation": "pcm16",
+      "pair_id": "legacy-1",
+      "gate_missed": false,
+      "raw_text": "ほう。",
+      "diagnostic_score": {
+        "character_errors": 2,
+        "reference_characters": 1,
+        "word_errors": null,
+        "reference_words": null
+      },
+      "projected_text": "ほう。",
+      "projected_score": {
+        "character_errors": 2,
+        "reference_characters": 1,
+        "word_errors": null,
+        "reference_words": null
+      },
+      "projection_not_an_additional_actual_call": true
+    }
+  ],
+  "all_unconfirmed": true,
+  "negative_nonempty": [],
+  "gated_scores_are_projections": true,
+  "model_replaced": false,
+  "application_integrated": false,
+  "correction_implemented": false,
+  "quality_accepted": false
+}

@@ -1,5 +1,19 @@
 # Public-only worker prototype evidence
 
+**Latest approved same-INT8 ASR input diagnosis:** `asr-input/` preserves182windows×2fresh processes plus exact previous noise4×2, all reproduced/unconfirmed. Quiet English raw WER10.86% float32 vs41.14% extra PCM16;14/33pairs improve,3 worsen. Baseline30texts unchanged. Short-word padding/noise failures remain, including old 本→ほう。 in both formats. No app/default/model replacement/correction implementation; gated scores are projections. See `../../../QWEN3-ASR-ASR-INPUT.md`.
+
+**Earlier approved steps1/2:** `vad-input/` verifies actual official Python/Torch vs Rust (296,667same-runtime frames bit-identical) and frozen gain/extra-PCM16-quantization comparisons on575windows. Float32-retained -40dB+gain100 detects33/33 vs29/33 after additional PCM16 rounding; every whole-corpus profile still misses speech. No ASR/step3/correction/cloud/default/app changes. See `../../../QWEN3-ASR-VAD-INPUT.md`. Post-ASR correction considered as separate unconfirmed proposals, NOT automatic meaning/negation edits.
+
+**Latest frozen-candidate validation FAILS:** `current-vad-validation/` preserves254additional windows,6quiet misses/0FP at fixed peak20/.7/>90ms vs v4 control1miss/3FP; no retuning/adoption. Two new lexical speakers detected12/12, but unchanged-v4 ASR control only11/12 (本+white SNR0→ほう。), reviewed/unconfirmed. See `../../../QWEN3-ASR-VAD-VALIDATION.md`. Not a fully independent source holdout, natural-ack or meeting acceptance.
+
+**Latest approved comparison:** `current-vad/` records pinned official-current ONNX vs v4. Same endpoint settings improve old misses/burst false positives but add a tone false-positive. Exploratory settings can reach zero errors on the same89 windows; this is NOT held-out/meeting acceptance or policy adoption. See `../../../QWEN3-ASR-CURRENT-VAD.md`. Existing worker/app defaults remain unchanged.
+
+**Current diagnostic follow-up:** `diagnostics/` contains same-v4 grid24 settings (no zero-FP/zero-miss choice), known-speech gate-bypass diagnosis, and short-word full/crop instability. No diagnostic policy was adopted. See `../../../QWEN3-ASR-DIAGNOSTICS.md`.
+
+**Latest additional quality evaluation FAILED:** `robustness/` records same-binary burst-noise false positives (`はい。`), quiet/noisy English misses and isolated `いいえ` context errors, repeated with fresh workers. See `../../../QWEN3-ASR-ROBUSTNESS.md`. Fixed-corpus success below is narrower than this evaluation; do not integrate with the app.
+
+**Current revision:** `fixed/` contains the512-sample forward + full-input presence-gating repair. Full speech30/30 matches corrected six-thread ungated text exactly; JA CER3.05% / EN WER5.14% / TH CER6.49%; silence empty/zero ASR calls. Diagnostic512/crop scores2.48%/5.71%/10.18%. See `../../../QWEN3-ASR-WORKER-FIX.md` for scope/limits. **The files and failures below are preserved previous480/crop history**, not current worker results. Real meeting/short-ack/noise/Windows acceptance remains unverified; app unchanged.
+
 No real meetings, microphone/desktop capture, credentials or model/audio weights. FLEURS (Conneau et al., 2022), CC-BY-4.0, fixed parent manifest/provenance; derived fixtures carry byte SHA256. Synthetic white noise/tone generation is deterministic in `test_worker_fixture.py`.
 
 - `vad-only.jsonl`, `asr-gated.jsonl`: final non-primed, bounded-gain gate fixtures. Eight negative cases per suite, all empty / zero ASR calls. Positive diagnostics are **not** blanket pass assertions: a 500ms unaligned crop wasn't detected. Original and attenuated Japanese full sentence/tail observations are inspectable.

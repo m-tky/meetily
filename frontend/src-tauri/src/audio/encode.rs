@@ -50,6 +50,8 @@ pub fn encode_single_audio(
             "192k", // Increased from 64k for better audio quality (especially for speech)
             "-profile:a",
             "aac_low", // Use AAC-LC profile for better compatibility
+            "-movie_timescale",
+            &sample_rate.to_string(), // Preserve sub-millisecond sample lengths in MP4 edit lists.
             "-movflags",
             "+faststart", // Optimize for web streaming
             "-f",
@@ -70,17 +72,21 @@ pub fn encode_single_audio(
 
     debug!("FFmpeg command: {:?}", command);
 
-    #[allow(clippy::zombie_processes)]
-    let mut ffmpeg = command.spawn().expect("Failed to spawn FFmpeg process");
+    let mut ffmpeg = command.spawn()?;
     debug!("FFmpeg process spawned");
-    let mut stdin = ffmpeg.stdin.take().expect("Failed to open stdin");
+    let mut stdin = ffmpeg.stdin.take().ok_or_else(|| anyhow::anyhow!("FFmpeg stdin unavailable"))?;
 
-    stdin.write_all(data)?;
+    if let Err(error) = stdin.write_all(data) {
+        drop(stdin);
+        let _ = ffmpeg.kill();
+        let _ = ffmpeg.wait();
+        return Err(error.into());
+    }
 
     debug!("Dropping stdin");
     drop(stdin);
     debug!("Waiting for FFmpeg process to exit");
-    let output = ffmpeg.wait_with_output().unwrap();
+    let output = ffmpeg.wait_with_output()?;
     let status = output.status;
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);

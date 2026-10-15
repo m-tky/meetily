@@ -22,6 +22,14 @@ describe('transcription model readiness', () => {
     });
   });
 
+  test('uses opt-in Qwen commands without changing existing providers', () => {
+    expect(getProviderCommands('qwen')).toEqual({
+      initialize: 'qwen_init',
+      hasAvailableModels: 'qwen_has_available_models',
+      getAvailableModels: 'qwen_get_available_models',
+    });
+  });
+
   test('does not silently treat an unsupported provider as Parakeet', () => {
     expect(getProviderCommands('deepgram')).toBeNull();
   });

@@ -39,11 +39,12 @@ pub fn create_meeting_folder(
 ) -> Result<PathBuf> {
     let timestamp = Utc::now().format("%Y-%m-%d_%H-%M").to_string();
     let sanitized_name = sanitize_filename(meeting_name);
-    let folder_name = format!("{}_{}", sanitized_name, timestamp);
+    // Same title/minute must never reuse a prior meeting or overwrite its
+    // metadata/audio/checkpoints. Persisted folder paths remain authoritative.
+    std::fs::create_dir_all(base_path)?;
+    let folder_name = format!("{}_{}_{}", sanitized_name, timestamp, uuid::Uuid::new_v4().simple());
     let meeting_folder = base_path.join(folder_name);
-
-    // Create main meeting folder
-    std::fs::create_dir_all(&meeting_folder)?;
+    std::fs::create_dir(&meeting_folder)?;
 
     // Only create .checkpoints subdirectory if requested (when auto_save is true)
     if create_checkpoints_dir {

@@ -1,0 +1,13 @@
+{
+  "binary_sha256": "05f0cdb63e2210abae17d043586a4bed4022b3c6b8ed5cdc5167277b480fed73",
+  "manifest_sha256": "b3b319460f622bfefe80aea87715890c2a19703e7c113d9306cf9880802bf441",
+  "requests_sha256": "738c86e33c1733b26e87e0a0a844f423370a0e5bf36f583fdc66de64f218eabf",
+  "raw_sha256": {
+    "0": "372cbf026588c6337feefc175cd77660a98cbcb7d4ef0111dc30f7e46ee74cdc",
+    "1": "192ddc9685824228f4be12186f63aae8af6e6e144525a6e9e2f8a4dc586819f5"
+  },
+  "fresh_processes": 2,
+  "worker_policy_changed": false,
+  "model_replaced": false,
+  "correction_implemented": false
+}

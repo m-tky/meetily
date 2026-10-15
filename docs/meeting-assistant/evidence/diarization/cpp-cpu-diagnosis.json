@@ -1,0 +1,574 @@
+{
+  "date": "2026-10-14",
+  "scope": "parakeet.cpp CPU delay diagnosis; no app integration or workflow change",
+  "source_revision": "5c9b0fbbd8e611d88e47d7e1ebae9bca9b447e8f",
+  "ggml_revision": "e705c5fed490514458bdd2eaddc43bd098fcce9b",
+  "host_cpu": "Ryzen 5 PRO 5650GE / Zen3",
+  "root_cause": "Nix GCC wrapper stripped -march=native with NIX_ENFORCE_NO_NATIVE; original library lacked AVX2/FMA/F16C. Earlier intrinsic cpp speed conclusion superseded; original measurements retained as generic controls.",
+  "optimized_flags": [
+    "-DGGML_NATIVE=OFF",
+    "-DCMAKE_C_FLAGS=-march=znver3 -mtune=znver3",
+    "-DCMAKE_CXX_FLAGS=-march=znver3 -mtune=znver3"
+  ],
+  "builds": {
+    "build-cpu": {
+      "features": {
+        "sse3": 0,
+        "avx": 0,
+        "avx2": 0,
+        "avx512": 0,
+        "fma": 0,
+        "f16c": 0,
+        "llamafile": 1
+      },
+      "libraries": {
+        "../runtime/diarization-engines/parakeet.cpp/build-cpu/libparakeet.so": {
+          "sha256": "29a8941024055c4db13b0d24eb67bb4434cdffa8a07e6999a8a83524f65ec961",
+          "bytes": 1384248
+        },
+        "../runtime/diarization-engines/parakeet.cpp/build-cpu/third_party/ggml/src/libggml-cpu.so": {
+          "sha256": "a836a2f1582f78da6f27ed724851934e1058e8bc773e63d71039300a9b51a16d",
+          "bytes": 897232
+        },
+        "../runtime/diarization-engines/parakeet.cpp/build-cpu/third_party/ggml/src/libggml-base.so": {
+          "sha256": "fe4e171ae255fa08de825e276bba20d3886307ddccef6827b23b1450433592cc",
+          "bytes": 893600
+        }
+      },
+      "cache_sha256": "5e73d7952fbeeff3be85333989e0d2dd455d95614cb2eb328d168681ad5d5e2e"
+    },
+    "build-znver3": {
+      "features": {
+        "sse3": 1,
+        "avx": 1,
+        "avx2": 1,
+        "avx512": 0,
+        "fma": 1,
+        "f16c": 1,
+        "llamafile": 1
+      },
+      "libraries": {
+        "../runtime/diarization-engines/parakeet.cpp/build-znver3/libparakeet.so": {
+          "sha256": "cbc03f7074d2032480cf1e91f58114bb6c435b98057ecb5a2f1d62a2d6cf1b1b",
+          "bytes": 1441528
+        },
+        "../runtime/diarization-engines/parakeet.cpp/build-znver3/third_party/ggml/src/libggml-cpu.so": {
+          "sha256": "bf3752c250a48cddcd42c8a52711b6dec7f2d0a14f4aa334edce1a57e8025587",
+          "bytes": 1160632
+        },
+        "../runtime/diarization-engines/parakeet.cpp/build-znver3/third_party/ggml/src/libggml-base.so": {
+          "sha256": "5bf5e56e583a117404ab683e902c53220f390d013dc6bcc0fd47184798893fda",
+          "bytes": 922464
+        }
+      },
+      "cache_sha256": "dfa91e8e71b57fbd19b33f63be5340f2b6271fb8efb8e4e9e51236b026085b87"
+    }
+  },
+  "runs": {
+    "cpp-znver3-f16-low-turns.json": {
+      "report_path": "../runtime/diarization-engines/results/cpp-znver3-f16-low-turns.json",
+      "report_sha256": "ffd65dd4cf748c629b3a84c1bb7525e40bdabb3741e51db26fdf433d8a2a3354",
+      "summary": {
+        "seconds": 60,
+        "paced": true,
+        "cpu_threads": 4,
+        "load_seconds": 0.27036256800056435,
+        "buffer_latency_seconds": 1.04,
+        "compute_seconds": 27.707429488968046,
+        "compute_rtf": 0.46179049148280077,
+        "wall_seconds": 60.69561452599737,
+        "flush_seconds": 0.6951789359955001,
+        "cpu_seconds": 110.711366461,
+        "max_rss_mib": 264.4609375,
+        "maximum_push_seconds": 0.6284736970046652,
+        "maximum_completion_lateness_seconds": 0.6285907539972655,
+        "final_completion_lateness_seconds": 0.00042833099723793566,
+        "completion_lateness_15_30_45_60": {
+          "15": 0.00033791700116125867,
+          "30": 0.2564530339950579,
+          "45": 0.3924271419964498,
+          "60": 0.00042833099723793566
+        },
+        "first_speaker_wall_seconds": 1.105863775999751,
+        "voiced_frame_first_label_age_median_seconds": 1.006953897996862,
+        "voiced_frame_first_label_age_max_seconds": 1.6756493959994998,
+        "clusters": [
+          0,
+          1
+        ],
+        "segment_count": 45,
+        "overlap_frames": 0,
+        "revised_nonempty_frame_events": 0,
+        "proxy_score": {
+          "voiced_frames": 1850,
+          "source_identity_accuracy_proxy": 0.9135135135135135,
+          "best_reference_to_cluster": {
+            "1": 1,
+            "2": 2
+          },
+          "not_standard_der": true
+        },
+        "not_standard_der": true,
+        "asr_concurrency_not_tested": true,
+        "engine": "cpp",
+        "profile": "low",
+        "fixture": "turns",
+        "audio_sha256": "6ef320aa2c7c373128623c442e89a6be1fd5ce525344773f786dc06e84f8279b",
+        "model_sha256": "3dca41a92162af6edf96276c4d2c397b034b55abf9eb2662a58cc7bc8c872683",
+        "prefix_limit_seconds": null,
+        "input_samples": 960000
+      }
+    },
+    "cpp-znver3-f16-prefix-12.json": {
+      "report_path": "../runtime/diarization-engines/results/cpp-znver3-f16-prefix-12.json",
+      "report_sha256": "0a3d114bd98d551b43d679372fb998b0337d2b4152c152cbc342c425f90237d8",
+      "summary": {
+        "seconds": 12,
+        "paced": false,
+        "cpu_threads": 4,
+        "load_seconds": 0.286686223000288,
+        "buffer_latency_seconds": 1.04,
+        "compute_seconds": 1.5539742989931256,
+        "compute_rtf": 0.12949785824942714,
+        "wall_seconds": 1.5555905970031745,
+        "flush_seconds": 0.16102750100253616,
+        "cpu_seconds": 6.150915366,
+        "max_rss_mib": 231.3046875,
+        "maximum_push_seconds": 0.15459630099940114,
+        "maximum_completion_lateness_seconds": null,
+        "final_completion_lateness_seconds": null,
+        "completion_lateness_15_30_45_60": null,
+        "first_speaker_wall_seconds": 0.019100937999610323,
+        "voiced_frame_first_label_age_median_seconds": null,
+        "voiced_frame_first_label_age_max_seconds": null,
+        "clusters": [
+          0,
+          1
+        ],
+        "segment_count": 9,
+        "overlap_frames": 0,
+        "revised_nonempty_frame_events": 0,
+        "proxy_score": {
+          "voiced_frames": 380,
+          "source_identity_accuracy_proxy": 1,
+          "best_reference_to_cluster": {
+            "1": 1,
+            "2": 2
+          },
+          "not_standard_der": true
+        },
+        "not_standard_der": true,
+        "asr_concurrency_not_tested": true,
+        "engine": "cpp",
+        "profile": "low",
+        "fixture": "turns",
+        "audio_sha256": "6ef320aa2c7c373128623c442e89a6be1fd5ce525344773f786dc06e84f8279b",
+        "model_sha256": "3dca41a92162af6edf96276c4d2c397b034b55abf9eb2662a58cc7bc8c872683",
+        "prefix_limit_seconds": 12,
+        "input_samples": 192000
+      }
+    },
+    "cpp-znver3-q8-low-reverse.json": {
+      "report_path": "../runtime/diarization-engines/results/cpp-znver3-q8-low-reverse.json",
+      "report_sha256": "cf3f84d82198ce3c000a3fa77ea624e9c7379ce316f265c268f41c0f3227be75",
+      "summary": {
+        "seconds": 60,
+        "paced": true,
+        "cpu_threads": 4,
+        "load_seconds": 0.16489253399777226,
+        "buffer_latency_seconds": 1.04,
+        "compute_seconds": 33.985584443064,
+        "compute_rtf": 0.5664264073844,
+        "wall_seconds": 60.88480205200176,
+        "flush_seconds": 0.8844337690024986,
+        "cpu_seconds": 135.621355827,
+        "max_rss_mib": 176.4765625,
+        "maximum_push_seconds": 0.7650662289961474,
+        "maximum_completion_lateness_seconds": 0.7810168740013594,
+        "final_completion_lateness_seconds": 0.0003614529996411875,
+        "completion_lateness_15_30_45_60": {
+          "15": 0.00038872600271133706,
+          "30": 0.33960863199899904,
+          "45": 0.4918518260019482,
+          "60": 0.0003614529996411875
+        },
+        "first_speaker_wall_seconds": 1.0956976919987937,
+        "voiced_frame_first_label_age_median_seconds": 1.086075957001885,
+        "voiced_frame_first_label_age_max_seconds": 1.8610168740013577,
+        "clusters": [
+          0,
+          1
+        ],
+        "segment_count": 45,
+        "overlap_frames": 0,
+        "revised_nonempty_frame_events": 0,
+        "proxy_score": {
+          "voiced_frames": 1806,
+          "source_identity_accuracy_proxy": 1,
+          "best_reference_to_cluster": {
+            "1": 1,
+            "2": 2
+          },
+          "not_standard_der": true
+        },
+        "not_standard_der": true,
+        "asr_concurrency_not_tested": true,
+        "engine": "cpp",
+        "profile": "low",
+        "fixture": "reverse",
+        "audio_sha256": "9a4230c72036d962a24401130288b4d419943cd064aafb2a99749ac65b583f07",
+        "model_sha256": "76c5bb1fb20d82706142ad32769b7ab496d2458489473a000fd7074c52ceec22",
+        "prefix_limit_seconds": null,
+        "input_samples": 960000
+      }
+    },
+    "cpp-znver3-q8-low-turns-repeat.json": {
+      "report_path": "../runtime/diarization-engines/results/cpp-znver3-q8-low-turns-repeat.json",
+      "report_sha256": "1e0ff2f8b932f9e246e22807c27e27ab0c945df8df2bef9ad3a69c471df20f34",
+      "summary": {
+        "seconds": 60,
+        "paced": true,
+        "cpu_threads": 4,
+        "load_seconds": 0.1588335909982561,
+        "buffer_latency_seconds": 1.04,
+        "compute_seconds": 33.63265368805878,
+        "compute_rtf": 0.560544228134313,
+        "wall_seconds": 60.84451762599929,
+        "flush_seconds": 0.844169547999627,
+        "cpu_seconds": 134.28854164999998,
+        "max_rss_mib": 176.3828125,
+        "maximum_push_seconds": 0.782589681999525,
+        "maximum_completion_lateness_seconds": 0.7826862599956783,
+        "final_completion_lateness_seconds": 0.00034105899976566434,
+        "completion_lateness_15_30_45_60": {
+          "15": 0.0002987510015373118,
+          "30": 0.36530609100009315,
+          "45": 0.4888416670000879,
+          "60": 0.00034105899976566434
+        },
+        "first_speaker_wall_seconds": 1.0990768929987098,
+        "voiced_frame_first_label_age_median_seconds": 1.1042034239956422,
+        "voiced_frame_first_label_age_max_seconds": 1.8626862599956766,
+        "clusters": [
+          0,
+          1
+        ],
+        "segment_count": 45,
+        "overlap_frames": 0,
+        "revised_nonempty_frame_events": 0,
+        "proxy_score": {
+          "voiced_frames": 1850,
+          "source_identity_accuracy_proxy": 0.987027027027027,
+          "best_reference_to_cluster": {
+            "1": 1,
+            "2": 2
+          },
+          "not_standard_der": true
+        },
+        "not_standard_der": true,
+        "asr_concurrency_not_tested": true,
+        "engine": "cpp",
+        "profile": "low",
+        "fixture": "turns",
+        "audio_sha256": "6ef320aa2c7c373128623c442e89a6be1fd5ce525344773f786dc06e84f8279b",
+        "model_sha256": "76c5bb1fb20d82706142ad32769b7ab496d2458489473a000fd7074c52ceec22",
+        "prefix_limit_seconds": null,
+        "input_samples": 960000
+      }
+    },
+    "cpp-znver3-q8-low-turns.json": {
+      "report_path": "../runtime/diarization-engines/results/cpp-znver3-q8-low-turns.json",
+      "report_sha256": "2cde2020c9dd3e1d67d5d52b23e3622f4a7672598bf5fa5337f3600129a61f7c",
+      "summary": {
+        "seconds": 60,
+        "paced": true,
+        "cpu_threads": 4,
+        "load_seconds": 0.1665178039984312,
+        "buffer_latency_seconds": 1.04,
+        "compute_seconds": 32.18532282590604,
+        "compute_rtf": 0.536422047098434,
+        "wall_seconds": 60.90591184799996,
+        "flush_seconds": 0.9052730330004124,
+        "cpu_seconds": 128.67504960800002,
+        "max_rss_mib": 176.1640625,
+        "maximum_push_seconds": 0.7385210560023552,
+        "maximum_completion_lateness_seconds": 0.7386315660021481,
+        "final_completion_lateness_seconds": 0.0006243699972401373,
+        "completion_lateness_15_30_45_60": {
+          "15": 0.00026926500140689313,
+          "30": 0.3293534609983908,
+          "45": 0.4560524720000103,
+          "60": 0.0006243699972401373
+        },
+        "first_speaker_wall_seconds": 1.1056945279997308,
+        "voiced_frame_first_label_age_median_seconds": 1.089217076997734,
+        "voiced_frame_first_label_age_max_seconds": 1.8186315660021464,
+        "clusters": [
+          0,
+          1
+        ],
+        "segment_count": 45,
+        "overlap_frames": 0,
+        "revised_nonempty_frame_events": 0,
+        "proxy_score": {
+          "voiced_frames": 1850,
+          "source_identity_accuracy_proxy": 0.987027027027027,
+          "best_reference_to_cluster": {
+            "1": 1,
+            "2": 2
+          },
+          "not_standard_der": true
+        },
+        "not_standard_der": true,
+        "asr_concurrency_not_tested": true,
+        "engine": "cpp",
+        "profile": "low",
+        "fixture": "turns",
+        "audio_sha256": "6ef320aa2c7c373128623c442e89a6be1fd5ce525344773f786dc06e84f8279b",
+        "model_sha256": "76c5bb1fb20d82706142ad32769b7ab496d2458489473a000fd7074c52ceec22",
+        "prefix_limit_seconds": null,
+        "input_samples": 960000
+      }
+    },
+    "cpp-znver3-q8-silence.json": {
+      "report_path": "../runtime/diarization-engines/results/cpp-znver3-q8-silence.json",
+      "report_sha256": "35aa84f83b137496014af731578573fe5b56a6214ebc272256717ac9eecf8d6c",
+      "summary": {
+        "seconds": 12,
+        "paced": false,
+        "cpu_threads": 4,
+        "load_seconds": 0.15283660699788015,
+        "buffer_latency_seconds": 1.04,
+        "compiled_cpu_features": {
+          "sse3": 1,
+          "avx": 1,
+          "avx2": 1,
+          "avx512": 0,
+          "fma": 1,
+          "f16c": 1,
+          "llamafile": 1
+        },
+        "compute_seconds": 1.691543046013976,
+        "compute_rtf": 0.14096192050116466,
+        "wall_seconds": 1.692863666001358,
+        "flush_seconds": 0.17107609599770512,
+        "cpu_seconds": 6.706309727000001,
+        "max_rss_mib": 142.7734375,
+        "maximum_push_seconds": 0.18320706800295739,
+        "maximum_completion_lateness_seconds": null,
+        "final_completion_lateness_seconds": null,
+        "completion_lateness_15_30_45_60": null,
+        "first_speaker_wall_seconds": null,
+        "voiced_frame_first_label_age_median_seconds": null,
+        "voiced_frame_first_label_age_max_seconds": null,
+        "clusters": [],
+        "segment_count": 0,
+        "overlap_frames": 0,
+        "revised_nonempty_frame_events": 0,
+        "proxy_score": {
+          "voiced_frames": 0,
+          "false_speaker_frames": 0
+        },
+        "not_standard_der": true,
+        "asr_concurrency_not_tested": true,
+        "engine": "cpp",
+        "profile": "low",
+        "fixture": "silence",
+        "audio_sha256": "b394ed6696151f1a3e61fdf9b9e381ae1d198cd3b1a83e9003417658f0a56188",
+        "model_sha256": "76c5bb1fb20d82706142ad32769b7ab496d2458489473a000fd7074c52ceec22",
+        "prefix_limit_seconds": null,
+        "input_samples": 192000
+      }
+    },
+    "cpp-znver3-q8-tone.json": {
+      "report_path": "../runtime/diarization-engines/results/cpp-znver3-q8-tone.json",
+      "report_sha256": "a13177d08b3a9fcc07d5fc18dcc2c6bb8f4eee5613d1fa16ca624d2114682175",
+      "summary": {
+        "seconds": 12,
+        "paced": false,
+        "cpu_threads": 4,
+        "load_seconds": 0.16785502000129782,
+        "buffer_latency_seconds": 1.04,
+        "compiled_cpu_features": {
+          "sse3": 1,
+          "avx": 1,
+          "avx2": 1,
+          "avx512": 0,
+          "fma": 1,
+          "f16c": 1,
+          "llamafile": 1
+        },
+        "compute_seconds": 1.7985239629488206,
+        "compute_rtf": 0.14987699691240172,
+        "wall_seconds": 1.7998606840046705,
+        "flush_seconds": 0.1880764489978901,
+        "cpu_seconds": 7.117659444,
+        "max_rss_mib": 142.78515625,
+        "maximum_push_seconds": 0.18613403999916045,
+        "maximum_completion_lateness_seconds": null,
+        "final_completion_lateness_seconds": null,
+        "completion_lateness_15_30_45_60": null,
+        "first_speaker_wall_seconds": null,
+        "voiced_frame_first_label_age_median_seconds": null,
+        "voiced_frame_first_label_age_max_seconds": null,
+        "clusters": [],
+        "segment_count": 0,
+        "overlap_frames": 0,
+        "revised_nonempty_frame_events": 0,
+        "proxy_score": {
+          "voiced_frames": 0,
+          "false_speaker_frames": 0
+        },
+        "not_standard_der": true,
+        "asr_concurrency_not_tested": true,
+        "engine": "cpp",
+        "profile": "low",
+        "fixture": "tone",
+        "audio_sha256": "52a2babf2e74f991fb47a46a33ba35839f61dc0edabc68959af56ac6ef20f9d3",
+        "model_sha256": "76c5bb1fb20d82706142ad32769b7ab496d2458489473a000fd7074c52ceec22",
+        "prefix_limit_seconds": null,
+        "input_samples": 192000
+      }
+    },
+    "cpp-low-turns.json": {
+      "historical_generic_control": true,
+      "report_sha256": "c19e6505ae8ea606533ade84e6fa70d874a40f3bc4572a22b61b9e8115100923",
+      "summary": {
+        "seconds": 60,
+        "paced": true,
+        "cpu_threads": 4,
+        "load_seconds": 0.14716230199701386,
+        "buffer_latency_seconds": 1.04,
+        "compute_seconds": 173.67549389007036,
+        "compute_rtf": 2.894591564834506,
+        "wall_seconds": 180.04918819200248,
+        "flush_seconds": 4.5777591740043135,
+        "cpu_seconds": 687.335333729,
+        "max_rss_mib": 176.48828125,
+        "maximum_push_seconds": 4.369850273003976,
+        "maximum_completion_lateness_seconds": 116.07033670700329,
+        "final_completion_lateness_seconds": 115.47142597800121,
+        "completion_lateness_15_30_45_60": {
+          "15": 1.5619458080036566,
+          "30": 23.764619945999584,
+          "45": 67.19151813400094,
+          "60": 115.47142597800121
+        },
+        "first_speaker_wall_seconds": 1.1340294870024081,
+        "voiced_frame_first_label_age_median_seconds": 21.37698100800364,
+        "voiced_frame_first_label_age_max_seconds": 116.5303367070033,
+        "clusters": [
+          0,
+          1
+        ],
+        "segment_count": 45,
+        "overlap_frames": 0,
+        "revised_nonempty_frame_events": 0,
+        "proxy_score": {
+          "voiced_frames": 1850,
+          "source_identity_accuracy_proxy": 0.987027027027027,
+          "best_reference_to_cluster": {
+            "1": 1,
+            "2": 2
+          },
+          "not_standard_der": true
+        },
+        "not_standard_der": true,
+        "asr_concurrency_not_tested": true,
+        "engine": "cpp",
+        "profile": "low",
+        "fixture": "turns",
+        "audio_sha256": "6ef320aa2c7c373128623c442e89a6be1fd5ce525344773f786dc06e84f8279b",
+        "model_sha256": "76c5bb1fb20d82706142ad32769b7ab496d2458489473a000fd7074c52ceec22"
+      }
+    },
+    "cpp-f16-prefix-12.json": {
+      "historical_generic_control": true,
+      "report_sha256": "60d2c0beb5e0640fefc9e83adaa5c484664d091095de22f5f580e7aeceba630c",
+      "summary": {
+        "seconds": 12,
+        "paced": false,
+        "cpu_threads": 4,
+        "load_seconds": 0.2911557020051987,
+        "buffer_latency_seconds": 1.04,
+        "compute_seconds": 40.12161693000235,
+        "compute_rtf": 3.3434680775001957,
+        "wall_seconds": 40.124790045003465,
+        "flush_seconds": 4.397737940998923,
+        "cpu_seconds": 158.69145184200002,
+        "max_rss_mib": 231.2734375,
+        "maximum_push_seconds": 4.542131815003813,
+        "maximum_completion_lateness_seconds": null,
+        "final_completion_lateness_seconds": null,
+        "completion_lateness_15_30_45_60": null,
+        "first_speaker_wall_seconds": 0.33587288900162093,
+        "voiced_frame_first_label_age_median_seconds": null,
+        "voiced_frame_first_label_age_max_seconds": null,
+        "clusters": [
+          0,
+          1
+        ],
+        "segment_count": 9,
+        "overlap_frames": 0,
+        "revised_nonempty_frame_events": 0,
+        "proxy_score": {
+          "voiced_frames": 380,
+          "source_identity_accuracy_proxy": 1,
+          "best_reference_to_cluster": {
+            "1": 1,
+            "2": 2
+          },
+          "not_standard_der": true
+        },
+        "not_standard_der": true,
+        "asr_concurrency_not_tested": true,
+        "engine": "cpp",
+        "profile": "low",
+        "fixture": "turns",
+        "audio_sha256": "6ef320aa2c7c373128623c442e89a6be1fd5ce525344773f786dc06e84f8279b",
+        "model_sha256": "3dca41a92162af6edf96276c4d2c397b034b55abf9eb2662a58cc7bc8c872683"
+      }
+    }
+  },
+  "quality": {
+    "proxy_not_der": true,
+    "old_vs_new_q8_final_10ms_frame_sets_differ": 4,
+    "optimized_q8_repeat_raw_segments_identical": true,
+    "f16_full60_proxy": 0.9135135135135135,
+    "no_natural_meeting_acceptance": true
+  },
+  "actual_instruction": {
+    "instruction": "vpmaddubsw %ymm3,%ymm5,%ymm3",
+    "single_step_verified": true,
+    "kernel": "tinyBLAS_Q0_AVX<block_q8_0, block_q8_0, float>::gemm4xN<2>",
+    "log": "../logs/diar-cpp-znver3-gdb-q8.log",
+    "script": "benchmarks/diarization-engines/verify-q8-simd.gdb",
+    "sampling_time_profile_performed": false
+  },
+  "safety": {
+    "cpu_threads": 4,
+    "sequential_inference": true,
+    "same_public_pcm_and_models": true,
+    "post_save_manual_choice_unchanged": true,
+    "old_build_and_failures_preserved": true,
+    "app_changed": false,
+    "real_capture_or_playback": false,
+    "cloud_inference": false,
+    "model_download": false,
+    "new_build_portable": false,
+    "qwen_concurrency_tested": false
+  },
+  "verification": {
+    "pure_tests": 13,
+    "pure_test_breakdown": {"engine": 7, "nvidia": 6},
+    "test_count_correction": "Previous 19 double-counted the NVIDIA tests; original log and resumed rerun both report 13 PASS",
+    "generic_build_guard_rejected_before_model_load": true,
+    "optimized_q8_silence_and_tone_no_labels": true
+  },
+  "references": [
+    "PARAKEET-CPP-CPU-DIAGNOSIS.md",
+    "../logs/diar-cpp-cpu-diagnosis-build.log",
+    "../logs/diar-cpp-diagnosis-tests.log",
+    "../logs/diar-cpp-reject-generic.log"
+  ]
+}

@@ -3,7 +3,7 @@ import { Lock, Sparkles, Cpu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { OnboardingContainer } from '../OnboardingContainer';
 import { useOnboarding } from '@/contexts/OnboardingContext';
-import { ChatGptPlanControls } from '@/components/ChatGptPlanControls';
+import Link from 'next/link';
 
 export function WelcomeStep() {
   const { goNext } = useOnboarding();
@@ -51,10 +51,7 @@ export function WelcomeStep() {
           })}
         </div>
 
-        <details className="w-full max-w-xl border rounded-lg p-3">
-          <summary className="cursor-pointer text-sm">公式ChatGPTログイン・人工文テスト（録音なし）</summary>
-          <div className="mt-3"><ChatGptPlanControls /></div>
-        </details>
+        <Link href="/settings?tab=summaryModels" className="text-sm underline">ChatGPT settings</Link>
 
         {/* CTA Section */}
         <div className="w-full max-w-xs space-y-3">

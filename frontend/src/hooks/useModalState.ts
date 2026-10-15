@@ -128,12 +128,14 @@ export function useModalState(transcriptModelConfig?: TranscriptModelProps): Use
 
   // Set up transcription error listener for model loading failures
   useEffect(() => {
+    let cancelled = false;
     let unlistenFn: (() => void) | undefined;
 
     const setupTranscriptionErrorListener = async () => {
       try {
         console.log('Setting up transcription-error listener...');
-        unlistenFn = await listen<TranscriptionErrorPayload>('transcription-error', (event) => {
+        const registered = await listen<TranscriptionErrorPayload>('transcription-error', (event) => {
+          if (cancelled) return;
           console.log('Transcription error received:', event.payload);
           const { userMessage, actionable } = event.payload;
 
@@ -142,12 +144,18 @@ export function useModalState(transcriptModelConfig?: TranscriptModelProps): Use
             showModal('modelSelector', userMessage);
           } else {
             // Show toast instead of modal for non-actionable errors (consistent with sidebar)
-            toast.error('', {
-              description: userMessage,
-              duration: 5000,
+            const activeFailure = event.payload.phase === 'active';
+            toast.error(activeFailure ? 'Transcription incomplete — recording continues' : '', {
+              id: activeFailure ? 'transcription-incomplete' : undefined,
+              description: activeFailure
+                ? `${userMessage} Failed speech was not retried. Stop remains available; review the saved audio.`
+                : userMessage,
+              duration: activeFailure ? Infinity : 5000,
             });
           }
         });
+        if (cancelled) registered();
+        else unlistenFn = registered;
         console.log('Transcription error listener setup complete');
       } catch (error) {
         console.error('Failed to setup transcription error listener:', error);
@@ -157,6 +165,7 @@ export function useModalState(transcriptModelConfig?: TranscriptModelProps): Use
     setupTranscriptionErrorListener();
 
     return () => {
+      cancelled = true;
       console.log('Cleaning up transcription error listener...');
       if (unlistenFn) {
         unlistenFn();

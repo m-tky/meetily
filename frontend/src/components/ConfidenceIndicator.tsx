@@ -10,7 +10,9 @@ export const ConfidenceIndicator: React.FC<ConfidenceIndicatorProps> = ({
   showIndicator = true,
 }) => {
   // Don't render if preference is disabled
-  if (!showIndicator) {
+  // Native providers without a confidence score use -1 as an unknown
+  // sentinel, retaining the existing numeric transcript schema.
+  if (!showIndicator || !Number.isFinite(confidence) || confidence < 0 || confidence > 1) {
     return null;
   }
 

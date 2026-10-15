@@ -1,0 +1,498 @@
+{
+  "normalization": "Existing CER NFKC/lowercase/remove Unicode punctuation+whitespace; English WER punctuation removal and whitespace words. Raw text retained.",
+  "complete": true,
+  "total_requests": 8,
+  "speech_requests": 6,
+  "worker_errors": [],
+  "negative_requests": 2,
+  "negative_gate_passes": 2,
+  "negative_failures": [],
+  "quality_accepted": false,
+  "real_environment_noise_verified": false,
+  "spontaneous_acknowledgements_verified": false,
+  "application_integrated": false,
+  "groups": [
+    {
+      "language": "Japanese",
+      "condition": "clean",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 3,
+      "wer": null,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "Japanese",
+      "condition": "padded",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 1,
+      "character_errors": 3,
+      "reference_characters": 3,
+      "wer": null,
+      "normalized_exact_matches": 0
+    },
+    {
+      "language": "Japanese",
+      "condition": "gain-20dB",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 3,
+      "wer": null,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "Japanese",
+      "condition": "gain-40dB",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0.3333333333333333,
+      "character_errors": 1,
+      "reference_characters": 3,
+      "wer": null,
+      "normalized_exact_matches": 0
+    },
+    {
+      "language": "Japanese",
+      "condition": "white-snr10",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 3,
+      "wer": null,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "Japanese",
+      "condition": "white-snr0",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0.3333333333333333,
+      "character_errors": 1,
+      "reference_characters": 3,
+      "wer": null,
+      "normalized_exact_matches": 0
+    }
+  ],
+  "rows": [
+    {
+      "id": "negative-silence",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.03974057101004291,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-0",
+        "model_loaded": false,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 1,
+        "vad_seconds": 0.038315609
+      },
+      "fixture_sha256": "262d1f34f300560a4c82ba8127ddea9e1d72946f187fdbd3e8f70ee096077aec",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "iie-clean",
+      "language": "Japanese",
+      "condition": "clean",
+      "reference": "いいえ",
+      "audio_seconds": 0.8666875,
+      "text": "いいえ。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 1.64664263,
+      "request_seconds": 2.3090337770117912,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 0
+          }
+        ],
+        "id": "robust-1",
+        "inference_seconds": 1.64664263,
+        "load_seconds": 0.64249738,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.406164513,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "review_required",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.019491523
+      },
+      "fixture_sha256": "8b24c165bcd01ed2c4c2f8dd82a3a041740e1712e5f2331d334cb393b04c23d2",
+      "purpose": "accuracy",
+      "reference_characters": 3,
+      "character_errors": 0,
+      "reference_words": 1,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "iie-padded",
+      "language": "Japanese",
+      "condition": "padded",
+      "reference": "いいえ",
+      "audio_seconds": 2.8666875,
+      "text": "家。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 1.908287262,
+      "request_seconds": 1.935567776003154,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 30336,
+            "start_sample": 15168
+          }
+        ],
+        "id": "robust-2",
+        "inference_seconds": 1.908287262,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 45867,
+            "inference_seconds": 1.670166101,
+            "kind": "window_final",
+            "raw_text": "家。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "家。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.026433596
+      },
+      "fixture_sha256": "a3c37911cd5924ad355ebba17d031ff849a1f2eb8cee365a8aae02270031219f",
+      "purpose": "accuracy",
+      "reference_characters": 3,
+      "character_errors": 3,
+      "reference_words": 1,
+      "word_errors": 1,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "iie-gain-20dB",
+      "language": "Japanese",
+      "condition": "gain-20dB",
+      "reference": "いいえ",
+      "audio_seconds": 0.8666875,
+      "text": "いいえ。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 1.6228789780000001,
+      "request_seconds": 1.6451648200018099,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 0
+          }
+        ],
+        "id": "robust-3",
+        "inference_seconds": 1.6228789780000001,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.3701320909999999,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "review_required",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 2.625641107559204,
+        "vad_seconds": 0.021800257
+      },
+      "fixture_sha256": "7c4c4ef7fc08ec64a242d4f918adb73791ca2d7a177b0fe55cab2d7adfb035e6",
+      "purpose": "accuracy",
+      "reference_characters": 3,
+      "character_errors": 0,
+      "reference_words": 1,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "iie-gain-40dB",
+      "language": "Japanese",
+      "condition": "gain-40dB",
+      "reference": "いいえ",
+      "audio_seconds": 0.8666875,
+      "text": "いい。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 1.556820598,
+      "request_seconds": 1.5761397129972465,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 0
+          }
+        ],
+        "id": "robust-4",
+        "inference_seconds": 1.556820598,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.322208833,
+            "kind": "window_final",
+            "raw_text": "いい。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "いい。",
+        "vad_frame_samples": 512,
+        "vad_gain": 20,
+        "vad_seconds": 0.01888776
+      },
+      "fixture_sha256": "112b8b77c651f888ab0446acab3ededea6cec5a0f02230c7ab0bf832f1cd2d12",
+      "purpose": "accuracy",
+      "reference_characters": 3,
+      "character_errors": 1,
+      "reference_words": 1,
+      "word_errors": 1,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "iie-white-snr10",
+      "language": "Japanese",
+      "condition": "white-snr10",
+      "reference": "いいえ",
+      "audio_seconds": 0.8666875,
+      "text": "いいえ。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 1.618154053,
+      "request_seconds": 1.6394676479976624,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 0
+          }
+        ],
+        "id": "robust-5",
+        "inference_seconds": 1.618154053,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.37400543,
+            "kind": "window_final",
+            "raw_text": "いいえ。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "review_required",
+        "text": "いいえ。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.020862029
+      },
+      "fixture_sha256": "97bc4c628f2813fd018c2fde5e15fe31b4a656bf447df4bd9bb6769683192b9c",
+      "purpose": "accuracy",
+      "reference_characters": 3,
+      "character_errors": 0,
+      "reference_words": 1,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "iie-white-snr0",
+      "language": "Japanese",
+      "condition": "white-snr0",
+      "reference": "いいえ",
+      "audio_seconds": 0.8666875,
+      "text": "いい。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 1.577629661,
+      "request_seconds": 1.5976424440013943,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 13867,
+            "start_sample": 2880
+          }
+        ],
+        "id": "robust-6",
+        "inference_seconds": 1.577629661,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 13867,
+            "inference_seconds": 1.341598946,
+            "kind": "window_final",
+            "raw_text": "いい。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "いい。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.019580259
+      },
+      "fixture_sha256": "f334a9f03690b07ca635bc99ad11b9ab8d4131cc52a5e96e9b27aec5d7948d67",
+      "purpose": "accuracy",
+      "reference_characters": 3,
+      "character_errors": 1,
+      "reference_words": 1,
+      "word_errors": 1,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "negative-silence-after",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.03661982600169722,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-7",
+        "model_loaded": true,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 1,
+        "vad_seconds": 0.035279185
+      },
+      "fixture_sha256": "262d1f34f300560a4c82ba8127ddea9e1d72946f187fdbd3e8f70ee096077aec",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    }
+  ]
+}

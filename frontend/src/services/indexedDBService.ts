@@ -21,6 +21,7 @@ export interface StoredTranscript {
   text: string;               // Transcript text
   timestamp: string;          // ISO 8601 timestamp
   confidence: number;         // Whisper confidence score
+  speaker?: string | null;    // Input source, not a person's identity
   sequenceId: number;         // Sequence number for ordering
   storedAt: number;           // Unix timestamp when saved
   audio_start_time?: number;  // Recording-relative start time in seconds

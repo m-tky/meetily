@@ -220,9 +220,18 @@ pub enum LLMProvider {
     OpenRouter,
     BuiltInAI,
     CustomOpenAI,
+    ChatGptPlan { directory: PathBuf, account: String },
 }
 
 impl LLMProvider {
+    pub async fn bind_chatgpt<R: tauri::Runtime>(app: &tauri::AppHandle<R>, model: &str) -> Result<Self, String> {
+        let (directory, account) = crate::siwc::summary_context(app).await?;
+        let models = crate::siwc::chatgpt_list_models(app.clone(), account.clone()).await?;
+        if !models.iter().any(|m| m.slug == model) {
+            return Err("Selected ChatGPT model is unavailable. Check Settings.".into());
+        }
+        Ok(Self::ChatGptPlan { directory, account })
+    }
     /// Parse provider from string (case-insensitive)
     pub fn from_str(s: &str) -> Result<Self, String> {
         match s.to_lowercase().as_str() {
@@ -276,6 +285,13 @@ pub(crate) async fn generate_summary(
         if token.is_cancelled() {
             return Err("Summary generation was cancelled".to_string());
         }
+    }
+
+    if let LLMProvider::ChatGptPlan { directory, account } = provider {
+        return await_or_cancel(
+            crate::siwc::generate_in_directory(directory, account, model_name, system_prompt, user_prompt),
+            cancellation_token,
+        ).await?.map(|content| LlmCompletion { content, reasoning_stripped: false });
     }
 
     // Handle BuiltInAI provider separately (uses local sidecar, no HTTP API)
@@ -344,6 +360,7 @@ pub(crate) async fn generate_summary(
             );
             ("https://api.anthropic.com/v1/messages".to_string(), header_map)
         }
+        LLMProvider::ChatGptPlan { .. } => unreachable!("ChatGPT plan uses Responses, not chat completions"),
         LLMProvider::BuiltInAI => {
             // This case is handled earlier with early returns
             unreachable!("BuiltInAI is handled before this match statement")
@@ -562,6 +579,30 @@ mod tests {
             .map(|position| position + 4)
             .expect("request should contain complete headers");
         serde_json::from_slice(&request[headers_end..]).expect("request body should be valid JSON")
+    }
+
+    #[tokio::test]
+    async fn chatgpt_summary_without_account_never_falls_back_or_uses_api_key() {
+        let dir = tempfile::tempdir().unwrap();
+        let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let endpoint = format!("http://{}", listener.local_addr().unwrap());
+        let provider = LLMProvider::ChatGptPlan { directory: dir.path().to_path_buf(), account: "synthetic-account".into() };
+        let result = generate_summary(&Client::new(), &provider, "gpt-6-luna", "unused-api-key", "synthetic instruction", "synthetic text", Some(&endpoint), Some(&endpoint), None, None, None, None, None).await;
+        assert!(result.is_err());
+        assert!(timeout(Duration::from_millis(30), listener.accept()).await.is_err());
+        assert!(LLMProvider::from_str("chatgpt_plan").is_err(), "plan requires a bound native account");
+    }
+
+    #[tokio::test]
+    async fn cancelled_chatgpt_summary_does_not_open_auth_store_or_send() {
+        let dir = tempfile::tempdir().unwrap();
+        let missing = dir.path().join("not-created");
+        let provider = LLMProvider::ChatGptPlan { directory: missing.clone(), account: "synthetic-account".into() };
+        let cancellation = CancellationToken::new();
+        cancellation.cancel();
+        let result = generate_summary(&Client::new(), &provider, "gpt-6-luna", "", "synthetic", "synthetic", None, None, None, None, None, None, Some(&cancellation)).await;
+        assert!(result.unwrap_err().contains("cancelled"));
+        assert!(!missing.exists());
     }
 
     #[test]
@@ -922,6 +963,7 @@ fn provider_name(provider: &LLMProvider) -> &str {
         LLMProvider::BuiltInAI => "Built-in AI",
         LLMProvider::OpenRouter => "OpenRouter",
         LLMProvider::CustomOpenAI => "Custom OpenAI",
+        LLMProvider::ChatGptPlan { .. } => "ChatGPT plan",
     }
 }
 

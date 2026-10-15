@@ -1,0 +1,20 @@
+{
+  "sources": [
+    "車",
+    "本"
+  ],
+  "seed": [
+    7212028,
+    7212029
+  ],
+  "snr": 0,
+  "exact_previous_pcm16_signal": true,
+  "representations": [
+    "float32",
+    "pcm16"
+  ],
+  "asr_input_gain": 1,
+  "gate": "same .7/peak100/>90ms",
+  "model_replaced": false,
+  "correction": false
+}

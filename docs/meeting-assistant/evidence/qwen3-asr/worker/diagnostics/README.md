@@ -1,0 +1,13 @@
+# Same-v4 gate / context / ASR diagnostics — no policy adopted
+
+Details/commands/limits: [QWEN3-ASR-DIAGNOSTICS.md](../../../../QWEN3-ASR-DIAGNOSTICS.md).
+
+- `gate-summary.json`, `gate-fixtures.json`: 3gain×4threshold×2minimum=24 settings,89 request windows. No zero-FP/zero-miss setting. Counts describe presence windows only, NOT aligned speech recall. Raw probability arrays and full grid interval details stay outside Git; their hashes are in provenance. All raw default endpoints match Rust; prior58 window decisions reproduce. Gate-r2 repeats gate-r1 probabilities byte-for-byte after formatting-only rebuild. `unique_wavs` counts distinct file paths, not independent speech recordings.
+- `context-summary.json`, `context-r1/`:14 licensed short-word inputs ×same worker full/crop. Both detect14/14 and match only7/14 normalized references. Raw wrong/unflagged outputs retained. No best-of-two selection or production fallback.
+- `ungated-summary.json`, `ungated-r1/`:9 known-speech inputs ×2 fresh ASR sessions, including diagnostic100x gain on already-quantized PCM16. English bypass diagnosis recovers sentence content (contraction changes; raw WER13.33%), but short-word errors remain. This gate bypass is **not** a worker policy or a proof of model correctness on unlabelled noise.
+- `static-check.txt`: Rust15/Python9/Node11 +306 endpoint-reference cases pass; Rustfmt/Python compile pass. Synthetic scalar parity300 cases occur inside3 Python tests. No speech-quality acceptance follows.
+- `provenance.json`: unchanged worker hash; new example/source/artifact hashes and external probability/full-grid hashes.
+
+FLEURS attribution: Conneau et al. (2022), CC-BY-4.0. Short-word source: **Zsrtrgh**, speaker/recorder,2025-11-03, Lingua Libre, [Wikimedia source](https://commons.wikimedia.org/wiki/File:LL-Q5287_(jpn)-Zsrtrgh-%E3%81%84%E3%81%84%E3%81%88.wav), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Published transcription is `いいえ`; not independently listened or spontaneous conversation acceptance. Local transformations: mono16k PCM16 resampling, silence padding, attenuation/noise, diagnostic100x restoration and diagnostic VAD envelope. No original/derived audio distributed here. Preserve attribution/license/changes/share-alike when distributing derived audio. Original source metadata/hash is in sibling `robustness/lexical-r1/`.
+
+No recording/playback/cloud inference/credentials/app changes. Same v4 and1.7B decoder-INT8 / encoder-prefill F32. No new VAD weights downloaded or compared yet. All ASR outputs remain unconfirmed; status/review flags are not confidence. Live/Windows/two-hour meeting acceptance remains blocked.

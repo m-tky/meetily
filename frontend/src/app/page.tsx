@@ -1,7 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import type { SelectedDevices } from '@/components/DeviceSelection';
 import { RecordingControls } from '@/components/RecordingControls';
+import { RecordingInputPanel } from '@/components/RecordingInputPanel';
 import { useSidebar } from '@/components/Sidebar/SidebarProvider';
 import { usePermissionCheck } from '@/hooks/usePermissionCheck';
 import { useRecordingState, RecordingStatus } from '@/contexts/RecordingStateContext';
@@ -12,13 +14,13 @@ import Analytics from '@/lib/analytics';
 import { SettingsModals } from './_components/SettingsModal';
 import { TranscriptPanel } from './_components/TranscriptPanel';
 import { LiveMinutesPanel } from '@/components/LiveMinutesPanel';
+import { RecordingRecoveryPanel } from '@/components/RecordingRecoveryPanel';
 import { useModalState } from '@/hooks/useModalState';
 import { useRecordingStateSync } from '@/hooks/useRecordingStateSync';
 import { useRecordingStart } from '@/hooks/useRecordingStart';
 import { useRecordingStop } from '@/hooks/useRecordingStop';
 import { useTranscriptRecovery } from '@/hooks/useTranscriptRecovery';
 import { TranscriptRecovery } from '@/components/TranscriptRecovery';
-import { indexedDBService } from '@/services/indexedDBService';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
@@ -27,10 +29,19 @@ export default function Home() {
   const [isRecording, setIsRecordingState] = useState(false);
   const [barHeights, setBarHeights] = useState(['58%', '76%', '58%']);
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
+  const [inputValidation, setInputValidation] = useState<({ available: boolean } & SelectedDevices) | null>(null);
+  const handleInputAvailability = useCallback((available: boolean, selection: SelectedDevices) => {
+    setInputValidation({ available, ...selection });
+  }, []);
 
   // Use contexts for state management
   const { meetingTitle } = useTranscripts();
-  const { transcriptModelConfig, selectedDevices } = useConfig();
+  const { transcriptModelConfig, selectedDevices, devicePreferencesLoaded,
+    isSavingDevices, devicePreferencesError } = useConfig();
+  // An old validation result must never enable Start for a newly loaded/changed selection.
+  const inputsAvailable = !!inputValidation?.available
+    && inputValidation.micDevice === selectedDevices.micDevice
+    && inputValidation.systemDevice === selectedDevices.systemDevice;
   const recordingState = useRecordingState();
 
   // Extract status from global state
@@ -81,21 +92,9 @@ export default function Home() {
           return;
         }
 
-        // 1. Clean up old meetings (7+ days)
-        try {
-          await indexedDBService.deleteOldMeetings(7);
-        } catch (error) {
-          console.warn('⚠️ Failed to clean up old meetings:', error);
-        }
-
-        // 2. Clean up saved meetings (24+ hours after save)
-        try {
-          await indexedDBService.deleteSavedMeetings(24);
-        } catch (error) {
-          console.warn('⚠️ Failed to clean up saved meetings:', error);
-        }
-
-        // 3. Always check for recoverable meetings on startup
+        // Preserve recovery sources until the user explicitly removes them.
+        // Age alone is not proof that SQLite and audio saves completed.
+        // Always check for recoverable meetings on startup
         // Don't skip based on sessionStorage - we need to check every time
         await checkForRecoverableTranscripts();
       } catch (error) {
@@ -124,10 +123,10 @@ export default function Home() {
       const result = await recoverMeeting(meetingId);
 
       if (result.success) {
-        toast.success('Meeting recovered successfully!', {
-          description: result.audioRecoveryStatus?.status === 'success'
-            ? 'Transcripts and audio recovered'
-            : 'Transcripts recovered (no audio available)',
+        toast.success('Saved meeting data added', {
+          description: result.audioRecoveryStatus?.audio_file_path
+            ? 'Saved transcripts added; a local audio file is available (not quality-validated)'
+            : 'Saved transcripts added; audio recovery was not confirmed. Checkpoints were kept.',
           action: result.meetingId ? {
             label: 'View Meeting',
             onClick: () => {
@@ -207,7 +206,18 @@ export default function Home() {
         onDelete={deleteRecoverableMeeting}
         onLoadPreview={loadMeetingTranscripts}
       />
+      <RecordingRecoveryPanel
+        busy={recordingState.isRecording || isStopping || isProcessing || isSaving || status === RecordingStatus.STARTING}
+        onRecovered={async meetingId => {
+          await refetchMeetings();
+          router.push(`/meeting-details?id=${encodeURIComponent(meetingId)}`);
+        }}
+      />
       <LiveMinutesPanel />
+      <RecordingInputPanel
+        disabled={recordingState.isRecording || recordingState.isStartingRecording || isStopping || isProcessing || isSaving}
+        onAvailabilityChange={handleInputAvailability}
+      />
       <div className="flex flex-1 overflow-hidden">
         <TranscriptPanel
           isProcessingStop={isProcessingStop}
@@ -216,7 +226,7 @@ export default function Home() {
         />
 
         {/* Recording controls - only show when permissions are granted or already recording and not showing status messages */}
-        {(hasMicrophone || isRecording) &&
+        {(hasMicrophone || inputsAvailable || isRecording) &&
           status !== RecordingStatus.PROCESSING_TRANSCRIPTS &&
           status !== RecordingStatus.SAVING && (
             <div className="fixed bottom-12 left-0 right-0 z-10">
@@ -238,7 +248,7 @@ export default function Home() {
                       onTranscriptionError={(message) => {
                         showModal('errorAlert', message);
                       }}
-                      isRecordingDisabled={isRecordingDisabled}
+                      isRecordingDisabled={isRecordingDisabled || !inputsAvailable || !devicePreferencesLoaded || isSavingDevices || !!devicePreferencesError}
                       isParentProcessing={isProcessingStop}
                       selectedDevices={selectedDevices}
                       meetingName={meetingTitle}

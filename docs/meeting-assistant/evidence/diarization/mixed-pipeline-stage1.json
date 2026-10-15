@@ -1,0 +1,255 @@
+{
+  "scope": "User selected retained input lanes + single mixed cpp diarization; isolated stage1 validation only",
+  "raw_dir": "/home/user/Code/meeting-assistant-research/meetily/../runtime/diarization-engines/pipeline-lanes-turns-r1",
+  "raw_sha256": {
+    "lane-mic.wav": "e15ead7d6d560d232927d73496d338661676c889d6ef9ed815d97fd5ad9dd1b7",
+    "lane-pc.wav": "3ad0d2da316e531d69cae3c1807d1b24fecc213a39ea90177d078be107ef5aeb",
+    "plan.json": "52251972b4866efb45910281c3008c37f1af2c476670132a22ed09f35db1134c",
+    "qwen-warmup.json": "b67e93830d0dce16879e423a9b1e7613f12080fe4785161050133947dc7d8ca7",
+    "asr-events.jsonl": "e1a48486d828d230839a1bfe591b0cdbdce0142892a05f33f292127836c21659",
+    "cpp.json": "e5cb284efbc8eabf5086dd8db851c855ffd9c0eb05adc3eca4cae69e35c5e1fa",
+    "result.json": "70ecc84c7bcb42486f5dad9c593d164b20bf44925d56fa0d03e81d67c92847e0",
+    "memory.json": "a82accf3db543a603d3083b7956b4542cc4c26ed6afe33fba3b80d546b01ce08",
+    "cleanup.json": "73cfde99b8b6a6ed044657ad9f3364f1113d8b1d3a9be2656091958cf50de663",
+    "attribution.json": "6e11ccbb9a458b72852a2b9c666633ad890b7b8e9a68f3c00b671b2190490bf8"
+  },
+  "plan": {
+    "qwen_model_hashes": {
+      "config.json": "2e74a751548b8ad7d7526d29365ad8144c345d8b412b1152d25dc6698452712f",
+      "derived-tokenizer.json": "71fae83983a7fb082b1780e06e72bd4448ef47591960f281f2d6edaa7fc3e6dc",
+      "generation_config.json": "1da527824d81e07118facff437e03f2e24a23311e3bdeb2368973fe77e5f275c",
+      "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "model-00001-of-00002.safetensors": "a4cd1f1a04d90b757dc7f7dd26254e69a013b19e80efe590a83c6a3bde8608d6",
+      "model-00002-of-00002.safetensors": "6e0b9d9e09e2e0238e7ef3cc8a484ab387e91b90f1900bedf88bc92d7929ccfc",
+      "model.safetensors.index.json": "f994739fe38e5210b9e3e8ce6c6307315e2ceac3cb630e7b7414d69dce520f60",
+      "preprocessor_config.json": "45e120a4eda2c20c5d7f2ea9354e63536bf35e27aa573fb7cdf78017b378770d",
+      "provenance.json": "e2d47e6b22501af6a87a45c06f407bec46a73708b7b3aa126f7e4aa4ce51e919",
+      "qwen-asr-int8.sidecar": "f3787dab72eaa5881e142a23ecf093a959f0d8431e0d4cf882ed1670f089772d",
+      "tokenizer.json": "bd2a97b55c8f7f9c328c73ee9b9178771037e9f566dfca8e238a063d41cbac92",
+      "tokenizer_config.json": "4942d005604266809309cabc9f4e9cb89ce855d59b14681fdc0e1cc62ea26c4c",
+      "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+    },
+    "synthetic_source_lanes": {
+      "mic": {
+        "path": "/home/user/Code/meeting-assistant-research/runtime/diarization-engines/pipeline-lanes-turns-r1/lane-mic.wav",
+        "sha256": "e15ead7d6d560d232927d73496d338661676c889d6ef9ed815d97fd5ad9dd1b7",
+        "samples": 960000,
+        "sample_rate": 16000,
+        "start_sample": 0
+      },
+      "pc": {
+        "path": "/home/user/Code/meeting-assistant-research/runtime/diarization-engines/pipeline-lanes-turns-r1/lane-pc.wav",
+        "sha256": "3ad0d2da316e531d69cae3c1807d1b24fecc213a39ea90177d078be107ef5aeb",
+        "samples": 960000,
+        "sample_rate": 16000,
+        "start_sample": 0
+      }
+    },
+    "synthetic_lane_reconstruction_bit_exact": true,
+    "mode": "both",
+    "duration_seconds": 60,
+    "window_seconds": 10,
+    "cpp_threads": 4,
+    "qwen_threads": 6,
+    "cpp_profile": "low",
+    "fixture": "turns",
+    "audio_sha256": "6ef320aa2c7c373128623c442e89a6be1fd5ce525344773f786dc06e84f8279b",
+    "cpp_library_sha256": "cbc03f7074d2032480cf1e91f58114bb6c435b98057ecb5a2f1d62a2d6cf1b1b",
+    "cpp_model_sha256": "76c5bb1fb20d82706142ad32769b7ab496d2458489473a000fd7074c52ceec22",
+    "qwen_binary_sha256": "f9bca460d5535468d153eb4d11d5bf79d6dd92cac2d40192159846e982d2f4c1",
+    "qwen_model_warmup_before_measurement": true,
+    "cpp_model_load_before_epoch": true,
+    "cpp_inference_not_prewarmed": true,
+    "asr_serial_full_input": true,
+    "no_sample_drop": true,
+    "application_integration": false,
+    "real_capture": false,
+    "physical_playback": false,
+    "cloud": false,
+    "quality_acceptance": false,
+    "criteria": {
+      "cpp_rtf_below": 1,
+      "cpp_final_push_lag_below": 0.12,
+      "asr_rtf_below": 1,
+      "asr_queue_wait_below": 1,
+      "asr_stop_drain_below": 10
+    },
+    "limitations": [
+      "fixed repeated public clip, not natural meeting",
+      "fixed10s requests, not app VAD segmentation",
+      "60s only, excludes cold-start load from paced measurement"
+    ]
+  },
+  "cpp": {
+    "seconds": 60.0,
+    "paced": true,
+    "cpu_threads": 4,
+    "load_seconds": 0.12019718399096746,
+    "buffer_latency_seconds": 1.04,
+    "compiled_cpu_features": {
+      "sse3": 1,
+      "avx": 1,
+      "avx2": 1,
+      "avx512": 0,
+      "fma": 1,
+      "f16c": 1,
+      "llamafile": 1
+    },
+    "compute_seconds": 40.95360357694153,
+    "compute_rtf": 0.6825600596156922,
+    "wall_seconds": 60.94537195999874,
+    "flush_seconds": 0.9451178000017535,
+    "cpu_seconds": 156.59205669600001,
+    "max_rss_mib": 172.625,
+    "maximum_push_seconds": 1.2837415350077208,
+    "maximum_completion_lateness_seconds": 2.4233062589890295,
+    "final_completion_lateness_seconds": 0.0002502899878891185,
+    "completion_lateness_15_30_45_60": {
+      "15": 0.06548051099525765,
+      "30": 0.3093431009911001,
+      "45": 2.0116577389999293,
+      "60": 0.0002502899878891185
+    },
+    "first_speaker_wall_seconds": 1.1005266239953926,
+    "voiced_frame_first_label_age_median_seconds": 1.3970476269960628,
+    "voiced_frame_first_label_age_max_seconds": 3.503306258989035,
+    "clusters": [
+      0,
+      1
+    ],
+    "segment_count": 45,
+    "overlap_frames": 0,
+    "revised_nonempty_frame_events": 0,
+    "proxy_score": {
+      "voiced_frames": 1850,
+      "source_identity_accuracy_proxy": 0.987027027027027,
+      "best_reference_to_cluster": {
+        "1": 1,
+        "2": 2
+      },
+      "not_standard_der": true
+    },
+    "not_standard_der": true,
+    "asr_concurrency_not_tested": false
+  },
+  "asr": {
+    "requests": 6,
+    "total_request_seconds": 34.36463335399458,
+    "request_rtf": 0.5727438892332429,
+    "maximum_request_seconds": 7.066640780991293,
+    "maximum_queue_wait_seconds": 8.586699550505728e-05,
+    "final_queue_wait_seconds": 7.149200246203691e-05,
+    "stop_drain_seconds": 4.263610005000373,
+    "asr_calls": 6,
+    "nonempty_responses": 6,
+    "errors": 0
+  },
+  "throughput_criteria_passed": true,
+  "sampled_peak_sum_rss_mib": 7633.296875,
+  "actual_compute_overlap_seconds": 25.608404654907645,
+  "attribution": {
+    "raw_text_preserved": true,
+    "asr_context_unchanged": true,
+    "source_lanes_bit_exact_reconstruction": true,
+    "multiple_speakers_not_arbitrarily_resolved": true,
+    "word_alignment": false,
+    "provisional": true,
+    "confirmed": false,
+    "rows": [
+      {
+        "request_index": 0,
+        "speakers": [
+          0,
+          1
+        ],
+        "single_speaker_id": null,
+        "unknown_gate_samples": 46112,
+        "gate_samples": 106432,
+        "overlap_gate_samples": 0,
+        "delivery_attribution_changed": false
+      },
+      {
+        "request_index": 1,
+        "speakers": [
+          0,
+          1
+        ],
+        "single_speaker_id": null,
+        "unknown_gate_samples": 43232,
+        "gate_samples": 100672,
+        "overlap_gate_samples": 0,
+        "delivery_attribution_changed": false
+      },
+      {
+        "request_index": 2,
+        "speakers": [
+          0,
+          1
+        ],
+        "single_speaker_id": null,
+        "unknown_gate_samples": 43584,
+        "gate_samples": 100544,
+        "overlap_gate_samples": 0,
+        "delivery_attribution_changed": false
+      },
+      {
+        "request_index": 3,
+        "speakers": [
+          0,
+          1
+        ],
+        "single_speaker_id": null,
+        "unknown_gate_samples": 48064,
+        "gate_samples": 100544,
+        "overlap_gate_samples": 0,
+        "delivery_attribution_changed": false
+      },
+      {
+        "request_index": 4,
+        "speakers": [
+          0,
+          1
+        ],
+        "single_speaker_id": null,
+        "unknown_gate_samples": 41600,
+        "gate_samples": 97600,
+        "overlap_gate_samples": 0,
+        "delivery_attribution_changed": false
+      },
+      {
+        "request_index": 5,
+        "speakers": [
+          0,
+          1
+        ],
+        "single_speaker_id": null,
+        "unknown_gate_samples": 48128,
+        "gate_samples": 104768,
+        "overlap_gate_samples": 0,
+        "delivery_attribution_changed": false
+      }
+    ]
+  },
+  "cleanup": {
+    "worker_reaped": true,
+    "cpp_reaped": true,
+    "temporary_windows_removed": true,
+    "failure": null
+  },
+  "verification": {
+    "pure_tests": 23,
+    "new_attribution_tests": 7,
+    "previous_tests": 16
+  },
+  "limitations": [
+    "Artificial source assignment, not physical mic/PC or echo capture",
+    "Fixed10s full-input worker VAD requests, not app ContinuousVadProcessor schedule",
+    "Unknown gate coverage includes VAD padding, NOT speech miss rate",
+    "No diar-directed PCM cropping or word alignment, no app integration/persistent user source recording design",
+    "60s only, no natural meeting/long-duration acceptance"
+  ],
+  "harness_sha256": {
+    "probe_cpp_qwen_concurrency.py": "5bc619ba0130ef4d66f275611fdf15ec569590ef0050ffbf37dbfadb46aef977",
+    "attach_diarization_labels.py": "16841a8c65c970c9bfcabb992a19f75e746660ba53c6d48e7705b770210672a3"
+  }
+}

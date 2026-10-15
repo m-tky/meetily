@@ -1,8 +1,9 @@
-//! Experimental Linux stdin/stdout worker. No capture or application integration.
+//! Linux stdin/stdout worker. Capture stays in the opt-in Tauri provider.
 #[cfg(not(target_os = "linux"))]
 compile_error!("This host-tuned prototype is Linux-only; Windows acceptance is pending");
 use anyhow::{bail, Context, Result};
 use qwen_asr::{context::QwenModel, kernels, transcribe};
+use qwen_speech_worker::alignment::align_text;
 use qwen_speech_worker::{
     read_line_bounded, read_wav, recognition_window, review_reasons, speech_intervals, vad_gain,
     RATE,
@@ -25,6 +26,15 @@ enum Request {
         id: String,
         wav: String,
         language: String,
+        #[serde(default)]
+        align: bool,
+    },
+    #[serde(rename = "align")]
+    Align {
+        id: String,
+        wav: String,
+        text: String,
+        language: String,
     },
     #[serde(rename = "ping")]
     Ping { id: String },
@@ -34,7 +44,10 @@ enum Request {
 impl Request {
     fn id(&self) -> &str {
         match self {
-            Self::Transcribe { id, .. } | Self::Ping { id } | Self::Shutdown { id } => id,
+            Self::Transcribe { id, .. }
+            | Self::Align { id, .. }
+            | Self::Ping { id }
+            | Self::Shutdown { id } => id,
         }
     }
 }
@@ -76,6 +89,7 @@ fn run_request(
     model_dir: &str,
     model: &mut Option<Arc<QwenModel>>,
     vad_only: bool,
+    crop_context: bool,
 ) -> Result<Value> {
     if !["Japanese", "English", "Thai"].contains(&language) {
         bail!("unsupported_language");
@@ -95,7 +109,7 @@ fn run_request(
             json!({"id":id,"status":"vad_only","intervals":intervals,"asr_calls":0,"model_loaded":false,"vad_seconds":vad_seconds,"vad_gain":gain,"confirmed":false}),
         );
     }
-    let windows = recognition_window(&intervals);
+    let windows = recognition_window(&intervals, samples.len(), crop_context);
     let load_start = Instant::now();
     let newly_loaded = model.is_none();
     if newly_loaded {
@@ -128,9 +142,14 @@ fn run_request(
             transcribe::transcribe_audio(&mut ctx, &samples[span.start_sample..span.end_sample])
                 .context("inference_failed")?;
         let mut reasons = review_reasons(&raw, ctx.perf_text_tokens);
-        // A brief leading sound triggered VAD and hallucinated "はい".
-        // Keep short real responses, but don't silently promote them.
-        if span.end_sample - span.start_sample < RATE {
+        // Brief reference-unmatched sound is ambiguous, not proven hallucination.
+        // Preserve short responses; count gate evidence, not added context silence.
+        if intervals
+            .iter()
+            .map(|i| i.end_sample - i.start_sample)
+            .sum::<usize>()
+            < RATE
+        {
             reasons.push("short_speech_uncertain");
         }
         review |= !reasons.is_empty();
@@ -141,22 +160,40 @@ fn run_request(
         segments.push(json!({"start_sample":span.start_sample,"end_sample":span.end_sample,"sample_rate":RATE,"raw_text":raw,"review_reasons":reasons,"text_tokens":ctx.perf_text_tokens,"inference_seconds":tick.elapsed().as_secs_f64(),"confirmed":false,"kind":"window_final"}));
     }
     Ok(
-        json!({"id":id,"status":if review{"review_required"}else{"recognized"},"text":combined,"segments":segments,"asr_calls":windows.len(),"gate_intervals":intervals,"vad_seconds":vad_seconds,"vad_gain":gain,"load_seconds":load_seconds,"inference_seconds":compute.elapsed().as_secs_f64(),"model_loaded":true,"confirmed":false}),
+        json!({"id":id,"status":if review{"review_required"}else{"recognized"},"text":combined,"segments":segments,"asr_calls":windows.len(),"gate_intervals":intervals,"vad_frame_samples":512,"recognition_context":if crop_context{"vad_envelope"}else{"full_input"},"vad_seconds":vad_seconds,"vad_gain":gain,"load_seconds":load_seconds,"inference_seconds":compute.elapsed().as_secs_f64(),"model_loaded":true,"confirmed":false}),
     )
 }
 fn main() -> Result<()> {
     let args: Vec<_> = env::args().collect();
-    if args.len() < 3 || args.len() > 4 {
-        bail!("usage: qwen-speech-worker MODEL_DIR THREADS [--vad-only]");
+    if args.len() < 3 || args.len() > 7 {
+        bail!("usage: qwen-speech-worker MODEL_DIR THREADS [--vad-only] [--crop-context] [--aligner-dir DIR]");
     }
     let threads: usize = args[2].parse()?;
     if !(1..=12).contains(&threads) {
         bail!("invalid_threads");
     }
-    let vad_only = args.get(3).map(|s| s == "--vad-only").unwrap_or(false);
-    if args.len() == 4 && !vad_only {
+    let mut flags = args[3..].to_vec();
+    let mut aligner_dir = None;
+    if let Some(pos) = flags.iter().position(|s| s == "--aligner-dir") {
+        let dir = flags
+            .get(pos + 1)
+            .context("missing_aligner_directory")?
+            .clone();
+        if dir.is_empty() || dir.starts_with("--") {
+            bail!("invalid_aligner_directory");
+        }
+        aligner_dir = Some(dir);
+        flags.drain(pos..pos + 2);
+    }
+    if flags
+        .iter()
+        .any(|s| !["--vad-only", "--crop-context"].contains(&s.as_str()))
+        || flags.iter().collect::<HashSet<_>>().len() != flags.len()
+    {
         bail!("invalid_mode");
     }
+    let vad_only = flags.iter().any(|s| s == "--vad-only");
+    let crop_context = flags.iter().any(|s| s == "--crop-context");
     // Fail early, before even a silent request. No library/model fallback.
     kernels::set_threads(threads);
     kernels::set_verbose(0);
@@ -165,11 +202,12 @@ fn main() -> Result<()> {
         .context("ORT_DYLIB_PATH is required for this isolated worker")?;
     ort::init_from(ort_path).commit()?;
     emit(
-        json!({"event":"ready","protocol":1,"model":"Qwen3-ASR-1.7B","precision":"decoder-INT8-encoder-prefill-F32","threads":threads,"max_audio_seconds":30,"max_request_bytes":4096,"model_loaded":false,"vad_only":vad_only}),
+        json!({"event":"ready","protocol":1,"model":"Qwen3-ASR-1.7B","precision":"decoder-INT8-encoder-prefill-F32","threads":threads,"max_audio_seconds":30,"max_request_bytes":4096,"audio_formats":["pcm16","float32"],"model_loaded":false,"vad_only":vad_only,"vad_model":"silero-v4","vad_frame_samples":512,"recognition_context":if crop_context{"vad_envelope"}else{"full_input"},"alignment_enabled":aligner_dir.is_some(),"alignment_unit":"unicode_scalar","max_alignment_chars":512}),
     )?;
     let stdin = io::stdin();
     let mut input = stdin.lock();
     let mut model = None;
+    let mut aligner_model = None;
     let mut seen = HashSet::new();
     while let Some(line) = read_line_bounded(&mut input)? {
         let request: Request = match serde_json::from_slice(&line) {
@@ -200,9 +238,72 @@ fn main() -> Result<()> {
                 emit(json!({"id":id,"status":"bye"}))?;
                 break;
             }
-            Request::Transcribe { wav, language, .. } => {
-                match run_request(&id, &wav, &language, &args[1], &mut model, vad_only) {
-                    Ok(value) => emit(value)?,
+            Request::Align {
+                wav,
+                text,
+                language,
+                ..
+            } => {
+                let result = (|| -> Result<Value> {
+                    let dir = aligner_dir.as_deref().context("alignment_not_enabled")?;
+                    let samples = read_wav(Path::new(&wav))?;
+                    align_text(dir, &mut aligner_model, &samples, &text, &language)
+                })();
+                match result {
+                    Ok(mut value) => {
+                        value["id"] = json!(id);
+                        value["text_origin"] = json!("provided_not_recognition_verified");
+                        emit(value)?;
+                    }
+                    Err(_) => emit(
+                        json!({"id":id,"status":"error","code":"alignment_failed","confirmed":false}),
+                    )?,
+                }
+            }
+            Request::Transcribe {
+                wav,
+                language,
+                align,
+                ..
+            } => {
+                match run_request(
+                    &id,
+                    &wav,
+                    &language,
+                    &args[1],
+                    &mut model,
+                    vad_only,
+                    crop_context,
+                ) {
+                    Ok(mut value) => {
+                        if align {
+                            value["alignment"] = if value["asr_calls"] == 0 {
+                                json!({"status":"skipped_no_speech","confirmed":false})
+                            } else {
+                                let result = (|| -> Result<Value> {
+                                    if crop_context {
+                                        bail!("alignment_requires_full_input");
+                                    }
+                                    let dir =
+                                        aligner_dir.as_deref().context("alignment_not_enabled")?;
+                                    let samples = read_wav(Path::new(&wav))?;
+                                    let text =
+                                        value["text"].as_str().context("missing_asr_text")?;
+                                    align_text(dir, &mut aligner_model, &samples, text, &language)
+                                })();
+                                match result {
+                                    Ok(mut alignment) => {
+                                        alignment["text_origin"] = json!("raw_asr");
+                                        alignment
+                                    }
+                                    Err(_) => {
+                                        json!({"status":"failed","code":"alignment_failed","confirmed":false})
+                                    }
+                                }
+                            };
+                        }
+                        emit(value)?;
+                    }
                     Err(_) => emit(
                         json!({"id":id,"status":"error","code":"transcription_failed","confirmed":false}),
                     )?,
@@ -220,6 +321,21 @@ mod tests {
         assert!(valid_id("clip-1"));
         assert!(!valid_id("../file"));
         assert!(!valid_id(&"x".repeat(65)));
+    }
+    #[test]
+    fn alignment_is_explicit_and_legacy_requests_default_off() {
+        let r: Request = serde_json::from_str(
+            r#"{"op":"transcribe","id":"x","wav":"/public.wav","language":"Japanese"}"#,
+        )
+        .unwrap();
+        assert!(matches!(r, Request::Transcribe { align: false, .. }));
+        let r: Request = serde_json::from_str(r#"{"op":"transcribe","id":"x","wav":"/public.wav","language":"Japanese","align":true}"#).unwrap();
+        assert!(matches!(r, Request::Transcribe { align: true, .. }));
+        let r: Request = serde_json::from_str(
+            r#"{"op":"align","id":"a","wav":"/public.wav","language":"Japanese","text":"はい"}"#,
+        )
+        .unwrap();
+        assert_eq!(r.id(), "a");
     }
     #[test]
     fn unknown_fields_rejected() {

@@ -1,0 +1,1359 @@
+{
+  "binary_sha256": "83b2a3a8bce5d5bf456c64f97e9b642580b158b69a69997ea771bad58631b08f",
+  "frame_samples": 512,
+  "input_windows": 89,
+  "unique_wavs": 87,
+  "probabilities_sha256": "03012f72560462605f483e1af2b25313ff7c75389e531fec038d30bfb457ba85",
+  "default_endpoint_parity": "Every neural probability sequence matched Rust default endpoints; recorded detection reproduced",
+  "annotation_scope": "window presence only, not word boundaries or actual speech duration",
+  "any_zero_miss_zero_false_positive_grid_setting": false,
+  "adopted_policy": null,
+  "quality_accepted": false,
+  "grid": [
+    {
+      "policy": "none",
+      "threshold": 0.3,
+      "minimum_ms": 90,
+      "missed_speech_windows": 3,
+      "false_positive_windows": 2,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "none",
+          "threshold": 0.3,
+          "minimum_ms": 90,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-gain-20dB",
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-th_th-validation-0-1548-gain-40dB"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002",
+            "negative-bursts-0.01"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "none",
+          "threshold": 0.3,
+          "minimum_ms": 90,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "none",
+          "threshold": 0.3,
+          "minimum_ms": 90,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "none",
+      "threshold": 0.3,
+      "minimum_ms": 200,
+      "missed_speech_windows": 3,
+      "false_positive_windows": 2,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "none",
+          "threshold": 0.3,
+          "minimum_ms": 200,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-gain-20dB",
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-th_th-validation-0-1548-gain-40dB"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002",
+            "negative-bursts-0.01"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "none",
+          "threshold": 0.3,
+          "minimum_ms": 200,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "none",
+          "threshold": 0.3,
+          "minimum_ms": 200,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "none",
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "missed_speech_windows": 6,
+      "false_positive_windows": 2,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "none",
+          "threshold": 0.5,
+          "minimum_ms": 90,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-gain-20dB",
+            "fleurs-en_us-validation-0-1548-gain-40dB",
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-en_us-validation-0-1548-lowpass-snr10",
+            "fleurs-th_th-validation-0-1548-gain-20dB",
+            "fleurs-th_th-validation-0-1548-gain-40dB"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002",
+            "negative-bursts-0.01"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "none",
+          "threshold": 0.5,
+          "minimum_ms": 90,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "none",
+          "threshold": 0.5,
+          "minimum_ms": 90,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "none",
+      "threshold": 0.5,
+      "minimum_ms": 200,
+      "missed_speech_windows": 6,
+      "false_positive_windows": 1,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "none",
+          "threshold": 0.5,
+          "minimum_ms": 200,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-gain-20dB",
+            "fleurs-en_us-validation-0-1548-gain-40dB",
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-en_us-validation-0-1548-lowpass-snr10",
+            "fleurs-th_th-validation-0-1548-gain-20dB",
+            "fleurs-th_th-validation-0-1548-gain-40dB"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "none",
+          "threshold": 0.5,
+          "minimum_ms": 200,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "none",
+          "threshold": 0.5,
+          "minimum_ms": 200,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "none",
+      "threshold": 0.7,
+      "minimum_ms": 90,
+      "missed_speech_windows": 8,
+      "false_positive_windows": 1,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "none",
+          "threshold": 0.7,
+          "minimum_ms": 90,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-gain-20dB",
+            "fleurs-en_us-validation-0-1548-gain-40dB",
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-en_us-validation-0-1548-lowpass-snr10",
+            "fleurs-en_us-validation-0-1548-bursts-snr10",
+            "fleurs-th_th-validation-0-1548-gain-20dB",
+            "fleurs-th_th-validation-0-1548-gain-40dB",
+            "fleurs-th_th-validation-0-1548-bursts-snr10"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "none",
+          "threshold": 0.7,
+          "minimum_ms": 90,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "none",
+          "threshold": 0.7,
+          "minimum_ms": 90,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "none",
+      "threshold": 0.7,
+      "minimum_ms": 200,
+      "missed_speech_windows": 8,
+      "false_positive_windows": 1,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "none",
+          "threshold": 0.7,
+          "minimum_ms": 200,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-gain-20dB",
+            "fleurs-en_us-validation-0-1548-gain-40dB",
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-en_us-validation-0-1548-lowpass-snr10",
+            "fleurs-en_us-validation-0-1548-bursts-snr10",
+            "fleurs-th_th-validation-0-1548-gain-20dB",
+            "fleurs-th_th-validation-0-1548-gain-40dB",
+            "fleurs-th_th-validation-0-1548-bursts-snr10"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "none",
+          "threshold": 0.7,
+          "minimum_ms": 200,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "none",
+          "threshold": 0.7,
+          "minimum_ms": 200,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "none",
+      "threshold": 0.9,
+      "minimum_ms": 90,
+      "missed_speech_windows": 19,
+      "false_positive_windows": 0,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "none",
+          "threshold": 0.9,
+          "minimum_ms": 90,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-ja_jp-validation-0-1519-gain-40dB",
+            "fleurs-en_us-validation-0-1548-clean",
+            "fleurs-en_us-validation-0-1548-gain-20dB",
+            "fleurs-en_us-validation-0-1548-gain-40dB",
+            "fleurs-en_us-validation-0-1548-white-snr20",
+            "fleurs-en_us-validation-0-1548-white-snr10",
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-en_us-validation-0-1548-lowpass-snr10",
+            "fleurs-en_us-validation-0-1548-bursts-snr10",
+            "fleurs-th_th-validation-0-1548-clean",
+            "fleurs-th_th-validation-0-1548-gain-20dB",
+            "fleurs-th_th-validation-0-1548-gain-40dB",
+            "fleurs-th_th-validation-0-1548-white-snr0",
+            "fleurs-th_th-validation-0-1548-bursts-snr10"
+          ],
+          "false_positive": []
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "none",
+          "threshold": 0.9,
+          "minimum_ms": 90,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [
+            "iie-gain-40dB",
+            "iie-white-snr0"
+          ],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "none",
+          "threshold": 0.9,
+          "minimum_ms": 90,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548",
+            "fleurs-en_us-validation-3-1578",
+            "fleurs-th_th-validation-0-1548"
+          ],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "none",
+      "threshold": 0.9,
+      "minimum_ms": 200,
+      "missed_speech_windows": 20,
+      "false_positive_windows": 0,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "none",
+          "threshold": 0.9,
+          "minimum_ms": 200,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-ja_jp-validation-0-1519-gain-40dB",
+            "fleurs-en_us-validation-0-1548-clean",
+            "fleurs-en_us-validation-0-1548-gain-20dB",
+            "fleurs-en_us-validation-0-1548-gain-40dB",
+            "fleurs-en_us-validation-0-1548-white-snr20",
+            "fleurs-en_us-validation-0-1548-white-snr10",
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-en_us-validation-0-1548-lowpass-snr10",
+            "fleurs-en_us-validation-0-1548-bursts-snr10",
+            "fleurs-th_th-validation-0-1548-clean",
+            "fleurs-th_th-validation-0-1548-gain-20dB",
+            "fleurs-th_th-validation-0-1548-gain-40dB",
+            "fleurs-th_th-validation-0-1548-white-snr0",
+            "fleurs-th_th-validation-0-1548-bursts-snr10"
+          ],
+          "false_positive": []
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "none",
+          "threshold": 0.9,
+          "minimum_ms": 200,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [
+            "iie-gain-40dB",
+            "iie-white-snr0"
+          ],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "none",
+          "threshold": 0.9,
+          "minimum_ms": 200,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548",
+            "fleurs-en_us-validation-3-1578",
+            "fleurs-en_us-validation-5-1531",
+            "fleurs-th_th-validation-0-1548"
+          ],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak20",
+      "threshold": 0.3,
+      "minimum_ms": 90,
+      "missed_speech_windows": 1,
+      "false_positive_windows": 2,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak20",
+          "threshold": 0.3,
+          "minimum_ms": 90,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-white-snr0"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002",
+            "negative-bursts-0.01"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak20",
+          "threshold": 0.3,
+          "minimum_ms": 90,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak20",
+          "threshold": 0.3,
+          "minimum_ms": 90,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak20",
+      "threshold": 0.3,
+      "minimum_ms": 200,
+      "missed_speech_windows": 1,
+      "false_positive_windows": 2,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak20",
+          "threshold": 0.3,
+          "minimum_ms": 200,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-white-snr0"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002",
+            "negative-bursts-0.01"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak20",
+          "threshold": 0.3,
+          "minimum_ms": 200,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak20",
+          "threshold": 0.3,
+          "minimum_ms": 200,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak20",
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "missed_speech_windows": 2,
+      "false_positive_windows": 2,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak20",
+          "threshold": 0.5,
+          "minimum_ms": 90,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-gain-40dB",
+            "fleurs-en_us-validation-0-1548-white-snr0"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002",
+            "negative-bursts-0.01"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak20",
+          "threshold": 0.5,
+          "minimum_ms": 90,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak20",
+          "threshold": 0.5,
+          "minimum_ms": 90,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak20",
+      "threshold": 0.5,
+      "minimum_ms": 200,
+      "missed_speech_windows": 2,
+      "false_positive_windows": 1,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak20",
+          "threshold": 0.5,
+          "minimum_ms": 200,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-gain-40dB",
+            "fleurs-en_us-validation-0-1548-white-snr0"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak20",
+          "threshold": 0.5,
+          "minimum_ms": 200,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak20",
+          "threshold": 0.5,
+          "minimum_ms": 200,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak20",
+      "threshold": 0.7,
+      "minimum_ms": 90,
+      "missed_speech_windows": 4,
+      "false_positive_windows": 1,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak20",
+          "threshold": 0.7,
+          "minimum_ms": 90,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-gain-40dB",
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-en_us-validation-0-1548-bursts-snr10",
+            "fleurs-th_th-validation-0-1548-gain-40dB"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak20",
+          "threshold": 0.7,
+          "minimum_ms": 90,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak20",
+          "threshold": 0.7,
+          "minimum_ms": 90,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak20",
+      "threshold": 0.7,
+      "minimum_ms": 200,
+      "missed_speech_windows": 4,
+      "false_positive_windows": 0,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak20",
+          "threshold": 0.7,
+          "minimum_ms": 200,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-gain-40dB",
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-en_us-validation-0-1548-bursts-snr10",
+            "fleurs-th_th-validation-0-1548-gain-40dB"
+          ],
+          "false_positive": []
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak20",
+          "threshold": 0.7,
+          "minimum_ms": 200,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak20",
+          "threshold": 0.7,
+          "minimum_ms": 200,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak20",
+      "threshold": 0.9,
+      "minimum_ms": 90,
+      "missed_speech_windows": 9,
+      "false_positive_windows": 0,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak20",
+          "threshold": 0.9,
+          "minimum_ms": 90,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-gain-20dB",
+            "fleurs-en_us-validation-0-1548-gain-40dB",
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-en_us-validation-0-1548-bursts-snr10",
+            "fleurs-th_th-validation-0-1548-gain-20dB",
+            "fleurs-th_th-validation-0-1548-gain-40dB",
+            "fleurs-th_th-validation-0-1548-white-snr0",
+            "fleurs-th_th-validation-0-1548-bursts-snr10"
+          ],
+          "false_positive": []
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak20",
+          "threshold": 0.9,
+          "minimum_ms": 90,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [
+            "iie-white-snr0"
+          ],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak20",
+          "threshold": 0.9,
+          "minimum_ms": 90,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak20",
+      "threshold": 0.9,
+      "minimum_ms": 200,
+      "missed_speech_windows": 9,
+      "false_positive_windows": 0,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak20",
+          "threshold": 0.9,
+          "minimum_ms": 200,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-gain-20dB",
+            "fleurs-en_us-validation-0-1548-gain-40dB",
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-en_us-validation-0-1548-bursts-snr10",
+            "fleurs-th_th-validation-0-1548-gain-20dB",
+            "fleurs-th_th-validation-0-1548-gain-40dB",
+            "fleurs-th_th-validation-0-1548-white-snr0",
+            "fleurs-th_th-validation-0-1548-bursts-snr10"
+          ],
+          "false_positive": []
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak20",
+          "threshold": 0.9,
+          "minimum_ms": 200,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [
+            "iie-white-snr0"
+          ],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak20",
+          "threshold": 0.9,
+          "minimum_ms": 200,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak100",
+      "threshold": 0.3,
+      "minimum_ms": 90,
+      "missed_speech_windows": 1,
+      "false_positive_windows": 2,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak100",
+          "threshold": 0.3,
+          "minimum_ms": 90,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-white-snr0"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002",
+            "negative-bursts-0.01"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak100",
+          "threshold": 0.3,
+          "minimum_ms": 90,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak100",
+          "threshold": 0.3,
+          "minimum_ms": 90,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak100",
+      "threshold": 0.3,
+      "minimum_ms": 200,
+      "missed_speech_windows": 1,
+      "false_positive_windows": 2,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak100",
+          "threshold": 0.3,
+          "minimum_ms": 200,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-white-snr0"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002",
+            "negative-bursts-0.01"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak100",
+          "threshold": 0.3,
+          "minimum_ms": 200,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak100",
+          "threshold": 0.3,
+          "minimum_ms": 200,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak100",
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "missed_speech_windows": 1,
+      "false_positive_windows": 2,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak100",
+          "threshold": 0.5,
+          "minimum_ms": 90,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-white-snr0"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002",
+            "negative-bursts-0.01"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak100",
+          "threshold": 0.5,
+          "minimum_ms": 90,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak100",
+          "threshold": 0.5,
+          "minimum_ms": 90,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak100",
+      "threshold": 0.5,
+      "minimum_ms": 200,
+      "missed_speech_windows": 1,
+      "false_positive_windows": 1,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak100",
+          "threshold": 0.5,
+          "minimum_ms": 200,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-white-snr0"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak100",
+          "threshold": 0.5,
+          "minimum_ms": 200,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak100",
+          "threshold": 0.5,
+          "minimum_ms": 200,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak100",
+      "threshold": 0.7,
+      "minimum_ms": 90,
+      "missed_speech_windows": 2,
+      "false_positive_windows": 1,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak100",
+          "threshold": 0.7,
+          "minimum_ms": 90,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-en_us-validation-0-1548-bursts-snr10"
+          ],
+          "false_positive": [
+            "negative-bursts-0.002"
+          ]
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak100",
+          "threshold": 0.7,
+          "minimum_ms": 90,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak100",
+          "threshold": 0.7,
+          "minimum_ms": 90,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak100",
+      "threshold": 0.7,
+      "minimum_ms": 200,
+      "missed_speech_windows": 2,
+      "false_positive_windows": 0,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak100",
+          "threshold": 0.7,
+          "minimum_ms": 200,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-en_us-validation-0-1548-bursts-snr10"
+          ],
+          "false_positive": []
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak100",
+          "threshold": 0.7,
+          "minimum_ms": 200,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak100",
+          "threshold": 0.7,
+          "minimum_ms": 200,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak100",
+      "threshold": 0.9,
+      "minimum_ms": 90,
+      "missed_speech_windows": 5,
+      "false_positive_windows": 0,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak100",
+          "threshold": 0.9,
+          "minimum_ms": 90,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-en_us-validation-0-1548-bursts-snr10",
+            "fleurs-th_th-validation-0-1548-white-snr0",
+            "fleurs-th_th-validation-0-1548-bursts-snr10"
+          ],
+          "false_positive": []
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak100",
+          "threshold": 0.9,
+          "minimum_ms": 90,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [
+            "iie-white-snr0"
+          ],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak100",
+          "threshold": 0.9,
+          "minimum_ms": 90,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    },
+    {
+      "policy": "peak100",
+      "threshold": 0.9,
+      "minimum_ms": 200,
+      "missed_speech_windows": 5,
+      "false_positive_windows": 0,
+      "groups": [
+        {
+          "suite": "synthetic-r1",
+          "policy": "peak100",
+          "threshold": 0.9,
+          "minimum_ms": 200,
+          "speech_windows": 32,
+          "negative_windows": 18,
+          "missed_speech": [
+            "fleurs-en_us-validation-0-1548-white-snr0",
+            "fleurs-en_us-validation-0-1548-bursts-snr10",
+            "fleurs-th_th-validation-0-1548-white-snr0",
+            "fleurs-th_th-validation-0-1548-bursts-snr10"
+          ],
+          "false_positive": []
+        },
+        {
+          "suite": "lexical-r1",
+          "policy": "peak100",
+          "threshold": 0.9,
+          "minimum_ms": 200,
+          "speech_windows": 6,
+          "negative_windows": 2,
+          "missed_speech": [
+            "iie-white-snr0"
+          ],
+          "false_positive": []
+        },
+        {
+          "suite": "original-30",
+          "policy": "peak100",
+          "threshold": 0.9,
+          "minimum_ms": 200,
+          "speech_windows": 30,
+          "negative_windows": 1,
+          "missed_speech": [],
+          "false_positive": []
+        }
+      ]
+    }
+  ],
+  "failed_fixture_maxima": [
+    {
+      "suite": "synthetic-r1",
+      "id": "fleurs-en_us-validation-0-1548-gain-40dB",
+      "language": "English",
+      "speech": true,
+      "policy": "none",
+      "gain": 1,
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "max_probability": 0.41299837827682495,
+      "detected": false,
+      "intervals": []
+    },
+    {
+      "suite": "synthetic-r1",
+      "id": "fleurs-en_us-validation-0-1548-gain-40dB",
+      "language": "English",
+      "speech": true,
+      "policy": "peak20",
+      "gain": 20,
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "max_probability": 0.4593106508255005,
+      "detected": false,
+      "intervals": []
+    },
+    {
+      "suite": "synthetic-r1",
+      "id": "fleurs-en_us-validation-0-1548-gain-40dB",
+      "language": "English",
+      "speech": true,
+      "policy": "peak100",
+      "gain": 100,
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "max_probability": 0.9633313417434692,
+      "detected": true,
+      "intervals": [
+        {
+          "start_sample": 14144,
+          "end_sample": 104640
+        }
+      ]
+    },
+    {
+      "suite": "synthetic-r1",
+      "id": "fleurs-en_us-validation-0-1548-white-snr0",
+      "language": "English",
+      "speech": true,
+      "policy": "none",
+      "gain": 1,
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "max_probability": 0.15154463052749634,
+      "detected": false,
+      "intervals": []
+    },
+    {
+      "suite": "synthetic-r1",
+      "id": "fleurs-en_us-validation-0-1548-white-snr0",
+      "language": "English",
+      "speech": true,
+      "policy": "peak20",
+      "gain": 3.585120439529419,
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "max_probability": 0.2611141800880432,
+      "detected": false,
+      "intervals": []
+    },
+    {
+      "suite": "synthetic-r1",
+      "id": "fleurs-en_us-validation-0-1548-white-snr0",
+      "language": "English",
+      "speech": true,
+      "policy": "peak100",
+      "gain": 3.585120439529419,
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "max_probability": 0.2611141800880432,
+      "detected": false,
+      "intervals": []
+    },
+    {
+      "suite": "synthetic-r1",
+      "id": "negative-bursts-0.002",
+      "language": "Japanese",
+      "speech": false,
+      "policy": "none",
+      "gain": 1,
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "max_probability": 0.8923559188842773,
+      "detected": true,
+      "intervals": [
+        {
+          "start_sample": 4416,
+          "end_sample": 80000
+        }
+      ]
+    },
+    {
+      "suite": "synthetic-r1",
+      "id": "negative-bursts-0.002",
+      "language": "Japanese",
+      "speech": false,
+      "policy": "peak20",
+      "gain": 2.8794376850128174,
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "max_probability": 0.7025190591812134,
+      "detected": true,
+      "intervals": [
+        {
+          "start_sample": 8512,
+          "end_sample": 19584
+        },
+        {
+          "start_sample": 24384,
+          "end_sample": 80000
+        }
+      ]
+    },
+    {
+      "suite": "synthetic-r1",
+      "id": "negative-bursts-0.002",
+      "language": "Japanese",
+      "speech": false,
+      "policy": "peak100",
+      "gain": 2.8794376850128174,
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "max_probability": 0.7025190591812134,
+      "detected": true,
+      "intervals": [
+        {
+          "start_sample": 8512,
+          "end_sample": 19584
+        },
+        {
+          "start_sample": 24384,
+          "end_sample": 80000
+        }
+      ]
+    },
+    {
+      "suite": "synthetic-r1",
+      "id": "negative-bursts-0.01",
+      "language": "Japanese",
+      "speech": false,
+      "policy": "none",
+      "gain": 1,
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "max_probability": 0.5399901270866394,
+      "detected": true,
+      "intervals": [
+        {
+          "start_sample": 52544,
+          "end_sample": 63616
+        },
+        {
+          "start_sample": 72512,
+          "end_sample": 80000
+        }
+      ]
+    },
+    {
+      "suite": "synthetic-r1",
+      "id": "negative-bursts-0.01",
+      "language": "Japanese",
+      "speech": false,
+      "policy": "peak20",
+      "gain": 1,
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "max_probability": 0.5399901270866394,
+      "detected": true,
+      "intervals": [
+        {
+          "start_sample": 52544,
+          "end_sample": 63616
+        },
+        {
+          "start_sample": 72512,
+          "end_sample": 80000
+        }
+      ]
+    },
+    {
+      "suite": "synthetic-r1",
+      "id": "negative-bursts-0.01",
+      "language": "Japanese",
+      "speech": false,
+      "policy": "peak100",
+      "gain": 1,
+      "threshold": 0.5,
+      "minimum_ms": 90,
+      "max_probability": 0.5399901270866394,
+      "detected": true,
+      "intervals": [
+        {
+          "start_sample": 52544,
+          "end_sample": 63616
+        },
+        {
+          "start_sample": 72512,
+          "end_sample": 80000
+        }
+      ]
+    }
+  ]
+}

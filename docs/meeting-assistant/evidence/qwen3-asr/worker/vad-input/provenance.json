@@ -1,0 +1,121 @@
+{
+  "authorized_steps": [
+    1,
+    2
+  ],
+  "post_asr_correction_considered_only": true,
+  "official_source_unmodified": true,
+  "actual_torch_used": true,
+  "same_runtime_parity": "all296667frames bit-identical",
+  "historical_runtime_max_absolute_error": 2.5033950805664062e-06,
+  "gate_intervals_equal": true,
+  "parity_passes": 2,
+  "gain_passes": 2,
+  "raw_arrays_byte_identical": true,
+  "known_control_vectors_reproduced": 1029,
+  "frozen_gain_comparison": true,
+  "retuned": false,
+  "gain_windows": 575,
+  "gain_sequences": 2875,
+  "fully_independent_source_holdout": false,
+  "asr_calls": 0,
+  "step3_executed": false,
+  "correction_implemented": false,
+  "cloud_inference": false,
+  "capture": false,
+  "playback": false,
+  "policy_adopted": false,
+  "model_replaced": false,
+  "application_integrated": false,
+  "quality_accepted": false,
+  "worker_binary_sha256": "45dda8b1fb73054d8e5f3ea195286eb6c7faf61841b3cde4a897ab224d90bf36",
+  "worker_core_sources_unchanged": true,
+  "rust_probe_sha256": "509b20a6ae2e5cd547877809291ca9125c9f8b0b8a069dfe2f25b990f81c27e8",
+  "model_provenance": {
+    "repository": "https://github.com/snakers4/silero-vad",
+    "revision": "1e261b036686cd0017d500ee96acd1c4ba572a9d",
+    "model_path": "src/silero_vad/data/silero_vad.onnx",
+    "model_git_blob_sha1": "80c5592ef1f4c9ede3e357bbd02eb863358a6a9d",
+    "license": "MIT",
+    "user_approved_comparison": true,
+    "worker_replaced": false,
+    "files": [
+      {
+        "file": "silero_vad.onnx",
+        "upstream_path": "src/silero_vad/data/silero_vad.onnx",
+        "url": "https://raw.githubusercontent.com/snakers4/silero-vad/1e261b036686cd0017d500ee96acd1c4ba572a9d/src/silero_vad/data/silero_vad.onnx",
+        "bytes": 2327524,
+        "git_blob_sha1": "80c5592ef1f4c9ede3e357bbd02eb863358a6a9d",
+        "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3"
+      },
+      {
+        "file": "utils_vad.py",
+        "upstream_path": "src/silero_vad/utils_vad.py",
+        "url": "https://raw.githubusercontent.com/snakers4/silero-vad/1e261b036686cd0017d500ee96acd1c4ba572a9d/src/silero_vad/utils_vad.py",
+        "bytes": 31474,
+        "git_blob_sha1": "4b3bef714cae87a44381077ac0519fd1a0f45089",
+        "sha256": "7e0f9b3334ee4feb79abcf2251be12458329077bce28c8540878ed9d35e5aa6b"
+      },
+      {
+        "file": "LICENSE",
+        "upstream_path": "LICENSE",
+        "url": "https://raw.githubusercontent.com/snakers4/silero-vad/1e261b036686cd0017d500ee96acd1c4ba572a9d/LICENSE",
+        "bytes": 1075,
+        "git_blob_sha1": "0bf5e90cac691b999d4a35044f97167d7bbbf0b9",
+        "sha256": "2e63e9a38b6e8fc0c7bc37ce174caca1862870856c6daf5697cfb785e925520b"
+      },
+      {
+        "file": "pyproject.toml",
+        "upstream_path": "pyproject.toml",
+        "url": "https://raw.githubusercontent.com/snakers4/silero-vad/1e261b036686cd0017d500ee96acd1c4ba572a9d/pyproject.toml",
+        "bytes": 1945,
+        "git_blob_sha1": "951de2f5beaf661146006c2383abd7678087c702",
+        "sha256": "2aa7fecb20eb9c9feaf22ae31421f904f85d7b939c03d17d12c0113fea49e32f"
+      },
+      {
+        "file": "__init__.py",
+        "upstream_path": "src/silero_vad/__init__.py",
+        "url": "https://raw.githubusercontent.com/snakers4/silero-vad/1e261b036686cd0017d500ee96acd1c4ba572a9d/src/silero_vad/__init__.py",
+        "bytes": 1288,
+        "git_blob_sha1": "910001a6233f9ba54c4ac41e94bddf8301d87557",
+        "sha256": "45fcf7e268eb0ba83ccee737b1a86cc94d7cf7487e2a1c0a31b9b72b899201f1"
+      }
+    ]
+  },
+  "external_raw_sha256": {
+    "../runtime/qwen3-asr/diagnostics/official-vad-parity-r1/official-python.jsonl": "df8ed3a46037d6b05208819fd4c3a1f4ba1af6293e68d10da291d6b32396c414",
+    "../runtime/qwen3-asr/diagnostics/official-vad-parity-r1/rust-wheel.jsonl": "776c9ecb7e6592e2ee6e9b515c168bfebfd0a77138a5a82113f3701371e60af3",
+    "../runtime/qwen3-asr/diagnostics/official-vad-parity-r2/official-python.jsonl": "df8ed3a46037d6b05208819fd4c3a1f4ba1af6293e68d10da291d6b32396c414",
+    "../runtime/qwen3-asr/diagnostics/official-vad-parity-r2/rust-wheel.jsonl": "776c9ecb7e6592e2ee6e9b515c168bfebfd0a77138a5a82113f3701371e60af3",
+    "../runtime/qwen3-asr/diagnostics/vad-gain-r1/probabilities.jsonl": "6acef8d0b56df47f02ea5df2d84779d4e241839aa0a79a8e90f846f0e4083996",
+    "../runtime/qwen3-asr/diagnostics/vad-gain-r2/probabilities.jsonl": "6acef8d0b56df47f02ea5df2d84779d4e241839aa0a79a8e90f846f0e4083996"
+  },
+  "external_manifest_sha256": {
+    "../runtime/qwen3-asr/diagnostics/vad-gain-r1/manifest.json": "88ec74b66a93abc67f5368601f77c857ab4addce86579cb873d868b2f8d25939",
+    "../runtime/qwen3-asr/diagnostics/vad-gain-r2/manifest.json": "88ec74b66a93abc67f5368601f77c857ab4addce86579cb873d868b2f8d25939"
+  },
+  "failed_nix_setup_source_sha256": "f7acc857f12faf0b81a9aff5b924423be908086ccaf969b6904756c1b1196a69",
+  "failed_nix_setup_log_sha256": "89c2df08190cec4694fdf65f0a43cc68461189964e3dddbf4be1e63962887c11",
+  "failed_setup_timeout_seconds": 600,
+  "rust_core_tests": 15,
+  "current_frame_helper_tests": 2,
+  "python_tests": 18,
+  "node_tests": 14,
+  "endpoint_reference_cases": 306,
+  "source_sha256": {
+    "benchmarks/qwen3-asr/reference_current_vad.py": "446395d93212ff373b7f08529b7918b14d5ea0e28fb16c008d41b03cb35b185b",
+    "benchmarks/qwen3-asr/compare_vad_gain.py": "9d65fc68c7a3d6a1423cbd1c3a5271dc047f9214c70b8f031d94b65dce4e650f",
+    "benchmarks/qwen3-asr/test_vad_reference_gain.py": "e7926a3515a04238465c4914ac25e4599a4dc94dc300b13b94fe51525f06641b",
+    "benchmarks/qwen3-asr/vad-reference-requirements.txt": "04bd74928f77d99338dead78a75f5237ecabc3ff617f549b1eacad2bf903f2aa"
+  },
+  "evidence_sha256": {
+    "README.md": "11603ab7cf8e64b01e09f0cc1b8a51cec44e2bae6d2a9509421301a9969d93fb",
+    "frozen-plan.json": "3cbb34645d4d45a591fb33660fffd94900a5af78570e03b5a74bcc15f0abb7ff",
+    "input-manifest.json": "88ec74b66a93abc67f5368601f77c857ab4addce86579cb873d868b2f8d25939",
+    "parity-report.json": "0c7cb051488b60ae5ad9e555247eb1bbcbeb748dac274ff2b9af9926e6f37048",
+    "reference-freeze.txt": "20248b46f03f25000e2e4b57b316e696a7d6559c07fa026bc811631de00d5c88",
+    "report.json": "b62d8d5259c8158ffde40025d6917cce03cb2c37f59c333fd729260099ab1193",
+    "static-check.txt": "079e8fc4ee48e7eb3f2d52c4ad59e405d1ab3c3332efb1f7e40fa36fd3ad0446",
+    "summary.json": "630869baec6aaef47696957127e53de419597bfec6e27842014bc9d89cb230b8"
+  }
+}

@@ -1,0 +1,2757 @@
+{
+  "normalization": "Existing CER NFKC/lowercase/remove Unicode punctuation+whitespace; English WER punctuation removal and whitespace words. Raw text retained.",
+  "complete": true,
+  "total_requests": 50,
+  "speech_requests": 32,
+  "worker_errors": [],
+  "negative_requests": 18,
+  "negative_gate_passes": 16,
+  "negative_failures": [
+    {
+      "id": "negative-bursts-0.002",
+      "text": "はい。",
+      "status": "recognized",
+      "asr_calls": 1
+    },
+    {
+      "id": "negative-bursts-0.01",
+      "text": "はい。",
+      "status": "recognized",
+      "asr_calls": 1
+    }
+  ],
+  "quality_accepted": false,
+  "real_environment_noise_verified": false,
+  "spontaneous_acknowledgements_verified": false,
+  "application_integrated": false,
+  "groups": [
+    {
+      "language": "Japanese",
+      "condition": "clean",
+      "clips": 2,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0.023622047244094488,
+      "character_errors": 3,
+      "reference_characters": 127,
+      "wer": null,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "Japanese",
+      "condition": "gain-20dB",
+      "clips": 2,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0.015748031496062992,
+      "character_errors": 2,
+      "reference_characters": 127,
+      "wer": null,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "Japanese",
+      "condition": "gain-40dB",
+      "clips": 2,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0.023622047244094488,
+      "character_errors": 3,
+      "reference_characters": 127,
+      "wer": null,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "Japanese",
+      "condition": "white-snr20",
+      "clips": 2,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0.023622047244094488,
+      "character_errors": 3,
+      "reference_characters": 127,
+      "wer": null,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "Japanese",
+      "condition": "white-snr10",
+      "clips": 2,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0.06299212598425197,
+      "character_errors": 8,
+      "reference_characters": 127,
+      "wer": null,
+      "normalized_exact_matches": 0
+    },
+    {
+      "language": "Japanese",
+      "condition": "white-snr0",
+      "clips": 2,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0.10236220472440945,
+      "character_errors": 13,
+      "reference_characters": 127,
+      "wer": null,
+      "normalized_exact_matches": 0
+    },
+    {
+      "language": "Japanese",
+      "condition": "lowpass-snr10",
+      "clips": 2,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0.023622047244094488,
+      "character_errors": 3,
+      "reference_characters": 127,
+      "wer": null,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "Japanese",
+      "condition": "bursts-snr10",
+      "clips": 2,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0.031496062992125984,
+      "character_errors": 4,
+      "reference_characters": 127,
+      "wer": null,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "English",
+      "condition": "clean",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 64,
+      "wer": 0,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "English",
+      "condition": "gain-20dB",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 64,
+      "wer": 0,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "English",
+      "condition": "gain-40dB",
+      "clips": 1,
+      "missed_speech": [
+        "fleurs-en_us-validation-0-1548-gain-40dB"
+      ],
+      "worker_errors": [],
+      "cer": 1,
+      "character_errors": 64,
+      "reference_characters": 64,
+      "wer": 1,
+      "normalized_exact_matches": 0
+    },
+    {
+      "language": "English",
+      "condition": "white-snr20",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 64,
+      "wer": 0,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "English",
+      "condition": "white-snr10",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0.015625,
+      "character_errors": 1,
+      "reference_characters": 64,
+      "wer": 0.13333333333333333,
+      "normalized_exact_matches": 0
+    },
+    {
+      "language": "English",
+      "condition": "white-snr0",
+      "clips": 1,
+      "missed_speech": [
+        "fleurs-en_us-validation-0-1548-white-snr0"
+      ],
+      "worker_errors": [],
+      "cer": 1,
+      "character_errors": 64,
+      "reference_characters": 64,
+      "wer": 1,
+      "normalized_exact_matches": 0
+    },
+    {
+      "language": "English",
+      "condition": "lowpass-snr10",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 64,
+      "wer": 0,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "English",
+      "condition": "bursts-snr10",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 64,
+      "wer": 0,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "Thai",
+      "condition": "clean",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 86,
+      "wer": null,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "Thai",
+      "condition": "gain-20dB",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 86,
+      "wer": null,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "Thai",
+      "condition": "gain-40dB",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0.03488372093023256,
+      "character_errors": 3,
+      "reference_characters": 86,
+      "wer": null,
+      "normalized_exact_matches": 0
+    },
+    {
+      "language": "Thai",
+      "condition": "white-snr20",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 86,
+      "wer": null,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "Thai",
+      "condition": "white-snr10",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 86,
+      "wer": null,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "Thai",
+      "condition": "white-snr0",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0.3023255813953488,
+      "character_errors": 26,
+      "reference_characters": 86,
+      "wer": null,
+      "normalized_exact_matches": 0
+    },
+    {
+      "language": "Thai",
+      "condition": "lowpass-snr10",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 86,
+      "wer": null,
+      "normalized_exact_matches": 1
+    },
+    {
+      "language": "Thai",
+      "condition": "bursts-snr10",
+      "clips": 1,
+      "missed_speech": [],
+      "worker_errors": [],
+      "cer": 0,
+      "character_errors": 0,
+      "reference_characters": 86,
+      "wer": null,
+      "normalized_exact_matches": 1
+    }
+  ],
+  "rows": [
+    {
+      "id": "negative-white-0.002",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.03918637199967634,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-0",
+        "model_loaded": false,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 20,
+        "vad_seconds": 0.037795181
+      },
+      "fixture_sha256": "177f3f49265e0a502f2f927aa5f6aa2e8a8c35ec4a54a875432682ea2cd636fa",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "negative-white-0.01",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.0333491170022171,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-1",
+        "model_loaded": false,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 5.769014358520508,
+        "vad_seconds": 0.032194167
+      },
+      "fixture_sha256": "64c9877a7429264351f45c0b4b9a71129c7774204bb256d6623da478ff4d08d6",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "negative-white-0.05",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.03363083800650202,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-2",
+        "model_loaded": false,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 1.1542092561721802,
+        "vad_seconds": 0.032182317
+      },
+      "fixture_sha256": "96854c948fc5137ca1a9349a8474abe5c66e62a065e992c055ac057be410a043",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "negative-white-0.1",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.03260926700022537,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-3",
+        "model_loaded": false,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 1,
+        "vad_seconds": 0.031432576
+      },
+      "fixture_sha256": "d6ecf330fee068b62dfea999b22ea8f87566b4ce6ac9ecddd8ee89ef3a6c2f61",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "negative-lowpass-0.002",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.0332947580027394,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-4",
+        "model_loaded": false,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 13.107200622558594,
+        "vad_seconds": 0.032130347
+      },
+      "fixture_sha256": "95eb9f40f29f0b706230bd505b7795e370a519452fc66a7b4e1312eed0fbd835",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "negative-lowpass-0.01",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.03270029700070154,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-5",
+        "model_loaded": false,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 2.6172523498535156,
+        "vad_seconds": 0.031538726
+      },
+      "fixture_sha256": "0f744409ce321fb4c12a29b6238797752ca62ee042e8f80810c03d7377374680",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "negative-lowpass-0.05",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.03287953700055368,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-6",
+        "model_loaded": false,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 1,
+        "vad_seconds": 0.031699516
+      },
+      "fixture_sha256": "d7d6e53fe23b15bbbeaf11db3a2c1d803c00188c652dc99e8859e82f42eb603d",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "negative-lowpass-0.1",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.03470125800231472,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-7",
+        "model_loaded": false,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 1,
+        "vad_seconds": 0.033502818
+      },
+      "fixture_sha256": "2f428d9a530e3123d3db498d0b45bb8f9d5a2caec96b7d76962cca0b6dfa0219",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "negative-bursts-0.002",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "はい。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 2.319830787,
+      "request_seconds": 2.9712889900110895,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 19584,
+            "start_sample": 8512
+          },
+          {
+            "end_sample": 80000,
+            "start_sample": 24384
+          }
+        ],
+        "id": "robust-8",
+        "inference_seconds": 2.319830787,
+        "load_seconds": 0.618456796,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 80000,
+            "inference_seconds": 2.083814055,
+            "kind": "window_final",
+            "raw_text": "はい。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "recognized",
+        "text": "はい。",
+        "vad_frame_samples": 512,
+        "vad_gain": 2.8794376850128174,
+        "vad_seconds": 0.031803956
+      },
+      "fixture_sha256": "cf17de1d8ff1ffe596424a8f72a54acd36b311abab8212217bb29cd5c456687c",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 2,
+      "reference_words": 0,
+      "word_errors": 1,
+      "normalized_exact_match": false,
+      "negative_gate_pass": false
+    },
+    {
+      "id": "negative-bursts-0.01",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "はい。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 2.291228695,
+      "request_seconds": 2.331056852999609,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 63616,
+            "start_sample": 52544
+          },
+          {
+            "end_sample": 80000,
+            "start_sample": 72512
+          }
+        ],
+        "id": "robust-9",
+        "inference_seconds": 2.291228695,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 80000,
+            "inference_seconds": 2.016738774,
+            "kind": "window_final",
+            "raw_text": "はい。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 3
+          }
+        ],
+        "status": "recognized",
+        "text": "はい。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.038360657
+      },
+      "fixture_sha256": "a6c8cdf682f17972bb67e82c13005d9c34eb0f1cddac2feb24b8825bdbf1ff12",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 2,
+      "reference_words": 0,
+      "word_errors": 1,
+      "normalized_exact_match": false,
+      "negative_gate_pass": false
+    },
+    {
+      "id": "negative-bursts-0.05",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.03889089199947193,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-10",
+        "model_loaded": true,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 1,
+        "vad_seconds": 0.03747425
+      },
+      "fixture_sha256": "8e153740a67601539225080414407d820f8a19dda656dfe11a1545469784fc45",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "negative-bursts-0.1",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.03966371199931018,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-11",
+        "model_loaded": true,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 1,
+        "vad_seconds": 0.03827938
+      },
+      "fixture_sha256": "2fdaa415b70d0868f4b3a480ed02f9d8de2c98974ca71c98672ffafe867d5685",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "negative-tones-0.002",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.038241071000811644,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-12",
+        "model_loaded": true,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 20,
+        "vad_seconds": 0.036896319
+      },
+      "fixture_sha256": "a96107f47a8924ab83c8aade0f52a0695de071961afc3445062657793435be50",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "negative-tones-0.01",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.03860996100411285,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-13",
+        "model_loaded": true,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 5.488777160644531,
+        "vad_seconds": 0.03724675
+      },
+      "fixture_sha256": "c4e40a31248c26737c873606d5e9675dfa18f3f7484f8534e045177f1f9ba6b2",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "negative-tones-0.05",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.037862651006435044,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-14",
+        "model_loaded": true,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 1.0970203876495361,
+        "vad_seconds": 0.036486508
+      },
+      "fixture_sha256": "3969ccb915ba09543717a5954842ab67427517933dc49a8da604816983d4ea8a",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "negative-tones-0.1",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.0374027509969892,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-15",
+        "model_loaded": true,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 1,
+        "vad_seconds": 0.03606031
+      },
+      "fixture_sha256": "9f797909b94bc1f695fac5eee542cd187cf2f12df6454cc3bbe825bee59ac841",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "negative-silence",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.03532511899538804,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-16",
+        "model_loaded": true,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 1,
+        "vad_seconds": 0.034030418
+      },
+      "fixture_sha256": "262d1f34f300560a4c82ba8127ddea9e1d72946f187fdbd3e8f70ee096077aec",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    },
+    {
+      "id": "fleurs-ja_jp-validation-0-1519-clean",
+      "language": "Japanese",
+      "condition": "clean",
+      "reference": "多くの場合 海外のギャップイヤーコースに入学することで 帰国後に実際に大学に進学しやすくなります",
+      "audio_seconds": 11.1,
+      "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 4.076501224,
+      "request_seconds": 4.134927959996276,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 15488,
+            "start_sample": 0
+          },
+          {
+            "end_sample": 149632,
+            "start_sample": 24896
+          }
+        ],
+        "id": "robust-17",
+        "inference_seconds": 4.076501224,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 177600,
+            "inference_seconds": 3.831498942,
+            "kind": "window_final",
+            "raw_text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 27
+          }
+        ],
+        "status": "recognized",
+        "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.055820892
+      },
+      "fixture_sha256": "e80cbc5135de641a8268357db54740b9e7a799f997567bbbbcced12411b5f2c9",
+      "purpose": "accuracy",
+      "reference_characters": 46,
+      "character_errors": 0,
+      "reference_words": 3,
+      "word_errors": 3,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-0-1519-gain-20dB",
+      "language": "Japanese",
+      "condition": "gain-20dB",
+      "reference": "多くの場合 海外のギャップイヤーコースに入学することで 帰国後に実際に大学に進学しやすくなります",
+      "audio_seconds": 11.1,
+      "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 4.154319704,
+      "request_seconds": 4.211883429001318,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 177600,
+            "start_sample": 24896
+          }
+        ],
+        "id": "robust-18",
+        "inference_seconds": 4.154319704,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 177600,
+            "inference_seconds": 3.914443011,
+            "kind": "window_final",
+            "raw_text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 27
+          }
+        ],
+        "status": "recognized",
+        "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+        "vad_frame_samples": 512,
+        "vad_gain": 2.018977165222168,
+        "vad_seconds": 0.055050342
+      },
+      "fixture_sha256": "4046c9597faa24b62d687ad2eb26e8ef78bd0eb26fd88f0d2d2e255bac6fedda",
+      "purpose": "accuracy",
+      "reference_characters": 46,
+      "character_errors": 0,
+      "reference_words": 3,
+      "word_errors": 3,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-0-1519-gain-40dB",
+      "language": "Japanese",
+      "condition": "gain-40dB",
+      "reference": "多くの場合 海外のギャップイヤーコースに入学することで 帰国後に実際に大学に進学しやすくなります",
+      "audio_seconds": 11.1,
+      "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 4.058818121,
+      "request_seconds": 4.118909279990476,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 177600,
+            "start_sample": 24896
+          }
+        ],
+        "id": "robust-19",
+        "inference_seconds": 4.058818121,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 177600,
+            "inference_seconds": 3.8217260570000002,
+            "kind": "window_final",
+            "raw_text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 27
+          }
+        ],
+        "status": "recognized",
+        "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+        "vad_frame_samples": 512,
+        "vad_gain": 20,
+        "vad_seconds": 0.057599656
+      },
+      "fixture_sha256": "7df665458690588dc1dd2b9d1134950f1f2ba6fec7dc5ae57cbebe8da13792c5",
+      "purpose": "accuracy",
+      "reference_characters": 46,
+      "character_errors": 0,
+      "reference_words": 3,
+      "word_errors": 3,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-0-1519-white-snr20",
+      "language": "Japanese",
+      "condition": "white-snr20",
+      "reference": "多くの場合 海外のギャップイヤーコースに入学することで 帰国後に実際に大学に進学しやすくなります",
+      "audio_seconds": 11.1,
+      "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 3.988188191,
+      "request_seconds": 4.042404022009578,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 16512,
+            "start_sample": 0
+          },
+          {
+            "end_sample": 156800,
+            "start_sample": 24896
+          }
+        ],
+        "id": "robust-20",
+        "inference_seconds": 3.988188191,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 177600,
+            "inference_seconds": 3.753564107,
+            "kind": "window_final",
+            "raw_text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 27
+          }
+        ],
+        "status": "recognized",
+        "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.051851818
+      },
+      "fixture_sha256": "5415b55cef7b818f3583bf14c6dda0b1d6322175e8a0c83d160fbf7fcf2be7fb",
+      "purpose": "accuracy",
+      "reference_characters": 46,
+      "character_errors": 0,
+      "reference_words": 3,
+      "word_errors": 3,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-0-1519-white-snr10",
+      "language": "Japanese",
+      "condition": "white-snr10",
+      "reference": "多くの場合 海外のギャップイヤーコースに入学することで 帰国後に実際に大学に進学しやすくなります",
+      "audio_seconds": 11.1,
+      "text": "多くの場合、海外のギャップイヤーコースに入学することで、比較上に実際に大学に進学しやすくなります。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 4.155207807,
+      "request_seconds": 4.216425431004609,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 150144,
+            "start_sample": 24896
+          }
+        ],
+        "id": "robust-21",
+        "inference_seconds": 4.155207807,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 177600,
+            "inference_seconds": 3.911130881,
+            "kind": "window_final",
+            "raw_text": "多くの場合、海外のギャップイヤーコースに入学することで、比較上に実際に大学に進学しやすくなります。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 27
+          }
+        ],
+        "status": "recognized",
+        "text": "多くの場合、海外のギャップイヤーコースに入学することで、比較上に実際に大学に進学しやすくなります。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.05880813
+      },
+      "fixture_sha256": "7f8c29902cb72a7b39b2d8d4e9c103dba908b800447a2eeff9182cfa7736b5dc",
+      "purpose": "accuracy",
+      "reference_characters": 46,
+      "character_errors": 3,
+      "reference_words": 3,
+      "word_errors": 3,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-0-1519-white-snr0",
+      "language": "Japanese",
+      "condition": "white-snr0",
+      "reference": "多くの場合 海外のギャップイヤーコースに入学することで 帰国後に実際に大学に進学しやすくなります",
+      "audio_seconds": 11.1,
+      "text": "多くの場合、海外のギャップイヤーコースに入学することで、比較的に実際に大学に進学しやすくなります。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 4.056176652,
+      "request_seconds": 4.115968765996513,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 71808,
+            "start_sample": 24896
+          },
+          {
+            "end_sample": 147072,
+            "start_sample": 88384
+          }
+        ],
+        "id": "robust-22",
+        "inference_seconds": 4.056176652,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 177600,
+            "inference_seconds": 3.811068117,
+            "kind": "window_final",
+            "raw_text": "多くの場合、海外のギャップイヤーコースに入学することで、比較的に実際に大学に進学しやすくなります。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 26
+          }
+        ],
+        "status": "recognized",
+        "text": "多くの場合、海外のギャップイヤーコースに入学することで、比較的に実際に大学に進学しやすくなります。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.057322658
+      },
+      "fixture_sha256": "e6aaa7c477460fe55b2f0f8eed78419a7e6848fd1bab0de11731200efb792983",
+      "purpose": "accuracy",
+      "reference_characters": 46,
+      "character_errors": 3,
+      "reference_words": 3,
+      "word_errors": 3,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-0-1519-lowpass-snr10",
+      "language": "Japanese",
+      "condition": "lowpass-snr10",
+      "reference": "多くの場合 海外のギャップイヤーコースに入学することで 帰国後に実際に大学に進学しやすくなります",
+      "audio_seconds": 11.1,
+      "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 4.140331706,
+      "request_seconds": 4.200465860994882,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 10368,
+            "start_sample": 0
+          },
+          {
+            "end_sample": 167040,
+            "start_sample": 24896
+          }
+        ],
+        "id": "robust-23",
+        "inference_seconds": 4.140331706,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 177600,
+            "inference_seconds": 3.894851827,
+            "kind": "window_final",
+            "raw_text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 27
+          }
+        ],
+        "status": "recognized",
+        "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.05771177
+      },
+      "fixture_sha256": "f05342a9bd4a4d6702ffb906d49abca57bcbb6fb997ebc4da21f03b8cddd4a5b",
+      "purpose": "accuracy",
+      "reference_characters": 46,
+      "character_errors": 0,
+      "reference_words": 3,
+      "word_errors": 3,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-0-1519-bursts-snr10",
+      "language": "Japanese",
+      "condition": "bursts-snr10",
+      "reference": "多くの場合 海外のギャップイヤーコースに入学することで 帰国後に実際に大学に進学しやすくなります",
+      "audio_seconds": 11.1,
+      "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 3.996375184,
+      "request_seconds": 4.052757933997782,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 82560,
+            "start_sample": 24896
+          },
+          {
+            "end_sample": 105088,
+            "start_sample": 87872
+          },
+          {
+            "end_sample": 144512,
+            "start_sample": 107328
+          }
+        ],
+        "id": "robust-24",
+        "inference_seconds": 3.996375184,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 177600,
+            "inference_seconds": 3.751907322,
+            "kind": "window_final",
+            "raw_text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 27
+          }
+        ],
+        "status": "recognized",
+        "text": "多くの場合、海外のギャップイヤーコースに入学することで、帰国後に実際に大学に進学しやすくなります。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.053882882
+      },
+      "fixture_sha256": "cb676efb24fae39869d57cfaebacc6d0dd7a1e3d11542c1e7d9e2d30aabc1c78",
+      "purpose": "accuracy",
+      "reference_characters": 46,
+      "character_errors": 0,
+      "reference_words": 3,
+      "word_errors": 3,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-1-1608-clean",
+      "language": "Japanese",
+      "condition": "clean",
+      "reference": "私は妹やその友人とはぐれてしまったのですが 途中で車椅子に乗った障害者が2人いて 飛び越えて車椅子を押している人たちがいました とアルマン ヴェルサーチさんは語っています",
+      "audio_seconds": 22.86,
+      "text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が二人いて、飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 6.753741379,
+      "request_seconds": 6.858158234987059,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 251008,
+            "start_sample": 76608
+          },
+          {
+            "end_sample": 299648,
+            "start_sample": 252736
+          }
+        ],
+        "id": "robust-25",
+        "inference_seconds": 6.753741379,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 365760,
+            "inference_seconds": 6.505598626,
+            "kind": "window_final",
+            "raw_text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が二人いて、飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 45
+          }
+        ],
+        "status": "recognized",
+        "text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が二人いて、飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.099756974
+      },
+      "fixture_sha256": "38cd2bc12473fb8312ead0faca4e1f41ac4cfcb41b8df7256a4bab4d97eeb906",
+      "purpose": "accuracy",
+      "reference_characters": 81,
+      "character_errors": 3,
+      "reference_words": 5,
+      "word_errors": 5,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-1-1608-gain-20dB",
+      "language": "Japanese",
+      "condition": "gain-20dB",
+      "reference": "私は妹やその友人とはぐれてしまったのですが 途中で車椅子に乗った障害者が2人いて 飛び越えて車椅子を押している人たちがいました とアルマン ヴェルサーチさんは語っています",
+      "audio_seconds": 22.86,
+      "text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が2人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 6.720508314,
+      "request_seconds": 6.818022562991246,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 310400,
+            "start_sample": 87360
+          }
+        ],
+        "id": "robust-26",
+        "inference_seconds": 6.720508314,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 365760,
+            "inference_seconds": 6.471044991,
+            "kind": "window_final",
+            "raw_text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が2人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 45
+          }
+        ],
+        "status": "recognized",
+        "text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が2人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.092663775
+      },
+      "fixture_sha256": "f6c0c4533fe4b0eef0783b27390ec860fa3783b755162a518498ea4243b52b68",
+      "purpose": "accuracy",
+      "reference_characters": 81,
+      "character_errors": 2,
+      "reference_words": 5,
+      "word_errors": 5,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-1-1608-gain-40dB",
+      "language": "Japanese",
+      "condition": "gain-40dB",
+      "reference": "私は妹やその友人とはぐれてしまったのですが 途中で車椅子に乗った障害者が2人いて 飛び越えて車椅子を押している人たちがいました とアルマン ヴェルサーチさんは語っています",
+      "audio_seconds": 22.86,
+      "text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が2人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサージさんは語っています。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 6.804777138,
+      "request_seconds": 6.908013200998539,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 251520,
+            "start_sample": 87360
+          },
+          {
+            "end_sample": 310400,
+            "start_sample": 252736
+          }
+        ],
+        "id": "robust-27",
+        "inference_seconds": 6.804777138,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 365760,
+            "inference_seconds": 6.559582914,
+            "kind": "window_final",
+            "raw_text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が2人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサージさんは語っています。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 45
+          }
+        ],
+        "status": "recognized",
+        "text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が2人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサージさんは語っています。",
+        "vad_frame_samples": 512,
+        "vad_gain": 9.990243911743164,
+        "vad_seconds": 0.098488668
+      },
+      "fixture_sha256": "de918f3acb3cea5e040980e11e54dcea4fcb3359c0cc54761069857d252dc769",
+      "purpose": "accuracy",
+      "reference_characters": 81,
+      "character_errors": 3,
+      "reference_words": 5,
+      "word_errors": 5,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-1-1608-white-snr20",
+      "language": "Japanese",
+      "condition": "white-snr20",
+      "reference": "私は妹やその友人とはぐれてしまったのですが 途中で車椅子に乗った障害者が2人いて 飛び越えて車椅子を押している人たちがいました とアルマン ヴェルサーチさんは語っています",
+      "audio_seconds": 22.86,
+      "text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が二人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 6.476086261,
+      "request_seconds": 6.57440292800311,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 298624,
+            "start_sample": 86848
+          }
+        ],
+        "id": "robust-28",
+        "inference_seconds": 6.476086261,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 365760,
+            "inference_seconds": 6.229531522,
+            "kind": "window_final",
+            "raw_text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が二人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 44
+          }
+        ],
+        "status": "recognized",
+        "text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が二人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.09360536
+      },
+      "fixture_sha256": "409edf0a90584589ff5929906d0441463ef269ac1e82b54fb55c62e040f49166",
+      "purpose": "accuracy",
+      "reference_characters": 81,
+      "character_errors": 3,
+      "reference_words": 5,
+      "word_errors": 5,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-1-1608-white-snr10",
+      "language": "Japanese",
+      "condition": "white-snr10",
+      "reference": "私は妹やその友人とはぐれてしまったのですが 途中で車椅子に乗った障害者が2人いて 飛び越えて車椅子を押している人たちがいました とアルマン ヴェルサーチさんは語っています",
+      "audio_seconds": 22.86,
+      "text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が二人いて飛び越えて車椅子を押して行く人たちがいました」とアルマンベルサーチさんは語っています。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 6.647648941,
+      "request_seconds": 6.749218109995127,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 299136,
+            "start_sample": 87360
+          }
+        ],
+        "id": "robust-29",
+        "inference_seconds": 6.647648941,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 365760,
+            "inference_seconds": 6.398755301,
+            "kind": "window_final",
+            "raw_text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が二人いて飛び越えて車椅子を押して行く人たちがいました」とアルマンベルサーチさんは語っています。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 45
+          }
+        ],
+        "status": "recognized",
+        "text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が二人いて飛び越えて車椅子を押して行く人たちがいました」とアルマンベルサーチさんは語っています。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.096845491
+      },
+      "fixture_sha256": "8a88e951d653a2940fd86e9f5a2122a968c5328684c868c50c31d87da45d92fd",
+      "purpose": "accuracy",
+      "reference_characters": 81,
+      "character_errors": 5,
+      "reference_words": 5,
+      "word_errors": 5,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-1-1608-white-snr0",
+      "language": "Japanese",
+      "condition": "white-snr0",
+      "reference": "私は妹やその友人とはぐれてしまったのですが 途中で車椅子に乗った障害者が2人いて 飛び越えて車椅子を押している人たちがいました とアルマン ヴェルサーチさんは語っています",
+      "audio_seconds": 22.86,
+      "text": "私は妹やその友人とはぐれてしまったんですが、途中で車椅子に乗った障害者が二人いて、飛び越えて車椅子を押して引き出しがいました」とアルマンベルサチさんは語っています。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 6.565751789,
+      "request_seconds": 6.665980051999213,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 298112,
+            "start_sample": 90432
+          }
+        ],
+        "id": "robust-30",
+        "inference_seconds": 6.565751789,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 365760,
+            "inference_seconds": 6.316861497,
+            "kind": "window_final",
+            "raw_text": "私は妹やその友人とはぐれてしまったんですが、途中で車椅子に乗った障害者が二人いて、飛び越えて車椅子を押して引き出しがいました」とアルマンベルサチさんは語っています。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 47
+          }
+        ],
+        "status": "recognized",
+        "text": "私は妹やその友人とはぐれてしまったんですが、途中で車椅子に乗った障害者が二人いて、飛び越えて車椅子を押して引き出しがいました」とアルマンベルサチさんは語っています。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.095439874
+      },
+      "fixture_sha256": "fce8b69ad799ca863c4a9b31c129ae2bb9554c31705a52e3a2d9cc72fd4d8ab3",
+      "purpose": "accuracy",
+      "reference_characters": 81,
+      "character_errors": 10,
+      "reference_words": 5,
+      "word_errors": 5,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-1-1608-lowpass-snr10",
+      "language": "Japanese",
+      "condition": "lowpass-snr10",
+      "reference": "私は妹やその友人とはぐれてしまったのですが 途中で車椅子に乗った障害者が2人いて 飛び越えて車椅子を押している人たちがいました とアルマン ヴェルサーチさんは語っています",
+      "audio_seconds": 22.86,
+      "text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が2人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサージさんは語っています。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 6.571713671,
+      "request_seconds": 6.672845184002654,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 299648,
+            "start_sample": 86848
+          }
+        ],
+        "id": "robust-31",
+        "inference_seconds": 6.571713671,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 365760,
+            "inference_seconds": 6.319011134,
+            "kind": "window_final",
+            "raw_text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が2人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサージさんは語っています。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 45
+          }
+        ],
+        "status": "recognized",
+        "text": "私は妹やその友人とはぐれてしまったのですが、途中で車椅子に乗った障害者が2人いて飛び越えて車椅子を押している人たちがいました」とアルマンベルサージさんは語っています。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.096078391
+      },
+      "fixture_sha256": "2066d6a1086948eecc3201a26e9eaeb16a8c708e5595401b767e5cd8edb9f5f4",
+      "purpose": "accuracy",
+      "reference_characters": 81,
+      "character_errors": 3,
+      "reference_words": 5,
+      "word_errors": 5,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-ja_jp-validation-1-1608-bursts-snr10",
+      "language": "Japanese",
+      "condition": "bursts-snr10",
+      "reference": "私は妹やその友人とはぐれてしまったのですが 途中で車椅子に乗った障害者が2人いて 飛び越えて車椅子を押している人たちがいました とアルマン ヴェルサーチさんは語っています",
+      "audio_seconds": 22.86,
+      "text": "私は妹やその友人とハグれてしまったのですが、途中で車椅子に乗った障害者が2人いて、飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 7.570613628,
+      "request_seconds": 7.689005571999587,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 252032,
+            "start_sample": 88896
+          },
+          {
+            "end_sample": 299648,
+            "start_sample": 252736
+          }
+        ],
+        "id": "robust-32",
+        "inference_seconds": 7.570613628,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 365760,
+            "inference_seconds": 7.308271464,
+            "kind": "window_final",
+            "raw_text": "私は妹やその友人とハグれてしまったのですが、途中で車椅子に乗った障害者が2人いて、飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 46
+          }
+        ],
+        "status": "recognized",
+        "text": "私は妹やその友人とハグれてしまったのですが、途中で車椅子に乗った障害者が2人いて、飛び越えて車椅子を押している人たちがいました」とアルマンベルサーチさんは語っています。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.11344391
+      },
+      "fixture_sha256": "1e1104b627bee8ab6fc05928282fd3a532eb79d6ee5affc49ff60015a406c973",
+      "purpose": "accuracy",
+      "reference_characters": 81,
+      "character_errors": 4,
+      "reference_words": 5,
+      "word_errors": 5,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548-clean",
+      "language": "English",
+      "condition": "clean",
+      "reference": "when you call someone who is thousands of miles away you are using a satellite",
+      "audio_seconds": 6.54,
+      "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 3.154110002,
+      "request_seconds": 3.1956850200076587,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 104640,
+            "start_sample": 14144
+          }
+        ],
+        "id": "robust-33",
+        "inference_seconds": 3.154110002,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 104640,
+            "inference_seconds": 2.894161006,
+            "kind": "window_final",
+            "raw_text": "When you call someone who is thousands of miles away, you are using a satellite.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 17
+          }
+        ],
+        "status": "recognized",
+        "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+        "vad_frame_samples": 512,
+        "vad_gain": 4.233591556549072,
+        "vad_seconds": 0.04004291
+      },
+      "fixture_sha256": "2aa36d461b9de2ee8bab4cfc489f1c7a80cae32dfc894e8fdac371faaf7f234f",
+      "purpose": "accuracy",
+      "reference_characters": 64,
+      "character_errors": 0,
+      "reference_words": 15,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548-gain-20dB",
+      "language": "English",
+      "condition": "gain-20dB",
+      "reference": "when you call someone who is thousands of miles away you are using a satellite",
+      "audio_seconds": 6.54,
+      "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 3.219160177,
+      "request_seconds": 3.259107531994232,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 96896,
+            "start_sample": 14144
+          }
+        ],
+        "id": "robust-34",
+        "inference_seconds": 3.219160177,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 104640,
+            "inference_seconds": 2.964072425,
+            "kind": "window_final",
+            "raw_text": "When you call someone who is thousands of miles away, you are using a satellite.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 17
+          }
+        ],
+        "status": "recognized",
+        "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+        "vad_frame_samples": 512,
+        "vad_gain": 20,
+        "vad_seconds": 0.038430177
+      },
+      "fixture_sha256": "19f3246fc188a998a48c3a252fc875b652a0e3e2f31b981224b4f31c356f66a2",
+      "purpose": "accuracy",
+      "reference_characters": 64,
+      "character_errors": 0,
+      "reference_words": 15,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548-gain-40dB",
+      "language": "English",
+      "condition": "gain-40dB",
+      "reference": "when you call someone who is thousands of miles away you are using a satellite",
+      "audio_seconds": 6.54,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.0404630129924044,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-35",
+        "model_loaded": true,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 20,
+        "vad_seconds": 0.038935354
+      },
+      "fixture_sha256": "13e7e9ad750feec0fa94f81990f82ab2fc765bcf63cea6309d794684fe9b7497",
+      "purpose": "accuracy",
+      "reference_characters": 64,
+      "character_errors": 64,
+      "reference_words": 15,
+      "word_errors": 15,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548-white-snr20",
+      "language": "English",
+      "condition": "white-snr20",
+      "reference": "when you call someone who is thousands of miles away you are using a satellite",
+      "audio_seconds": 6.54,
+      "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 3.129964071,
+      "request_seconds": 3.1689776159910252,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 104640,
+            "start_sample": 14144
+          }
+        ],
+        "id": "robust-36",
+        "inference_seconds": 3.129964071,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 104640,
+            "inference_seconds": 2.876932199,
+            "kind": "window_final",
+            "raw_text": "When you call someone who is thousands of miles away, you are using a satellite.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 17
+          }
+        ],
+        "status": "recognized",
+        "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+        "vad_frame_samples": 512,
+        "vad_gain": 4.1956467628479,
+        "vad_seconds": 0.037501297
+      },
+      "fixture_sha256": "001b37239c0fb5a1d384a128ef3062b6960430117e1bad60ebb1cac8d486979c",
+      "purpose": "accuracy",
+      "reference_characters": 64,
+      "character_errors": 0,
+      "reference_words": 15,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548-white-snr10",
+      "language": "English",
+      "condition": "white-snr10",
+      "reference": "when you call someone who is thousands of miles away you are using a satellite",
+      "audio_seconds": 6.54,
+      "text": "When you call someone who is thousands of miles away, you're using a satellite.",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 3.148450356,
+      "request_seconds": 3.1890838030085433,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 97920,
+            "start_sample": 17728
+          }
+        ],
+        "id": "robust-37",
+        "inference_seconds": 3.148450356,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 104640,
+            "inference_seconds": 2.895755845,
+            "kind": "window_final",
+            "raw_text": "When you call someone who is thousands of miles away, you're using a satellite.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 17
+          }
+        ],
+        "status": "recognized",
+        "text": "When you call someone who is thousands of miles away, you're using a satellite.",
+        "vad_frame_samples": 512,
+        "vad_gain": 4.116582870483398,
+        "vad_seconds": 0.039107009
+      },
+      "fixture_sha256": "81b279b351a76ac5cc8409b37ff62619a0ddf7fe558caaaf5436a26f55f5d7d5",
+      "purpose": "accuracy",
+      "reference_characters": 64,
+      "character_errors": 1,
+      "reference_words": 15,
+      "word_errors": 2,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548-white-snr0",
+      "language": "English",
+      "condition": "white-snr0",
+      "reference": "when you call someone who is thousands of miles away you are using a satellite",
+      "audio_seconds": 6.54,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.03894644298998173,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-38",
+        "model_loaded": true,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 3.585120439529419,
+        "vad_seconds": 0.037438515
+      },
+      "fixture_sha256": "91bfa35d6c425ea645453ada0e508a2ecc73088f708eff64e5f8325a208f6ae9",
+      "purpose": "accuracy",
+      "reference_characters": 64,
+      "character_errors": 64,
+      "reference_words": 15,
+      "word_errors": 15,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548-lowpass-snr10",
+      "language": "English",
+      "condition": "lowpass-snr10",
+      "reference": "when you call someone who is thousands of miles away you are using a satellite",
+      "audio_seconds": 6.54,
+      "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 3.111827195,
+      "request_seconds": 3.151297913005692,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 64128,
+            "start_sample": 14144
+          },
+          {
+            "end_sample": 98432,
+            "start_sample": 65856
+          }
+        ],
+        "id": "robust-39",
+        "inference_seconds": 3.111827195,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 104640,
+            "inference_seconds": 2.85650938,
+            "kind": "window_final",
+            "raw_text": "When you call someone who is thousands of miles away, you are using a satellite.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 17
+          }
+        ],
+        "status": "recognized",
+        "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+        "vad_frame_samples": 512,
+        "vad_gain": 4.266666889190674,
+        "vad_seconds": 0.037982749
+      },
+      "fixture_sha256": "ae2082fab2bff2ecf1656163fdccf102a81cf5e709d8ea46d2325a775f4269b7",
+      "purpose": "accuracy",
+      "reference_characters": 64,
+      "character_errors": 0,
+      "reference_words": 15,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-en_us-validation-0-1548-bursts-snr10",
+      "language": "English",
+      "condition": "bursts-snr10",
+      "reference": "when you call someone who is thousands of miles away you are using a satellite",
+      "audio_seconds": 6.54,
+      "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 3.242589182,
+      "request_seconds": 3.2833523510053055,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 35456,
+            "start_sample": 14144
+          },
+          {
+            "end_sample": 50816,
+            "start_sample": 37184
+          }
+        ],
+        "id": "robust-40",
+        "inference_seconds": 3.242589182,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 104640,
+            "inference_seconds": 2.983950737,
+            "kind": "window_final",
+            "raw_text": "When you call someone who is thousands of miles away, you are using a satellite.",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 17
+          }
+        ],
+        "status": "recognized",
+        "text": "When you call someone who is thousands of miles away, you are using a satellite.",
+        "vad_frame_samples": 512,
+        "vad_gain": 3.420459270477295,
+        "vad_seconds": 0.039231751
+      },
+      "fixture_sha256": "dda59fd58405f58f554ee398dbd835619e9e61e3c98ed4d90fe1982a6483a7f5",
+      "purpose": "accuracy",
+      "reference_characters": 64,
+      "character_errors": 0,
+      "reference_words": 15,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-th_th-validation-0-1548-clean",
+      "language": "Thai",
+      "condition": "clean",
+      "reference": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "audio_seconds": 8.22,
+      "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 4.7047376,
+      "request_seconds": 4.75146254900028,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 63104,
+            "start_sample": 15680
+          },
+          {
+            "end_sample": 89216,
+            "start_sample": 79680
+          },
+          {
+            "end_sample": 131520,
+            "start_sample": 96576
+          }
+        ],
+        "id": "robust-41",
+        "inference_seconds": 4.7047376,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 131520,
+            "inference_seconds": 4.445094564,
+            "kind": "window_final",
+            "raw_text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 46
+          }
+        ],
+        "status": "recognized",
+        "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+        "vad_frame_samples": 512,
+        "vad_gain": 3.962273359298706,
+        "vad_seconds": 0.044768548
+      },
+      "fixture_sha256": "7c278d7df79c484ffed04d4490187a8578b5535fc214aa534f5f4f10babac154",
+      "purpose": "accuracy",
+      "reference_characters": 86,
+      "character_errors": 0,
+      "reference_words": 2,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-th_th-validation-0-1548-gain-20dB",
+      "language": "Thai",
+      "condition": "gain-20dB",
+      "reference": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "audio_seconds": 8.22,
+      "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 4.792250287,
+      "request_seconds": 4.838017239992041,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 56960,
+            "start_sample": 16192
+          },
+          {
+            "end_sample": 126080,
+            "start_sample": 104768
+          }
+        ],
+        "id": "robust-42",
+        "inference_seconds": 4.792250287,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 131520,
+            "inference_seconds": 4.533257467,
+            "kind": "window_final",
+            "raw_text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 46
+          }
+        ],
+        "status": "recognized",
+        "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+        "vad_frame_samples": 512,
+        "vad_gain": 20,
+        "vad_seconds": 0.043913351
+      },
+      "fixture_sha256": "9df1c70184eec6f516b88e16d5d0d06fa4b52e4511968767668e874b0d2c7a17",
+      "purpose": "accuracy",
+      "reference_characters": 86,
+      "character_errors": 0,
+      "reference_words": 2,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-th_th-validation-0-1548-gain-40dB",
+      "language": "Thai",
+      "condition": "gain-40dB",
+      "reference": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "audio_seconds": 8.22,
+      "text": "เมื่อคุณชอหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 4.748326552,
+      "request_seconds": 4.793280488011078,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 73344,
+            "start_sample": 45376
+          }
+        ],
+        "id": "robust-43",
+        "inference_seconds": 4.748326552,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 131520,
+            "inference_seconds": 4.487676183,
+            "kind": "window_final",
+            "raw_text": "เมื่อคุณชอหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 47
+          }
+        ],
+        "status": "recognized",
+        "text": "เมื่อคุณชอหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+        "vad_frame_samples": 512,
+        "vad_gain": 20,
+        "vad_seconds": 0.043032754
+      },
+      "fixture_sha256": "42a9475e6a5bf2d3d44d4d372888c173f2b7beb6e023a527e955b14b0aa335e7",
+      "purpose": "accuracy",
+      "reference_characters": 86,
+      "character_errors": 3,
+      "reference_words": 2,
+      "word_errors": 1,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-th_th-validation-0-1548-white-snr20",
+      "language": "Thai",
+      "condition": "white-snr20",
+      "reference": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "audio_seconds": 8.22,
+      "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 4.737840297,
+      "request_seconds": 4.783710246003466,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 131520,
+            "start_sample": 16704
+          }
+        ],
+        "id": "robust-44",
+        "inference_seconds": 4.737840297,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 131520,
+            "inference_seconds": 4.479369789,
+            "kind": "window_final",
+            "raw_text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 46
+          }
+        ],
+        "status": "recognized",
+        "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+        "vad_frame_samples": 512,
+        "vad_gain": 3.9960975646972656,
+        "vad_seconds": 0.043985447
+      },
+      "fixture_sha256": "dade0e4444788d8a8672fe1759e4ebc0c2becdf8c33d0457c97c6ec980a0615e",
+      "purpose": "accuracy",
+      "reference_characters": 86,
+      "character_errors": 0,
+      "reference_words": 2,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-th_th-validation-0-1548-white-snr10",
+      "language": "Thai",
+      "condition": "white-snr10",
+      "reference": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "audio_seconds": 8.22,
+      "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 4.644049992,
+      "request_seconds": 4.691099767005653,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 131520,
+            "start_sample": 19264
+          }
+        ],
+        "id": "robust-45",
+        "inference_seconds": 4.644049992,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 131520,
+            "inference_seconds": 4.386229011,
+            "kind": "window_final",
+            "raw_text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 46
+          }
+        ],
+        "status": "recognized",
+        "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+        "vad_frame_samples": 512,
+        "vad_gain": 3.919617176055908,
+        "vad_seconds": 0.045179502
+      },
+      "fixture_sha256": "2d95891425c6143fc1bc62ad8dd2980e68b09c38da7cbb786e3c50d52621cfba",
+      "purpose": "accuracy",
+      "reference_characters": 86,
+      "character_errors": 0,
+      "reference_words": 2,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-th_th-validation-0-1548-white-snr0",
+      "language": "Thai",
+      "condition": "white-snr0",
+      "reference": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "audio_seconds": 8.22,
+      "text": "เมื่อคุณโทรหาไปสักคนที่อยู่ห่างไกลออฟไลน์ทันไหม น่าไหนการว่าคุณกำลังใช้ดาเมจ",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 4.684217934,
+      "request_seconds": 4.730344520998187,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 63616,
+            "start_sample": 32576
+          },
+          {
+            "end_sample": 114304,
+            "start_sample": 83776
+          }
+        ],
+        "id": "robust-46",
+        "inference_seconds": 4.684217934,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 131520,
+            "inference_seconds": 4.423261894,
+            "kind": "window_final",
+            "raw_text": "เมื่อคุณโทรหาไปสักคนที่อยู่ห่างไกลออฟไลน์ทันไหม น่าไหนการว่าคุณกำลังใช้ดาเมจ",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 45
+          }
+        ],
+        "status": "recognized",
+        "text": "เมื่อคุณโทรหาไปสักคนที่อยู่ห่างไกลออฟไลน์ทันไหม น่าไหนการว่าคุณกำลังใช้ดาเมจ",
+        "vad_frame_samples": 512,
+        "vad_gain": 3.427615165710449,
+        "vad_seconds": 0.044205995
+      },
+      "fixture_sha256": "3cd9a92a130ed87a676d7581dd69901d6ff69264fd8fb0c21c222a0327848539",
+      "purpose": "accuracy",
+      "reference_characters": 86,
+      "character_errors": 26,
+      "reference_words": 2,
+      "word_errors": 2,
+      "normalized_exact_match": false,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-th_th-validation-0-1548-lowpass-snr10",
+      "language": "Thai",
+      "condition": "lowpass-snr10",
+      "reference": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "audio_seconds": 8.22,
+      "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 4.671038414,
+      "request_seconds": 4.7167927579866955,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 74368,
+            "start_sample": 24384
+          },
+          {
+            "end_sample": 131520,
+            "start_sample": 79680
+          }
+        ],
+        "id": "robust-47",
+        "inference_seconds": 4.671038414,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 131520,
+            "inference_seconds": 4.413368929,
+            "kind": "window_final",
+            "raw_text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 46
+          }
+        ],
+        "status": "recognized",
+        "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+        "vad_frame_samples": 512,
+        "vad_gain": 3.7109854221343994,
+        "vad_seconds": 0.04378377
+      },
+      "fixture_sha256": "87bc3173028258c25fd2fe467525aab4d1e0d795bce8cecd12922b188bb2532f",
+      "purpose": "accuracy",
+      "reference_characters": 86,
+      "character_errors": 0,
+      "reference_words": 2,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "fleurs-th_th-validation-0-1548-bursts-snr10",
+      "language": "Thai",
+      "condition": "bursts-snr10",
+      "reference": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "audio_seconds": 8.22,
+      "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 4.6566249840000005,
+      "request_seconds": 4.70277158699173,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 27264,
+            "start_sample": 15680
+          },
+          {
+            "end_sample": 56448,
+            "start_sample": 33600
+          },
+          {
+            "end_sample": 115328,
+            "start_sample": 104768
+          }
+        ],
+        "id": "robust-48",
+        "inference_seconds": 4.6566249840000005,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 131520,
+            "inference_seconds": 4.398041765,
+            "kind": "window_final",
+            "raw_text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+            "review_reasons": [],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 46
+          }
+        ],
+        "status": "recognized",
+        "text": "เมื่อคุณโทรหาใครสักคนที่อยู่ห่างไกลออกไปหลายพันไมล์ นั่นหมายความว่าคุณกำลังใช้ดาวเทียม",
+        "vad_frame_samples": 512,
+        "vad_gain": 3.6776657104492188,
+        "vad_seconds": 0.04422592
+      },
+      "fixture_sha256": "194850f8c2a86cb870ec7969c07c94ec360f6fe4f550508f0bc644eb20c7644c",
+      "purpose": "accuracy",
+      "reference_characters": 86,
+      "character_errors": 0,
+      "reference_words": 2,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": null
+    },
+    {
+      "id": "negative-silence-after",
+      "language": "Japanese",
+      "condition": "negative",
+      "reference": "",
+      "audio_seconds": 5,
+      "text": "",
+      "rep": 0,
+      "status": "ok",
+      "elapsed_seconds": 0,
+      "request_seconds": 0.032588763991952874,
+      "engine": "vad-gated-native-rust",
+      "threads": 6,
+      "worker": {
+        "asr_calls": 0,
+        "confirmed": false,
+        "id": "robust-49",
+        "model_loaded": true,
+        "segments": [],
+        "status": "no_speech",
+        "text": "",
+        "vad_gain": 1,
+        "vad_seconds": 0.031394785
+      },
+      "fixture_sha256": "262d1f34f300560a4c82ba8127ddea9e1d72946f187fdbd3e8f70ee096077aec",
+      "purpose": "silence",
+      "reference_characters": 0,
+      "character_errors": 0,
+      "reference_words": 0,
+      "word_errors": 0,
+      "normalized_exact_match": true,
+      "negative_gate_pass": true
+    }
+  ]
+}

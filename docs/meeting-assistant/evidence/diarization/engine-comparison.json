@@ -1,0 +1,531 @@
+{
+  "scope": "Only parakeet.cpp and parakeet-rs; isolated CPU4threads, public/artificial input, no app integration",
+  "cpp_speed_correction": {
+    "date": "2026-10-14",
+    "old_results_preserved_as": "Generic-build controls: Nix stripped -march=native; AVX2/FMA/F16C were not compiled",
+    "intrinsic_cpp_speed_conclusion_superseded": true,
+    "optimized_results": "cpp-cpu-diagnosis.json"
+  },
+  "plan": {
+    "user_scope": "Updated user explicitly restricted to first TWO engines: parakeet.cpp, parakeet-rs. Other two source checkouts were cloned before correction but no build/model download/inference performed for them.",
+    "revisions": {
+      "parakeet.cpp": "5c9b0fbbd8e611d88e47d7e1ebae9bca9b447e8f",
+      "parakeet-rs": "66bb38752ee899fcde8ac3d5e46b08dccb5a2db3"
+    },
+    "cpu": "Ryzen 5 PRO 5650GE, CPU-only, 4 intra threads, sequential inference runs, no concurrent builds",
+    "input": "Same exact float32 mono16k fixtures, 120ms pushes; source reference is energy-filtered identity proxy, not manual DER",
+    "profile": "Both engines use upstream low latency preset: chunk9/right4/cache264/fifo264/update222 on 80ms grid; nominal buffering1.04s",
+    "first_pass": [
+      "cpp Q8: silence12 fast, turns60 paced",
+      "rs FP32: silence12 fast, turns60 paced"
+    ],
+    "fixed_followup": [
+      "cpp F16: turns60 paced to determine whether CPU Q8 is counterproductive; if still backlog growth retain failures without further tuning",
+      "rs FP32: reverse60 and FLEURS-repeat60 paced plus tone12 fast"
+    ],
+    "optional_int8": "Only if accessible local conversion tools permit a bounded standard dynamic weight quantization, retain conversion/runtime errors, do not silently substitute v2 model for v3",
+    "restrictions": "No actual microphone/capture/physical playback/cloud inference/app replacement/ASR or defaults/schema/lock changes/production release. Existing manual post-save choice remains unchanged. Native release builds are isolated benchmarks, not app releases."
+  },
+  "fixtures": {
+    "turns": {
+      "sha256": "6ef320aa2c7c373128623c442e89a6be1fd5ce525344773f786dc06e84f8279b",
+      "samples": 960000,
+      "sources": [
+        {
+          "path": "../runtime/qwen3-asr/diagnostics/current-vad-validation-r2/lexical-converted-0.wav",
+          "sha256": "23dbb51f080b9d84c8fff8a39b3d9eb1b56fde4adeb06608baff78f88e8aa2ed"
+        },
+        {
+          "path": "../runtime/qwen3-asr/diagnostics/current-vad-validation-r2/lexical-converted-1.wav",
+          "sha256": "d1780859bf2d8e3408dbb19280b7d50060844bd7c6f644aea17a1fec45c00209"
+        }
+      ]
+    },
+    "reverse": {
+      "sha256": "9a4230c72036d962a24401130288b4d419943cd064aafb2a99749ac65b583f07",
+      "samples": 960000,
+      "sources": [
+        {
+          "path": "../runtime/qwen3-asr/diagnostics/current-vad-validation-r2/lexical-converted-1.wav",
+          "sha256": "d1780859bf2d8e3408dbb19280b7d50060844bd7c6f644aea17a1fec45c00209"
+        },
+        {
+          "path": "../runtime/qwen3-asr/diagnostics/current-vad-validation-r2/lexical-converted-0.wav",
+          "sha256": "23dbb51f080b9d84c8fff8a39b3d9eb1b56fde4adeb06608baff78f88e8aa2ed"
+        }
+      ]
+    },
+    "repeat": {
+      "sha256": "7f8c95d73fa2050addb545efda5b4a20df2164cb9acc0bcbb2d4ab9d6fe3710c",
+      "samples": 960000,
+      "sources": [
+        {
+          "path": "../runtime/qwen3-asr/artifacts/fleurs-ja_jp-validation-0-1519.wav",
+          "sha256": "725511728984c6eb4353a73aebe6cf77ed1914b1bd71e24a2dae517284e2d171"
+        }
+      ]
+    },
+    "silence": {
+      "sha256": "b394ed6696151f1a3e61fdf9b9e381ae1d198cd3b1a83e9003417658f0a56188",
+      "samples": 192000,
+      "sources": []
+    },
+    "tone": {
+      "sha256": "52a2babf2e74f991fb47a46a33ba35839f61dc0edabc68959af56ac6ef20f9d3",
+      "samples": 192000,
+      "sources": []
+    }
+  },
+  "results": {
+    "cpp-f16-prefix-12": {
+      "seconds": 12.0,
+      "paced": false,
+      "cpu_threads": 4,
+      "load_seconds": 0.2911557020051987,
+      "buffer_latency_seconds": 1.04,
+      "compute_seconds": 40.12161693000235,
+      "compute_rtf": 3.3434680775001957,
+      "wall_seconds": 40.124790045003465,
+      "flush_seconds": 4.397737940998923,
+      "cpu_seconds": 158.69145184200002,
+      "max_rss_mib": 231.2734375,
+      "maximum_push_seconds": 4.542131815003813,
+      "maximum_completion_lateness_seconds": null,
+      "final_completion_lateness_seconds": null,
+      "completion_lateness_15_30_45_60": null,
+      "first_speaker_wall_seconds": 0.33587288900162093,
+      "voiced_frame_first_label_age_median_seconds": null,
+      "voiced_frame_first_label_age_max_seconds": null,
+      "clusters": [
+        0,
+        1
+      ],
+      "segment_count": 9,
+      "overlap_frames": 0,
+      "revised_nonempty_frame_events": 0,
+      "proxy_score": {
+        "voiced_frames": 380,
+        "source_identity_accuracy_proxy": 1.0,
+        "best_reference_to_cluster": {
+          "1": 1,
+          "2": 2
+        },
+        "not_standard_der": true
+      },
+      "not_standard_der": true,
+      "asr_concurrency_not_tested": true,
+      "engine": "cpp",
+      "profile": "low",
+      "fixture": "turns",
+      "audio_sha256": "6ef320aa2c7c373128623c442e89a6be1fd5ce525344773f786dc06e84f8279b",
+      "model_sha256": "3dca41a92162af6edf96276c4d2c397b034b55abf9eb2662a58cc7bc8c872683"
+    },
+    "cpp-low-tone": {
+      "seconds": 12.0,
+      "paced": false,
+      "cpu_threads": 4,
+      "load_seconds": 0.166990204998001,
+      "buffer_latency_seconds": 1.04,
+      "compute_seconds": 7.437235283025075,
+      "compute_rtf": 0.6197696069187563,
+      "wall_seconds": 7.438691662995552,
+      "flush_seconds": 0.8539315009984421,
+      "cpu_seconds": 29.513344815,
+      "max_rss_mib": 142.45703125,
+      "maximum_push_seconds": 0.8298645800023223,
+      "maximum_completion_lateness_seconds": null,
+      "final_completion_lateness_seconds": null,
+      "completion_lateness_15_30_45_60": null,
+      "first_speaker_wall_seconds": null,
+      "voiced_frame_first_label_age_median_seconds": null,
+      "voiced_frame_first_label_age_max_seconds": null,
+      "clusters": [],
+      "segment_count": 0,
+      "overlap_frames": 0,
+      "revised_nonempty_frame_events": 0,
+      "proxy_score": {
+        "voiced_frames": 0,
+        "false_speaker_frames": 0
+      },
+      "not_standard_der": true,
+      "asr_concurrency_not_tested": true,
+      "engine": "cpp",
+      "profile": "low",
+      "fixture": "tone",
+      "audio_sha256": "52a2babf2e74f991fb47a46a33ba35839f61dc0edabc68959af56ac6ef20f9d3",
+      "model_sha256": "76c5bb1fb20d82706142ad32769b7ab496d2458489473a000fd7074c52ceec22",
+      "prefix_limit_seconds": null,
+      "input_samples": 192000
+    },
+    "cpp-low-turns": {
+      "seconds": 60.0,
+      "paced": true,
+      "cpu_threads": 4,
+      "load_seconds": 0.14716230199701386,
+      "buffer_latency_seconds": 1.04,
+      "compute_seconds": 173.67549389007036,
+      "compute_rtf": 2.894591564834506,
+      "wall_seconds": 180.04918819200248,
+      "flush_seconds": 4.5777591740043135,
+      "cpu_seconds": 687.335333729,
+      "max_rss_mib": 176.48828125,
+      "maximum_push_seconds": 4.369850273003976,
+      "maximum_completion_lateness_seconds": 116.07033670700329,
+      "final_completion_lateness_seconds": 115.47142597800121,
+      "completion_lateness_15_30_45_60": {
+        "15": 1.5619458080036566,
+        "30": 23.764619945999584,
+        "45": 67.19151813400094,
+        "60": 115.47142597800121
+      },
+      "first_speaker_wall_seconds": 1.1340294870024081,
+      "voiced_frame_first_label_age_median_seconds": 21.37698100800364,
+      "voiced_frame_first_label_age_max_seconds": 116.5303367070033,
+      "clusters": [
+        0,
+        1
+      ],
+      "segment_count": 45,
+      "overlap_frames": 0,
+      "revised_nonempty_frame_events": 0,
+      "proxy_score": {
+        "voiced_frames": 1850,
+        "source_identity_accuracy_proxy": 0.987027027027027,
+        "best_reference_to_cluster": {
+          "1": 1,
+          "2": 2
+        },
+        "not_standard_der": true
+      },
+      "not_standard_der": true,
+      "asr_concurrency_not_tested": true,
+      "engine": "cpp",
+      "profile": "low",
+      "fixture": "turns",
+      "audio_sha256": "6ef320aa2c7c373128623c442e89a6be1fd5ce525344773f786dc06e84f8279b",
+      "model_sha256": "76c5bb1fb20d82706142ad32769b7ab496d2458489473a000fd7074c52ceec22"
+    },
+    "cpp-silence-smoke": {
+      "seconds": 12.0,
+      "paced": false,
+      "cpu_threads": 4,
+      "load_seconds": 0.14071493299707072,
+      "buffer_latency_seconds": 1.04,
+      "compute_seconds": 7.193521772038366,
+      "compute_rtf": 0.5994601476698639,
+      "wall_seconds": 7.194879057002254,
+      "flush_seconds": 0.8077306019986281,
+      "cpu_seconds": 28.56295781,
+      "max_rss_mib": 143.0234375,
+      "maximum_push_seconds": 0.81081571100367,
+      "maximum_completion_lateness_seconds": null,
+      "final_completion_lateness_seconds": null,
+      "completion_lateness_15_30_45_60": null,
+      "first_speaker_wall_seconds": null,
+      "voiced_frame_first_label_age_median_seconds": null,
+      "voiced_frame_first_label_age_max_seconds": null,
+      "clusters": [],
+      "segment_count": 0,
+      "overlap_frames": 0,
+      "revised_nonempty_frame_events": 0,
+      "proxy_score": {
+        "voiced_frames": 0,
+        "false_speaker_frames": 0
+      },
+      "not_standard_der": true,
+      "asr_concurrency_not_tested": true,
+      "engine": "cpp",
+      "profile": "low",
+      "fixture": "silence",
+      "audio_sha256": "b394ed6696151f1a3e61fdf9b9e381ae1d198cd3b1a83e9003417658f0a56188",
+      "model_sha256": "76c5bb1fb20d82706142ad32769b7ab496d2458489473a000fd7074c52ceec22"
+    },
+    "rs-low-repeat": {
+      "seconds": 60.0,
+      "paced": true,
+      "cpu_threads": 4,
+      "load_seconds": 1.8205720909999998,
+      "buffer_latency_seconds": 1.0399999618530273,
+      "compute_seconds": 32.663601012,
+      "compute_rtf": 0.5443933502,
+      "wall_seconds": 60.435049965,
+      "flush_seconds": 0.434967511,
+      "cpu_seconds": 136.457925,
+      "max_rss_mib": 620.7578125,
+      "maximum_push_seconds": 0.769678596,
+      "maximum_completion_lateness_seconds": 0.8250335580000012,
+      "final_completion_lateness_seconds": 7.02629999977944e-05,
+      "completion_lateness_15_30_45_60": {
+        "15": 7.058899999989876e-05,
+        "30": 0.32880965100000026,
+        "45": 0.476429250999999,
+        "60": 7.02629999977944e-05
+      },
+      "first_speaker_wall_seconds": 2.561263732,
+      "voiced_frame_first_label_age_median_seconds": 1.1166228439999992,
+      "voiced_frame_first_label_age_max_seconds": 1.8553133099999997,
+      "clusters": [
+        0
+      ],
+      "segment_count": 61,
+      "overlap_frames": 0,
+      "revised_nonempty_frame_events": 0,
+      "proxy_score": {
+        "voiced_frames": 5720,
+        "source_identity_accuracy_proxy": 0.5853146853146853,
+        "best_reference_to_cluster": {
+          "1": 1
+        },
+        "not_standard_der": true
+      },
+      "not_standard_der": true,
+      "asr_concurrency_not_tested": true,
+      "engine": "rs",
+      "profile": "low",
+      "fixture": "repeat",
+      "audio_sha256": "7f8c95d73fa2050addb545efda5b4a20df2164cb9acc0bcbb2d4ab9d6fe3710c",
+      "model_sha256": "915e4fa23b0192ed9fadeb1cdd26847df986d50c92012d177be28d0343bbe03a"
+    },
+    "rs-low-reverse": {
+      "seconds": 60.0,
+      "paced": true,
+      "cpu_threads": 4,
+      "load_seconds": 1.710776455,
+      "buffer_latency_seconds": 1.0399999618530273,
+      "compute_seconds": 32.301780674,
+      "compute_rtf": 0.5383630112333333,
+      "wall_seconds": 60.389195252,
+      "flush_seconds": 0.389110307,
+      "cpu_seconds": 135.09635500000002,
+      "max_rss_mib": 620.6484375,
+      "maximum_push_seconds": 0.786734241,
+      "maximum_completion_lateness_seconds": 0.7868031179999946,
+      "final_completion_lateness_seconds": 7.012399999695162e-05,
+      "completion_lateness_15_30_45_60": {
+        "15": 7.221000000079414e-05,
+        "30": 0.3118472720000014,
+        "45": 0.47818576000000235,
+        "60": 7.012399999695162e-05
+      },
+      "first_speaker_wall_seconds": 1.107302347,
+      "voiced_frame_first_label_age_median_seconds": 1.078788658999997,
+      "voiced_frame_first_label_age_max_seconds": 1.8668031179999929,
+      "clusters": [
+        0,
+        1
+      ],
+      "segment_count": 78,
+      "overlap_frames": 0,
+      "revised_nonempty_frame_events": 0,
+      "proxy_score": {
+        "voiced_frames": 1806,
+        "source_identity_accuracy_proxy": 0.9867109634551495,
+        "best_reference_to_cluster": {
+          "1": 1,
+          "2": 2
+        },
+        "not_standard_der": true
+      },
+      "not_standard_der": true,
+      "asr_concurrency_not_tested": true,
+      "engine": "rs",
+      "profile": "low",
+      "fixture": "reverse",
+      "audio_sha256": "9a4230c72036d962a24401130288b4d419943cd064aafb2a99749ac65b583f07",
+      "model_sha256": "915e4fa23b0192ed9fadeb1cdd26847df986d50c92012d177be28d0343bbe03a"
+    },
+    "rs-low-tone": {
+      "seconds": 12.0,
+      "paced": false,
+      "cpu_threads": 4,
+      "load_seconds": 1.9521034099999999,
+      "buffer_latency_seconds": 1.0399999618530273,
+      "compute_seconds": 1.5797800629999998,
+      "compute_rtf": 0.13164833858333333,
+      "wall_seconds": 1.5803357550000001,
+      "flush_seconds": 0.15629169,
+      "cpu_seconds": 8.379495,
+      "max_rss_mib": 566.40625,
+      "maximum_push_seconds": 0.15101917,
+      "maximum_completion_lateness_seconds": null,
+      "final_completion_lateness_seconds": null,
+      "completion_lateness_15_30_45_60": null,
+      "first_speaker_wall_seconds": null,
+      "voiced_frame_first_label_age_median_seconds": null,
+      "voiced_frame_first_label_age_max_seconds": null,
+      "clusters": [],
+      "segment_count": 0,
+      "overlap_frames": 0,
+      "revised_nonempty_frame_events": 0,
+      "proxy_score": {
+        "voiced_frames": 0,
+        "false_speaker_frames": 0
+      },
+      "not_standard_der": true,
+      "asr_concurrency_not_tested": true,
+      "engine": "rs",
+      "profile": "low",
+      "fixture": "tone",
+      "audio_sha256": "52a2babf2e74f991fb47a46a33ba35839f61dc0edabc68959af56ac6ef20f9d3",
+      "model_sha256": "915e4fa23b0192ed9fadeb1cdd26847df986d50c92012d177be28d0343bbe03a"
+    },
+    "rs-low-turns-repeat": {
+      "seconds": 60.0,
+      "paced": true,
+      "cpu_threads": 4,
+      "load_seconds": 1.932631148,
+      "buffer_latency_seconds": 1.0399999618530273,
+      "compute_seconds": 32.626762957,
+      "compute_rtf": 0.5437793826166666,
+      "wall_seconds": 60.395743215,
+      "flush_seconds": 0.395656945,
+      "cpu_seconds": 136.50562599999998,
+      "max_rss_mib": 616.79296875,
+      "maximum_push_seconds": 0.767504619,
+      "maximum_completion_lateness_seconds": 0.8050827229999982,
+      "final_completion_lateness_seconds": 7.281900000322139e-05,
+      "completion_lateness_15_30_45_60": {
+        "15": 6.91980000002701e-05,
+        "30": 0.3119229680000011,
+        "45": 0.4883549950000017,
+        "60": 7.281900000322139e-05
+      },
+      "first_speaker_wall_seconds": 1.105844124,
+      "voiced_frame_first_label_age_median_seconds": 1.1026322610000037,
+      "voiced_frame_first_label_age_max_seconds": 1.8850827229999965,
+      "clusters": [
+        0,
+        1
+      ],
+      "segment_count": 79,
+      "overlap_frames": 0,
+      "revised_nonempty_frame_events": 0,
+      "proxy_score": {
+        "voiced_frames": 1850,
+        "source_identity_accuracy_proxy": 0.7848648648648648,
+        "best_reference_to_cluster": {
+          "1": 1,
+          "2": 2
+        },
+        "not_standard_der": true
+      },
+      "not_standard_der": true,
+      "asr_concurrency_not_tested": true,
+      "engine": "rs",
+      "profile": "low",
+      "fixture": "turns",
+      "audio_sha256": "6ef320aa2c7c373128623c442e89a6be1fd5ce525344773f786dc06e84f8279b",
+      "model_sha256": "915e4fa23b0192ed9fadeb1cdd26847df986d50c92012d177be28d0343bbe03a"
+    },
+    "rs-low-turns": {
+      "seconds": 60.0,
+      "paced": true,
+      "cpu_threads": 4,
+      "load_seconds": 1.918206515,
+      "buffer_latency_seconds": 1.0399999618530273,
+      "compute_seconds": 35.947355013,
+      "compute_rtf": 0.59912258355,
+      "wall_seconds": 60.39507642,
+      "flush_seconds": 0.39499368,
+      "cpu_seconds": 146.813864,
+      "max_rss_mib": 653.05078125,
+      "maximum_push_seconds": 1.106401853,
+      "maximum_completion_lateness_seconds": 1.6101439679999956,
+      "final_completion_lateness_seconds": 6.865999999661199e-05,
+      "completion_lateness_15_30_45_60": {
+        "15": 7.018500000022243e-05,
+        "30": 0.4198897929999994,
+        "45": 0.5591341089999986,
+        "60": 6.865999999661199e-05
+      },
+      "first_speaker_wall_seconds": 1.110731943,
+      "voiced_frame_first_label_age_median_seconds": 1.163108477999998,
+      "voiced_frame_first_label_age_max_seconds": 2.690143968000001,
+      "clusters": [
+        0,
+        1
+      ],
+      "segment_count": 79,
+      "overlap_frames": 0,
+      "revised_nonempty_frame_events": 0,
+      "proxy_score": {
+        "voiced_frames": 1850,
+        "source_identity_accuracy_proxy": 0.7848648648648648,
+        "best_reference_to_cluster": {
+          "1": 1,
+          "2": 2
+        },
+        "not_standard_der": true
+      },
+      "not_standard_der": true,
+      "asr_concurrency_not_tested": true,
+      "engine": "rs",
+      "profile": "low",
+      "fixture": "turns",
+      "audio_sha256": "6ef320aa2c7c373128623c442e89a6be1fd5ce525344773f786dc06e84f8279b",
+      "model_sha256": "915e4fa23b0192ed9fadeb1cdd26847df986d50c92012d177be28d0343bbe03a"
+    },
+    "rs-silence-smoke": {
+      "seconds": 12.0,
+      "paced": false,
+      "cpu_threads": 4,
+      "load_seconds": 1.771788152,
+      "buffer_latency_seconds": 1.0399999618530273,
+      "compute_seconds": 1.537566177,
+      "compute_rtf": 0.12813051475,
+      "wall_seconds": 1.538158098,
+      "flush_seconds": 0.14880475,
+      "cpu_seconds": 8.006064,
+      "max_rss_mib": 558.31640625,
+      "maximum_push_seconds": 0.151977148,
+      "maximum_completion_lateness_seconds": null,
+      "final_completion_lateness_seconds": null,
+      "completion_lateness_15_30_45_60": null,
+      "first_speaker_wall_seconds": null,
+      "voiced_frame_first_label_age_median_seconds": null,
+      "voiced_frame_first_label_age_max_seconds": null,
+      "clusters": [],
+      "segment_count": 0,
+      "overlap_frames": 0,
+      "revised_nonempty_frame_events": 0,
+      "proxy_score": {
+        "voiced_frames": 0,
+        "false_speaker_frames": 0
+      },
+      "not_standard_der": true,
+      "asr_concurrency_not_tested": true,
+      "engine": "rs",
+      "profile": "low",
+      "fixture": "silence",
+      "audio_sha256": "b394ed6696151f1a3e61fdf9b9e381ae1d198cd3b1a83e9003417658f0a56188",
+      "model_sha256": "915e4fa23b0192ed9fadeb1cdd26847df986d50c92012d177be28d0343bbe03a"
+    }
+  },
+  "failures": [
+    {
+      "case": "initial parallel model download",
+      "status": "240s tool timeout; rs file incomplete, resumed and size/hash verified before use"
+    },
+    {
+      "case": "cpp F16 low60 paced",
+      "status": "500s tool timeout without final report; preserved empty native log; separate prefix12 diagnostic completed"
+    }
+  ],
+  "ort": {
+    "version": "1.23.2",
+    "api_feature": 22,
+    "sha256": "718c3fb0785d5ea06061b92c32ce4ad35be1bd4c71ae6192efe06f1ab21f0f8a"
+  },
+  "rs_forward_repeat_segments_equal": true,
+  "tests": {
+    "pure_probe_tests_passed": 12
+  },
+  "limitations": [
+    "Not human-annotated DER or natural conversation",
+    "CPP Q8 vs RS FP32 is not same precision",
+    "Initial RS load/first run slower than repeats; retain all cases",
+    "INT8 v3 not downloaded or synthesized",
+    "ASR contention, real capture, long meetings, overlapping voices untested",
+    "No app release or displayed-app replacement"
+  ]
+}

@@ -1,6 +1,8 @@
 // Audio capture implementations module
 
 pub mod microphone;
+#[cfg(target_os = "linux")]
+pub mod pulse;
 pub mod system;
 pub mod backend_config;
 

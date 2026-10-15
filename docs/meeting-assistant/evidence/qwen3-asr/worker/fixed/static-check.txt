@@ -1,0 +1,58 @@
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running unittests src/lib.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/deps/qwen_speech_worker-1981b5e748b593fe)
+
+running 13 tests
+test tests::empty_or_nonfinite_audio_rejected ... ok
+test tests::gain_bounded_and_not_silence_gate ... ok
+test tests::last_partial_frame_not_lost ... ok
+test tests::real_acknowledgements_not_blacklisted ... ok
+test tests::no_speech_tail_has_no_interval ... ok
+test tests::recognition_keeps_internal_pause_and_empty_stays_empty ... ok
+test tests::overlapping_padding_merged ... ok
+test tests::repetition_only_flags_and_limit_flags ... ok
+test tests::request_limits_and_eof ... ok
+test vad::tests::endpoint_hysteresis_and_real_tail ... ok
+test vad::tests::invalid_probabilities_and_frame_counts_reject ... ok
+test vad::tests::official_geometry_and_short_speech_at_eof ... ok
+test vad::tests::padding_does_not_authorize_under_minimum_real_speech ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/deps/qwen_speech_worker-1b4a638d38fb99ff)
+
+running 2 tests
+test tests::ids_bounded_and_unique_format ... ok
+test tests::unknown_fields_rejected ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests qwen_speech_worker
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+    Finished `release` profile [optimized] target(s) in 0.05s
+V4 endpoint reference: 306 cases passed (seed 512)
+test_busy_rejects_not_queue (test_worker_client.Tests.test_busy_rejects_not_queue) ... ok
+test_excessive_response (test_worker_client.Tests.test_excessive_response) ... ok
+test_id_mismatch_fails_closed (test_worker_client.Tests.test_id_mismatch_fails_closed) ... ok
+test_timeout_kills_and_restart (test_worker_client.Tests.test_timeout_kills_and_restart) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.181s
+
+OK
+✔ English WER uses whitespace words and preserves contractions as one word (2.827711ms)
+✔ Thai keeps combining marks; silence is not mixed into speech CER (0.470297ms)
+✔ prefix-only audio is timing-only; missing accuracy rows are explicit (0.218763ms)
+✔ Candle control separator is not counted as a spoken recognition error; raw output retained (0.206933ms)
+✔ unknown ID, mismatched duration, failures and duplicates reject (0.380406ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 62.696863

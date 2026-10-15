@@ -3,13 +3,13 @@ No microphone, cloud, database or application provider integration.
 """
 import json,os,selectors,subprocess,time,resource,threading
 class Worker:
- def __init__(self,binary,model,threads=6,vad_only=False,timeout=120):
-  self.binary=str(binary);self.model=str(model);self.threads=threads;self.vad_only=vad_only;self.timeout=timeout;self.process=None;self.buffer=b'';self.generation=0;self.lock=threading.Lock()
+ def __init__(self,binary,model,threads=6,vad_only=False,timeout=120,crop_context=False,aligner_dir=None):
+  self.binary=str(binary);self.model=str(model);self.threads=threads;self.vad_only=vad_only;self.timeout=timeout;self.crop_context=crop_context;self.aligner_dir=str(aligner_dir) if aligner_dir is not None else None;self.process=None;self.buffer=b'';self.generation=0;self.lock=threading.Lock()
  def start(self):
   if self.process is not None:raise RuntimeError('Worker already started')
   env=os.environ.copy();env.update(OPENBLAS_NUM_THREADS=str(self.threads),OMP_NUM_THREADS=str(self.threads))
   def limit():resource.setrlimit(resource.RLIMIT_AS,(18*1024**3,18*1024**3))
-  args=[self.binary,self.model,str(self.threads)]+(['--vad-only'] if self.vad_only else [])
+  args=[self.binary,self.model,str(self.threads)]+(['--vad-only'] if self.vad_only else [])+(['--crop-context'] if self.crop_context else [])+(['--aligner-dir',self.aligner_dir] if self.aligner_dir else [])
   self.process=subprocess.Popen(args,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,env=env,preexec_fn=limit)
   self.buffer=b'';self.generation+=1
   try:

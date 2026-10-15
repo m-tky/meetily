@@ -1,0 +1,3 @@
+{"event":"ready","max_audio_seconds":30,"max_request_bytes":4096,"model":"Qwen3-ASR-1.7B","model_loaded":false,"precision":"decoder-INT8-encoder-prefill-F32","protocol":1,"recognition_context":"full_input","threads":6,"vad_frame_samples":512,"vad_model":"silero-v4","vad_only":false}
+{"id":"fix-check","model_loaded":false,"status":"pong"}
+{"id":"fix-stop","status":"bye"}

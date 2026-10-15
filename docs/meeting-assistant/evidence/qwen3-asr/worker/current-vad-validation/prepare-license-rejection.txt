@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/user/Code/meeting-assistant-research/meetily/benchmarks/qwen3-asr/validate_current_vad.py", line 239, in <module>
+    main()
+  File "/home/user/Code/meeting-assistant-research/meetily/benchmarks/qwen3-asr/validate_current_vad.py", line 233, in main
+    prepare(root, out)
+  File "/home/user/Code/meeting-assistant-research/meetily/benchmarks/qwen3-asr/validate_current_vad.py", line 94, in prepare
+    raise ValueError('Unexpected lexical license')
+ValueError: Unexpected lexical license

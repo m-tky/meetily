@@ -1,0 +1,51 @@
+{
+  "repository": "https://github.com/snakers4/silero-vad",
+  "revision": "1e261b036686cd0017d500ee96acd1c4ba572a9d",
+  "model_path": "src/silero_vad/data/silero_vad.onnx",
+  "model_git_blob_sha1": "80c5592ef1f4c9ede3e357bbd02eb863358a6a9d",
+  "license": "MIT",
+  "user_approved_comparison": true,
+  "worker_replaced": false,
+  "files": [
+    {
+      "file": "silero_vad.onnx",
+      "upstream_path": "src/silero_vad/data/silero_vad.onnx",
+      "url": "https://raw.githubusercontent.com/snakers4/silero-vad/1e261b036686cd0017d500ee96acd1c4ba572a9d/src/silero_vad/data/silero_vad.onnx",
+      "bytes": 2327524,
+      "git_blob_sha1": "80c5592ef1f4c9ede3e357bbd02eb863358a6a9d",
+      "sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3"
+    },
+    {
+      "file": "utils_vad.py",
+      "upstream_path": "src/silero_vad/utils_vad.py",
+      "url": "https://raw.githubusercontent.com/snakers4/silero-vad/1e261b036686cd0017d500ee96acd1c4ba572a9d/src/silero_vad/utils_vad.py",
+      "bytes": 31474,
+      "git_blob_sha1": "4b3bef714cae87a44381077ac0519fd1a0f45089",
+      "sha256": "7e0f9b3334ee4feb79abcf2251be12458329077bce28c8540878ed9d35e5aa6b"
+    },
+    {
+      "file": "LICENSE",
+      "upstream_path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/snakers4/silero-vad/1e261b036686cd0017d500ee96acd1c4ba572a9d/LICENSE",
+      "bytes": 1075,
+      "git_blob_sha1": "0bf5e90cac691b999d4a35044f97167d7bbbf0b9",
+      "sha256": "2e63e9a38b6e8fc0c7bc37ce174caca1862870856c6daf5697cfb785e925520b"
+    },
+    {
+      "file": "pyproject.toml",
+      "upstream_path": "pyproject.toml",
+      "url": "https://raw.githubusercontent.com/snakers4/silero-vad/1e261b036686cd0017d500ee96acd1c4ba572a9d/pyproject.toml",
+      "bytes": 1945,
+      "git_blob_sha1": "951de2f5beaf661146006c2383abd7678087c702",
+      "sha256": "2aa7fecb20eb9c9feaf22ae31421f904f85d7b939c03d17d12c0113fea49e32f"
+    },
+    {
+      "file": "__init__.py",
+      "upstream_path": "src/silero_vad/__init__.py",
+      "url": "https://raw.githubusercontent.com/snakers4/silero-vad/1e261b036686cd0017d500ee96acd1c4ba572a9d/src/silero_vad/__init__.py",
+      "bytes": 1288,
+      "git_blob_sha1": "910001a6233f9ba54c4ac41e94bddf8301d87557",
+      "sha256": "45fcf7e268eb0ba83ccee737b1a86cc94d7cf7487e2a1c0a31b9b72b899201f1"
+    }
+  ]
+}

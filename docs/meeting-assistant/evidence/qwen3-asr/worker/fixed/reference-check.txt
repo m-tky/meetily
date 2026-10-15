@@ -1,0 +1,25 @@
+   Compiling qwen-speech-worker v0.1.0 (/home/user/Code/meeting-assistant-research/meetily/benchmarks/qwen3-asr/worker)
+    Finished `release` profile [optimized] target(s) in 3.66s
+V4 endpoint reference: 306 cases passed (seed 512)
+test_busy_rejects_not_queue (test_worker_client.Tests.test_busy_rejects_not_queue) ... ok
+test_excessive_response (test_worker_client.Tests.test_excessive_response) ... ok
+test_id_mismatch_fails_closed (test_worker_client.Tests.test_id_mismatch_fails_closed) ... ok
+test_timeout_kills_and_restart (test_worker_client.Tests.test_timeout_kills_and_restart) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.222s
+
+OK
+✔ English WER uses whitespace words and preserves contractions as one word (2.775238ms)
+✔ Thai keeps combining marks; silence is not mixed into speech CER (0.503666ms)
+✔ prefix-only audio is timing-only; missing accuracy rows are explicit (0.219473ms)
+✔ Candle control separator is not counted as a spoken recognition error; raw output retained (0.220213ms)
+✔ unknown ID, mismatched duration, failures and duplicates reject (0.393336ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 69.158377

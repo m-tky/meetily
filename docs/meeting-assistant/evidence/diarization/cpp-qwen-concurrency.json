@@ -1,0 +1,357 @@
+{
+  "scope": "Approved C++ Q8 + local Qwen concurrency test ONLY; C++ preference selected, no app integration",
+  "host": "Ryzen 5 PRO 5650GE",
+  "duration_seconds": 60,
+  "fixture": "existing public FLEURS repeat; identical mono16k float32 PCM",
+  "audio_sha256": "7f8c95d73fa2050addb545efda5b4a20df2164cb9acc0bcbb2d4ab9d6fe3710c",
+  "cpp_threads": 4,
+  "qwen_threads": 6,
+  "cpp_profile": "low",
+  "asr_windows_seconds": 10,
+  "cpp_library_sha256": "cbc03f7074d2032480cf1e91f58114bb6c435b98057ecb5a2f1d62a2d6cf1b1b",
+  "cpp_model_sha256": "76c5bb1fb20d82706142ad32769b7ab496d2458489473a000fd7074c52ceec22",
+  "qwen_binary_sha256": "f9bca460d5535468d153eb4d11d5bf79d6dd92cac2d40192159846e982d2f4c1",
+  "qwen_model_hashes": {
+    "config.json": "2e74a751548b8ad7d7526d29365ad8144c345d8b412b1152d25dc6698452712f",
+    "derived-tokenizer.json": "71fae83983a7fb082b1780e06e72bd4448ef47591960f281f2d6edaa7fc3e6dc",
+    "generation_config.json": "1da527824d81e07118facff437e03f2e24a23311e3bdeb2368973fe77e5f275c",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "model-00001-of-00002.safetensors": "a4cd1f1a04d90b757dc7f7dd26254e69a013b19e80efe590a83c6a3bde8608d6",
+    "model-00002-of-00002.safetensors": "6e0b9d9e09e2e0238e7ef3cc8a484ab387e91b90f1900bedf88bc92d7929ccfc",
+    "model.safetensors.index.json": "f994739fe38e5210b9e3e8ce6c6307315e2ceac3cb630e7b7414d69dce520f60",
+    "preprocessor_config.json": "45e120a4eda2c20c5d7f2ea9354e63536bf35e27aa573fb7cdf78017b378770d",
+    "provenance.json": "e2d47e6b22501af6a87a45c06f407bec46a73708b7b3aa126f7e4aa4ce51e919",
+    "qwen-asr-int8.sidecar": "f3787dab72eaa5881e142a23ecf093a959f0d8431e0d4cf882ed1670f089772d",
+    "tokenizer.json": "bd2a97b55c8f7f9c328c73ee9b9178771037e9f566dfca8e238a063d41cbac92",
+    "tokenizer_config.json": "4942d005604266809309cabc9f4e9cb89ce855d59b14681fdc0e1cc62ea26c4c",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  "runs": {
+    "cpp-r1": {
+      "result_path": "/home/user/Code/meeting-assistant-research/meetily/../runtime/diarization-engines/concurrency-cpp-r1/result.json",
+      "result_sha256": "3ad29c1b429a4f51a36a04ff462626a62a98170d6eb50ea6960b345746325ff0",
+      "raw_sha256": {
+        "plan.json": "ccdb0d926b6bd48f7b751858face7ad9cb7049064005f95816edd7da6414c39b",
+        "cpp.json": "a5fcff91363763cecf21ad04472289ba7f7802e2b6a75c088b907d065eff7560",
+        "result.json": "3ad29c1b429a4f51a36a04ff462626a62a98170d6eb50ea6960b345746325ff0",
+        "memory.json": "7b04f87fbb2408f6c91d7d78b074e376b4588f409d487e28fd408c838c80e921",
+        "cleanup.json": "73cfde99b8b6a6ed044657ad9f3364f1113d8b1d3a9be2656091958cf50de663"
+      },
+      "asr": null,
+      "cpp": {
+        "seconds": 60.0,
+        "paced": true,
+        "cpu_threads": 4,
+        "load_seconds": 0.11912829699576832,
+        "buffer_latency_seconds": 1.04,
+        "compiled_cpu_features": {
+          "sse3": 1,
+          "avx": 1,
+          "avx2": 1,
+          "avx512": 0,
+          "fma": 1,
+          "f16c": 1,
+          "llamafile": 1
+        },
+        "compute_seconds": 26.00157727286569,
+        "compute_rtf": 0.4333596212144281,
+        "wall_seconds": 60.72526152498904,
+        "flush_seconds": 0.7249295850051567,
+        "cpu_seconds": 104.04905820100001,
+        "max_rss_mib": 172.65625,
+        "maximum_push_seconds": 0.574077308003325,
+        "maximum_completion_lateness_seconds": 0.5741704169975108,
+        "final_completion_lateness_seconds": 0.00032666999322827905,
+        "completion_lateness_15_30_45_60": {
+          "15": 0.00036967199412174523,
+          "30": 0.24282089799817186,
+          "45": 0.35531543899560347,
+          "60": 0.00032666999322827905
+        },
+        "first_speaker_wall_seconds": 2.5541639939910965,
+        "voiced_frame_first_label_age_median_seconds": 1.0313789909973288,
+        "voiced_frame_first_label_age_max_seconds": 1.6185458329931137,
+        "clusters": [
+          0
+        ],
+        "segment_count": 16,
+        "overlap_frames": 0,
+        "revised_nonempty_frame_events": 0,
+        "proxy_score": {
+          "voiced_frames": 5720,
+          "source_identity_accuracy_proxy": 0.5842657342657342,
+          "best_reference_to_cluster": {
+            "1": 1
+          },
+          "not_standard_der": true
+        },
+        "not_standard_der": true,
+        "asr_concurrency_not_tested": true
+      },
+      "sampled_peak_sum_rss_mib": 204.53515625,
+      "sampled_peak_rss_mib": {
+        "supervisor": 37.58984375,
+        "cpp": 167.0625,
+        "qwen": 0
+      },
+      "actual_compute_overlap_seconds": 0,
+      "throughput_criteria_passed": true,
+      "cleanup": {
+        "worker_reaped": true,
+        "cpp_reaped": true,
+        "temporary_windows_removed": true,
+        "failure": null
+      },
+      "asr_texts_equal_baseline": null,
+      "cpp_segments_equal_baseline": true,
+      "cold_qwen_warmup_request_seconds": null,
+      "qwen_load_seconds": null
+    },
+    "asr-r1": {
+      "result_path": "/home/user/Code/meeting-assistant-research/meetily/../runtime/diarization-engines/concurrency-asr-r1/result.json",
+      "result_sha256": "1f541813b1ca5bd7b5b207b4b9df3da0bcdbb8d1d670f8111a40b58430184412",
+      "raw_sha256": {
+        "plan.json": "4e10c6ee7d2f463ff51f3335c0962af250c1dae912a75ebc9d62a94ec258c0c9",
+        "qwen-warmup.json": "ff53eb301dc0502126ba300717555dfb1c01bc679777177b383e024a21e95bb0",
+        "asr-events.jsonl": "f5da89d26cda3fbf04b0bab33ea4ea23f33436ae7699a1c6cc168a273e27601c",
+        "result.json": "1f541813b1ca5bd7b5b207b4b9df3da0bcdbb8d1d670f8111a40b58430184412",
+        "memory.json": "deaa6746b3dc348cea02a31a17ee393024cea3a95493314862e6110a33533909",
+        "cleanup.json": "73cfde99b8b6a6ed044657ad9f3364f1113d8b1d3a9be2656091958cf50de663"
+      },
+      "asr": {
+        "requests": 6,
+        "total_request_seconds": 25.344876511007897,
+        "request_rtf": 0.4224146085167983,
+        "maximum_request_seconds": 4.935911068998394,
+        "maximum_queue_wait_seconds": 7.277799886651337e-05,
+        "final_queue_wait_seconds": 6.798299727961421e-05,
+        "stop_drain_seconds": 3.9215040849958314,
+        "asr_calls": 6,
+        "nonempty_responses": 6,
+        "errors": 0
+      },
+      "cpp": null,
+      "sampled_peak_sum_rss_mib": 7456.68359375,
+      "sampled_peak_rss_mib": {
+        "supervisor": 36.43359375,
+        "cpp": 0,
+        "qwen": 7420.296875
+      },
+      "actual_compute_overlap_seconds": 0,
+      "throughput_criteria_passed": true,
+      "cleanup": {
+        "worker_reaped": true,
+        "cpp_reaped": true,
+        "temporary_windows_removed": true,
+        "failure": null
+      },
+      "asr_texts_equal_baseline": true,
+      "cpp_segments_equal_baseline": null,
+      "cold_qwen_warmup_request_seconds": 5.144534614999429,
+      "qwen_load_seconds": 0.670811727
+    },
+    "both-r1": {
+      "result_path": "/home/user/Code/meeting-assistant-research/meetily/../runtime/diarization-engines/concurrency-both-r1/result.json",
+      "result_sha256": "35fe3e8e640ee2dd225023dc33b907b26478af859f1833b44474de1616db0099",
+      "raw_sha256": {
+        "plan.json": "6665ff122772336c86a0878ba2245458fa9c9a6cede8e7bab66f624b14ee513a",
+        "qwen-warmup.json": "3636118eabdef0945de0d8eca870b894fe9674924b641b4fcb16447eeb929f22",
+        "asr-events.jsonl": "3a422fecd6944a6186376a09003e46d9a03af7fb4d9b6fbe71ebde442a7044e4",
+        "cpp.json": "601c5eb6b70433f00f76d8a0b9e3b0673ed01fae9b8b9b5c358e9ba30c646845",
+        "result.json": "35fe3e8e640ee2dd225023dc33b907b26478af859f1833b44474de1616db0099",
+        "memory.json": "d95235628f168802de11f144a4798683c7f3c0c584808cce7daf596ff1707275",
+        "cleanup.json": "73cfde99b8b6a6ed044657ad9f3364f1113d8b1d3a9be2656091958cf50de663"
+      },
+      "asr": {
+        "requests": 6,
+        "total_request_seconds": 33.22436539801129,
+        "request_rtf": 0.5537394233001881,
+        "maximum_request_seconds": 5.965705840004375,
+        "maximum_queue_wait_seconds": 8.140999125316739e-05,
+        "final_queue_wait_seconds": 7.03169935150072e-05,
+        "stop_drain_seconds": 4.691020194994053,
+        "asr_calls": 6,
+        "nonempty_responses": 6,
+        "errors": 0
+      },
+      "cpp": {
+        "seconds": 60.0,
+        "paced": true,
+        "cpu_threads": 4,
+        "load_seconds": 0.10784035100368783,
+        "buffer_latency_seconds": 1.04,
+        "compiled_cpu_features": {
+          "sse3": 1,
+          "avx": 1,
+          "avx2": 1,
+          "avx512": 0,
+          "fma": 1,
+          "f16c": 1,
+          "llamafile": 1
+        },
+        "compute_seconds": 38.44445522798924,
+        "compute_rtf": 0.6407409204664873,
+        "wall_seconds": 60.87231154800975,
+        "flush_seconds": 0.8720241190021625,
+        "cpu_seconds": 149.880903869,
+        "max_rss_mib": 172.69921875,
+        "maximum_push_seconds": 1.172416064000572,
+        "maximum_completion_lateness_seconds": 2.1497295309958275,
+        "final_completion_lateness_seconds": 0.0002819170040311292,
+        "completion_lateness_15_30_45_60": {
+          "15": 0.2100738139997702,
+          "30": 0.25815778999822214,
+          "45": 1.0631467189959949,
+          "60": 0.0002819170040311292
+        },
+        "first_speaker_wall_seconds": 2.5521687770087738,
+        "voiced_frame_first_label_age_median_seconds": 1.1750791590038006,
+        "voiced_frame_first_label_age_max_seconds": 3.229729530995826,
+        "clusters": [
+          0
+        ],
+        "segment_count": 16,
+        "overlap_frames": 0,
+        "revised_nonempty_frame_events": 0,
+        "proxy_score": {
+          "voiced_frames": 5720,
+          "source_identity_accuracy_proxy": 0.5842657342657342,
+          "best_reference_to_cluster": {
+            "1": 1
+          },
+          "not_standard_der": true
+        },
+        "not_standard_der": true,
+        "asr_concurrency_not_tested": false
+      },
+      "sampled_peak_sum_rss_mib": 7622.75,
+      "sampled_peak_rss_mib": {
+        "supervisor": 36.43359375,
+        "cpp": 170.12890625,
+        "qwen": 7420.57421875
+      },
+      "actual_compute_overlap_seconds": 23.581262482097372,
+      "throughput_criteria_passed": true,
+      "cleanup": {
+        "worker_reaped": true,
+        "cpp_reaped": true,
+        "temporary_windows_removed": true,
+        "failure": null
+      },
+      "asr_texts_equal_baseline": true,
+      "cpp_segments_equal_baseline": true,
+      "cold_qwen_warmup_request_seconds": 4.955321708999691,
+      "qwen_load_seconds": 0.579631445
+    },
+    "both-r2": {
+      "result_path": "/home/user/Code/meeting-assistant-research/meetily/../runtime/diarization-engines/concurrency-both-r2/result.json",
+      "result_sha256": "36ca6cd2d8476d96bab458e1f4f414bb2d46bd5532a0d26f249dafe4bd78b6c0",
+      "raw_sha256": {
+        "plan.json": "6665ff122772336c86a0878ba2245458fa9c9a6cede8e7bab66f624b14ee513a",
+        "qwen-warmup.json": "b867fd3e8e8ed166df3a39867f03ba2d3a9a5c43d7de38ae63111c447bcc6b7c",
+        "asr-events.jsonl": "8268a461ca9e890a6a70e79257a2a94d405b3d403dfbdf8ddcac05023711fe3b",
+        "cpp.json": "cede293d7f4af4281a891797bd4a4ba65f6af890c771d04d4ef54c13438edfe2",
+        "result.json": "36ca6cd2d8476d96bab458e1f4f414bb2d46bd5532a0d26f249dafe4bd78b6c0",
+        "memory.json": "5542530a6dfead1bad82680f87157073c95cdb2d940b3604f8a5f5b07b2bf7a4",
+        "cleanup.json": "73cfde99b8b6a6ed044657ad9f3364f1113d8b1d3a9be2656091958cf50de663"
+      },
+      "asr": {
+        "requests": 6,
+        "total_request_seconds": 34.85688297500019,
+        "request_rtf": 0.5809480495833365,
+        "maximum_request_seconds": 6.816616652999073,
+        "maximum_queue_wait_seconds": 0.0001029559934977442,
+        "final_queue_wait_seconds": 7.307100167963654e-05,
+        "stop_drain_seconds": 4.632566915999632,
+        "asr_calls": 6,
+        "nonempty_responses": 6,
+        "errors": 0
+      },
+      "cpp": {
+        "seconds": 60.0,
+        "paced": true,
+        "cpu_threads": 4,
+        "load_seconds": 0.10947560399654321,
+        "buffer_latency_seconds": 1.04,
+        "compiled_cpu_features": {
+          "sse3": 1,
+          "avx": 1,
+          "avx2": 1,
+          "avx512": 0,
+          "fma": 1,
+          "f16c": 1,
+          "llamafile": 1
+        },
+        "compute_seconds": 40.37143194585224,
+        "compute_rtf": 0.6728571990975373,
+        "wall_seconds": 60.929450476003694,
+        "flush_seconds": 0.9291526140004862,
+        "cpu_seconds": 155.352588912,
+        "max_rss_mib": 172.6875,
+        "maximum_push_seconds": 1.1403779210086213,
+        "maximum_completion_lateness_seconds": 2.2429437680105906,
+        "final_completion_lateness_seconds": 0.0002935610100394115,
+        "completion_lateness_15_30_45_60": {
+          "15": 0.0002898300008382648,
+          "30": 0.26219898300769273,
+          "45": 1.2936044510133797,
+          "60": 0.0002935610100394115
+        },
+        "first_speaker_wall_seconds": 2.5510617719992297,
+        "voiced_frame_first_label_age_median_seconds": 1.2213591140066278,
+        "voiced_frame_first_label_age_max_seconds": 3.322943768010589,
+        "clusters": [
+          0
+        ],
+        "segment_count": 16,
+        "overlap_frames": 0,
+        "revised_nonempty_frame_events": 0,
+        "proxy_score": {
+          "voiced_frames": 5720,
+          "source_identity_accuracy_proxy": 0.5842657342657342,
+          "best_reference_to_cluster": {
+            "1": 1
+          },
+          "not_standard_der": true
+        },
+        "not_standard_der": true,
+        "asr_concurrency_not_tested": false
+      },
+      "sampled_peak_sum_rss_mib": 7624.109375,
+      "sampled_peak_rss_mib": {
+        "supervisor": 36.50390625,
+        "cpp": 167.15625,
+        "qwen": 7420.6875
+      },
+      "actual_compute_overlap_seconds": 25.8818562469678,
+      "throughput_criteria_passed": true,
+      "cleanup": {
+        "worker_reaped": true,
+        "cpp_reaped": true,
+        "temporary_windows_removed": true,
+        "failure": null
+      },
+      "asr_texts_equal_baseline": true,
+      "cpp_segments_equal_baseline": true,
+      "cold_qwen_warmup_request_seconds": 4.871576341989567,
+      "qwen_load_seconds": 0.583006194
+    }
+  },
+  "conclusion": "Both fresh concurrent60s runs keep up in throughput, but cpp transient push lag grows to2.15-2.24s and provisional label age to3.23-3.32s; not immediate-label or meeting-quality acceptance",
+  "limitations": [
+    "Only60s fixed repeated public clip, not long-duration acceptance",
+    "ASR six serial10s full-input requests, not app VAD segmentation/frequent short requests",
+    "Qwen first-speech warmup separately measured/excluded; cpp model preloaded but compute not prewarmed",
+    "100ms sampled resident sum is not PSS, may double-count shared pages",
+    "FLEURS single-source identity proxy58.43% is NOT human DER or quality acceptance",
+    "No actual mic/desktop/playback/cloud/UI/capture/storage integration/release",
+    "cpp baseline preceded model-hash recording addition; timing schedule unchanged",
+    "Legacy raw plan warmup_before_measurement refers to Qwen only; final harness clarifies cpp not inference-prewarmed"
+  ],
+  "verification": {
+    "pure_tests": 16,
+    "source_model_provenance_checked_for_asr_runs": true,
+    "model_cache_unchanged": true
+  },
+  "harness_sha256": "003dc799ac437a440c741e1839b4c9b3b35bf4d0ae6b43990304df1e71e5e3ff"
+}

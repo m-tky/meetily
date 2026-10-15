@@ -45,6 +45,7 @@ export function TranscriptPanel({
       endTime: t.audio_end_time,
       text: t.text,
       confidence: t.confidence,
+      speaker: t.speaker,
     })),
     [transcripts]
   );
@@ -70,7 +71,7 @@ export function TranscriptPanel({
                     </span>
                   </Button>
                 )}
-                {transcriptModelConfig.provider === "localWhisper" &&
+                {(transcriptModelConfig.provider === "localWhisper" || transcriptModelConfig.provider === "qwen") &&
                   <Button
                     variant="outline"
                     size="sm"

@@ -17,6 +17,8 @@ use super::capture::CoreAudioCapture;
 pub enum StreamBackend {
     /// CPAL-based stream (ScreenCaptureKit or default)
     Cpal(Stream),
+    #[cfg(target_os = "linux")]
+    Pulse(super::capture::pulse::PulseCapture),
     /// Core Audio direct implementation (macOS only)
     #[cfg(target_os = "macos")]
     CoreAudio {
@@ -85,6 +87,36 @@ impl AudioStream {
         if use_core_audio {
             info!("🎵 Stream: Using Core Audio backend (cidre) for system audio");
             return Self::create_core_audio_stream(device, state, device_type, recording_sender).await;
+        }
+
+        #[cfg(target_os = "linux")]
+        if device_type == DeviceType::System && device.name.starts_with(super::capture::pulse::PREFIX) {
+            let selected = device.clone();
+            let pulse = tokio::task::spawn_blocking(move || {
+                let capture = AudioCapture::new(selected.clone(), state.clone(), 48000, 1, device_type, recording_sender);
+                super::capture::pulse::PulseCapture::start_timed(&selected.name,
+                    move |samples, at| capture.process_audio_data_at(samples, at),
+                    move |message| {
+                        error!("Linux system audio failed: {message}");
+                        state.report_error(super::recording_state::AudioError::StreamFailed);
+                    })
+            }).await.map_err(|e| anyhow::anyhow!("Pulse capture startup failed: {e}"))??;
+            return Ok(Self { device, backend: StreamBackend::Pulse(pulse) });
+        }
+
+        #[cfg(target_os = "linux")]
+        if device_type == DeviceType::Microphone && device.name.starts_with(super::capture::pulse::INPUT_PREFIX) {
+            let selected = device.clone();
+            let pulse = tokio::task::spawn_blocking(move || {
+                let capture = AudioCapture::new(selected.clone(), state.clone(), 48000, 1, DeviceType::Microphone, recording_sender);
+                super::capture::pulse::PulseCapture::start_input_timed(&selected.name,
+                    move |samples, at| capture.process_audio_data_at(samples, at),
+                    move |message| {
+                        error!("Linux native microphone failed: {message}");
+                        state.report_error(super::recording_state::AudioError::StreamFailed);
+                    })
+            }).await.map_err(|e| anyhow::anyhow!("Pulse microphone startup failed: {e}"))??;
+            return Ok(Self { device, backend: StreamBackend::Pulse(pulse) });
         }
 
         // Default path: use CPAL
@@ -246,7 +278,10 @@ impl AudioStream {
                 let capture_clone = capture.clone();
                 device.build_input_stream(
                     &config_copy.into(),
-                    move |data: &[f32], _: &cpal::InputCallbackInfo| {
+                    move |data: &[f32], info: &cpal::InputCallbackInfo| {
+                        #[cfg(target_os = "linux")]
+                        capture.process_cpal_audio_data(data, info);
+                        #[cfg(not(target_os = "linux"))]
                         capture.process_audio_data(data);
                     },
                     move |err| {
@@ -259,10 +294,13 @@ impl AudioStream {
                 let capture_clone = capture.clone();
                 device.build_input_stream(
                     &config_copy.into(),
-                    move |data: &[i16], _: &cpal::InputCallbackInfo| {
+                    move |data: &[i16], info: &cpal::InputCallbackInfo| {
                         let f32_data: Vec<f32> = data.iter()
                             .map(|&sample| sample as f32 / i16::MAX as f32)
                             .collect();
+                        #[cfg(target_os = "linux")]
+                        capture.process_cpal_audio_data(&f32_data, info);
+                        #[cfg(not(target_os = "linux"))]
                         capture.process_audio_data(&f32_data);
                     },
                     move |err| {
@@ -275,10 +313,13 @@ impl AudioStream {
                 let capture_clone = capture.clone();
                 device.build_input_stream(
                     &config_copy.into(),
-                    move |data: &[i32], _: &cpal::InputCallbackInfo| {
+                    move |data: &[i32], info: &cpal::InputCallbackInfo| {
                         let f32_data: Vec<f32> = data.iter()
                             .map(|&sample| sample as f32 / i32::MAX as f32)
                             .collect();
+                        #[cfg(target_os = "linux")]
+                        capture.process_cpal_audio_data(&f32_data, info);
+                        #[cfg(not(target_os = "linux"))]
                         capture.process_audio_data(&f32_data);
                     },
                     move |err| {
@@ -291,10 +332,13 @@ impl AudioStream {
                 let capture_clone = capture.clone();
                 device.build_input_stream(
                     &config_copy.into(),
-                    move |data: &[i8], _: &cpal::InputCallbackInfo| {
+                    move |data: &[i8], info: &cpal::InputCallbackInfo| {
                         let f32_data: Vec<f32> = data.iter()
                             .map(|&sample| sample as f32 / i8::MAX as f32)
                             .collect();
+                        #[cfg(target_os = "linux")]
+                        capture.process_cpal_audio_data(&f32_data, info);
+                        #[cfg(not(target_os = "linux"))]
                         capture.process_audio_data(&f32_data);
                     },
                     move |err| {
@@ -321,6 +365,8 @@ impl AudioStream {
         info!("Stopping audio stream for device: {}", self.device.name);
 
         match self.backend {
+            #[cfg(target_os = "linux")]
+            StreamBackend::Pulse(capture) => drop(capture),
             StreamBackend::Cpal(stream) => {
                 // CRITICAL: Pause the stream first to stop callbacks immediately
                 // This ensures closures stop executing before we drop the stream,

@@ -43,44 +43,17 @@ export function useTranscriptRecovery(): UseTranscriptRecoveryReturn {
     try {
       const meetings = await indexedDBService.getAllMeetings();
 
-      // Filter out meetings older than 7 days and newer than 15 seconds
-      // The 15 seconds threshold prevents showing meetings from the current session(jus in case)
-      // where recording just stopped but hasn't been fully saved yet
-      const cutoffTime = Date.now() - (7 * 24 * 60 * 60 * 1000);
+      // Keep unsaved meetings regardless of age; only defer very recent writes.
       const secondsAgo = Date.now() - (2 * 1000);
 
       const recentMeetings = meetings.filter(m => {
-        const isWithinRetention = m.lastUpdated > cutoffTime; // Not older than 7 days
-        const isOldEnough = m.lastUpdated < secondsAgo; // Older than 15 seconds
-        return isWithinRetention && isOldEnough;
+        // Unsaved data remains recoverable regardless of age.
+        return m.lastUpdated < secondsAgo;
       });
 
-      // Verify audio checkpoint availability for each meeting
-      const meetingsWithAudioStatus = await Promise.all(
-        recentMeetings.map(async (meeting) => {
-          if (meeting.folderPath) {
-            try {
-              const hasAudio = await invoke<boolean>('has_audio_checkpoints', {
-                meetingFolder: meeting.folderPath
-              });
-
-              // If no audio files, clear folderPath to show "No audio" in UI
-              return {
-                ...meeting,
-                folderPath: hasAudio ? meeting.folderPath : undefined
-              };
-            } catch (error) {
-              console.warn('Failed to check audio for meeting:', error);
-              // On error, assume no audio to be safe
-              return { ...meeting, folderPath: undefined };
-            }
-          }
-          return meeting;
-        })
-      );
-
-
-      setRecoverableMeetings(meetingsWithAudioStatus);
+      // Folder binding is evidence, not an audio-availability flag. Keep it
+      // even when checkpoints are missing; final audio/minutes may still exist.
+      setRecoverableMeetings(recentMeetings);
     } catch (error) {
       console.error('Failed to check for recoverable transcripts:', error);
       setRecoverableMeetings([]);
@@ -126,14 +99,8 @@ export function useTranscriptRecovery(): UseTranscriptRecoveryReturn {
       let folderPath = metadata.folderPath;
 
 
-      if (!folderPath) {
-        // Try to get from backend (might exist if only app crashed, not system)
-        try {
-          folderPath = await invoke<string>('get_meeting_folder_path');
-        } catch (error) {
-          folderPath = undefined;
-        }
-      }
+      // Never guess the current recording's folder for a historical meeting.
+      // A missing historical binding stays missing.
 
       // 4. Attempt audio recovery if folder path exists
       let audioRecoveryStatus: AudioRecoveryStatus | null = null;
@@ -170,6 +137,7 @@ export function useTranscriptRecovery(): UseTranscriptRecoveryReturn {
         chunk_start_time: (t as any).chunk_start_time,
         is_partial: (t as any).is_partial || false,
         confidence: t.confidence,
+        speaker: t.speaker,
         audio_start_time: (t as any).audio_start_time,
         audio_end_time: (t as any).audio_end_time,
         duration: (t as any).duration,
@@ -197,15 +165,8 @@ export function useTranscriptRecovery(): UseTranscriptRecoveryReturn {
       await indexedDBService.markMeetingSaved(meetingId);
 
 
-      // 8. Clean up checkpoint files
-      if (folderPath) {
-        try {
-          await invoke('cleanup_checkpoints', { meetingFolder: folderPath });
-        } catch (error) {
-          // Non-fatal - don't fail recovery if cleanup fails
-          console.warn('Checkpoint cleanup failed (non-fatal):', error);
-        }
-      }
+      // Keep original checkpoints even if audio recovery or DB registration
+      // succeeds. Recovery must not erase the only copy on partial failure.
 
       // 9. Remove from recoverable list
       setRecoverableMeetings(prev => prev.filter(m => m.meetingId !== meetingId));

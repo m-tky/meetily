@@ -57,6 +57,7 @@ pub(crate) fn create_transcript_segments(transcripts: &[(String, f64, f64)]) -> 
             let duration = end_seconds - start_seconds;
 
             TranscriptSegment {
+                speaker: None,
                 id: format!("transcript-{}", Uuid::new_v4()),
                 text: text.trim().to_string(),
                 timestamp: chrono::Utc::now().to_rfc3339(),
@@ -85,7 +86,8 @@ pub(crate) fn write_transcripts_json(folder: &Path, segments: &[TranscriptSegmen
                 "audio_start_time": s.audio_start_time,
                 "audio_end_time": s.audio_end_time,
                 "duration": s.duration,
-                "sequence_id": i
+                "sequence_id": i,
+                "speaker": s.speaker
             })
         }).collect::<Vec<_>>()
     });

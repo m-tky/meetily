@@ -161,9 +161,17 @@ export function RecordingStateProvider({ children }: { children: React.ReactNode
         });
         unsubscribers.push(unlistenStarting);
 
+        const unlistenSaveWarning = await recordingService.onRecordingSaveWarning(message => {
+          toast.error('Recording storage needs attention', { id: 'recording-save-failure', description: message, duration: Infinity });
+        });
+        unsubscribers.push(unlistenSaveWarning);
+
         // Recording stopped
         const unlistenStopped = await recordingService.onRecordingStopped((payload) => {
           console.log('[RecordingStateContext] Recording stopped event:', payload);
+          if (payload.save_succeeded === false) {
+            toast.error('Recording files were not fully saved', { id: 'recording-save-failure', description: payload.save_error ?? 'Keep checkpoints and check available disk space.', duration: Infinity });
+          }
           setState(prev => {
             // Set status to STOPPING if not already in stop flow
             // This ensures smooth UI transition for tray/keyboard stops

@@ -76,18 +76,16 @@ pub async fn validate_transcription_model_ready<R: Runtime>(app: &AppHandle<R>) 
                 api_key: None,
             }
         }
-        Err(e) => {
-            warn!("⚠️ Failed to get transcript config: {}, defaulting to parakeet", e);
-            crate::api::api::TranscriptConfig {
-                provider: "parakeet".to_string(),
-                model: crate::config::DEFAULT_PARAKEET_MODEL.to_string(),
-                api_key: None,
-            }
-        }
+        Err(e) => return Err(format!("Cannot read transcription configuration: {e}; no provider fallback")),
     };
 
     // Validate based on provider
     match config.provider.as_str() {
+        "qwen" => {
+            if config.model != super::qwen_provider::MODEL { return Err("Unsupported Qwen model selection".into()); }
+            super::qwen_provider::validate_language()?;
+            super::qwen_provider::initialize(app).await.map(|_| ())
+        }
         "localWhisper" => {
             info!("🔍 Validating Whisper model...");
             // Ensure whisper engine is initialized first
@@ -138,7 +136,7 @@ pub async fn validate_transcription_model_ready<R: Runtime>(app: &AppHandle<R>) 
         other => {
             warn!("❌ Unsupported transcription provider for local recording: {}", other);
             Err(format!(
-                "Provider '{}' is not supported for local transcription. Please select 'localWhisper' or 'parakeet'.",
+                "Provider '{}' is not supported for local transcription. Please select 'localWhisper', 'parakeet' or Linux 'qwen'.",
                 other
             ))
         }
@@ -172,18 +170,16 @@ pub async fn get_or_init_transcription_engine<R: Runtime>(
                 api_key: None,
             }
         }
-        Err(e) => {
-            warn!("⚠️ Failed to get transcript config: {}, defaulting to parakeet", e);
-            crate::api::api::TranscriptConfig {
-                provider: "parakeet".to_string(),
-                model: crate::config::DEFAULT_PARAKEET_MODEL.to_string(),
-                api_key: None,
-            }
-        }
+        Err(e) => return Err(format!("Cannot read transcription configuration: {e}; no provider fallback")),
     };
 
     // Initialize the appropriate engine based on provider
     match config.provider.as_str() {
+        "qwen" => {
+            if config.model != super::qwen_provider::MODEL { return Err("Unsupported Qwen model selection".into()); }
+            super::qwen_provider::validate_language()?;
+            Ok(TranscriptionEngine::Provider(super::qwen_provider::initialize(app).await?))
+        }
         "parakeet" => {
             info!("🦜 Initializing Parakeet transcription engine");
 
@@ -212,11 +208,12 @@ pub async fn get_or_init_transcription_engine<R: Runtime>(
                 }
             }
         }
-        "localWhisper" | _ => {
+        "localWhisper" => {
             info!("🎤 Initializing Whisper transcription engine");
             let whisper_engine = get_or_init_whisper(app).await?;
             Ok(TranscriptionEngine::Whisper(whisper_engine))
         }
+        other => Err(format!("Unsupported transcription provider: {other}; no fallback")),
     }
 }
 

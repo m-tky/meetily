@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { MeetingSummary, SummaryProcessResponse } from '@/types';
 import { useSidebar } from '@/components/Sidebar/SidebarProvider';
@@ -18,6 +18,8 @@ import { useTemplates } from '@/hooks/meeting-details/useTemplates';
 import { useCopyOperations } from '@/hooks/meeting-details/useCopyOperations';
 import { useMeetingOperations } from '@/hooks/meeting-details/useMeetingOperations';
 import { useConfig } from '@/contexts/ConfigContext';
+import { useMinutesSettings } from '@/contexts/MinutesSettingsContext';
+import { resolveSummaryModel, mayAutoGenerateSummary } from '@/lib/summary-model';
 
 export default function PageContent({
   meeting,
@@ -71,7 +73,10 @@ export default function PageContent({
   const { serverAddress } = useSidebar();
 
   // Get model config from ConfigContext
-  const { modelConfig, setModelConfig, isModelConfigLoading } = useConfig();
+  const { modelConfig: savedModelConfig, setModelConfig, isModelConfigLoading: baseLoading } = useConfig();
+  const { settings: minutesSettings, loaded: minutesLoaded } = useMinutesSettings();
+  const modelConfig = useMemo(() => resolveSummaryModel(savedModelConfig, minutesSettings), [savedModelConfig, minutesSettings]);
+  const isModelConfigLoading = baseLoading || !minutesLoaded;
 
   // Custom hooks
   const meetingData = useMeetingData({ meeting, summaryData, onMeetingUpdated });
@@ -161,6 +166,7 @@ export default function PageContent({
   useEffect(() => {
     if (
       !shouldAutoGenerate
+      || !mayAutoGenerateSummary(modelConfig.provider)
       || summaryGeneration.summaryStatus !== 'idle'
       || isModelConfigLoading
       || meetingData.transcripts.length === 0

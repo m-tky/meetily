@@ -2,7 +2,9 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, ReactNode, useRef } from 'react';
 import { TranscriptModelProps } from '@/components/TranscriptSettings';
+import { MinutesSettingsProvider } from './MinutesSettingsContext';
 import { SelectedDevices } from '@/components/DeviceSelection';
+import { createRecordingInputPreferenceWriter } from '@/lib/recording-input-preferences';
 import { configService, ModelConfig } from '@/services/configService';
 import { invoke } from '@tauri-apps/api/core';
 import Analytics from '@/lib/analytics';
@@ -55,6 +57,10 @@ interface ConfigContextType {
   // Device configuration
   selectedDevices: SelectedDevices;
   setSelectedDevices: (devices: SelectedDevices) => void;
+  updateSelectedDevices: (devices: SelectedDevices) => Promise<void>;
+  devicePreferencesLoaded: boolean;
+  isSavingDevices: boolean;
+  devicePreferencesError: string | null;
 
   // Language preference
   selectedLanguage: string;
@@ -138,6 +144,27 @@ export function ConfigProvider({ children }: { children: ReactNode }) {
     micDevice: null,
     systemDevice: null
   });
+  const [devicePreferencesLoaded, setDevicePreferencesLoaded] = useState(false);
+  const [pendingDeviceSaves, setPendingDeviceSaves] = useState(0);
+  const [devicePreferencesError, setDevicePreferencesError] = useState<string | null>(null);
+  const writeDevicePreferences = useMemo(() => createRecordingInputPreferenceWriter({
+    read: () => invoke<Record<string, unknown>>('get_recording_preferences'),
+    write: preferences => invoke('set_recording_preferences', { preferences }),
+    commit: setSelectedDevices,
+  }), []);
+  const updateSelectedDevices = useCallback(async (devices: SelectedDevices) => {
+    setPendingDeviceSaves(n => n + 1);
+    setDevicePreferencesError(null);
+    try {
+      await writeDevicePreferences(devices);
+      setDevicePreferencesError(null);
+    } catch (error) {
+      setDevicePreferencesError('Could not save input devices. Previous selection retained.');
+      throw error;
+    } finally {
+      setPendingDeviceSaves(n => n - 1);
+    }
+  }, [writeDevicePreferences]);
 
   // Language preference state
   const [selectedLanguage, setSelectedLanguage] = useState<string>(() => {
@@ -360,7 +387,9 @@ export function ConfigProvider({ children }: { children: ReactNode }) {
           console.log('Loaded device preferences:', prefs);
         }
       } catch (error) {
-        console.log('No device preferences found or failed to load:', error);
+        setDevicePreferencesError('Could not load saved input devices.');
+      } finally {
+        setDevicePreferencesLoaded(true);
       }
     };
     loadDevicePreferences();
@@ -375,6 +404,7 @@ export function ConfigProvider({ children }: { children: ReactNode }) {
     openai: ['gpt-4', 'gpt-4-turbo', 'gpt-3.5-turbo'],
     'builtin-ai': [],
     'custom-openai': [],
+    chatgpt_plan: [],
   };
 
   // Toggle confidence indicator with localStorage persistence
@@ -499,6 +529,10 @@ export function ConfigProvider({ children }: { children: ReactNode }) {
     setTranscriptModelConfig,
     selectedDevices,
     setSelectedDevices,
+    updateSelectedDevices,
+    devicePreferencesLoaded,
+    isSavingDevices: pendingDeviceSaves > 0,
+    devicePreferencesError,
     selectedLanguage,
     setSelectedLanguage: handleSetSelectedLanguage,
     showConfidenceIndicator,
@@ -522,6 +556,10 @@ export function ConfigProvider({ children }: { children: ReactNode }) {
     updateProviderApiKey,
     transcriptModelConfig,
     selectedDevices,
+    updateSelectedDevices,
+    devicePreferencesLoaded,
+    pendingDeviceSaves,
+    devicePreferencesError,
     selectedLanguage,
     handleSetSelectedLanguage,
     showConfidenceIndicator,
@@ -540,7 +578,7 @@ export function ConfigProvider({ children }: { children: ReactNode }) {
 
   return (
     <ConfigContext.Provider value={value}>
-      {children}
+      <MinutesSettingsProvider>{children}</MinutesSettingsProvider>
     </ConfigContext.Provider>
   );
 }

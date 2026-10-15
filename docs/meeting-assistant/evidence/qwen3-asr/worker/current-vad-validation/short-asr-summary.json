@@ -1,0 +1,73 @@
+{
+  "existing_v4_full_input_control": true,
+  "current_vad_used": false,
+  "normalization": "Existing CER: NFKC/lowercase/remove Unicode punctuation+whitespace; no lexical substitutions",
+  "speech_windows": 12,
+  "normalized_matches": 11,
+  "character_errors": 2,
+  "reference_characters": 12,
+  "cer": 0.16666666666666666,
+  "review_required": 12,
+  "all_unconfirmed": true,
+  "silences": [
+    {
+      "id": "silence-before",
+      "text": "",
+      "asr_calls": 0
+    },
+    {
+      "id": "silence-after",
+      "text": "",
+      "asr_calls": 0
+    }
+  ],
+  "fresh_worker_passes": 2,
+  "reproduced_text_status_gate_review": true,
+  "failed_rows": [
+    {
+      "id": "lexical-1-white-snr0",
+      "reference": "本",
+      "condition": "white-snr0",
+      "fixture_sha256": "10bd02970a138daca5a7d6e53db86406c24d9df587535de564b6180a5b75ac4f",
+      "audio_seconds": 0.776,
+      "text": "ほう。",
+      "worker": {
+        "asr_calls": 1,
+        "confirmed": false,
+        "gate_intervals": [
+          {
+            "end_sample": 12416,
+            "start_sample": 0
+          }
+        ],
+        "id": "new-short-12",
+        "inference_seconds": 1.812957338,
+        "load_seconds": 0,
+        "model_loaded": true,
+        "recognition_context": "full_input",
+        "segments": [
+          {
+            "confirmed": false,
+            "end_sample": 12416,
+            "inference_seconds": 1.563228362,
+            "kind": "window_final",
+            "raw_text": "ほう。",
+            "review_reasons": [
+              "short_speech_uncertain"
+            ],
+            "sample_rate": 16000,
+            "start_sample": 0,
+            "text_tokens": 2
+          }
+        ],
+        "status": "review_required",
+        "text": "ほう。",
+        "vad_frame_samples": 512,
+        "vad_gain": 1,
+        "vad_seconds": 0.021077861
+      },
+      "existing_v4_full_input_control": true,
+      "current_vad_used": false
+    }
+  ]
+}

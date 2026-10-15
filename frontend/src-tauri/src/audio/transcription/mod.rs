@@ -3,6 +3,7 @@
 // Transcription module: Provider abstraction, engine management, and worker pool.
 
 pub mod provider;
+pub mod qwen_provider;
 pub mod whisper_provider;
 pub mod parakeet_provider;
 pub mod engine;
@@ -18,8 +19,5 @@ pub use engine::{
     get_or_init_transcription_engine,
     get_or_init_whisper
 };
-pub use worker::{
-    start_transcription_task,
-    reset_speech_detected_flag,
-    TranscriptUpdate
-};
+pub(crate) use worker::start_transcription_task;
+pub use worker::{reset_speech_detected_flag, TranscriptUpdate};

@@ -1,10 +1,11 @@
 """Full fixed public corpus after VAD: never discard review-required text from CER."""
 import argparse,hashlib,json,pathlib,time
 from worker_client import Worker
-p=argparse.ArgumentParser();p.add_argument('root',type=pathlib.Path);a=p.parse_args();root=a.root.resolve();art=root/'artifacts'
-manifest=json.loads((art/'manifest.json').read_text());out=root/'worker-fixtures/gated-accuracy.jsonl'
+p=argparse.ArgumentParser();p.add_argument('root',type=pathlib.Path);p.add_argument('--crop-context',action='store_true');p.add_argument('--tag',choices=['fixed-full','fixed-crop'],required=True);a=p.parse_args();root=a.root.resolve();art=root/'artifacts'
+if (a.tag=='fixed-crop')!=a.crop_context:p.error('--tag and --crop-context must agree')
+manifest=json.loads((art/'manifest.json').read_text());out=root/f'worker-fixtures/{a.tag}-accuracy.jsonl'
 selected=[r for r in manifest['rows'] if r['purpose'] in ['accuracy','silence']]
-with Worker(root/'worker-target/release/qwen-speech-worker',art/'model-1.7B') as w,out.open('w') as f:
+with Worker(root/'worker-target/release/qwen-speech-worker',art/'model-1.7B',crop_context=a.crop_context) as w,out.open('w') as f:
  for index,row in enumerate(selected):
   path=art/row['wav'];assert hashlib.sha256(path.read_bytes()).hexdigest()==row['sha256']
   tick=time.monotonic();r=w.request({'op':'transcribe','id':f'corpus-{index}','wav':str(path),'language':row['language']})

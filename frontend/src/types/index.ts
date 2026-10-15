@@ -5,6 +5,8 @@ export interface Message {
 }
 
 export interface Transcript {
+  /** Capture input only; null/absent for legacy mixed audio. */
+  speaker?: string | null;
   id: string;
   text: string;
   timestamp: string; // Wall-clock time (e.g., "14:30:05")
@@ -22,6 +24,7 @@ export interface TranscriptUpdate {
   text: string;
   timestamp: string; // Wall-clock time for reference
   source: string;
+  speaker?: string | null;
   sequence_id: number;
   chunk_start_time: number; // Legacy field
   is_partial: boolean;
@@ -136,6 +139,7 @@ export interface PaginatedTranscriptsResponse {
 
 // Transcript segment data for virtualized display
 export interface TranscriptSegmentData {
+  speaker?: string | null;
   id: string;
   timestamp: number; // audio_start_time in seconds
   endTime?: number; // audio_end_time in seconds

@@ -1,0 +1,40 @@
+{
+  "binary_sha256": "45dda8b1fb73054d8e5f3ea195286eb6c7faf61841b3cde4a897ab224d90bf36",
+  "same_binary_as_fixed_corpus": true,
+  "precision": "decoder INT8, encoder/prefill F32",
+  "threads": 6,
+  "blas_abi": "LP64",
+  "vad_forward_samples": 512,
+  "recognition_context": "full_input",
+  "synthetic_requests": 50,
+  "lexical_requests": 8,
+  "failure_recheck_requests": 14,
+  "quality_accepted": false,
+  "application_integrated": false,
+  "spontaneous_acknowledgements_verified": false,
+  "real_capture_or_playback": false,
+  "noise_generation_tests": 2,
+  "reporter_tests": 3,
+  "supervisor_tests": 4,
+  "metrics_tests": 5,
+  "source_sha256": {
+    "benchmarks/qwen3-asr/evaluate_robustness.py": "26261a528cbbcff8ba9126988f8d504d9e72863707903990dad804067947ebcf",
+    "benchmarks/qwen3-asr/evaluate_short_speech.py": "b81a4e974e48b24241d8fb4aba8cff7d350c45a36834aefe7580bec1537d1614",
+    "benchmarks/qwen3-asr/recheck_robustness.py": "0bc5d4cf525bb1d0870b7b6ec44221adb099fa09f65fdaf8d2be449cb4df02c2",
+    "benchmarks/qwen3-asr/summarize_robustness.mjs": "12b47eec05236a57f18f882b7369a61930278def43d6f0f14fe9bd441bd451ca",
+    "benchmarks/qwen3-asr/test_robustness.py": "761a6fbbb8c910d1cdcf482f52d030bdf6a8f7e1df0151199c2bcee37ed6907d",
+    "benchmarks/qwen3-asr/test-robustness-report.mjs": "935f31797eefb181281cc2b051873a8cf899c51a35789e0c664b313056397651",
+    "benchmarks/qwen3-asr/worker_client.py": "92c4566099e1b674dd24bb4755d2bb9795d21baf4aff8fca0e53445918af3c04"
+  },
+  "files_sha256": {
+    "README.md": "115d4683478a0c9eaaf6022e7021a3369af290e408a7dd6f244d4ebdf02d8b47",
+    "failure-recheck-r1.jsonl": "86fec05b724d8a68a433ffc445097a12500464163012d44e70e5c38e13f9e5d0",
+    "lexical-r1/manifest.json": "5b03fa2ceca8f0a6953703472e4ff49561b67bad4ab5eef43960f7495a25a8a0",
+    "lexical-r1/report.json": "c0d70d81fd99d5b2edb41e41a5c85731179531757cf5f7b7ede3c8913dd00c37",
+    "lexical-r1/results.jsonl": "5af563db9f81b46c12d85773a797235d1fed9fbb13d4d7820c9a47c28c44e01d",
+    "lexical-r1/source-metadata.json": "9ed16ef6d38d742bf5fd488fffbe5ec5a13e94c3f22880ed0afd937ff9558071",
+    "synthetic-r1/manifest.json": "c9dc9167b8566cdc08ce08ecb732c9cbb81413195ae7a285cdad66b25110bc33",
+    "synthetic-r1/report.json": "d2144275f3c0842c896a8da001bb8219a8be25ae246ae77b994d35ed00f1d27d",
+    "synthetic-r1/results.jsonl": "5ae83ab93af4e288605fce6030c504a525c22c526ca9de2077b1f0641dcf24be"
+  }
+}

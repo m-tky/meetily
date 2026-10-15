@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback, ReactNode, MutableRefObject } from 'react';
 import { Transcript, TranscriptUpdate } from '@/types';
+import { compareTranscriptTimes, sameTranscriptEvent, transcriptSourceLabel } from '@/lib/transcript-source';
 import { toast } from 'sonner';
 import { useRecordingState } from './RecordingStateContext';
 import { transcriptService } from '@/services/transcriptService';
@@ -229,11 +230,7 @@ export function TranscriptProvider({ children }: { children: ReactNode }) {
 
       // Sort both stale and recent transcripts by chunk_start_time, then by sequence_id
       const sortTranscripts = (transcripts: Transcript[]) => {
-        return transcripts.sort((a, b) => {
-          const chunkTimeDiff = (a.chunk_start_time || 0) - (b.chunk_start_time || 0);
-          if (chunkTimeDiff !== 0) return chunkTimeDiff;
-          return (a.sequence_id || 0) - (b.sequence_id || 0);
-        });
+        return transcripts.sort(compareTranscriptTimes);
       };
 
       const sortedStaleTranscripts = sortTranscripts(staleTranscripts);
@@ -264,11 +261,7 @@ export function TranscriptProvider({ children }: { children: ReactNode }) {
           const combined = [...prev, ...uniqueNewTranscripts];
 
           // Sort by chunk_start_time first, then by sequence_id
-          return combined.sort((a, b) => {
-            const chunkTimeDiff = (a.chunk_start_time || 0) - (b.chunk_start_time || 0);
-            if (chunkTimeDiff !== 0) return chunkTimeDiff;
-            return (a.sequence_id || 0) - (b.sequence_id || 0);
-          });
+          return combined.sort(compareTranscriptTimes);
         });
 
         // Log the processing summary
@@ -311,6 +304,7 @@ export function TranscriptProvider({ children }: { children: ReactNode }) {
             chunk_start_time: update.chunk_start_time,
             is_partial: update.is_partial,
             confidence: update.confidence,
+            speaker: update.speaker,
             // NEW: Recording-relative timestamps for playback sync
             audio_start_time: update.audio_start_time,
             audio_end_time: update.audio_end_time,
@@ -380,6 +374,7 @@ export function TranscriptProvider({ children }: { children: ReactNode }) {
             chunk_start_time: segment.audio_start_time,
             is_partial: false, // History segments are always final
             confidence: segment.confidence,
+            speaker: segment.speaker,
             audio_start_time: segment.audio_start_time,
             audio_end_time: segment.audio_end_time,
             duration: segment.duration,
@@ -414,13 +409,14 @@ export function TranscriptProvider({ children }: { children: ReactNode }) {
     });
 
     const newTranscript: Transcript = {
-      id: update.sequence_id ? update.sequence_id.toString() : Date.now().toString(),
+      id: update.sequence_id !== undefined ? update.sequence_id.toString() : Date.now().toString(),
       text: update.text,
       timestamp: update.timestamp,
       sequence_id: update.sequence_id || 0,
       chunk_start_time: update.chunk_start_time,
       is_partial: update.is_partial,
       confidence: update.confidence,
+      speaker: update.speaker,
       audio_start_time: update.audio_start_time,
       audio_end_time: update.audio_end_time,
       duration: update.duration,
@@ -431,16 +427,16 @@ export function TranscriptProvider({ children }: { children: ReactNode }) {
 
       // Check if this transcript already exists
       const exists = prev.some(
-        t => t.text === update.text && t.timestamp === update.timestamp
+        t => sameTranscriptEvent(t, update)
       );
       if (exists) {
         console.log('🚫 Duplicate transcript detected, skipping:', update.text.substring(0, 30) + '...');
         return prev;
       }
 
-      // Add new transcript and sort by sequence_id to maintain order
+      // Input VADs finish independently; completion IDs are not audio order.
       const updated = [...prev, newTranscript];
-      const sorted = updated.sort((a, b) => (a.sequence_id || 0) - (b.sequence_id || 0));
+      const sorted = updated.sort(compareTranscriptTimes);
 
       console.log('✅ Added new transcript. New count:', sorted.length);
       console.log('📝 Latest transcript:', {
@@ -465,7 +461,7 @@ export function TranscriptProvider({ children }: { children: ReactNode }) {
     };
 
     const fullTranscript = transcripts
-      .map(t => `${formatTime(t.audio_start_time)} ${t.text}`)
+      .map(t => `${formatTime(t.audio_start_time)} ${transcriptSourceLabel(t.speaker) ? `[${transcriptSourceLabel(t.speaker)}] ` : ''}${t.text}`)
       .join('\n');
     navigator.clipboard.writeText(fullTranscript);
 

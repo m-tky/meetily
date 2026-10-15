@@ -14,6 +14,11 @@ const PROVIDER_COMMANDS: Record<string, ProviderCommands> = {
     hasAvailableModels: 'whisper_has_available_models',
     getAvailableModels: 'whisper_get_available_models',
   },
+  qwen: {
+    initialize: 'qwen_init',
+    hasAvailableModels: 'qwen_has_available_models',
+    getAvailableModels: 'qwen_get_available_models',
+  },
   parakeet: {
     initialize: 'parakeet_init',
     hasAvailableModels: 'parakeet_has_available_models',

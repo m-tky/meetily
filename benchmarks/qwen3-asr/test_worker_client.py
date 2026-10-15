@@ -4,7 +4,7 @@ class Tests(unittest.TestCase):
  def mock(self,folder,behavior):
   p=pathlib.Path(folder)/'worker';p.write_text(f'''#!{sys.executable}
 import sys,json,time
-print(json.dumps({{"event":"ready","protocol":1}}),flush=True)
+print(json.dumps({{"event":"ready","protocol":1,"argv":sys.argv[1:]}}),flush=True)
 for line in sys.stdin:
  r=json.loads(line)
  {behavior}
@@ -21,6 +21,12 @@ for line in sys.stdin:
    w=Worker(self.mock(d,'print(json.dumps({"id":"wrong"}),flush=True)'),'unused',timeout=1)
    with self.assertRaisesRegex(RuntimeError,'ID mismatch'):w.request({'op':'ping','id':'x'})
    self.assertIsNone(w.process)
+ def test_aligner_arguments_are_explicit_and_optional(self):
+  with tempfile.TemporaryDirectory() as d:
+   p=self.mock(d,'print(json.dumps({"id":r["id"]}),flush=True)')
+   w=Worker(p,'unused');self.assertEqual(w.start()['argv'],['unused','6']);w.cancel()
+   w=Worker(p,'unused',aligner_dir='/local/aligner')
+   self.assertEqual(w.start()['argv'],['unused','6','--aligner-dir','/local/aligner']);w.cancel()
  def test_busy_rejects_not_queue(self):
   w=Worker('unused','unused');w.lock.acquire()
   with self.assertRaisesRegex(RuntimeError,'one in-flight'):w.request({'id':'x'})

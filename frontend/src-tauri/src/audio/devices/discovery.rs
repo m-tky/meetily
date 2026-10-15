@@ -7,6 +7,7 @@ use super::platform;
 
 /// List all available audio devices on the system
 pub async fn list_audio_devices() -> Result<Vec<AudioDevice>> {
+    #[cfg(not(target_os = "linux"))]
     let host = cpal::default_host();
 
     // Platform-specific device enumeration
@@ -18,7 +19,10 @@ pub async fn list_audio_devices() -> Result<Vec<AudioDevice>> {
 
         #[cfg(target_os = "linux")]
         {
-            platform::configure_linux_audio(&host)?
+            // Keep bounded synchronous Pulse operations off the async executor.
+            tokio::task::spawn_blocking(|| {
+                platform::configure_linux_audio(&cpal::default_host())
+            }).await.map_err(|e| anyhow::anyhow!("Linux device discovery failed: {e}"))??
         }
 
         #[cfg(target_os = "macos")]
@@ -28,6 +32,9 @@ pub async fn list_audio_devices() -> Result<Vec<AudioDevice>> {
     };
 
     // Add any additional devices from the default host
+    // ALSA playback devices are not Linux loopback sources. Do not offer
+    // them as system capture choices; native/legacy monitors are listed above.
+    #[cfg(not(target_os = "linux"))]
     if let Ok(other_devices) = host.devices() {
         for device in other_devices {
             if let Ok(name) = device.name() {

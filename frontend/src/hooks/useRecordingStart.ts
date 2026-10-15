@@ -93,6 +93,7 @@ export function useRecordingStart(
       return false;
     } catch (error) {
       console.error('Failed to check transcription model status:', error);
+      toast.error('Speech recognition setup failed', { description: String(error), duration: 8000 });
       return false;
     }
   }, [getTranscriptionProvider]);

@@ -247,12 +247,19 @@ export const RecordingControls: React.FC<RecordingControlsProps> = ({
 
   useEffect(() => {
     console.log('Setting up recording event listeners');
-    let unsubscribes: (() => void)[] = [];
+    let cancelled = false;
+    const unsubscribes: (() => void)[] = [];
+    const retain = (unlisten: () => void) => {
+      if (cancelled) { unlisten(); return false; }
+      unsubscribes.push(unlisten);
+      return true;
+    };
 
     const setupListeners = async () => {
       try {
         // Transcript error listener - handles both regular and actionable errors
         const transcriptErrorUnsubscribe = await listen('transcript-error', (event) => {
+          if (cancelled) return;
           console.log('transcript-error event received:', event);
           console.error('Transcription error received:', event.payload);
           const errorMessage = event.payload as string;
@@ -266,15 +273,18 @@ export const RecordingControls: React.FC<RecordingControlsProps> = ({
             return newCount;
           });
           setIsProcessing(false);
-          console.log('Calling onRecordingStop(false) due to transcript error');
-          onRecordingStop(false);
+          // Recognition failure is not a native capture stop. Keep Stop usable;
+          // recording/audio preservation continues until an explicit stop.
           if (onTranscriptionError) {
             onTranscriptionError(errorMessage);
           }
         });
 
+        if (!retain(transcriptErrorUnsubscribe)) return;
+
         // Transcription error listener - handles structured error objects with actionable flag
         const transcriptionErrorUnsubscribe = await listen<TranscriptionErrorPayload>('transcription-error', (event) => {
+          if (cancelled) return;
           console.log('transcription-error event received:', event);
           console.error('Transcription error received:', event.payload);
 
@@ -290,29 +300,27 @@ export const RecordingControls: React.FC<RecordingControlsProps> = ({
           });
           setIsProcessing(false);
 
-          if (event.payload.phase === 'active') {
-            console.log('Calling onRecordingStop(false) due to active transcription error');
-            onRecordingStop(false);
-          }
+          // Active ASR failure must not run the post-stop/SQLite workflow while
+          // the native manager is still capturing. A later request can restart
+          // the worker; missing speech remains an explicit warning.
 
           // For actionable errors (like model loading failures), the main page will handle showing the model selector
           // For regular errors, they are handled by useModalState global listener which shows a toast
         });
+
+        if (!retain(transcriptionErrorUnsubscribe)) return;
 
         // Pause/Resume events are now handled by RecordingStateContext
         // No need for duplicate listeners here
 
         // Speech detected listener - for UX feedback when VAD detects speech
         const speechDetectedUnsubscribe = await listen('speech-detected', (event) => {
+          if (cancelled) return;
           console.log('speech-detected event received:', event);
           setSpeechDetected(true);
         });
 
-        unsubscribes = [
-          transcriptErrorUnsubscribe,
-          transcriptionErrorUnsubscribe,
-          speechDetectedUnsubscribe
-        ];
+        if (!retain(speechDetectedUnsubscribe)) return;
         console.log('Recording event listeners set up successfully');
       } catch (error) {
         console.error('Failed to set up recording event listeners:', error);
@@ -322,6 +330,7 @@ export const RecordingControls: React.FC<RecordingControlsProps> = ({
     setupListeners();
 
     return () => {
+      cancelled = true;
       console.log('Cleaning up recording event listeners');
       unsubscribes.forEach(unsubscribe => {
         if (unsubscribe && typeof unsubscribe === 'function') {
@@ -329,7 +338,7 @@ export const RecordingControls: React.FC<RecordingControlsProps> = ({
         }
       });
     };
-  }, [onRecordingStop, onTranscriptionError]);
+  }, [onTranscriptionError]);
 
   return (
     <TooltipProvider>
@@ -388,6 +397,7 @@ export const RecordingControls: React.FC<RecordingControlsProps> = ({
                             Analytics.trackButtonClick('start_recording', 'recording_controls');
                             handleStartRecording();
                           }}
+                          aria-label="Start recording"
                           disabled={isStarting || isProcessing || isRecordingDisabled || isValidatingModel || isStartingRecording}
                           className={`w-12 h-12 flex items-center justify-center ${isStarting || isProcessing || isValidatingModel || isStartingRecording ? 'bg-gray-400' : 'bg-red-500 hover:bg-red-600'
                             } rounded-full text-white transition-colors relative`}
@@ -418,6 +428,7 @@ export const RecordingControls: React.FC<RecordingControlsProps> = ({
                                 handlePauseRecording();
                               }
                             }}
+                            aria-label={isPaused ? 'Resume recording' : 'Pause recording'}
                             disabled={isPausing || isResuming || isStopping}
                             className={`w-10 h-10 flex items-center justify-center ${isPausing || isResuming || isStopping
                               ? 'bg-gray-200 border-2 border-gray-300 text-gray-400'
@@ -444,6 +455,7 @@ export const RecordingControls: React.FC<RecordingControlsProps> = ({
                               Analytics.trackButtonClick('stop_recording', 'recording_controls');
                               handleStopRecording();
                             }}
+                            aria-label="Stop recording"
                             disabled={isStopping || isPausing || isResuming || isStartingRecording}
                             className={`w-10 h-10 flex items-center justify-center ${isStopping || isPausing || isResuming || isStartingRecording ? 'bg-gray-400' : 'bg-red-500 hover:bg-red-600'
                               } rounded-full text-white transition-colors relative`}

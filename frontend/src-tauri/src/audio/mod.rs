@@ -2,6 +2,7 @@
 pub mod audio_processing;
 pub mod decoder;
 pub mod encode;
+pub(crate) mod checkpoint_audio;
 pub mod ffmpeg;
 pub mod vad;
 
@@ -18,11 +19,16 @@ pub mod ffmpeg_mixer;  // NEW: FFmpeg-style adaptive audio mixer
 // New simplified audio system
 pub mod recording_state;
 pub mod pipeline;
+pub(crate) mod mixing;
+pub(crate) mod timed_mixing;
+pub(crate) mod capture_clock;
+pub(crate) mod pc_normalizer;
 pub mod stream;
 pub mod recording_manager;
 pub mod recording_commands;
 pub mod recording_preferences;
 pub mod recording_saver;
+pub mod recording_recovery;
 pub mod incremental_saver;  // NEW: Incremental audio saving with checkpoints
 pub mod level_monitor;
 pub mod simple_level_monitor;

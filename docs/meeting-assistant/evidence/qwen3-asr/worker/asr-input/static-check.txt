@@ -1,0 +1,121 @@
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running unittests src/lib.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/deps/qwen_speech_worker-1981b5e748b593fe)
+
+running 13 tests
+test tests::empty_or_nonfinite_audio_rejected ... ok
+test tests::last_partial_frame_not_lost ... ok
+test tests::gain_bounded_and_not_silence_gate ... ok
+test tests::no_speech_tail_has_no_interval ... ok
+test tests::overlapping_padding_merged ... ok
+test tests::recognition_keeps_internal_pause_and_empty_stays_empty ... ok
+test tests::real_acknowledgements_not_blacklisted ... ok
+test tests::repetition_only_flags_and_limit_flags ... ok
+test tests::request_limits_and_eof ... ok
+test vad::tests::invalid_probabilities_and_frame_counts_reject ... ok
+test vad::tests::endpoint_hysteresis_and_real_tail ... ok
+test vad::tests::official_geometry_and_short_speech_at_eof ... ok
+test vad::tests::padding_does_not_authorize_under_minimum_real_speech ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/deps/qwen_speech_worker-1b4a638d38fb99ff)
+
+running 2 tests
+test tests::ids_bounded_and_unique_format ... ok
+test tests::unknown_fields_rejected ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/current_vad_probe.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/examples/current_vad_probe-41957cb0acb10d2d)
+
+running 2 tests
+test tests::incompatible_frames_reject ... ok
+test tests::official_frame_context_and_padding ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/float_asr_probe.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/examples/float_asr_probe-c7f1234eddef0893)
+
+running 2 tests
+test tests::input_contract_rejects_unknown_role_and_fields ... ok
+test tests::float_reader_preserves_tiny_values_and_rejects_invalid ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/ungated_speech_probe.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/examples/ungated_speech_probe-23b3d15508c38fa8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/vad_endpoint_probe.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/examples/vad_endpoint_probe-22a6bce8e9ab4a62)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/vad_frame_probe.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/examples/vad_frame_probe-62ecbd14d7f653d8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests examples/vad_gain_probe.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/examples/vad_gain_probe-9449c7daf059ed68)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+[0;93m2026-10-12 19:08:33.290698509 [W:onnxruntime:Default, device_discovery.cc:164 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:89 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+test_busy_rejects_not_queue (test_worker_client.Tests.test_busy_rejects_not_queue) ... ok
+test_excessive_response (test_worker_client.Tests.test_excessive_response) ... ok
+test_id_mismatch_fails_closed (test_worker_client.Tests.test_id_mismatch_fails_closed) ... ok
+test_timeout_kills_and_restart (test_worker_client.Tests.test_timeout_kills_and_restart) ... ok
+test_seeded_unit_rms (test_robustness.Tests.test_seeded_unit_rms) ... ok
+test_snr_and_common_gain (test_robustness.Tests.test_snr_and_common_gain) ... ok
+test_default_scalar_parity (test_gate_diagnostics.Tests.test_default_scalar_parity) ... ok
+test_invalid_probabilities (test_gate_diagnostics.Tests.test_invalid_probabilities) ... ok
+test_threshold_and_real_eof (test_gate_diagnostics.Tests.test_threshold_and_real_eof) ... ok
+test_frozen_candidate_no_retuning_or_source_holdout_claim (test_current_vad_validation.CurrentValidationTests.test_frozen_candidate_no_retuning_or_source_holdout_claim) ... ok
+test_manifest_fail_closed (test_current_vad_validation.CurrentValidationTests.test_manifest_fail_closed) ... ok
+test_new_tones_are_deterministic_distinct_and_unit_rms (test_current_vad_validation.CurrentValidationTests.test_new_tones_are_deterministic_distinct_and_unit_rms) ... ok
+test_frozen_thresholds_caps_and_zero_gain (test_vad_reference_gain.ReferenceGainTests.test_frozen_thresholds_caps_and_zero_gain) ... ok
+test_gain_coverage_pairs_fail_closed (test_vad_reference_gain.ReferenceGainTests.test_gain_coverage_pairs_fail_closed) ... ok
+test_parity_bit_equal_and_gate_mismatch (test_vad_reference_gain.ReferenceGainTests.test_parity_bit_equal_and_gate_mismatch) ... ok
+test_parity_duplicate_missing_and_geometry_fail_closed (test_vad_reference_gain.ReferenceGainTests.test_parity_duplicate_missing_and_geometry_fail_closed) ... ok
+test_quantization_loss_and_nearest_even (test_vad_reference_gain.ReferenceGainTests.test_quantization_loss_and_nearest_even) ... ok
+test_slow_gain_block_causal_and_no_clipping (test_vad_reference_gain.ReferenceGainTests.test_slow_gain_block_causal_and_no_clipping) ... ok
+test_frozen_model_gain_and_bypass_scope (test_float_asr.FloatASRTests.test_frozen_model_gain_and_bypass_scope) ... ok
+test_missing_duplicate_labels_and_pairs_reject (test_float_asr.FloatASRTests.test_missing_duplicate_labels_and_pairs_reject) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.393s
+
+OK
+✔ scores raw short-word failure, keeps review and ignores timings only (3.475852ms)
+✔ rejects missing/duplicate controls, wrong hash, pipeline and reference (0.936486ms)
+✔ different text/status across fresh workers is not labeled reproducible (0.549081ms)
+✔ modes remain separate and wrong unflagged text is retained (53.195951ms)
+✔ incorrect crop mode and missing context result reject (80.993852ms)
+✔ incomplete/duplicate ungated repeats reject (86.391896ms)
+✔ diagnosis and gated projection are distinct; missing gate counts deletions (3.071996ms)
+✔ word substitution is not normalized away and contractions stay raw-scored (0.442037ms)
+✔ missing/hash/gate mismatch and negative bypass reject (0.558771ms)
+✔ repeat differences are retained, not falsely called reproducible (1.006338ms)
+✔ English WER uses whitespace words and preserves contractions as one word (6.255487ms)
+✔ Thai keeps combining marks; silence is not mixed into speech CER (0.680856ms)
+✔ prefix-only audio is timing-only; missing accuracy rows are explicit (0.26433ms)
+✔ Candle control separator is not counted as a spoken recognition error; raw output retained (0.26014ms)
+✔ unknown ID, mismatched duration, failures and duplicates reject (0.427826ms)
+✔ missed speech counts full deletion and non-speech insertions remain raw (44.854435ms)
+✔ incomplete and duplicated measurements reject (73.916035ms)
+✔ mismatched fixture hashes reject (44.563855ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 293.092391
+V4 endpoint reference: 306 cases passed (seed 512)

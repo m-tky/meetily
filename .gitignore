@@ -78,5 +78,9 @@ target/
 
 frontend/src-tauri/binaries/
 
+# Local Python build caches
+__pycache__/
+*.py[cod]
+
 # App-managed SIWC credentials must never enter source control, even with custom XDG paths.
 **/official-siwc/

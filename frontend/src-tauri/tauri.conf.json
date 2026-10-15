@@ -88,6 +88,11 @@
             "app",
             "dmg"
         ],
+        "linux": {
+            "deb": {
+                "depends": ["libpulse0"]
+            }
+        },
         "createUpdaterArtifacts": true,
         "icon": [
             "icons/icon.png",

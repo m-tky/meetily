@@ -56,6 +56,7 @@ export function SummaryGeneratorButtonGroup({
   languageSlot
 }: SummaryGeneratorButtonGroupProps) {
   const [settingsDialogOpen, setSettingsDialogOpen] = useState(false);
+  const openCloudSettings = () => { window.location.href = window.location.origin + '/settings?tab=summaryModels'; };
 
   // Expose the function to open the modal via callback registration
   useEffect(() => {
@@ -64,7 +65,8 @@ export function SummaryGeneratorButtonGroup({
       // This allows the parent to store a reference to this function
       const openDialog = () => {
         console.log('📱 Opening model settings dialog via callback');
-        setSettingsDialogOpen(true);
+        if (modelConfig.provider === 'chatgpt_plan') openCloudSettings();
+        else setSettingsDialogOpen(true);
       };
 
       // Call the parent's callback with our open function
@@ -72,7 +74,7 @@ export function SummaryGeneratorButtonGroup({
       // We'll need to adjust the signature
       onOpenModelSettings(openDialog);
     }
-  }, [onOpenModelSettings]);
+  }, [onOpenModelSettings, modelConfig.provider]);
 
   if (!hasTranscripts) {
     return null;
@@ -130,7 +132,9 @@ export function SummaryGeneratorButtonGroup({
       {languageSlot}
 
       {/* Settings button */}
-      <Dialog open={settingsDialogOpen} onOpenChange={setSettingsDialogOpen}>
+      {modelConfig.provider === 'chatgpt_plan' ? (
+        <Button variant="outline" size="sm" title="Summary Settings" onClick={openCloudSettings}><Settings /><span className="hidden @[40rem]:inline">AI Model</span></Button>
+      ) : <Dialog open={settingsDialogOpen} onOpenChange={setSettingsDialogOpen}>
         <DialogTrigger asChild>
           <Button
             variant="outline"
@@ -158,7 +162,7 @@ export function SummaryGeneratorButtonGroup({
             layout="dialog"
           />
         </DialogContent>
-      </Dialog>
+      </Dialog>}
 
       {/* Template selector dropdown */}
       {availableTemplates.length > 0 && (

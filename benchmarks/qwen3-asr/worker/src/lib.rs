@@ -1,12 +1,13 @@
-//! Bounded local-file prototype: reuse pinned Silero endpointing, not an RMS fallback.
+//! Bounded local-file prototype with Silero v4-compatible 512-sample VAD.
 use anyhow::{bail, Context, Result};
 use serde::Serialize;
-use silero_rs::{VadConfig, VadSession, VadTransition};
-use std::{io::BufRead, path::Path, time::Duration};
+use std::{io::BufRead, path::Path};
+pub mod alignment;
+pub mod vad;
+pub use vad::speech_intervals;
 pub const RATE: usize = 16000;
 pub const MAX_SAMPLES: usize = 30 * RATE;
 pub const MAX_LINE: usize = 4096;
-const FRAME: usize = 480;
 
 #[derive(Debug, Clone, Serialize)]
 pub struct Interval {
@@ -40,22 +41,29 @@ pub fn validate_audio(samples: &[f32]) -> Result<()> {
 pub fn read_wav(path: &Path) -> Result<Vec<f32>> {
     let mut reader = hound::WavReader::open(path).context("wav_open_failed")?;
     let s = reader.spec();
-    if s.channels != 1
-        || s.sample_rate != RATE as u32
-        || s.bits_per_sample != 16
-        || s.sample_format != hound::SampleFormat::Int
-    {
-        bail!("expected_mono_16k_pcm16");
+    let pcm16 = s.bits_per_sample == 16 && s.sample_format == hound::SampleFormat::Int;
+    let float32 = s.bits_per_sample == 32 && s.sample_format == hound::SampleFormat::Float;
+    if s.channels != 1 || s.sample_rate != RATE as u32 || !(pcm16 || float32) {
+        bail!("expected_mono_16k_pcm16_or_float32");
     }
     if reader.duration() == 0 || reader.duration() as usize > MAX_SAMPLES {
         bail!("invalid_audio_duration");
     }
     let mut samples = Vec::with_capacity(reader.duration() as usize);
-    for v in reader.samples::<i16>() {
-        if samples.len() >= MAX_SAMPLES {
-            bail!("invalid_audio_duration");
+    if float32 {
+        for v in reader.samples::<f32>() {
+            if samples.len() >= MAX_SAMPLES {
+                bail!("invalid_audio_duration");
+            }
+            samples.push(v?);
         }
-        samples.push(v? as f32 / 32768.0);
+    } else {
+        for v in reader.samples::<i16>() {
+            if samples.len() >= MAX_SAMPLES {
+                bail!("invalid_audio_duration");
+            }
+            samples.push(v? as f32 / 32768.0);
+        }
     }
     validate_audio(&samples)?;
     Ok(samples)
@@ -71,64 +79,21 @@ pub fn vad_gain(samples: &[f32]) -> f32 {
         1.0
     }
 }
-pub fn speech_intervals(samples: &[f32]) -> Result<Vec<Interval>> {
-    validate_audio(samples)?;
-    // Fresh Silero session per bounded request: upstream reset() doesn't clear its
-    // audio/timestamp buffers. No state from the previous file may authorize speech.
-    let config = VadConfig {
-        sample_rate: RATE,
-        positive_speech_threshold: 0.50,
-        negative_speech_threshold: 0.35,
-        pre_speech_pad: Duration::from_millis(300),
-        post_speech_pad: Duration::from_millis(200),
-        redemption_time: Duration::from_millis(500),
-        min_speech_time: Duration::from_millis(90),
-    };
-    let mut vad = VadSession::new(config)?;
-    let mut intervals = Vec::new();
-    let mut active_start = None;
-    let gain = vad_gain(samples);
-    for chunk in samples.chunks(FRAME) {
-        let mut frame: Vec<f32> = chunk.iter().map(|x| x * gain).collect();
-        frame.resize(FRAME, 0.0);
-        for event in vad.process(&frame)? {
-            match event {
-                VadTransition::SpeechStart { timestamp_ms } => {
-                    active_start = Some(timestamp_ms);
-                }
-                VadTransition::SpeechEnd {
-                    start_timestamp_ms,
-                    end_timestamp_ms,
-                    ..
-                } => {
-                    if let Some(i) = interval(start_timestamp_ms, end_timestamp_ms, samples.len()) {
-                        intervals.push(i);
-                    }
-                    active_start = None;
-                }
-            }
-        }
-    }
-    // Never call ASR just to flush an empty or unqualified VAD state.
-    if vad.is_speaking() {
-        if let Some(start) = active_start {
-            if let Some(i) = interval(start, samples.len().div_ceil(16), samples.len()) {
-                intervals.push(i);
-            }
-        }
-    }
-    // Silero pre-padding may overlap an earlier segment. Merge ranges so the same
-    // original audio cannot generate duplicate final evidence; no silence compaction.
-    Ok(merge_intervals(intervals))
-}
-
 /// Bounded request context: preserve natural internal pauses rather than
 /// independently decoding every VAD endpoint (which regressed Thai accuracy).
-pub fn recognition_window(intervals: &[Interval]) -> Vec<Interval> {
+pub fn recognition_window(
+    intervals: &[Interval],
+    real_len: usize,
+    crop_context: bool,
+) -> Vec<Interval> {
     match (intervals.first(), intervals.last()) {
         (Some(first), Some(last)) => vec![Interval {
-            start_sample: first.start_sample,
-            end_sample: last.end_sample,
+            start_sample: if crop_context { first.start_sample } else { 0 },
+            end_sample: if crop_context {
+                last.end_sample
+            } else {
+                real_len
+            },
         }],
         _ => Vec::new(),
     }
@@ -233,19 +198,24 @@ mod tests {
     }
     #[test]
     fn recognition_keeps_internal_pause_and_empty_stays_empty() {
-        assert!(recognition_window(&[]).is_empty());
-        let span = recognition_window(&[
+        assert!(recognition_window(&[], 512, false).is_empty());
+        let intervals = [
             Interval {
-                start_sample: 0,
+                start_sample: 10,
                 end_sample: 100,
             },
             Interval {
                 start_sample: 200,
                 end_sample: 400,
             },
-        ]);
+        ];
+        let span = recognition_window(&intervals, 512, false);
         assert_eq!(span.len(), 1);
-        assert_eq!(span[0].end_sample, 400);
+        assert_eq!(span[0].start_sample, 0);
+        assert_eq!(span[0].end_sample, 512);
+        let crop = recognition_window(&intervals, 512, true);
+        assert_eq!(crop[0].start_sample, 10);
+        assert_eq!(crop[0].end_sample, 400);
     }
     #[test]
     fn overlapping_padding_merged() {

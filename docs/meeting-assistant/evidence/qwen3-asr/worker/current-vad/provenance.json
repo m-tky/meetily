@@ -1,0 +1,46 @@
+{
+  "user_approved_comparison": true,
+  "model_revision": "1e261b036686cd0017d500ee96acd1c4ba572a9d",
+  "worker_binary_sha256": "45dda8b1fb73054d8e5f3ea195286eb6c7faf61841b3cde4a897ab224d90bf36",
+  "worker_core_sources_unchanged": true,
+  "probe_binary_sha256": "509b20a6ae2e5cd547877809291ca9125c9f8b0b8a069dfe2f25b990f81c27e8",
+  "model_sha256": "1a153a22f4509e292a94e67d6f9b85e8deb25b4988682b7e174c65279d8788e3",
+  "comparison_windows": 89,
+  "current_passes": 2,
+  "probabilities_byte_identical": true,
+  "candidate_for_unseen_validation": {
+    "gain": "peak20",
+    "threshold": 0.7,
+    "minimum_ms": 90
+  },
+  "grid_exploratory_in_sample": true,
+  "independent_official_wrapper_execution_parity": false,
+  "new_model_adopted": false,
+  "worker_policy_changed": false,
+  "application_integrated": false,
+  "quality_accepted": false,
+  "asr_rerun": false,
+  "rust_core_tests": 15,
+  "current_frame_helper_tests": 2,
+  "python_tests": 9,
+  "node_tests": 11,
+  "endpoint_reference_cases": 306,
+  "source_sha256": {
+    "benchmarks/qwen3-asr/prepare_current_vad.py": "2c73376db0add5524939a5d1f58d36be83f0081f407b00f380c2fa00e46a0553",
+    "benchmarks/qwen3-asr/compare_current_vad.py": "fc9db6818b1d703c46908bdc1496072b4a4dd2586a4f47de46f301e00c3ff3bc",
+    "benchmarks/qwen3-asr/worker/examples/current_vad_probe.rs": "02d61ae24b769bb7736abaabed7398cec50563bd27a4ce16503c328b3d35704e",
+    "benchmarks/qwen3-asr/diagnose_gate.py": "04c4ef4b628826a4bf2828a3d1d6076f292a3c05387f667cd83b0256fdf70c84"
+  },
+  "external_sha256": {
+    "../runtime/qwen3-asr/diagnostics/current-vad-r1/probabilities.jsonl": "501b1a04f84a8710b05e682c152dd99bbe10044b2070c32078e51c77d0999e73",
+    "../runtime/qwen3-asr/diagnostics/current-vad-r2/probabilities.jsonl": "501b1a04f84a8710b05e682c152dd99bbe10044b2070c32078e51c77d0999e73",
+    "../runtime/qwen3-asr/diagnostics/gate-r2/probabilities.jsonl": "03012f72560462605f483e1af2b25313ff7c75389e531fec038d30bfb457ba85"
+  },
+  "files_sha256": {
+    "README.md": "43a8b2912aab033809d8e01a8c125199740e0eb96ff73085d2771401fb2ddd63",
+    "Silero-MIT.txt": "2e63e9a38b6e8fc0c7bc37ce174caca1862870856c6daf5697cfb785e925520b",
+    "model-provenance.json": "802e5509a798e28e219db868c9d47d0967f69e27c9b8168cb3ccc636e546b5d0",
+    "report.json": "9db94aa81fe878d72a745b24e722d7be94cae0a5d88f129353eac28e6fa6ed2e",
+    "static-check.txt": "d56a2907a098e10bc56876f97628d1fd102e0169665acab05e91cef92f224ec8"
+  }
+}

@@ -34,6 +34,9 @@ pub struct TranscriptUpdate {
     pub text: String,
     pub timestamp: String, // Wall-clock time for reference (e.g., "14:30:05")
     pub source: String,
+    /// Capture input only (mic/system), never an inferred person.
+    #[serde(default)]
+    pub speaker: Option<String>,
     pub sequence_id: u64,
     pub chunk_start_time: f64, // Legacy field, kept for compatibility
     pub is_partial: bool,
@@ -44,16 +47,55 @@ pub struct TranscriptUpdate {
     pub duration: f64,          // Segment duration in seconds (e.g., 3.3)
 }
 
+fn capture_source(kind: &crate::audio::recording_state::DeviceType) -> &'static str {
+    match kind {
+        crate::audio::recording_state::DeviceType::Microphone => "mic",
+        crate::audio::recording_state::DeviceType::System => "system",
+    }
+}
+
+#[cfg(test)]
+mod source_metadata_tests {
+    use super::*;
+    #[test]
+    fn capture_tags_are_inputs_not_inferred_speakers() {
+        use crate::audio::recording_state::DeviceType;
+        assert_eq!(capture_source(&DeviceType::Microphone), "mic");
+        assert_eq!(capture_source(&DeviceType::System), "system");
+        let old: TranscriptUpdate = serde_json::from_value(serde_json::json!({
+            "text":"raw", "timestamp":"00:00", "source":"Audio", "sequence_id":0,
+            "chunk_start_time":0.0, "is_partial":false, "confidence":-1.0,
+            "audio_start_time":0.0, "audio_end_time":1.0, "duration":1.0
+        })).unwrap();
+        assert_eq!(old.speaker, None);
+    }
+}
+
 // NOTE: get_transcript_history and get_recording_meeting_name functions
 // have been moved to recording_commands.rs where they have access to RECORDING_MANAGER
 
-/// Optimized parallel transcription task ensuring ZERO chunk loss
-pub fn start_transcription_task<R: Runtime>(
+/// Drain or cancel an owned dispatcher. Never detach it on timeout.
+pub(crate) async fn finish_task(mut task: tokio::task::JoinHandle<bool>, limit: std::time::Duration) -> Result<bool, String> {
+    match tokio::time::timeout(limit, &mut task).await {
+        Ok(result) => result.map_err(|e| format!("Transcription task failed: {e}")),
+        Err(_) => {
+            task.abort();
+            let _ = task.await;
+            Err("Transcription shutdown timed out; unfinished work cancelled. Automatic final minutes were skipped.".into())
+        }
+    }
+}
+
+/// Session-bound serial transcription task; reports failures separately from dequeue counts.
+pub(crate) fn start_transcription_task<R: Runtime>(
     app: AppHandle<R>,
     transcription_receiver: tokio::sync::mpsc::UnboundedReceiver<AudioChunk>,
-) -> tokio::task::JoinHandle<()> {
+    transcript_sink: crate::audio::recording_saver::TranscriptSink,
+) -> tokio::task::JoinHandle<bool> {
+    // The caller binds the sink BEFORE publishing the global manager, so even
+    // a Stop racing startup cannot redirect or remove the persistence target.
     tokio::spawn(async move {
-        info!("🚀 Starting optimized parallel transcription task - guaranteeing zero chunk loss");
+        info!("Starting serial source-aware transcription task");
 
         // Initialize transcription engine (Whisper or Parakeet based on config)
         let transcription_engine = match super::engine::get_or_init_transcription_engine(&app).await {
@@ -66,12 +108,14 @@ pub fn start_transcription_task<R: Runtime>(
                     "actionable": true,
                     "phase": "active"
                 }));
-                return;
+                return false;
             }
         };
 
         // Create parallel workers for faster processing while preserving ALL chunks
-        const NUM_WORKERS: usize = 1; // Serial processing ensures transcripts emit in chronological order
+        // Share one ASR model. Input VADs may finish out of audio order;
+        // the session sink and UI sort by audio start, not completion IDs.
+        const NUM_WORKERS: usize = 1;
         let (work_sender, work_receiver) = tokio::sync::mpsc::unbounded_channel::<AudioChunk>();
         let work_receiver = Arc::new(tokio::sync::Mutex::new(work_receiver));
 
@@ -79,11 +123,14 @@ pub fn start_transcription_task<R: Runtime>(
         let chunks_queued = Arc::new(AtomicU64::new(0));
         let chunks_completed = Arc::new(AtomicU64::new(0));
         let input_finished = Arc::new(AtomicBool::new(false));
+        let transcription_ok = Arc::new(AtomicBool::new(true));
 
-        info!("📊 Starting {} transcription worker{} (serial mode for ordered emission)", NUM_WORKERS, if NUM_WORKERS == 1 { "" } else { "s" });
+        info!("📊 Starting {} transcription worker{} (serial model access)", NUM_WORKERS, if NUM_WORKERS == 1 { "" } else { "s" });
 
         // Spawn worker tasks
-        let mut worker_handles = Vec::new();
+        // Dropping/aborting the dispatcher aborts its workers instead of
+        // detaching them (important for Stop timeout and Qwen kill-on-drop).
+        let mut worker_handles = tokio::task::JoinSet::new();
         for worker_id in 0..NUM_WORKERS {
             let engine_clone = match &transcription_engine {
                 TranscriptionEngine::Whisper(e) => TranscriptionEngine::Whisper(e.clone()),
@@ -91,12 +138,14 @@ pub fn start_transcription_task<R: Runtime>(
                 TranscriptionEngine::Provider(p) => TranscriptionEngine::Provider(p.clone()),
             };
             let app_clone = app.clone();
+            let transcript_sink = transcript_sink.clone();
             let work_receiver_clone = work_receiver.clone();
             let chunks_completed_clone = chunks_completed.clone();
             let input_finished_clone = input_finished.clone();
             let chunks_queued_clone = chunks_queued.clone();
+            let transcription_ok = transcription_ok.clone();
 
-            let worker_handle = tokio::spawn(async move {
+            worker_handles.spawn(async move {
                 info!("👷 Worker {} started", worker_id);
 
                 // PRE-VALIDATE model state to avoid repeated async calls per chunk
@@ -142,11 +191,13 @@ pub fn start_transcription_task<R: Runtime>(
                             // Check if model is still loaded before processing
                             if !engine_clone.is_model_loaded().await {
                                 warn!("⚠️ Worker {}: Model unloaded, but continuing to preserve chunk {}", worker_id, chunk.chunk_id);
-                                // Still count as completed even if we can't process
+                                transcription_ok.store(false, Ordering::SeqCst);
+                                // Count dequeued work, but do not claim complete transcription.
                                 chunks_completed_clone.fetch_add(1, Ordering::SeqCst);
                                 continue;
                             }
 
+                            let input_source = capture_source(&chunk.device_type);
                             let chunk_timestamp = chunk.timestamp;
                             let chunk_duration = chunk.data.len() as f64 / chunk.sample_rate as f64;
 
@@ -194,29 +245,39 @@ pub fn start_transcription_task<R: Runtime>(
                                         let audio_start_time = chunk_timestamp; // Already in seconds from recording start
                                         let audio_end_time = chunk_timestamp + chunk_duration;
 
-                                        // Save structured transcript segment to recording manager (only final results)
-                                        // Save ALL segments (partial and final) to ensure complete JSON
-                                        // Create structured segment with full timestamp data
-                                        // NOTE: This is now handled via the transcript-update event emission below
-                                        // The recording_commands module listens to these events and saves them
-                                        // This decouples the transcription worker from direct RECORDING_MANAGER access
-
                                         // Emit transcript update with NEW recording-relative timestamps
 
                                         let update = TranscriptUpdate {
                                             text: transcript,
                                             timestamp: format_current_timestamp(), // Wall-clock for reference
-                                            source: "Audio".to_string(),
+                                            source: input_source.to_string(),
+                                            speaker: Some(input_source.to_string()),
                                             sequence_id,
                                             chunk_start_time: chunk_timestamp, // Legacy compatibility
                                             is_partial,
-                                            confidence: confidence_opt.unwrap_or(0.85), // Default for providers without confidence
+                                            confidence: confidence_opt.unwrap_or(-1.0), // Explicit unknown sentinel; never invent an 85% score.
                                             // NEW: Recording-relative timestamps for sync
                                             audio_start_time,
                                             audio_end_time,
                                             duration: chunk_duration,
                                         };
 
+                                        let segment = crate::audio::recording_saver::TranscriptSegment {
+                                            id: format!("seg_{}", update.sequence_id),
+                                            text: update.text.clone(),
+                                            audio_start_time: update.audio_start_time,
+                                            audio_end_time: update.audio_end_time,
+                                            duration: update.duration,
+                                            display_time: update.timestamp.clone(),
+                                            confidence: update.confidence,
+                                            sequence_id: update.sequence_id,
+                                            speaker: update.speaker.clone(),
+                                        };
+                                        if let Err(error) = transcript_sink.add(segment) {
+                                            transcription_ok.store(false, Ordering::SeqCst);
+                                            error!("Failed to persist transcript: {}", error);
+                                            let _ = app_clone.emit("transcription-warning", "Transcript could not be saved to disk. Keep this session open and check available disk space.");
+                                        }
                                         if let Err(e) = app_clone.emit("transcript-update", &update)
                                         {
                                             error!(
@@ -237,11 +298,13 @@ pub fn start_transcription_task<R: Runtime>(
                                             continue;
                                         }
                                         TranscriptionError::ModelNotLoaded => {
+                                            transcription_ok.store(false, Ordering::SeqCst);
                                             warn!("Worker {}: Model unloaded during transcription", worker_id);
                                             chunks_completed_clone.fetch_add(1, Ordering::SeqCst);
                                             continue;
                                         }
                                         _ => {
+                                            transcription_ok.store(false, Ordering::SeqCst);
                                             warn!("Worker {}: Transcription failed: {}", worker_id, e);
                                             let _ = app_clone.emit("transcription-warning", e.to_string());
                                         }
@@ -309,7 +372,7 @@ pub fn start_transcription_task<R: Runtime>(
                 info!("👷 Worker {} completed", worker_id);
             });
 
-            worker_handles.push(worker_handle);
+
         }
 
         // Main dispatcher: receive chunks and distribute to workers
@@ -342,12 +405,15 @@ pub fn start_transcription_task<R: Runtime>(
         }));
 
         // Wait for all workers to complete
-        for (worker_id, handle) in worker_handles.into_iter().enumerate() {
-            if let Err(e) = handle.await {
+        let mut worker_id = 0;
+        while let Some(result) = worker_handles.join_next().await {
+            if let Err(e) = result {
+                transcription_ok.store(false, Ordering::SeqCst);
                 error!("❌ Worker {} panicked: {:?}", worker_id, e);
             } else {
                 info!("✅ Worker {} completed successfully", worker_id);
             }
+            worker_id += 1;
         }
 
         // Final verification with retry logic to catch any stragglers
@@ -391,7 +457,9 @@ pub fn start_transcription_task<R: Runtime>(
             }
         }
 
-        info!("✅ Parallel transcription task completed - all workers finished, ready for model unload");
+        info!("✅ Parallel transcription task completed - workers finished, ready for model unload");
+        transcription_ok.load(Ordering::SeqCst)
+            && chunks_queued.load(Ordering::SeqCst) == chunks_completed.load(Ordering::SeqCst)
     })
 }
 
@@ -594,6 +662,28 @@ fn format_recording_time(seconds: f64) -> String {
     mod tests {
         use super::*;
 
+        #[tokio::test]
+        async fn timeout_cancels_dispatcher_and_owned_workers() {
+            struct Cleanup(Option<tokio::sync::oneshot::Sender<()>>);
+            impl Drop for Cleanup { fn drop(&mut self) { if let Some(tx) = self.0.take() { let _ = tx.send(()); } } }
+            let (ready_tx, ready_rx) = tokio::sync::oneshot::channel();
+            let (cleanup_tx, cleanup_rx) = tokio::sync::oneshot::channel();
+            let task = tokio::spawn(async move {
+                let mut workers = tokio::task::JoinSet::new();
+                workers.spawn(async move {
+                    let _cleanup = Cleanup(Some(cleanup_tx));
+                    let _ = ready_tx.send(());
+                    std::future::pending::<()>().await;
+                });
+                while workers.join_next().await.is_some() {}
+                true
+            });
+            ready_rx.await.unwrap();
+            assert!(finish_task(task, std::time::Duration::from_millis(10)).await.unwrap_err().contains("timed out"));
+            tokio::time::timeout(std::time::Duration::from_secs(1), cleanup_rx).await.unwrap().unwrap();
+            assert!(finish_task(tokio::spawn(async { true }), std::time::Duration::from_secs(1)).await.unwrap());
+            assert!(!finish_task(tokio::spawn(async { false }), std::time::Duration::from_secs(1)).await.unwrap());
+        }
         #[test]
         fn keeps_short_acknowledgements() {
             assert!(should_emit_transcript("Yes"));

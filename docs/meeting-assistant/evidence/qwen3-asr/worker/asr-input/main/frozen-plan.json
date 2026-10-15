@@ -1,0 +1,20 @@
+{
+  "asr_model": "same1.7B decoder-INT8 encoder/prefillF32",
+  "threads": 6,
+  "gate": "pinned-current .7/.55/>90ms, VAD-only peak100",
+  "asr_input_gain": 1,
+  "context": "full original input",
+  "known_speech_diagnostic_bypass": true,
+  "negative_bypass": false,
+  "baseline": 33,
+  "quiet_pairs": 66,
+  "short_extra_pairs": 12,
+  "sentence_noise_pairs": 6,
+  "negative_windows": 65,
+  "total_windows": 182,
+  "retuning": false,
+  "new_source_holdout": false,
+  "correction": false,
+  "model_replacement": false,
+  "application_integration": false
+}

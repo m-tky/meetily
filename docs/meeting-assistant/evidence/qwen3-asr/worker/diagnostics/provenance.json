@@ -1,0 +1,50 @@
+{
+  "worker_binary_sha256": "45dda8b1fb73054d8e5f3ea195286eb6c7faf61841b3cde4a897ab224d90bf36",
+  "worker_and_core_sources_unchanged": true,
+  "probe_binaries_sha256": {
+    "vad_gain_probe": "83b2a3a8bce5d5bf456c64f97e9b642580b158b69a69997ea771bad58631b08f",
+    "ungated_speech_probe": "980de5769205c4b2aeb97213b661270273e8652a35015cf229f3fa5eef6716ca"
+  },
+  "gate_windows": 89,
+  "gate_settings": 24,
+  "context_requests": 28,
+  "ungated_known_speech_requests": 18,
+  "adopted_policy": null,
+  "quality_accepted": false,
+  "application_integrated": false,
+  "new_vad_weights_downloaded": false,
+  "real_capture_or_playback": false,
+  "rust_tests": 15,
+  "python_tests": 9,
+  "node_tests": 11,
+  "endpoint_reference_cases": 306,
+  "diagnostic_scalar_parity_cases": 300,
+  "source_sha256": {
+    "benchmarks/qwen3-asr/diagnose_gate.py": "04c4ef4b628826a4bf2828a3d1d6076f292a3c05387f667cd83b0256fdf70c84",
+    "benchmarks/qwen3-asr/diagnose_context.py": "0d045dfb537a6a5748a1cdfd6d20b2bdb2a92df08aa86a4d1fba0446495aeec6",
+    "benchmarks/qwen3-asr/diagnose_ungated.py": "c33b736ee700b35f0500be09ce36448a4a239f31523a889ec511db3276e6f523",
+    "benchmarks/qwen3-asr/summarize_diagnostics.mjs": "0da0ef6d2f1ae3a6268ec0273ed10922ce1a554f84bfe31624fb9aff82049453",
+    "benchmarks/qwen3-asr/test_gate_diagnostics.py": "611db97053a02df0a033bd1612cf9beee6e8f570a48e911f6e87bd0edd641b3b",
+    "benchmarks/qwen3-asr/test-diagnostic-report.mjs": "d170ed313326da5f6aa3dc177e7978f1a8576b86799cb114ffa78ae0264bc4f3",
+    "benchmarks/qwen3-asr/worker/examples/vad_gain_probe.rs": "fcae3c8e8b4000c833f4382569ed70373b0f82e3ec76066e41359ec743b06aac",
+    "benchmarks/qwen3-asr/worker/examples/ungated_speech_probe.rs": "c835c9cabf6d7bfa3d1dfb39912ff0663eea77631024455a83ab5033c8ed35e5"
+  },
+  "external_sha256": {
+    "../runtime/qwen3-asr/diagnostics/gate-r2/probabilities.jsonl": "03012f72560462605f483e1af2b25313ff7c75389e531fec038d30bfb457ba85",
+    "../runtime/qwen3-asr/diagnostics/gate-r2/report.json": "f0d6847d278dee0a26097f2cb4f652755104b8eb6985dd9faf62a862c70c5297",
+    "../runtime/qwen3-asr/diagnostics/gate-r1/probabilities.jsonl": "03012f72560462605f483e1af2b25313ff7c75389e531fec038d30bfb457ba85"
+  },
+  "files_sha256": {
+    "README.md": "ae26a77f6b8e00f5d8f3bb24705f66a98bcb6bfe986ffbde9df12a8c27779bce",
+    "context-r1/manifest.json": "1a4b60720378484b19667907923dcdb2680df78f37980343ed5fcc4503b1cb45",
+    "context-r1/results.jsonl": "9a9842892e2b25bef1d7591ada24c7c068d104db0ce20f9f66855ab9ef455f27",
+    "context-summary.json": "2ed28fc02a7c86cef09932b300d130cd19371ec632722e0d4c538a7af2c20375",
+    "gate-fixtures.json": "fc504136482650a0409208930a95dac7527b42748063bd86707f9ddb05dc7e2d",
+    "gate-summary.json": "0dbf18af31214d690ba42394334962305e610e1fb4d97eee1d178013af656f27",
+    "static-check.txt": "6531beb083099307469b528f09da871c7157b6549d23502c570d6a6736e451f6",
+    "ungated-r1/manifest.json": "f1599dd5558212ebec590aeaa3468d91811ede96275a28e49eaa4b5931272d4a",
+    "ungated-r1/raw.jsonl": "1ecdefcee92ccb3027fb4ac2cc5685b9120eddc62c68dec008d03135a33fda6f",
+    "ungated-r1/results.jsonl": "c1dbc6986504dd3a11c3a04daa1e6e16e885ba79ee2dea6778b547998089d19d",
+    "ungated-summary.json": "87fbe6a84f25ed5c36996fac341c090ad0e2509592e320400b54365ecd7a7efd"
+  }
+}

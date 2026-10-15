@@ -1,0 +1,1940 @@
+{
+  "schema": 1,
+  "authorization": "Optional isolated worker + four public/synthetic tests; official control on degradation",
+  "app_integration": false,
+  "real_capture": false,
+  "physical_playback": false,
+  "cloud_inference": false,
+  "model": {
+    "repository": "Qwen/Qwen3-ForcedAligner-0.6B",
+    "revision": "c7cbfc2048c462b0d63a45797104fc9db3ad62b7",
+    "license": "apache-2.0",
+    "files": [
+      {
+        "file": "config.json",
+        "sha256": "d616c65d46c4b90bdc651b0a0963ea932732241140f337f9bb6b0335a9c8ef09",
+        "bytes": 5982,
+        "git_blob": "7b9883fe52d0ba896773687a7fdad38eacab062d"
+      },
+      {
+        "file": "generation_config.json",
+        "sha256": "948d089b23bca1d214e768d59c4438365665f52ec6d33678f4062206b3fbbb8c",
+        "bytes": 115,
+        "git_blob": "b0a540032cf7b6b5ba1438d04ab69b7e787d9b8e"
+      },
+      {
+        "file": "merges.txt",
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "bytes": 1671853,
+        "git_blob": "31349551d90c7606f325fe0f11bbb8bd5fa0d7c7"
+      },
+      {
+        "file": "model.safetensors",
+        "sha256": "47831d0e82f96b20e9034dba01a075ee06436654719f6a68289e49f1b65ce0e7",
+        "bytes": 1835544544,
+        "git_blob": "659d2daf4f0b493a4e4490d18df4f0afc9e47ea6"
+      },
+      {
+        "file": "preprocessor_config.json",
+        "sha256": "45e120a4eda2c20c5d7f2ea9354e63536bf35e27aa573fb7cdf78017b378770d",
+        "bytes": 330,
+        "git_blob": "8f7f07346466d5d494ec0d4969d1c3d0190eed72"
+      },
+      {
+        "file": "tokenizer_config.json",
+        "sha256": "3ab80063f8511deb9566e6ad438d17b7a6277fcffd52d92854112f19d36bd81c",
+        "bytes": 12666,
+        "git_blob": "3df92df83b22342e36a7b11cf9a70de2a2996bec"
+      },
+      {
+        "file": "vocab.json",
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+        "bytes": 2776833,
+        "git_blob": "4783fe10ac3adce15ac8f358ef5462739852c569"
+      },
+      {
+        "file": "README.md",
+        "sha256": "5058416891bc47a2051557765997e8c42f8eb78a0e33c3e775bd17d4b0ba4d50",
+        "bytes": 57456,
+        "git_blob": "3a67d43f21febda213ff36efdb60ef10019af7f3"
+      }
+    ]
+  },
+  "worker_default_off_regression": {
+    "cases": 2,
+    "text_equal": true,
+    "status_equal": true,
+    "asr_calls_equal": true,
+    "alignment_absent_by_default": true,
+    "all_unconfirmed": true
+  },
+  "quality": [
+    {
+      "directory": "forced-alignment-r1",
+      "fixture_count": 12,
+      "comparison": [
+        {
+          "fixture": "sentence-0",
+          "official_status": "aligned",
+          "official_units": 25,
+          "raw_asr_text_unchanged": true,
+          "normalized_alnum_text_covered": true,
+          "official_zero_duration_units": 1,
+          "official_out_of_bounds_units": 0,
+          "official_assigned_alnum_chars": 45,
+          "official_unknown_alnum_chars": 1,
+          "native_turn_metrics": null,
+          "official_turn_metrics": null,
+          "assigned_units_intersecting_known_multi_source_clips": [],
+          "overlap_audit_is_source_clip_proxy_not_human_voiced_truth": true,
+          "official_seconds": 2.7529101359978085,
+          "units_not_interchangeable": true,
+          "not_human_character_timing_or_DER": true
+        },
+        {
+          "fixture": "sentence-1",
+          "official_status": "aligned",
+          "official_units": 50,
+          "raw_asr_text_unchanged": true,
+          "normalized_alnum_text_covered": true,
+          "official_zero_duration_units": 0,
+          "official_out_of_bounds_units": 0,
+          "official_assigned_alnum_chars": 79,
+          "official_unknown_alnum_chars": 1,
+          "native_turn_metrics": null,
+          "official_turn_metrics": null,
+          "assigned_units_intersecting_known_multi_source_clips": [],
+          "overlap_audit_is_source_clip_proxy_not_human_voiced_truth": true,
+          "official_seconds": 2.5784136389993364,
+          "units_not_interchangeable": true,
+          "not_human_character_timing_or_DER": true
+        },
+        {
+          "fixture": "turns-10",
+          "official_status": "aligned",
+          "official_units": 6,
+          "raw_asr_text_unchanged": true,
+          "normalized_alnum_text_covered": true,
+          "official_zero_duration_units": 3,
+          "official_out_of_bounds_units": 0,
+          "official_assigned_alnum_chars": 2,
+          "official_unknown_alnum_chars": 4,
+          "native_turn_metrics": {
+            "reference_chars": 6,
+            "recognized_chars": 6,
+            "normalized_alnum_char_errors": 0,
+            "source_attributed_char_errors_proxy": 4,
+            "cluster_to_source_best_mapping": {
+              "0": 0,
+              "1": 1
+            },
+            "oracle_word_midpoints_inside_source_clip": 1,
+            "oracle_word_midpoints_checked": 6,
+            "not_human_character_alignment_or_DER": true,
+            "source_clip_bounds_include_silence": true
+          },
+          "official_turn_metrics": {
+            "reference_chars": 6,
+            "recognized_chars": 6,
+            "normalized_alnum_char_errors": 0,
+            "source_attributed_char_errors_proxy": 4,
+            "cluster_to_source_best_mapping": {
+              "0": 0,
+              "1": 1
+            },
+            "oracle_word_midpoints_inside_source_clip": null,
+            "oracle_word_midpoints_checked": 0,
+            "not_human_character_alignment_or_DER": true,
+            "source_clip_bounds_include_silence": true
+          },
+          "assigned_units_intersecting_known_multi_source_clips": [],
+          "overlap_audit_is_source_clip_proxy_not_human_voiced_truth": true,
+          "official_seconds": 0.9291724740032805,
+          "units_not_interchangeable": true,
+          "not_human_character_timing_or_DER": true
+        },
+        {
+          "fixture": "turns-20",
+          "official_status": "aligned",
+          "official_units": 14,
+          "raw_asr_text_unchanged": true,
+          "normalized_alnum_text_covered": true,
+          "official_zero_duration_units": 6,
+          "official_out_of_bounds_units": 0,
+          "official_assigned_alnum_chars": 8,
+          "official_unknown_alnum_chars": 6,
+          "native_turn_metrics": {
+            "reference_chars": 14,
+            "recognized_chars": 14,
+            "normalized_alnum_char_errors": 0,
+            "source_attributed_char_errors_proxy": 12,
+            "cluster_to_source_best_mapping": {
+              "0": 0,
+              "1": 1
+            },
+            "oracle_word_midpoints_inside_source_clip": 1,
+            "oracle_word_midpoints_checked": 14,
+            "not_human_character_alignment_or_DER": true,
+            "source_clip_bounds_include_silence": true
+          },
+          "official_turn_metrics": {
+            "reference_chars": 14,
+            "recognized_chars": 14,
+            "normalized_alnum_char_errors": 0,
+            "source_attributed_char_errors_proxy": 7,
+            "cluster_to_source_best_mapping": {
+              "0": 0,
+              "1": 1
+            },
+            "oracle_word_midpoints_inside_source_clip": null,
+            "oracle_word_midpoints_checked": 0,
+            "not_human_character_alignment_or_DER": true,
+            "source_clip_bounds_include_silence": true
+          },
+          "assigned_units_intersecting_known_multi_source_clips": [],
+          "overlap_audit_is_source_clip_proxy_not_human_voiced_truth": true,
+          "official_seconds": 1.7804917430039495,
+          "units_not_interchangeable": true,
+          "not_human_character_timing_or_DER": true
+        },
+        {
+          "fixture": "turns-30",
+          "official_status": "aligned",
+          "official_units": 21,
+          "raw_asr_text_unchanged": true,
+          "normalized_alnum_text_covered": true,
+          "official_zero_duration_units": 8,
+          "official_out_of_bounds_units": 0,
+          "official_assigned_alnum_chars": 11,
+          "official_unknown_alnum_chars": 10,
+          "native_turn_metrics": {
+            "reference_chars": 21,
+            "recognized_chars": 21,
+            "normalized_alnum_char_errors": 0,
+            "source_attributed_char_errors_proxy": 18,
+            "cluster_to_source_best_mapping": {
+              "0": 0,
+              "1": 1
+            },
+            "oracle_word_midpoints_inside_source_clip": 1,
+            "oracle_word_midpoints_checked": 21,
+            "not_human_character_alignment_or_DER": true,
+            "source_clip_bounds_include_silence": true
+          },
+          "official_turn_metrics": {
+            "reference_chars": 21,
+            "recognized_chars": 21,
+            "normalized_alnum_char_errors": 0,
+            "source_attributed_char_errors_proxy": 12,
+            "cluster_to_source_best_mapping": {
+              "0": 0,
+              "1": 1
+            },
+            "oracle_word_midpoints_inside_source_clip": null,
+            "oracle_word_midpoints_checked": 0,
+            "not_human_character_alignment_or_DER": true,
+            "source_clip_bounds_include_silence": true
+          },
+          "assigned_units_intersecting_known_multi_source_clips": [],
+          "overlap_audit_is_source_clip_proxy_not_human_voiced_truth": true,
+          "official_seconds": 2.9787739970051916,
+          "units_not_interchangeable": true,
+          "not_human_character_timing_or_DER": true
+        },
+        {
+          "fixture": "turns-20-reverse",
+          "official_status": "aligned",
+          "official_units": 11,
+          "raw_asr_text_unchanged": true,
+          "normalized_alnum_text_covered": true,
+          "official_zero_duration_units": 3,
+          "official_out_of_bounds_units": 0,
+          "official_assigned_alnum_chars": 9,
+          "official_unknown_alnum_chars": 5,
+          "native_turn_metrics": {
+            "reference_chars": 14,
+            "recognized_chars": 14,
+            "normalized_alnum_char_errors": 0,
+            "source_attributed_char_errors_proxy": 11,
+            "cluster_to_source_best_mapping": {
+              "1": 0,
+              "0": 1
+            },
+            "oracle_word_midpoints_inside_source_clip": 3,
+            "oracle_word_midpoints_checked": 14,
+            "not_human_character_alignment_or_DER": true,
+            "source_clip_bounds_include_silence": true
+          },
+          "official_turn_metrics": {
+            "reference_chars": 14,
+            "recognized_chars": 14,
+            "normalized_alnum_char_errors": 0,
+            "source_attributed_char_errors_proxy": 6,
+            "cluster_to_source_best_mapping": {
+              "1": 0,
+              "0": 1
+            },
+            "oracle_word_midpoints_inside_source_clip": null,
+            "oracle_word_midpoints_checked": 0,
+            "not_human_character_alignment_or_DER": true,
+            "source_clip_bounds_include_silence": true
+          },
+          "assigned_units_intersecting_known_multi_source_clips": [],
+          "overlap_audit_is_source_clip_proxy_not_human_voiced_truth": true,
+          "official_seconds": 2.2815625719958916,
+          "units_not_interchangeable": true,
+          "not_human_character_timing_or_DER": true
+        },
+        {
+          "fixture": "iie-clean",
+          "official_status": "aligned",
+          "official_units": 1,
+          "raw_asr_text_unchanged": true,
+          "normalized_alnum_text_covered": true,
+          "official_zero_duration_units": 0,
+          "official_out_of_bounds_units": 0,
+          "official_assigned_alnum_chars": 3,
+          "official_unknown_alnum_chars": 0,
+          "native_turn_metrics": null,
+          "official_turn_metrics": null,
+          "assigned_units_intersecting_known_multi_source_clips": [],
+          "overlap_audit_is_source_clip_proxy_not_human_voiced_truth": true,
+          "official_seconds": 0.2895277380011976,
+          "units_not_interchangeable": true,
+          "not_human_character_timing_or_DER": true
+        },
+        {
+          "fixture": "iie-padded",
+          "official_status": "aligned",
+          "official_units": 1,
+          "raw_asr_text_unchanged": true,
+          "normalized_alnum_text_covered": true,
+          "official_zero_duration_units": 0,
+          "official_out_of_bounds_units": 0,
+          "official_assigned_alnum_chars": 1,
+          "official_unknown_alnum_chars": 0,
+          "native_turn_metrics": null,
+          "official_turn_metrics": null,
+          "assigned_units_intersecting_known_multi_source_clips": [],
+          "overlap_audit_is_source_clip_proxy_not_human_voiced_truth": true,
+          "official_seconds": 0.4107182870066026,
+          "units_not_interchangeable": true,
+          "not_human_character_timing_or_DER": true
+        },
+        {
+          "fixture": "ack-hai",
+          "official_status": "aligned",
+          "official_units": 1,
+          "raw_asr_text_unchanged": true,
+          "normalized_alnum_text_covered": true,
+          "official_zero_duration_units": 0,
+          "official_out_of_bounds_units": 0,
+          "official_assigned_alnum_chars": 2,
+          "official_unknown_alnum_chars": 0,
+          "native_turn_metrics": null,
+          "official_turn_metrics": null,
+          "assigned_units_intersecting_known_multi_source_clips": [],
+          "overlap_audit_is_source_clip_proxy_not_human_voiced_truth": true,
+          "official_seconds": 0.44249638200562913,
+          "units_not_interchangeable": true,
+          "not_human_character_timing_or_DER": true
+        },
+        {
+          "fixture": "ack-un",
+          "official_status": "aligned",
+          "official_units": 1,
+          "raw_asr_text_unchanged": true,
+          "normalized_alnum_text_covered": true,
+          "official_zero_duration_units": 0,
+          "official_out_of_bounds_units": 0,
+          "official_assigned_alnum_chars": 0,
+          "official_unknown_alnum_chars": 2,
+          "native_turn_metrics": null,
+          "official_turn_metrics": null,
+          "assigned_units_intersecting_known_multi_source_clips": [],
+          "overlap_audit_is_source_clip_proxy_not_human_voiced_truth": true,
+          "official_seconds": 0.3985121019941289,
+          "units_not_interchangeable": true,
+          "not_human_character_timing_or_DER": true
+        },
+        {
+          "fixture": "overlap-10",
+          "official_status": "aligned",
+          "official_units": 3,
+          "raw_asr_text_unchanged": true,
+          "normalized_alnum_text_covered": true,
+          "official_zero_duration_units": 1,
+          "official_out_of_bounds_units": 0,
+          "official_assigned_alnum_chars": 1,
+          "official_unknown_alnum_chars": 2,
+          "native_turn_metrics": null,
+          "official_turn_metrics": null,
+          "assigned_units_intersecting_known_multi_source_clips": [
+            0
+          ],
+          "overlap_audit_is_source_clip_proxy_not_human_voiced_truth": true,
+          "official_seconds": 0.9667184830032056,
+          "units_not_interchangeable": true,
+          "not_human_character_timing_or_DER": true
+        }
+      ],
+      "native_reproducibility": [
+        {
+          "fixture": "sentence-0",
+          "native_fresh_three_runs_text_and_units_identical": true
+        },
+        {
+          "fixture": "sentence-1",
+          "native_fresh_three_runs_text_and_units_identical": true
+        },
+        {
+          "fixture": "turns-10",
+          "native_fresh_three_runs_text_and_units_identical": true
+        },
+        {
+          "fixture": "turns-20",
+          "native_fresh_three_runs_text_and_units_identical": true
+        },
+        {
+          "fixture": "turns-30",
+          "native_fresh_three_runs_text_and_units_identical": true
+        },
+        {
+          "fixture": "turns-20-reverse",
+          "native_fresh_three_runs_text_and_units_identical": true
+        },
+        {
+          "fixture": "iie-clean",
+          "native_fresh_three_runs_text_and_units_identical": true
+        },
+        {
+          "fixture": "iie-padded",
+          "native_fresh_three_runs_text_and_units_identical": true
+        },
+        {
+          "fixture": "ack-hai",
+          "native_fresh_three_runs_text_and_units_identical": true
+        },
+        {
+          "fixture": "ack-un",
+          "native_fresh_three_runs_text_and_units_identical": true
+        },
+        {
+          "fixture": "overlap-10",
+          "native_fresh_three_runs_text_and_units_identical": true
+        },
+        {
+          "fixture": "silence-5",
+          "native_fresh_three_runs_text_and_units_identical": true
+        }
+      ],
+      "official_reproducibility": [
+        {
+          "case": "ack-hai-oracle",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "ack-hai-raw",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "ack-un-oracle",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "ack-un-raw",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "iie-clean-oracle",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "iie-clean-raw",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "iie-padded-oracle",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "iie-padded-raw",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "overlap-10-raw",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "sentence-0-oracle",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "sentence-0-raw",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "sentence-1-oracle",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "sentence-1-raw",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "turns-10-oracle",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "turns-10-raw",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "turns-20-oracle",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "turns-20-raw",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "turns-20-reverse-oracle",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "turns-20-reverse-raw",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "turns-30-oracle",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "turns-30-raw",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "wrong-0",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "wrong-1",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "wrong-silence",
+          "official_two_runs_text_status_units_identical": true
+        }
+      ]
+    },
+    {
+      "directory": "forced-alignment-sentence-turns-r1",
+      "fixture_count": 3,
+      "comparison": [
+        {
+          "fixture": "sentence-turns-22",
+          "official_status": "aligned",
+          "official_units": 25,
+          "raw_asr_text_unchanged": true,
+          "normalized_alnum_text_covered": true,
+          "official_zero_duration_units": 1,
+          "official_out_of_bounds_units": 0,
+          "official_assigned_alnum_chars": 45,
+          "official_unknown_alnum_chars": 1,
+          "native_turn_metrics": {
+            "reference_chars": 78,
+            "recognized_chars": 46,
+            "normalized_alnum_char_errors": 32,
+            "source_attributed_char_errors_proxy": 37,
+            "cluster_to_source_best_mapping": {
+              "0": 0,
+              "1": 1
+            },
+            "oracle_word_midpoints_inside_source_clip": null,
+            "oracle_word_midpoints_checked": 0,
+            "not_human_character_alignment_or_DER": true,
+            "source_clip_bounds_include_silence": true
+          },
+          "official_turn_metrics": {
+            "reference_chars": 78,
+            "recognized_chars": 46,
+            "normalized_alnum_char_errors": 32,
+            "source_attributed_char_errors_proxy": 33,
+            "cluster_to_source_best_mapping": {
+              "0": 0,
+              "1": 1
+            },
+            "oracle_word_midpoints_inside_source_clip": null,
+            "oracle_word_midpoints_checked": 0,
+            "not_human_character_alignment_or_DER": true,
+            "source_clip_bounds_include_silence": true
+          },
+          "assigned_units_intersecting_known_multi_source_clips": [],
+          "overlap_audit_is_source_clip_proxy_not_human_voiced_truth": true,
+          "official_seconds": 2.886364293997758,
+          "units_not_interchangeable": true,
+          "not_human_character_timing_or_DER": true
+        },
+        {
+          "fixture": "sentence-turns-22-reverse",
+          "official_status": "aligned",
+          "official_units": 45,
+          "raw_asr_text_unchanged": true,
+          "normalized_alnum_text_covered": true,
+          "official_zero_duration_units": 6,
+          "official_out_of_bounds_units": 0,
+          "official_assigned_alnum_chars": 67,
+          "official_unknown_alnum_chars": 11,
+          "native_turn_metrics": {
+            "reference_chars": 78,
+            "recognized_chars": 78,
+            "normalized_alnum_char_errors": 0,
+            "source_attributed_char_errors_proxy": 33,
+            "cluster_to_source_best_mapping": {
+              "1": 0,
+              "0": 1
+            },
+            "oracle_word_midpoints_inside_source_clip": null,
+            "oracle_word_midpoints_checked": 0,
+            "not_human_character_alignment_or_DER": true,
+            "source_clip_bounds_include_silence": true
+          },
+          "official_turn_metrics": {
+            "reference_chars": 78,
+            "recognized_chars": 78,
+            "normalized_alnum_char_errors": 0,
+            "source_attributed_char_errors_proxy": 16,
+            "cluster_to_source_best_mapping": {
+              "1": 0,
+              "0": 1
+            },
+            "oracle_word_midpoints_inside_source_clip": null,
+            "oracle_word_midpoints_checked": 0,
+            "not_human_character_alignment_or_DER": true,
+            "source_clip_bounds_include_silence": true
+          },
+          "assigned_units_intersecting_known_multi_source_clips": [],
+          "overlap_audit_is_source_clip_proxy_not_human_voiced_truth": true,
+          "official_seconds": 3.3840685019968078,
+          "units_not_interchangeable": true,
+          "not_human_character_timing_or_DER": true
+        },
+        {
+          "fixture": "sentence-turns-30",
+          "official_status": "aligned",
+          "official_units": 45,
+          "raw_asr_text_unchanged": true,
+          "normalized_alnum_text_covered": true,
+          "official_zero_duration_units": 5,
+          "official_out_of_bounds_units": 0,
+          "official_assigned_alnum_chars": 71,
+          "official_unknown_alnum_chars": 7,
+          "native_turn_metrics": {
+            "reference_chars": 110,
+            "recognized_chars": 78,
+            "normalized_alnum_char_errors": 32,
+            "source_attributed_char_errors_proxy": 62,
+            "cluster_to_source_best_mapping": {
+              "1": 0,
+              "0": 1
+            },
+            "oracle_word_midpoints_inside_source_clip": null,
+            "oracle_word_midpoints_checked": 0,
+            "not_human_character_alignment_or_DER": true,
+            "source_clip_bounds_include_silence": true
+          },
+          "official_turn_metrics": {
+            "reference_chars": 110,
+            "recognized_chars": 78,
+            "normalized_alnum_char_errors": 32,
+            "source_attributed_char_errors_proxy": 44,
+            "cluster_to_source_best_mapping": {
+              "1": 0,
+              "0": 1
+            },
+            "oracle_word_midpoints_inside_source_clip": null,
+            "oracle_word_midpoints_checked": 0,
+            "not_human_character_alignment_or_DER": true,
+            "source_clip_bounds_include_silence": true
+          },
+          "assigned_units_intersecting_known_multi_source_clips": [],
+          "overlap_audit_is_source_clip_proxy_not_human_voiced_truth": true,
+          "official_seconds": 4.025731450004969,
+          "units_not_interchangeable": true,
+          "not_human_character_timing_or_DER": true
+        }
+      ],
+      "native_reproducibility": [
+        {
+          "fixture": "sentence-turns-22",
+          "native_fresh_three_runs_text_and_units_identical": true
+        },
+        {
+          "fixture": "sentence-turns-22-reverse",
+          "native_fresh_three_runs_text_and_units_identical": true
+        },
+        {
+          "fixture": "sentence-turns-30",
+          "native_fresh_three_runs_text_and_units_identical": true
+        }
+      ],
+      "official_reproducibility": [
+        {
+          "case": "sentence-turns-22-oracle",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "sentence-turns-22-raw",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "sentence-turns-22-reverse-oracle",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "sentence-turns-22-reverse-raw",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "sentence-turns-30-oracle",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "sentence-turns-30-raw",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "wrong-0",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "wrong-1",
+          "official_two_runs_text_status_units_identical": true
+        },
+        {
+          "case": "wrong-silence",
+          "official_two_runs_text_status_units_identical": true
+        }
+      ]
+    }
+  ],
+  "concurrency": [
+    {
+      "directory": "three-model-baseline-r1",
+      "input_mode": "real_time_10s_windows",
+      "backend": "rust_character",
+      "aligner_threads": 0,
+      "cpp_rtf": 0.6970519546661914,
+      "asr_rtf": 0.6121470154665682,
+      "align_rtf": null,
+      "cpp_final_push_lag": 0.5345730990084121,
+      "cpp_label_age_max": 3.835140959997659,
+      "max_asr_wait": 8.089099719654769e-05,
+      "max_alignment_wait": 0,
+      "peak_sum_rss_mib": 7622.578125,
+      "cpu_seconds_sampled": {
+        "asr": 201.95,
+        "aligner": 0,
+        "cpp": 163.38
+      },
+      "corrected_mean_owned_core_equivalents": 5.604373412814888,
+      "corrected_all_models_stop_drain": 5.186591450998094,
+      "old_cpp_epoch_20ms_upper_bound_used": true,
+      "triple_request_cpp_push_overlap": 0,
+      "frozen_live_criteria_passed": false,
+      "cleanup": {
+        "asr_reaped": true,
+        "aligner_reaped": true,
+        "cpp_reaped": true,
+        "alignment_thread_stopped": true,
+        "temporary_windows_removed": true
+      },
+      "cold_asr_load_seconds": 0.712544381,
+      "first_asr_inference_seconds": 6.240996101,
+      "first_asr_request_seconds": 7.017476688008173,
+      "cold_alignment_load_seconds": null,
+      "first_alignment_inference_seconds": null,
+      "first_alignment_request_seconds": null
+    },
+    {
+      "directory": "three-model-native-r1",
+      "input_mode": "real_time_10s_windows",
+      "backend": "rust_character",
+      "aligner_threads": 6,
+      "cpp_rtf": 0.775524768364024,
+      "asr_rtf": 0.5761565561498476,
+      "align_rtf": 0.28311947391654635,
+      "cpp_final_push_lag": 3.09336262200668,
+      "cpp_label_age_max": 4.68740305400803,
+      "max_asr_wait": 7.601099787279963e-05,
+      "max_alignment_wait": 0.000229722005315125,
+      "peak_sum_rss_mib": 10103.3984375,
+      "cpu_seconds_sampled": {
+        "asr": 190.44,
+        "aligner": 88.24,
+        "cpp": 182.07
+      },
+      "corrected_mean_owned_core_equivalents": 6.807380240978338,
+      "corrected_all_models_stop_drain": 7.683893610999803,
+      "old_cpp_epoch_20ms_upper_bound_used": true,
+      "triple_request_cpp_push_overlap": 0,
+      "frozen_live_criteria_passed": false,
+      "cleanup": {
+        "asr_reaped": true,
+        "aligner_reaped": true,
+        "cpp_reaped": true,
+        "alignment_thread_stopped": true,
+        "temporary_windows_removed": true
+      },
+      "cold_asr_load_seconds": 0.692952517,
+      "first_asr_inference_seconds": 4.235368015,
+      "first_asr_request_seconds": 4.9876678599976,
+      "cold_alignment_load_seconds": 0.46722803,
+      "first_alignment_inference_seconds": 1.723035498,
+      "first_alignment_request_seconds": 2.4327522609964944
+    },
+    {
+      "directory": "three-model-official-actual-backlog-r1",
+      "input_mode": "offline_backlog_stress",
+      "backend": "official_nagisa",
+      "aligner_threads": 6,
+      "cpp_rtf": 0.9522079255155405,
+      "asr_rtf": 0.8787557165999412,
+      "align_rtf": 0.4616330104836379,
+      "cpp_final_push_lag": 5.178515645005973,
+      "cpp_label_age_max": 12.072848339002228,
+      "max_asr_wait": 42.82360777800204,
+      "max_alignment_wait": 0.019120441997074522,
+      "peak_sum_rss_mib": 11980.0,
+      "cpu_seconds_sampled": {
+        "asr": 245.95999999999998,
+        "aligner": 122.39,
+        "cpp": 197.64000000000001
+      },
+      "corrected_mean_owned_core_equivalents": 8.592710803037333,
+      "corrected_all_models_stop_drain": 5.868619690998457,
+      "old_cpp_epoch_20ms_upper_bound_used": false,
+      "triple_request_cpp_push_overlap": 23.490250667920918,
+      "frozen_live_criteria_passed": null,
+      "cleanup": {
+        "asr_reaped": true,
+        "aligner_reaped": true,
+        "cpp_reaped": true,
+        "alignment_thread_stopped": true,
+        "temporary_windows_removed": true
+      },
+      "cold_asr_load_seconds": 0.727600801,
+      "first_asr_inference_seconds": 4.440986162,
+      "first_asr_request_seconds": 5.231300462997751,
+      "cold_alignment_load_seconds": 1.576850078010466,
+      "first_alignment_inference_seconds": 1.299704990000464,
+      "first_alignment_request_seconds": 2.8774883200094337
+    },
+    {
+      "directory": "three-model-official-backlog-r1",
+      "input_mode": "real_time_10s_windows",
+      "backend": "official_nagisa",
+      "aligner_threads": 6,
+      "cpp_rtf": 0.7418771212340896,
+      "asr_rtf": 0.5778168261170019,
+      "align_rtf": 0.18107851958314616,
+      "cpp_final_push_lag": 1.3120292099920334,
+      "cpp_label_age_max": 4.199853376994724,
+      "max_asr_wait": 7.625599391758442e-05,
+      "max_alignment_wait": 0.00023973500356078148,
+      "peak_sum_rss_mib": 11974.703125,
+      "cpu_seconds_sampled": {
+        "asr": 187.92000000000002,
+        "aligner": 59.209999999999994,
+        "cpp": 174.38
+      },
+      "corrected_mean_owned_core_equivalents": 6.352153109492256,
+      "corrected_all_models_stop_drain": 6.357027724996442,
+      "old_cpp_epoch_20ms_upper_bound_used": true,
+      "triple_request_cpp_push_overlap": 0,
+      "frozen_live_criteria_passed": false,
+      "cleanup": {
+        "asr_reaped": true,
+        "aligner_reaped": true,
+        "cpp_reaped": true,
+        "alignment_thread_stopped": true,
+        "temporary_windows_removed": true
+      },
+      "cold_asr_load_seconds": 0.736916999,
+      "first_asr_inference_seconds": 4.408432881,
+      "first_asr_request_seconds": 5.2124684160080506,
+      "cold_alignment_load_seconds": 1.3809935820027022,
+      "first_alignment_inference_seconds": 1.3373013810050907,
+      "first_alignment_request_seconds": 2.7193880760023603
+    },
+    {
+      "directory": "three-model-official-r1",
+      "input_mode": "real_time_10s_windows",
+      "backend": "official_nagisa",
+      "aligner_threads": 6,
+      "cpp_rtf": 0.8606470077337387,
+      "asr_rtf": 0.692563208683229,
+      "align_rtf": 0.21052240238301845,
+      "cpp_final_push_lag": 7.83987395800068,
+      "cpp_label_age_max": 9.108718338992333,
+      "max_asr_wait": 8.312601130455732e-05,
+      "max_alignment_wait": 0.00037387400516308844,
+      "peak_sum_rss_mib": 11747.54296875,
+      "cpu_seconds_sampled": {
+        "asr": 213.12,
+        "aligner": 69.07,
+        "cpp": 196.57
+      },
+      "corrected_mean_owned_core_equivalents": 6.958486862715308,
+      "corrected_all_models_stop_drain": 8.802314273994412,
+      "old_cpp_epoch_20ms_upper_bound_used": true,
+      "triple_request_cpp_push_overlap": 0,
+      "frozen_live_criteria_passed": false,
+      "cleanup": {
+        "asr_reaped": true,
+        "aligner_reaped": true,
+        "cpp_reaped": true,
+        "alignment_thread_stopped": true,
+        "temporary_windows_removed": true
+      },
+      "cold_asr_load_seconds": 0.68116198,
+      "first_asr_inference_seconds": 4.212608797,
+      "first_asr_request_seconds": 4.9551834860030795,
+      "cold_alignment_load_seconds": 2.020297359005781,
+      "first_alignment_inference_seconds": 1.6715760999941267,
+      "first_alignment_request_seconds": 3.693006809000508
+    },
+    {
+      "directory": "three-model-official-r2",
+      "input_mode": "real_time_10s_windows",
+      "backend": "official_nagisa",
+      "aligner_threads": 6,
+      "cpp_rtf": 0.7098284967997945,
+      "asr_rtf": 0.6350369439666489,
+      "align_rtf": 0.17778944736686147,
+      "cpp_final_push_lag": 0.3165245039999718,
+      "cpp_label_age_max": 3.6508034620055696,
+      "max_asr_wait": 7.633000495843589e-05,
+      "max_alignment_wait": 0.00029676599660888314,
+      "peak_sum_rss_mib": 11646.0859375,
+      "cpu_seconds_sampled": {
+        "asr": 194.84,
+        "aligner": 59.39,
+        "cpp": 166.97
+      },
+      "corrected_mean_owned_core_equivalents": 6.328755587850028,
+      "corrected_all_models_stop_drain": 6.553368060005596,
+      "old_cpp_epoch_20ms_upper_bound_used": true,
+      "triple_request_cpp_push_overlap": 0,
+      "frozen_live_criteria_passed": false,
+      "cleanup": {
+        "asr_reaped": true,
+        "aligner_reaped": true,
+        "cpp_reaped": true,
+        "alignment_thread_stopped": true,
+        "temporary_windows_removed": true
+      },
+      "cold_asr_load_seconds": 0.727973241,
+      "first_asr_inference_seconds": 5.019434121,
+      "first_asr_request_seconds": 5.827366367011564,
+      "cold_alignment_load_seconds": 1.8160788449895335,
+      "first_alignment_inference_seconds": 1.5720800290000625,
+      "first_alignment_request_seconds": 3.389567379010259
+    },
+    {
+      "directory": "three-model-official-threads2-r1",
+      "input_mode": "real_time_10s_windows",
+      "backend": "official_nagisa",
+      "aligner_threads": 2,
+      "cpp_rtf": 0.7028375729108424,
+      "asr_rtf": 0.5795073923831903,
+      "align_rtf": 0.29687601841651484,
+      "cpp_final_push_lag": 0.4157497220003279,
+      "cpp_label_age_max": 3.3589066620019707,
+      "max_asr_wait": 7.781799649819732e-05,
+      "max_alignment_wait": 0.00024052499793469906,
+      "peak_sum_rss_mib": 11956.3515625,
+      "cpu_seconds_sampled": {
+        "asr": 191.97,
+        "aligner": 35.08,
+        "cpp": 166.25
+      },
+      "corrected_mean_owned_core_equivalents": 5.7925840735875145,
+      "corrected_all_models_stop_drain": 7.897158677995321,
+      "old_cpp_epoch_20ms_upper_bound_used": true,
+      "triple_request_cpp_push_overlap": 0,
+      "frozen_live_criteria_passed": false,
+      "cleanup": {
+        "asr_reaped": true,
+        "aligner_reaped": true,
+        "cpp_reaped": true,
+        "alignment_thread_stopped": true,
+        "temporary_windows_removed": true
+      },
+      "cold_asr_load_seconds": 0.711509788,
+      "first_asr_inference_seconds": 4.269374878,
+      "first_asr_request_seconds": 5.042427469001268,
+      "cold_alignment_load_seconds": 2.5022939769987715,
+      "first_alignment_inference_seconds": 2.5016510679997737,
+      "first_alignment_request_seconds": 5.005029296007706
+    }
+  ],
+  "original_benchmark_binary_retained": "qwen3-asr/align-worker-tested-r2",
+  "formatting_rebuild_three_run_native_text_units_equal": true,
+  "corrections": [
+    "Original live results final_stop_drain excluded CPP; corrected aggregate above includes CPP/flush.",
+    "Directory three-model-official-backlog-r1 accidentally ran paced; declared input_mode is authoritative; actual-backlog directory is the stress test."
+  ],
+  "verification": {
+    "rust_tests": 17,
+    "python_tests": 35,
+    "python_components": {
+      "worker_client": 5,
+      "alignment": 7,
+      "prior_diarization_attribution": 23
+    },
+    "raw_quality_json_parse": true,
+    "fmt": true,
+    "release_build_locked_offline": true
+  },
+  "decision": "Character path and official path not accepted for natural-meeting speaker-attributed transcription",
+  "limitations": [
+    "No human character timestamps/DER",
+    "Word labels inherited by characters do not create character timestamps",
+    "ASR omission/substitution not repaired",
+    "Overlap can be missed by diarization",
+    "Cold RSS not profiled; sampled RSS not PSS/leak proof",
+    "60s repeats/backlog only; no long-duration/UI/capture/storage/minutes contention",
+    "Official control differs in runtime and preprocessing, not just nagisa"
+  ],
+  "artifacts": [
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/plan.json",
+      "sha256": "029d260f5a68b6a58f7ae94f24a25e0f7ad7772bbaa3b64960a79777fb7f5067"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/sentence-0.wav",
+      "sha256": "a08a0b68d47a465ebdfefaab9afe02a2cbe6ee0d09d4baa5ff3a9fee1160756f"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/sentence-0.json",
+      "sha256": "83dd00fb08511016e404ad2bb74fa5937aea8c9dca4c9a0436cba163116c0d66"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/sentence-0.json",
+      "sha256": "8d088688370cab9ac3fea539a85c981fc5beb2fb91062dada2a0de5dd2ead61c"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/sentence-0.json",
+      "sha256": "582f8f631efda4a51929b631617b1095fbcf958548d042ad45b12e81655b6490"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/sentence-1.wav",
+      "sha256": "c55d4ca5b5314c58c96e9cdc4df3c28e9ea4e812a75f4ba4299b326e73c2e1a6"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/sentence-1.json",
+      "sha256": "658f0a8f45c82b886f9adc46f42d6d9403aa482a0ea1ceeae2fdab19bb70bcdd"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/sentence-1.json",
+      "sha256": "85b9570e91cb15ebbc7f3ece2d301f7c28716110b210d3c44874173bee215881"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/sentence-1.json",
+      "sha256": "a04d76edb36caef16a2fbb63800166435347d2d9d54c8c411c519d6862376621"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/turns-10.wav",
+      "sha256": "1bb386b51dfbea3df437415e6759c6ef015178f621b573c83386ad17040aeeff"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/turns-10.json",
+      "sha256": "65c3b226290ef898f3cc0a9fd13229bba1da236c8863d0b38b8b9da025069e62"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/turns-10.json",
+      "sha256": "ebc474a6e5420de395e993fbb2bf1a0a878b535bf82d3613e410d1de2c8953b9"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/turns-10.json",
+      "sha256": "df28197ca87c37eb1bc499c7e654bedfebfe850e8a022a9ef80797a9df3a4ea6"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/turns-20.wav",
+      "sha256": "9238457bdb424b865a13db489803e2a2ac90ec57fada07f398c7e9a3d8d8028d"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/turns-20.json",
+      "sha256": "b672a58809b3edf180f62ddddbe15bd2a7e9fe33c53a459950f6bbc3042991f8"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/turns-20.json",
+      "sha256": "93352481f5772ae2f3118cb6ced1bb7158a3841e5b69b7cf4150b195b38d9ab2"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/turns-20.json",
+      "sha256": "832d3a062e51224b5e3d2a4124e9269ef28a93edf36bc7e55cc7dfff27c3e10d"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/turns-30.wav",
+      "sha256": "6dfd9a48fd761e56646c4b4e9b1138d120ca2191a10b8737e8dc75b9f0ae3549"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/turns-30.json",
+      "sha256": "150cdd809f79da97c56cec68bf9ca047eefd4334137f0cf3bdcc55b74ae61767"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/turns-30.json",
+      "sha256": "a00f4c9db7dd764aca440edf5fc1e031162942ac2cce827bb16c23ab0905f572"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/turns-30.json",
+      "sha256": "35765019f85791dc00e33f2d331dfb58127f307ee29867c1c252bdf2fe2a658a"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/turns-20-reverse.wav",
+      "sha256": "72e5254284aad2babe8f4a6489c9a8f2567c56dfd33002e2d16b831fab557700"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/turns-20-reverse.json",
+      "sha256": "44ecb6585de2838d899708271634c5e53fac1d97d772d2937a3c3cc0f049bfa9"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/turns-20-reverse.json",
+      "sha256": "a57923b2d6b424850d1be1179706890c3936975e26f0b9abfea5ea8ae9be7f6d"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/turns-20-reverse.json",
+      "sha256": "43b84e76f6baef19edbdefeadafe9058cc89af0235f86c0cf1a467f7d2f1de4a"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/iie-clean.wav",
+      "sha256": "59db1b4df300225ec4f7a8ea8418b45dbedfec2f90c9be921451a80da845e5c5"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/iie-clean.json",
+      "sha256": "2bc8b0e6c1ecb72384ba64349dc9bb15887c348354235ee79cf2481e9ff511f1"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/iie-clean.json",
+      "sha256": "214beea5e33a1170b061088ff526439b9631179fe63477df00b0fcfa74013706"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/iie-clean.json",
+      "sha256": "7a183ab9782fc5fcd5aecb34c9e646bee74932d4da677be838b119dad3f648fd"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/iie-padded.wav",
+      "sha256": "55651e7651c4009253f5545616a756e248ab1f006dea34775f30fd84d88ea1d0"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/iie-padded.json",
+      "sha256": "3d4afe8542fd41c8d7fa3487d1a0af812931c85b27d65cd94c9a9397a1f84db6"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/iie-padded.json",
+      "sha256": "3a070a07dcdf5d405ac70a130a636f2f5bb7e91a6302f320c1f83a29dd9b8175"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/iie-padded.json",
+      "sha256": "e4ea5428cfeb56ce319208b05fd975066a6bd294634867910dba29b49ecac6e6"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/ack-hai.wav",
+      "sha256": "1b762eb3b409a4426cf21de64900aa57009f8c092858f8ad160ec87d9d07c08a"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/ack-hai.json",
+      "sha256": "179fddd6f9a4ce7639bd92163064c90dab776dae4292d795daa5a1563f3f557e"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/ack-hai.json",
+      "sha256": "a3fd97f2a8fb51cfb6d8fc1467a970482e663f7c6c72619bd12ee87b80a1bec7"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/ack-hai.json",
+      "sha256": "1aa52e7e4ffd5d1dd8c951031067900c4779808a7ca117b16e91a8def5e619e5"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/ack-un.wav",
+      "sha256": "dd74d71746f4f151e9f49001188b95cd50ee09659c9953aa87228c949526bb7e"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/ack-un.json",
+      "sha256": "be109515083ab741e9b4ed46443370c6d828cd0af069e216851ef14ad1b11ae9"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/ack-un.json",
+      "sha256": "24f86d0ed1dfa84f39ba29da0da3b0ac2546872945b0b4088d61d1686aae9605"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/ack-un.json",
+      "sha256": "10f4e31f86912ef87e3b6cb22cc5add6943be55dcdad27ad1c84aa04787a410c"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/overlap-10.wav",
+      "sha256": "262a518aeae3d7c04e3f62885cac8cef73d3513c5610ccb3e5affe180cbf2f77"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/overlap-10.json",
+      "sha256": "0207b9f99bd40f7732a1f69ea48ea9cecc882cba3e708e07579b1ad4b9275495"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/overlap-10.json",
+      "sha256": "29f7be47db82d676576f0067f8ec16b4464cee3bfd8fb2afa2d0a66db6e5f94f"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/overlap-10.json",
+      "sha256": "f541d5c8bf17568580a293c4caf6691a1caf004194989d383f8df5340bcea03f"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/silence-5.wav",
+      "sha256": "779adc9cbff430554910c3a44f31fcc5b56578aba9c58c84d65f98079f43b269"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/silence-5.json",
+      "sha256": "b20cf377c500a2053fe7717825f7bcaa555d396c1fdca80da06e67541113d3a3"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/silence-5.json",
+      "sha256": "12c7de88ff94e2b10bd2c5a25361968314fb69ff8069dd1839d1127e90f8731f"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/silence-5.json",
+      "sha256": "f7766b8609a20c4d23840926ef9239ea45cfa0c35b4461b737678b91734a1a1c"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/ack-hai-oracle.json",
+      "sha256": "44c2d4c524efd02d80fb88661a9fc2c0f84ea6d0cc094433b05c6d20d573ce0f"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/ack-hai-oracle.json",
+      "sha256": "1e85c3e28a8294f9d9e6e26ff585f100f5ebb2ac49b9f89c47e455af6b1ff21e"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/ack-hai-raw.json",
+      "sha256": "3cf0a392d60bd0013d022dedffcc4258493b18c6db2ff260788f8c1d6a67004d"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/ack-hai-raw.json",
+      "sha256": "e1e8018edd6c6e73b042a28a05fff0ba11a174599dc074b365c869f044cbb683"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/ack-un-oracle.json",
+      "sha256": "835df59835b26e1516b63ed8aca03833c0536a81efa7de76df73f29a3bd8ea0c"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/ack-un-oracle.json",
+      "sha256": "a2c63a14fb41e9f68fc196929443022510027973001b077ab2034dd89808a130"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/ack-un-raw.json",
+      "sha256": "17ca2deeb0f7abc1b202a6b6308e87b9120fc0327aa38a1ab8af23c5fbeddb95"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/ack-un-raw.json",
+      "sha256": "c21907502a1a4c2acf13b7b2a4dd704365331ead07f448618881ab6c2a9a061d"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/iie-clean-oracle.json",
+      "sha256": "90113a88ab140eff8fbd553b58cb456fa503a03b03367a228930eacc760694eb"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/iie-clean-oracle.json",
+      "sha256": "b5349515ca07c807f51878c0743248de94a5c6b7c8c2b26faaae22bb08bdc0c9"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/iie-clean-raw.json",
+      "sha256": "4f010fefe1114a082d35d703a5a2d75f6ebaa391b564178329d5435d49b9bb0b"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/iie-clean-raw.json",
+      "sha256": "10fcf4acf2f3fd45a1192864752baa81cccf07e7682dec17c6c5ae579609e63d"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/iie-padded-oracle.json",
+      "sha256": "ee2537a50b53e2f856b6296849f7ceaab325d5583e5cb3b373df1ec0c44ad508"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/iie-padded-oracle.json",
+      "sha256": "1cd9217466093f2a7e0a00ff329e353c43bbff32957fac730a5259502e5815e3"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/iie-padded-raw.json",
+      "sha256": "40e0c9d3bd235e89a5af856ffa14c25601a20e7481ebcec46c21e532e5b52e6a"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/iie-padded-raw.json",
+      "sha256": "02a7217ffbe9100c235fefbefa33482f73654c93ac94c2571c21168e8bbe7cb7"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/overlap-10-raw.json",
+      "sha256": "06d14cf0bdbf01a670d07447cb427f4e2e5f38e61e1d42b0ffd09dd9368245c4"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/overlap-10-raw.json",
+      "sha256": "857f9f5ee95b0173865622b91473ebc218680272a1e2da6587295b25e35207da"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/provenance.json",
+      "sha256": "b8c715e74424379eaf9ef00a4dd698ffc97174c8ce7937e47cdefd9720eddc6b"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/provenance.json",
+      "sha256": "090e7fb719342e4444af59ae3602fd84d3e0b47df95345d9ff208369b03f1e6b"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/sentence-0-oracle.json",
+      "sha256": "635ba3d9617f77642b60998aedbb0f7260818db6762fd43f5c9ddcb948430329"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/sentence-0-oracle.json",
+      "sha256": "4e60a612ccd8d073c9d852632a00c62d6560e6c0ba527f3b56dada019814d12a"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/sentence-0-raw.json",
+      "sha256": "0f48953930300f86f8e40b870d074acf46ccb9ed037b688e2dddd193276e4bac"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/sentence-0-raw.json",
+      "sha256": "590b2fd1dc030bec51b5360fce4db7c9c7b390980efa9eff87a450ca3d0aa4eb"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/sentence-1-oracle.json",
+      "sha256": "81058d012a986dba7161a82b12068536c8ded7bb22e35faccf545d85d9e58ff9"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/sentence-1-oracle.json",
+      "sha256": "4cc29a0d8bac66dbb1b9650aa12c2e40d431e29cbaccd229e8c3c30de3df13cf"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/sentence-1-raw.json",
+      "sha256": "286f9ba60cc54710b3d63cb7318c81c58d2088eae43da7a31496bb4e6d99bad8"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/sentence-1-raw.json",
+      "sha256": "155c454728c2d23e498e9884a1b4753b18d66f4cae1996109bc1447fd8a5a3ef"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/summary.json",
+      "sha256": "70e3775cc43d1969a3d60995f2f6dcf2784af86ea600652c08a3705b70742c34"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/summary.json",
+      "sha256": "9b1e7283d394d86f05d4c187a7026b59a50872e25e5dab50acfc1f9de2b55e8d"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/turns-10-oracle.json",
+      "sha256": "0bdd0417a147ed332857ef099d8dd9b2d59ba6f7c8d969f8de552b2e8918b98b"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/turns-10-oracle.json",
+      "sha256": "b6abd70a577d80d0ef76f164af51c706d65fd9c3ccd06e8f7d179b431a397035"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/turns-10-raw.json",
+      "sha256": "eacc683e64607b129e242bf8004771bac63a4a96e09a2265543410afd3ffb856"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/turns-10-raw.json",
+      "sha256": "dde7b1ac1cdd87029ebc6615ace0ab6a54ae0d9c120108e4bc37faaa5712f218"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/turns-20-oracle.json",
+      "sha256": "0df10f57b0e57b0d2a23d95dc1502ffd8a6a0f0d34a14b22743ae7756952d2f5"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/turns-20-oracle.json",
+      "sha256": "653191098fbd19e39ee35531aa796c4e32ccff674682bb31f71d456c294a312d"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/turns-20-raw.json",
+      "sha256": "a417847d665ab7379bfa2740ae6ec0fd841a7e2c98841e5958452aaf74590005"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/turns-20-raw.json",
+      "sha256": "b0ae11f6414c0af2c3c425cd36abd9b4df18cbf80b1a16d376dde9cdb2011756"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/turns-20-reverse-oracle.json",
+      "sha256": "c2226ef52d2e3cae7074608e505374d6c6b95ca0d82a6ffddd101b3d654fbe71"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/turns-20-reverse-oracle.json",
+      "sha256": "70a5978fb8c6880b2bbc8661f6555fad55af461c839821aa500a1b53c863b051"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/turns-20-reverse-raw.json",
+      "sha256": "b01a22eb5f7d1357edecc57946eaafb3e5e7c005489d7ed4590e27e6c86b3cd3"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/turns-20-reverse-raw.json",
+      "sha256": "981ae21c0512932aea4488cba5681987e1315cb4a325b10a54184b02ad1733b2"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/turns-30-oracle.json",
+      "sha256": "e8e01838f93cb9d7b9d05da9db22891de73cc16b1d1f75592bf59ef7ef03cbff"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/turns-30-oracle.json",
+      "sha256": "09a812539a8a0ef47350981af60cb795018a3e06175370bbec2b85b4f58f6fb9"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/turns-30-raw.json",
+      "sha256": "3b45663f9ae3d5ff0db28da8935d60e45936abe6338e83b9cec9def0ced65e8d"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/turns-30-raw.json",
+      "sha256": "bc7b68a8d1a9af35ad3192a03d08bc168f4fea7a2f66af1c41a7406b14786390"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/wrong-0.json",
+      "sha256": "46e5af243c6b2a90bfad78d1ef38971eb41a776018bdc23c86e94d697dfd7601"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/wrong-0.json",
+      "sha256": "60a3d2d6d7eace776196d4ccfcf1f85b5443b30c671d8d694013685d2e2644e0"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/wrong-1.json",
+      "sha256": "834989676b46e1cd78c31bc89022a020d3f8142a3fbea2dcfe83bf5be0f42d10"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/wrong-1.json",
+      "sha256": "1de470cae56fb045c1f54624270eda2fc1a3cb89a367ef8815b31330a3b6ce14"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-0/wrong-silence.json",
+      "sha256": "5044005451b0e13cb464f6cf62ffee96c50756e79f0a9e0e855467907ef3d71c"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/official-control-1/wrong-silence.json",
+      "sha256": "caff5685c8e43e095bfe4ad8be91e3f2233ab0c6841beaee2739516742bb6be3"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/comparison-0.json",
+      "sha256": "0c939df70d46be4a00c7469b3eecb911209d479bed40ea95977f73d75a50d4dc"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/comparison-1.json",
+      "sha256": "936f2e0322e42048e51c96122d224257f15349c48148e692b5238d9dca45fce2"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/summary.json",
+      "sha256": "98cc262ecc012319e3c45f867cf39d1dd93e4cb2c22945d6f15f3b7d10bb907d"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/provenance.json",
+      "sha256": "aea9e33c30b181f968019523fdf34e69cea0f14f82e5e0b7bdbea93b506f5349"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/wrong-0.json",
+      "sha256": "8d442103081c44768ad713d6dc0cb805299def0e9fb14dabdab6aa28c605baae"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/wrong-1.json",
+      "sha256": "b8f016b6193323a0e11e1542da865ba3cb28c8b206506548a2817e4e082f1225"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-0/wrong-silence.json",
+      "sha256": "d6120103203a218621b5ff239b906ed89647072f4d53b054484c6a0e98d3fbc2"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/summary.json",
+      "sha256": "9df2aaf69217b4ddd4a4791fbc9f2ad2c22e6c61cca24202f7b4a20f4471f604"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/provenance.json",
+      "sha256": "051ca7997799affd49e6770b0782126bc931e3e95cdab2ed156419796e926cba"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/wrong-0.json",
+      "sha256": "344c38336b713deec740d0cc895d773cb31ce5d9fada0c2eec1084e2924ce92f"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/wrong-1.json",
+      "sha256": "83e91fb2dd804f5a8cba73773ea673ef129bffb41cd496dbe7361d198aebbe61"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-1/wrong-silence.json",
+      "sha256": "f4ea7f33cabfb186fb0b399b2035065e47bb50306eca41fae3d02f7082dbb2d2"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/summary.json",
+      "sha256": "bf9751e7872be11821185472b47eb1248fbda1d29155457c8fa635d1d32fb567"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/provenance.json",
+      "sha256": "dbb3366606dba30822ca2d26e433225d41f605b6273baa8dbbf0680a633595c9"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/wrong-0.json",
+      "sha256": "09ac168afc5e028f0428cc420ab5a4ca7fd3de0d148721b6516e47d371a03ec0"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/wrong-1.json",
+      "sha256": "f06ae0acd075804a2a97b61b55f65c36b13e5847c2ffe20829d4933e9095b9cc"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/pass-2/wrong-silence.json",
+      "sha256": "e436f5d335d182e3fb560ec9ecb37bb60cae673fb9eada42a9606c8360339603"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/plan.json",
+      "sha256": "943bb754040974047fb0a7a90b65fe403226cde5c1602711694e9cd84c710c2a"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/sentence-turns-22.wav",
+      "sha256": "979fecb947747713b22b94ebe0c643d8bb001696c67521d63fbfdb4332c4c492"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-0/sentence-turns-22.json",
+      "sha256": "e802887a159c7a430a0e51f9b1b624f2159c41e44483ef74d8f0a522ebad085c"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-1/sentence-turns-22.json",
+      "sha256": "5ed400bc662324658f23c5bc976697a66802c6751454151a1f037a3bf2d07303"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-2/sentence-turns-22.json",
+      "sha256": "f4211e2ab21a97dba6648378e141f6def106a9051eddc778fe9dc6dc1709668b"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/sentence-turns-22-reverse.wav",
+      "sha256": "319925fb4037462e60ca4ba948de38e48fb1c36ee2b488ce9b673d2b38bf1b86"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-0/sentence-turns-22-reverse.json",
+      "sha256": "cf3ae74c4673bbbf1a5b2f79969ad66501d1c1d8aa447b8b83756dd9f91ae297"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-1/sentence-turns-22-reverse.json",
+      "sha256": "c0ad8598aa9825e5a4a53712bf79281b8dc8e0320013ba315e8fdc427ff6b9dd"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-2/sentence-turns-22-reverse.json",
+      "sha256": "0a209c35e0cfa546824107ed2b77e34f17bc3b96059459b22fac869ef84bce39"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/sentence-turns-30.wav",
+      "sha256": "3c33a38e45630f4dd14839321700fea8f691747e855e364c2c0a874bb68a0af9"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-0/sentence-turns-30.json",
+      "sha256": "0cffabbe9a1f4f82a2b203165a79a38e8ccf8685857034a8cb5d121208d5d36f"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-1/sentence-turns-30.json",
+      "sha256": "84d4b6215f5a5ecd09cd4c54098da33f4fbbada668bc3796cdd75860d6f2319f"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-2/sentence-turns-30.json",
+      "sha256": "6262dcb756a407c189957be1e52968b1b3c9ef371dcd6ca09e463b23a50ac284"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-0/provenance.json",
+      "sha256": "f749029e8d910ff4daa0d5a4497e5dc1fccc91dc4f895f644fd573dbc8090d2f"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-1/provenance.json",
+      "sha256": "9a67b6a72ade6e94ab28030931861c67d830f547c5482458fe191c01e2555c75"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-0/sentence-turns-22-oracle.json",
+      "sha256": "06139a999a9698aea22424445468938b12f4b540fd0380a2c318e7954c80c929"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-1/sentence-turns-22-oracle.json",
+      "sha256": "28f20b0019b5021efbe95d06ce74c8f9798d5157f36d159260aa23d9b142e380"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-0/sentence-turns-22-raw.json",
+      "sha256": "3a4c7ccc5bf5de776a69d6d982deac8a4bb8d2e3c8a2130c725c39b6e9ed6d06"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-1/sentence-turns-22-raw.json",
+      "sha256": "715c8b6d44047afac2b92dea5fca13dcbf872ef6f2353ec7ccc3f109a9347ca6"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-0/sentence-turns-22-reverse-oracle.json",
+      "sha256": "abc9b624c140ac34101cc1a7d648f1ae7320c118c03e7e10494c209c455be53c"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-1/sentence-turns-22-reverse-oracle.json",
+      "sha256": "5632d2e05b33978563909f9831f72a61357e7c2f248fb9eeb5adfba551b15486"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-0/sentence-turns-22-reverse-raw.json",
+      "sha256": "a5780a61b5629b145641c0570dd4bb182ca1823b1ee370e0f1415ee05402ff23"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-1/sentence-turns-22-reverse-raw.json",
+      "sha256": "bcde5f1e2361e959750c9585bfcf0d12b28312bd2d2dbcc71c888acbea685c26"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-0/sentence-turns-30-oracle.json",
+      "sha256": "308087f9a12fd8b9b5b9cead065bc61ab15d3871317a43301136edc0749e1021"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-1/sentence-turns-30-oracle.json",
+      "sha256": "6b0dc49b99477ec60706f0b1ed31eb7ed57efface36c8136342ccac57e69e4fc"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-0/sentence-turns-30-raw.json",
+      "sha256": "3f367473ac0cb055c641efceac4e525b9eb221c077288c313fdf2a50b7ff03bb"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-1/sentence-turns-30-raw.json",
+      "sha256": "824ba14a6f4f0eece7e30efed9d0d30e44163561e1f743414daa240440b3d81e"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-0/summary.json",
+      "sha256": "03fa2141b7b94db6567636ff7fd541845f10304d945c7d076654c68e19f68139"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-1/summary.json",
+      "sha256": "a4b7644ae1206ed07d342d88d164d301ba3ac00fbbf082ccdc89376d40ef11da"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-0/wrong-0.json",
+      "sha256": "cabc88b4c32d4845d9ef51fa64af4be16da5bc443f8bd6e57b70af2fca86c75e"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-1/wrong-0.json",
+      "sha256": "b4bfc879300a67c97ba77f8395fb85cbcb4eb969ab98d57078096e14900b7da6"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-0/wrong-1.json",
+      "sha256": "d6b8222ce6863b757137ff9432ec83438c62ae6aeebd43e71c2a6b3771187ca1"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-1/wrong-1.json",
+      "sha256": "edfd9ad120d75b9f951cef9973f53b187fe11d9502eafc7322f5a2857e21ba42"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-0/wrong-silence.json",
+      "sha256": "663f44be1f9d918d35ee89847e9244d3ef6b15104455db97ca2581ce88668247"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/official-control-1/wrong-silence.json",
+      "sha256": "79fc5994967f6a11f3491be5dfd5282cc77be6d9dfb2de4bbba4dd406bdc5f99"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/comparison-0.json",
+      "sha256": "e5ad0bf5fde9dcf2381e0f51368ba6a13a29afb82c6fa808ff7cd5a1a39b2d36"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/comparison-1.json",
+      "sha256": "542f3625af809a58982db9a060f08783a8e819d7c0781f44881c9c0c3514b0dc"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-0/summary.json",
+      "sha256": "bb00f34e092ad39499fd4485b0bab37834d2605957947c49709bfaa6d3747f92"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-0/provenance.json",
+      "sha256": "83f02f301eeae4181246e57426673d3b2c5034b39f3212a346ca8b77b64b28ed"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-0/wrong-0.json",
+      "sha256": "7f4d33f0e28a77e209d9326290652c4f7b2eb1cf83d4dbcb0a791f2734c778e7"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-0/wrong-1.json",
+      "sha256": "31fe9b3e04de61e7bcb96b4e1c94e9346c50aff21029d30f8a4d53144e1d67b9"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-0/wrong-silence.json",
+      "sha256": "615da1ac66720a2063180afb7aaf5027f9a0ce1e66d91e8fa0328a1d290251e1"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-1/summary.json",
+      "sha256": "5794d9691b1e26ca5999812657430afeb4903d295d6bfe8277e0f15712aa53f0"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-1/provenance.json",
+      "sha256": "926811f4f59e8c661e63e49db880485df303bd82e74ea651e8b6043bcf610fbd"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-1/wrong-0.json",
+      "sha256": "b7595a91b158c2c366b40d71009b063b43ca108f6c2ebc8184bbe97944913bc0"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-1/wrong-1.json",
+      "sha256": "5776464f032e05871140c9c9a3a1914b670f2aafd4aa560e982ffb3ef7e40693"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-1/wrong-silence.json",
+      "sha256": "536a00bc168d47f2b3ceadd5dfeee0d662c89ac923980b2e13d50b0b606592c2"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-2/summary.json",
+      "sha256": "7b8514c66e449867e785b5b6b88f69f94bbb436749f3801506944bfd638a188d"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-2/provenance.json",
+      "sha256": "bd86506b01a40a776d394f5ded7871e92753a211c060e65fe7290f07ce5a7717"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-2/wrong-0.json",
+      "sha256": "4430fcc595e623fcf5cba169f4057f1badef3bdea286235ecafc500a418a10e4"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-2/wrong-1.json",
+      "sha256": "7b441f1c275942aec4e8919405ea6692164c787514f6f7ce7ac64a29bebf414a"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-sentence-turns-r1/pass-2/wrong-silence.json",
+      "sha256": "4b658f444caed9a149b8632964ef4aeaa661ccc8226e807dad3fc2742f3ae59e"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-baseline-r1/result.json",
+      "sha256": "f2a1f6e9a8eba6e502df0c463652162ec405ea3eb22b1baecec7fa1fbff7fbb0"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-baseline-r1/cleanup.json",
+      "sha256": "595904a340a57146a548a7a7dcad669ec947634d41938fa74f221ba28880c9e4"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-baseline-r1/warmup.json",
+      "sha256": "ec66f1bd33448a0614b6d38f62e8b91183a20f5b8db643359bcdf24e8a898ef5"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-baseline-r1/cpp.json",
+      "sha256": "4d151f746c38270297035a50611d9fbdb5c1632167cde7a0d87a7a883c76e5bb"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-baseline-r1/memory.json",
+      "sha256": "c078de7075b39b2fc96e6d819165629818fbb4dc32d69d32f1a09d11afdc3929"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-baseline-r1/asr-events.jsonl",
+      "sha256": "d46e08edae4915f5cf171cd7df7c676d49e0ee77202516cfc602bffff84b4434"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-baseline-r1/plan.json",
+      "sha256": "fbc12ac6a11e32571e9efd665a16ab060acdd9bafcba3e05952c7a6bb2b788e7"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-native-r1/result.json",
+      "sha256": "a5e834776d4484f7716621e89adb6927052a4000152553471e5e9709959c3c88"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-native-r1/cleanup.json",
+      "sha256": "595904a340a57146a548a7a7dcad669ec947634d41938fa74f221ba28880c9e4"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-native-r1/warmup.json",
+      "sha256": "19b8c53745c70bbde12f6d27d5d16c644a15d4e2f74bab420551b8f545f1246a"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-native-r1/cpp.json",
+      "sha256": "f613f808b86cb3c0d45d3f6f815193ae52b836355460a48d5eae29fe0f324b93"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-native-r1/memory.json",
+      "sha256": "c7864b94c88c7829cfdb70fa09e1684e7cfbdd2f4826440e9fcf39e45f091f0f"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-native-r1/asr-events.jsonl",
+      "sha256": "9d54046a57b0a92fea5d4f0e66fdddb4cce6021e5a6ea41317639dc4d9d63f40"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-native-r1/alignment-events.jsonl",
+      "sha256": "df64af0e5b4e406f48fb8f3bb30e48bfa901ce9664585d7efa5be7ff3ade2664"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-native-r1/plan.json",
+      "sha256": "297b8c1d409a525596f20fc46ed3ee6c447ef295ce5f6369c7efb721c1900f8f"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-actual-backlog-r1/result.json",
+      "sha256": "674ef0aeb3d9e10c2363cfa724599c43f3e12d291c2eeeffde997a3b0a3c8120"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-actual-backlog-r1/cleanup.json",
+      "sha256": "595904a340a57146a548a7a7dcad669ec947634d41938fa74f221ba28880c9e4"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-actual-backlog-r1/warmup.json",
+      "sha256": "7fa4b5aea650e3c3ff4586768f857b1cc119fe4aac125d13a3883ee9692f8144"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-actual-backlog-r1/cpp.json",
+      "sha256": "70c1ddd012e48c4649b1250322bbbccd8da2b6dbb93dddadeb7bd5d701c2a719"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-actual-backlog-r1/memory.json",
+      "sha256": "e70e432c4b9706d684bb16081482d109d8cc96d0abf2f8223b99d25fc6b783f9"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-actual-backlog-r1/asr-events.jsonl",
+      "sha256": "f421b31fe402d537e8765ecbf5e48d4a8f79db9edc9df07400a9642a7c2a229b"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-actual-backlog-r1/alignment-events.jsonl",
+      "sha256": "e9de6ef08c5249766df1984f93c27b9cf2956446ede259794edac321952ea339"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-actual-backlog-r1/plan.json",
+      "sha256": "060829d98cea985e74375a080b24240e8c7fede9799e71bcba839bcf738c895d"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-backlog-r1/result.json",
+      "sha256": "91fc865ef64a8829ff9dd518af6751e818b1704891bf12842a60b6d6ec2848ec"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-backlog-r1/cleanup.json",
+      "sha256": "595904a340a57146a548a7a7dcad669ec947634d41938fa74f221ba28880c9e4"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-backlog-r1/warmup.json",
+      "sha256": "a161579c8cb632f5658c2ec0f74cc12338a785123bd8f8155575d600d09c1922"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-backlog-r1/cpp.json",
+      "sha256": "799fdd29adacb161efe4b29655285440537e0869346880515b4a3419d2018810"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-backlog-r1/memory.json",
+      "sha256": "6dc442424176f8c70833d8a275ccf94552e2da08bb63a065130f17b273428ce8"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-backlog-r1/asr-events.jsonl",
+      "sha256": "112e86c70e53c484d701cc09c70742db45c29d985774e4cc71e086ff2f50c51f"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-backlog-r1/alignment-events.jsonl",
+      "sha256": "06da3c30978b4d03b663cf953b8746101db393fde855fee7a9f9358d4cc9b2b7"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-backlog-r1/plan.json",
+      "sha256": "0fdae5e8b6df128b9fd8e47b77abb494b1e780ab1c4621c568843da38644fb32"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r1/result.json",
+      "sha256": "a7acad84064ce56040096ba42da724d24fcf942ae569b5d32635d2bbde7bf877"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r1/cleanup.json",
+      "sha256": "595904a340a57146a548a7a7dcad669ec947634d41938fa74f221ba28880c9e4"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r1/warmup.json",
+      "sha256": "d5b508c8ca755cb3b4421d99c8b03ab379bace01f6d095f40c453cf7d0d5cf86"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r1/cpp.json",
+      "sha256": "61ac98802dc94794f401e3c7543f54c479628414426a369ae474712950be0154"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r1/memory.json",
+      "sha256": "95459941c35d2d9c87ec508e9f638583f43a022fe261089ed77b8e9256098642"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r1/asr-events.jsonl",
+      "sha256": "8aacea0856755132e2e953edef34efcf2ec8f61c04489e1361ae7262a0e8f7dc"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r1/alignment-events.jsonl",
+      "sha256": "2dcb37238ddd296f66dc732391455deea282ff07871c27e9988d29c6e6a1dd38"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r1/plan.json",
+      "sha256": "6b531edde2ba89adcc3c26ee3f7eae097b0d18acb2a3abab6b98eed926511d0e"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r2/result.json",
+      "sha256": "0aa781222fa790bc2ee2f24ebc6f4384d3fd89e7caaa6125ff6197c6046de1ec"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r2/cleanup.json",
+      "sha256": "595904a340a57146a548a7a7dcad669ec947634d41938fa74f221ba28880c9e4"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r2/warmup.json",
+      "sha256": "954ae57526047b6cf0c25ac7f9f8d871e9bc86e44162df130e7821f83dfedf3b"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r2/cpp.json",
+      "sha256": "2afe752fb9c8708f20e91eb0c18520b2e6f0a8b4f5ea2438e8f93775cee220bd"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r2/memory.json",
+      "sha256": "1be413caaf9c8753d2b407aac4d86e2afd607dd46262e8a1eb64fe5ca2735f73"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r2/asr-events.jsonl",
+      "sha256": "9abd21413fe1928825155be6c1ccd23e4dda74f7e7fcb1f7aedbf0fa81021b0f"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r2/alignment-events.jsonl",
+      "sha256": "7533c11d19381f73b50127819cafe5447cc1df906e53db2d8a8aa8c8951d93a7"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-r2/plan.json",
+      "sha256": "0fdae5e8b6df128b9fd8e47b77abb494b1e780ab1c4621c568843da38644fb32"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-threads2-r1/result.json",
+      "sha256": "a7f77468837ccba6c443f0736b8841611311b0196263ea6fd28e5b755335584e"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-threads2-r1/cleanup.json",
+      "sha256": "595904a340a57146a548a7a7dcad669ec947634d41938fa74f221ba28880c9e4"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-threads2-r1/warmup.json",
+      "sha256": "e87567785f8432201cd6c98bf2e093c7b17daed3ad4fb7a9e08434dd2af1b60e"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-threads2-r1/cpp.json",
+      "sha256": "8e78088c7df6ad675e1801bf655afe1773a15e0d6d89c274f31c81b28a4ebb9d"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-threads2-r1/memory.json",
+      "sha256": "a9525d2727efe83270c6740785049d1a641583bcfe3922421d6a2c4e20c1c1ac"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-threads2-r1/asr-events.jsonl",
+      "sha256": "8d7b734fb94f4e2932fe54a6cfaf2b4f3bdba89c1b589bb7bff6be409ebde65f"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-threads2-r1/alignment-events.jsonl",
+      "sha256": "fa73950a3be127d6c2760f953a5bceb964c71d9394e9d698bd8ed07d38a9776a"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/three-model-official-threads2-r1/plan.json",
+      "sha256": "01f85146c05a0083e0f23004b030e0fd6b6bed69f3f1515450287e1ed94caf86"
+    },
+    {
+      "path": "qwen3-asr/artifacts/model-forced-aligner-0.6B/provenance.json",
+      "sha256": "f32932134dd2ad5cc98f1e021c2f410175f67921bb7c46ed7d870bbf9ad5c708"
+    },
+    {
+      "path": "diarization-engines/parakeet.cpp/build-znver3/libparakeet.so",
+      "sha256": "cbc03f7074d2032480cf1e91f58114bb6c435b98057ecb5a2f1d62a2d6cf1b1b"
+    },
+    {
+      "path": "diarization-engines/models/cpp-q8_0.gguf",
+      "sha256": "76c5bb1fb20d82706142ad32769b7ab496d2458489473a000fd7074c52ceec22"
+    },
+    {
+      "path": "qwen3-asr/align-worker-tested-r2",
+      "sha256": "18014f8e3b77c50edc773b27210f36e130ccd6c5b03085fc778b68c5f75bb7ba"
+    },
+    {
+      "path": "qwen3-asr/align-worker-target/release/qwen-speech-worker",
+      "sha256": "d25a931fcaae103dbcb250513cae4f465ab485aefdf165e5c9b57b399ce028de"
+    },
+    {
+      "path": "qwen3-asr/worker-target/release/qwen-speech-worker",
+      "sha256": "f9bca460d5535468d153eb4d11d5bf79d6dd92cac2d40192159846e982d2f4c1"
+    },
+    {
+      "path": "qwen3-asr/diagnostics/forced-alignment-r1/default-off-regression.json",
+      "sha256": "cc882cabaa2a8bdd3dcd7943a05c12bea6abb4cfbd502ea84cbf32386dd01659"
+    }
+  ]
+}

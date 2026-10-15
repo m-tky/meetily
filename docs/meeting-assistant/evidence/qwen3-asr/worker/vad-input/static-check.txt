@@ -1,0 +1,110 @@
+    Finished `release` profile [optimized] target(s) in 0.93s
+     Running unittests src/lib.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/deps/qwen_speech_worker-1981b5e748b593fe)
+
+running 13 tests
+test tests::empty_or_nonfinite_audio_rejected ... ok
+test tests::gain_bounded_and_not_silence_gate ... ok
+test tests::no_speech_tail_has_no_interval ... ok
+test tests::last_partial_frame_not_lost ... ok
+test tests::overlapping_padding_merged ... ok
+test tests::real_acknowledgements_not_blacklisted ... ok
+test tests::recognition_keeps_internal_pause_and_empty_stays_empty ... ok
+test tests::repetition_only_flags_and_limit_flags ... ok
+test tests::request_limits_and_eof ... ok
+test vad::tests::endpoint_hysteresis_and_real_tail ... ok
+test vad::tests::invalid_probabilities_and_frame_counts_reject ... ok
+test vad::tests::official_geometry_and_short_speech_at_eof ... ok
+test vad::tests::padding_does_not_authorize_under_minimum_real_speech ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/deps/qwen_speech_worker-1b4a638d38fb99ff)
+
+running 2 tests
+test tests::ids_bounded_and_unique_format ... ok
+test tests::unknown_fields_rejected ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests qwen_speech_worker
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running unittests examples/current_vad_probe.rs (/home/user/Code/meeting-assistant-research/runtime/qwen3-asr/worker-target/release/examples/current_vad_probe-41957cb0acb10d2d)
+
+running 2 tests
+test tests::incompatible_frames_reject ... ok
+test tests::official_frame_context_and_padding ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+V4 endpoint reference: 306 cases passed (seed 512)
+test_default_scalar_parity (test_gate_diagnostics.Tests.test_default_scalar_parity) ... ok
+test_invalid_probabilities (test_gate_diagnostics.Tests.test_invalid_probabilities) ... ok
+test_threshold_and_real_eof (test_gate_diagnostics.Tests.test_threshold_and_real_eof) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.025s
+
+OK
+test_seeded_unit_rms (test_robustness.Tests.test_seeded_unit_rms) ... ok
+test_snr_and_common_gain (test_robustness.Tests.test_snr_and_common_gain) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.087s
+
+OK
+test_busy_rejects_not_queue (test_worker_client.Tests.test_busy_rejects_not_queue) ... ok
+test_excessive_response (test_worker_client.Tests.test_excessive_response) ... ok
+test_id_mismatch_fails_closed (test_worker_client.Tests.test_id_mismatch_fails_closed) ... ok
+test_timeout_kills_and_restart (test_worker_client.Tests.test_timeout_kills_and_restart) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.186s
+
+OK
+test_frozen_candidate_no_retuning_or_source_holdout_claim (test_current_vad_validation.CurrentValidationTests.test_frozen_candidate_no_retuning_or_source_holdout_claim) ... ok
+test_manifest_fail_closed (test_current_vad_validation.CurrentValidationTests.test_manifest_fail_closed) ... ok
+test_new_tones_are_deterministic_distinct_and_unit_rms (test_current_vad_validation.CurrentValidationTests.test_new_tones_are_deterministic_distinct_and_unit_rms) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.053s
+
+OK
+[0;93m2026-10-12 18:17:01.285327844 [W:onnxruntime:Default, device_discovery.cc:164 DiscoverDevicesForPlatform] GPU device discovery failed: device_discovery.cc:89 ReadFileContents Failed to open file: "/sys/class/drm/card0/device/vendor"[m
+test_frozen_thresholds_caps_and_zero_gain (test_vad_reference_gain.ReferenceGainTests.test_frozen_thresholds_caps_and_zero_gain) ... ok
+test_gain_coverage_pairs_fail_closed (test_vad_reference_gain.ReferenceGainTests.test_gain_coverage_pairs_fail_closed) ... ok
+test_parity_bit_equal_and_gate_mismatch (test_vad_reference_gain.ReferenceGainTests.test_parity_bit_equal_and_gate_mismatch) ... ok
+test_parity_duplicate_missing_and_geometry_fail_closed (test_vad_reference_gain.ReferenceGainTests.test_parity_duplicate_missing_and_geometry_fail_closed) ... ok
+test_quantization_loss_and_nearest_even (test_vad_reference_gain.ReferenceGainTests.test_quantization_loss_and_nearest_even) ... ok
+test_slow_gain_block_causal_and_no_clipping (test_vad_reference_gain.ReferenceGainTests.test_slow_gain_block_causal_and_no_clipping) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.006s
+
+OK
+✔ scores raw short-word failure, keeps review and ignores timings only (2.87168ms)
+✔ rejects missing/duplicate controls, wrong hash, pipeline and reference (0.729125ms)
+✔ different text/status across fresh workers is not labeled reproducible (0.412104ms)
+✔ modes remain separate and wrong unflagged text is retained (49.485271ms)
+✔ incorrect crop mode and missing context result reject (83.580844ms)
+✔ incomplete/duplicate ungated repeats reject (81.890185ms)
+✔ English WER uses whitespace words and preserves contractions as one word (3.175421ms)
+✔ Thai keeps combining marks; silence is not mixed into speech CER (0.727576ms)
+✔ prefix-only audio is timing-only; missing accuracy rows are explicit (0.27252ms)
+✔ Candle control separator is not counted as a spoken recognition error; raw output retained (0.463776ms)
+✔ unknown ID, mismatched duration, failures and duplicates reject (0.575ms)
+✔ missed speech counts full deletion and non-speech insertions remain raw (51.541143ms)
+✔ incomplete and duplicated measurements reject (72.197656ms)
+✔ mismatched fixture hashes reject (41.793742ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 289.799477
