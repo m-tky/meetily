@@ -35,8 +35,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# Local environment files (only the public template may be committed)
 .env
+.env.*
+!.env.example
 
 # vercel
 .vercel
@@ -82,5 +84,7 @@ frontend/src-tauri/binaries/
 __pycache__/
 *.py[cod]
 
-# App-managed SIWC credentials must never enter source control, even with custom XDG paths.
+# OAuth credentials must never enter source control, even with custom profile paths.
+.codex/
+auth.json
 **/official-siwc/
