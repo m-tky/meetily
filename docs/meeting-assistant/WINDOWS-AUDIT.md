@@ -1,5 +1,9 @@
 # Windows対応調査・段階計画
 
+## 最新：RC5公開・公開assets照合完了
+
+`windows-v0.4.1-rc.5`（source `51344ead6059da4acad4775e8d51b4b45a57dcec`）のrun `38866309187` がbuild／install-uninstall／publishすべてsuccess。Windows worker14＋4、Node25、app adapter4、setup8（READY確認＋250ms生存＋Job close後5秒以内終了・自然終了markerなしを含む）、onboarding3成功。新Qwen導線を含むunsigned/current-user CPU NSISをPre-releaseとして公開（draft=false、never latest/stable）。URL：https://github.com/m-tky/meetily/releases/tag/windows-v0.4.1-rc.5 。installer `Meetily.Local_0.4.1_x64-setup.exe` 49,269,792bytes、SHA256 `2e8bbea30a314a8a70734f65a051811795aff8254f19836dbac885bd681cf875`、worker SHA256 `8e2a0c0c5341f375ba5b315fd827a89fa0823d103d59124d7c6530c8498eb6e1`。公開4assetsを全再downloadし、API digest／sidecar名・hash／metadata／smokeの全gateを独立再照合した。証拠はGit外 `runtime/windows-audit/prerelease-rc5-{success.log,published.json,public-verification.json,release/}`。RC3と失敗RC4のtagは不変。RC4失敗を隠さず保持し、RC5で全gate再成功。READMEと案内の公開先をRC5へ更新した。実モデルHTTPS取得からGUI自動setup完了／再起動までの統合受入は未検証（CIはweightsなし）。実会議・実mic・cloud・ログインの新しいテストは行っていない。
+
 ## RC4停止とRC5再検証
 
 RC4 run `38863085597` はWindows native build／Node25件／adapter等まで成功し、追加したJob Objectテストで停止した（setup 7passed/1failed）。close後のchild終了が0.15秒以内・exit0であり、`!status.success()` という非ゼロ終了の仮定に失敗した。publishはskip、RC4 releaseは作られていない。tagは不変で保持、failed logは `runtime/windows-audit/prerelease-rc4-failed.log`。製品のJob Object処理は変えず、試験をREADY handshake→handle保持中250ms生存→close後5秒以内終了＋60秒自然終了markerなし、へ変更して終了コードに依存せず強く検証する。`windows-v0.4.1-rc.5` で全gateを再実行する。

@@ -46,9 +46,9 @@ A privacy-first AI meeting assistant that captures, transcribes, and summarizes 
 
 ## Meetily Local fork: Windows + Qwen
 
-- **Unsigned Windows x64 CPU pre-release:** [windows-v0.4.1-rc.3](https://github.com/m-tky/meetily/releases/tag/windows-v0.4.1-rc.3). Check the supplied SHA256; Windows SmartScreen may warn. This is not the upstream release.
-- **Models are not bundled.** RC3 requires [explicit model preparation](docs/meeting-assistant/WINDOWS-INSTALLER.md#explicit-qwen-model-setup).
-- **New source builds:** on first launch, or Settings → Transcription → Qwen, select a language and consent to **Agree and set up Qwen**. Setup downloads ~4.7 GB from Hugging Face, checks SHA256, prepares the local INT8 cache, then validates and selects Qwen. Allow ~6.5 GiB free disk and several minutes. Qwen-only first-run setup does not require Parakeet or a summary model. **This UI is not in the published RC3 installer.**
+- **Unsigned Windows x64 CPU pre-release:** [windows-v0.4.1-rc.5](https://github.com/m-tky/meetily/releases/tag/windows-v0.4.1-rc.5). Check the supplied SHA256; Windows SmartScreen may warn. This is not the upstream release.
+- **Models are not bundled.** Download/setup starts only after explicit consent. [Manual/offline preparation](docs/meeting-assistant/WINDOWS-INSTALLER.md#explicit-qwen-model-setup) remains available.
+- **RC5:** on first launch, or Settings → Transcription → Qwen, select a language and consent to **Agree and set up Qwen**. Setup downloads ~4.7 GB from Hugging Face, checks SHA256, prepares the local INT8 cache, then validates and selects Qwen. Allow ~6.5 GiB free disk and several minutes. Qwen-only first-run setup does not require Parakeet or a summary model. Windows CI build/setup tests and install/uninstall checks pass; full GUI setup with a real model download remains unverified. RC3 does not include this UI.
 - Audio stays local; cloud text processing is separate and opt-in. Linux/Nix setup is documented in [NIX-HOME-MANAGER.md](docs/meeting-assistant/NIX-HOME-MANAGER.md).
 
 [Windows installation, manual/offline setup and limitations](docs/meeting-assistant/WINDOWS-INSTALLER.md).
