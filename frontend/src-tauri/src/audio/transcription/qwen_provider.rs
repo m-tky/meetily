@@ -1,4 +1,4 @@
-//! Opt-in Linux Qwen adapter. No cloud, shell command strings or model fallback.
+//! Opt-in Linux / Windows x64 Qwen adapter. No cloud, shell command strings or model fallback.
 //! A request owns its child while in flight: timeout/cancellation drops and kills
 //! it, and the next request starts a fresh process. Failed audio is NOT retried.
 use super::provider::{TranscriptResult, TranscriptionError, TranscriptionProvider};
@@ -33,8 +33,8 @@ pub struct QwenSettings {
 }
 impl QwenSettings {
     fn validate(&self) -> Result<(), String> {
-        if !cfg!(target_os = "linux") {
-            return Err("Qwen ASR currently supports Linux only".into());
+        if !qwen_is_supported() {
+            return Err("Qwen ASR requires Linux or Windows x64/MSVC".into());
         }
         for path in [&self.worker_path, &self.model_dir, &self.ort_library] {
             if !path.is_absolute() {
@@ -117,7 +117,9 @@ fn validate_ready(v: &Value) -> Result<(), String> {
             .as_array()
             .is_some_and(|a| a.iter().any(|x| x == "float32"))
     {
-        return Err("Incompatible Qwen worker; install the float32-input Linux worker".into());
+        return Err(
+            "Incompatible Qwen worker; install the matching float32-input local worker".into(),
+        );
     }
     Ok(())
 }
@@ -210,13 +212,25 @@ impl QwenProvider {
         })
     }
     async fn spawn(&self) -> Result<Worker, String> {
-        let mut child=tokio::process::Command::new(&self.settings.worker_path)
-            .arg(&self.settings.model_dir).arg("6")
-            .env("ORT_DYLIB_PATH",&self.settings.ort_library)
-            .env("OPENBLAS_NUM_THREADS","6").env("OMP_NUM_THREADS","6").env("MKL_NUM_THREADS","6")
-            .env("HF_HUB_DISABLE_TELEMETRY","1").env("DO_NOT_TRACK","1")
-            .stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null()).kill_on_drop(true)
-            .spawn().map_err(|_| "Cannot start Qwen worker; check executable permission and local runtime dependencies")?;
+        let mut command = tokio::process::Command::new(&self.settings.worker_path);
+        command
+            .arg(&self.settings.model_dir)
+            .arg("6")
+            .env("ORT_DYLIB_PATH", &self.settings.ort_library)
+            .env("OPENBLAS_NUM_THREADS", "6")
+            .env("OMP_NUM_THREADS", "6")
+            .env("MKL_NUM_THREADS", "6")
+            .env("HF_HUB_DISABLE_TELEMETRY", "1")
+            .env("DO_NOT_TRACK", "1")
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::null())
+            .kill_on_drop(true);
+        #[cfg(windows)]
+        command.creation_flags(0x08000000); // CREATE_NO_WINDOW; no console flash.
+        let mut child = command.spawn().map_err(|_| {
+            "Cannot start Qwen worker; check executable permission and local runtime dependencies"
+        })?;
         let input = child.stdin.take().ok_or("Qwen stdin unavailable")?;
         let output = BufReader::new(child.stdout.take().ok_or("Qwen stdout unavailable")?);
         let mut worker = Worker {
@@ -238,7 +252,7 @@ impl QwenProvider {
         }
         Ok(())
     }
-    async fn shutdown(&self) {
+    pub async fn shutdown(&self) {
         if let Some(mut worker) = self.worker.lock().await.take() {
             let _ = worker.child.kill().await;
         }
@@ -363,7 +377,36 @@ fn config_path<R: Runtime>(app: &tauri::AppHandle<R>) -> Result<PathBuf, String>
 }
 #[tauri::command]
 pub fn qwen_is_supported() -> bool {
-    cfg!(target_os = "linux")
+    cfg!(any(
+        target_os = "linux",
+        all(
+            target_os = "windows",
+            target_arch = "x86_64",
+            target_env = "msvc"
+        )
+    ))
+}
+
+// Packaged Windows builds keep the worker and its DLLs together. No developer
+// PATH, registry search, download, model selection or provider switch is implied.
+#[cfg(windows)]
+fn bundled_settings<R: Runtime>(app: &tauri::AppHandle<R>) -> Result<QwenSettings, String> {
+    let resources = app
+        .path()
+        .resource_dir()
+        .map_err(|_| "App resources unavailable")?;
+    let runtime = resources.join("qwen");
+    let model_dir = app
+        .path()
+        .app_local_data_dir()
+        .map_err(|_| "App local data directory unavailable")?
+        .join("models")
+        .join("Qwen3-ASR-1.7B");
+    Ok(QwenSettings {
+        worker_path: runtime.join("qwen-speech-worker.exe"),
+        ort_library: runtime.join("onnxruntime.dll"),
+        model_dir,
+    })
 }
 #[tauri::command]
 pub fn qwen_get_settings<R: Runtime>(
@@ -373,7 +416,16 @@ pub fn qwen_get_settings<R: Runtime>(
         Ok(bytes) => serde_json::from_slice(&bytes)
             .map(Some)
             .map_err(|_| "Invalid saved Qwen settings".into()),
-        Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
+            #[cfg(windows)]
+            {
+                return bundled_settings(&app).map(Some);
+            }
+            #[cfg(not(windows))]
+            {
+                Ok(None)
+            }
+        }
         Err(_) => Err("Cannot read Qwen settings".into()),
     }
 }
@@ -538,6 +590,102 @@ printf '%s\n' '{"id":"request-1","confirmed":false,"text":"","asr_calls":0,"stat
             .text
             .is_empty());
         provider.shutdown().await;
+        assert_eq!(std::fs::read_dir(&provider.cache).unwrap().count(), 0);
+    }
+    #[cfg(windows)]
+    fn windows_fixture(root: &std::path::Path, behavior: &str) -> QwenProvider {
+        let worker_path = PathBuf::from(
+            std::env::var_os("MEETILY_QWEN_TEST_WORKER")
+                .expect("Set MEETILY_QWEN_TEST_WORKER to the built qwen_protocol_fixture.exe"),
+        );
+        assert!(worker_path.is_absolute() && worker_path.is_file());
+        std::fs::write(root.join("behavior"), behavior).unwrap();
+        let cache = root.join("日本語 O'Brien 空白");
+        std::fs::create_dir_all(&cache).unwrap();
+        QwenProvider {
+            settings: QwenSettings {
+                worker_path,
+                model_dir: root.into(),
+                ort_library: root.join("fake-ort"),
+            },
+            cache,
+            worker: Mutex::new(None),
+            timeout: Duration::from_secs(10),
+        }
+    }
+    #[cfg(windows)]
+    async fn fixture_exited(root: &std::path::Path) {
+        let pid: u32 = std::fs::read_to_string(root.join("pid"))
+            .unwrap()
+            .parse()
+            .unwrap();
+        for _ in 0..20 {
+            let output = tokio::process::Command::new("tasklist.exe")
+                .args(["/FI", &format!("PID eq {pid}"), "/FO", "CSV", "/NH"])
+                .creation_flags(0x08000000)
+                .output()
+                .await
+                .unwrap();
+            assert!(output.status.success());
+            if !String::from_utf8_lossy(&output.stdout).contains(&format!(",\"{pid}\",")) {
+                return;
+            }
+            tokio::time::sleep(Duration::from_millis(100)).await;
+        }
+        panic!("Owned fixture process survived shutdown/cancellation");
+    }
+    #[cfg(windows)]
+    #[tokio::test]
+    #[ignore = "requires explicitly built qwen_protocol_fixture.exe; run in Windows packaging checks"]
+    async fn windows_child_transport_timeout_crash_cancel_restart_cleanup() {
+        let root = tempfile::tempdir().unwrap();
+        let mut provider = windows_fixture(root.path(), "healthy");
+        let result = provider
+            .transcribe(vec![1e-6; MAX_SAMPLES + 1], Some("ja".into()))
+            .await
+            .unwrap();
+        assert_eq!(result.text, "samples=480000\nsamples=1");
+        assert_eq!(provider.worker.lock().await.as_ref().unwrap().requests, 2);
+        provider.shutdown().await;
+        fixture_exited(root.path()).await;
+        assert_eq!(std::fs::read_dir(&provider.cache).unwrap().count(), 0);
+        provider.timeout = Duration::from_millis(250);
+        std::fs::write(root.path().join("behavior"), "hang").unwrap();
+        provider.connect().await.unwrap();
+        assert!(provider
+            .infer(vec![1e-6], Some("ja".into()))
+            .await
+            .unwrap_err()
+            .contains("timed out"));
+        fixture_exited(root.path()).await;
+        assert!(provider.worker.lock().await.is_none());
+        assert_eq!(std::fs::read_dir(&provider.cache).unwrap().count(), 0);
+        provider.connect().await.unwrap();
+        assert!(tokio::time::timeout(
+            Duration::from_millis(40),
+            provider.infer(vec![1e-6], Some("ja".into()))
+        )
+        .await
+        .is_err());
+        fixture_exited(root.path()).await;
+        assert!(provider.worker.lock().await.is_none());
+        assert_eq!(std::fs::read_dir(&provider.cache).unwrap().count(), 0);
+        std::fs::write(root.path().join("behavior"), "crash").unwrap();
+        assert!(provider.infer(vec![1e-6], Some("ja".into())).await.is_err());
+        fixture_exited(root.path()).await;
+        assert!(provider.worker.lock().await.is_none());
+        assert_eq!(std::fs::read_dir(&provider.cache).unwrap().count(), 0);
+        std::fs::write(root.path().join("behavior"), "healthy").unwrap();
+        assert_eq!(
+            provider
+                .infer(vec![1e-6], Some("ja".into()))
+                .await
+                .unwrap()
+                .text,
+            "samples=1"
+        );
+        provider.shutdown().await;
+        fixture_exited(root.path()).await;
         assert_eq!(std::fs::read_dir(&provider.cache).unwrap().count(), 0);
     }
     #[test]

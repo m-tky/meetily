@@ -1,0 +1,26 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "Meetily Local",
+  "identifier": "local.meetily.desktop",
+  "app": {
+    "windows": [{"title": "Meetily Local", "width": 1100, "height": 700, "resizable": true, "fullscreen": false, "theme": "Light", "decorations": true}]
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "createUpdaterArtifacts": false,
+    "resources": {
+      "templates": "templates",
+      "binaries/onnxruntime": ".",
+      "binaries/qwen": "qwen",
+      "binaries/windows-notices": "third-party",
+      "binaries/windows-crt": "."
+    },
+    "windows": {
+      "signCommand": null,
+      "nsis": {"installMode": "currentUser"},
+      "webviewInstallMode": {"type": "downloadBootstrapper", "silent": true}
+    }
+  },
+  "plugins": {"updater": {"endpoints": []}}
+}

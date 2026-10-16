@@ -136,7 +136,7 @@ pub async fn validate_transcription_model_ready<R: Runtime>(app: &AppHandle<R>) 
         other => {
             warn!("❌ Unsupported transcription provider for local recording: {}", other);
             Err(format!(
-                "Provider '{}' is not supported for local transcription. Please select 'localWhisper', 'parakeet' or Linux 'qwen'.",
+                "Provider '{}' is not supported for local transcription. Please select 'localWhisper', 'parakeet' or 'qwen' (Linux / Windows x64).",
                 other
             ))
         }

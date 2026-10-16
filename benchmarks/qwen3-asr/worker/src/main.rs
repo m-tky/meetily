@@ -1,6 +1,10 @@
-//! Linux stdin/stdout worker. Capture stays in the opt-in Tauri provider.
-#[cfg(not(target_os = "linux"))]
-compile_error!("This host-tuned prototype is Linux-only; Windows acceptance is pending");
+//! CPU stdin/stdout worker. Capture stays in the opt-in Tauri provider.
+// Windows compilation is enabled for isolated validation, not app acceptance.
+#[cfg(not(any(
+    target_os = "linux",
+    all(target_os = "windows", target_arch = "x86_64", target_env = "msvc")
+)))]
+compile_error!("Worker validation supports Linux and Windows x64/MSVC only");
 use anyhow::{bail, Context, Result};
 use qwen_asr::{context::QwenModel, kernels, transcribe};
 use qwen_speech_worker::alignment::align_text;
@@ -164,6 +168,10 @@ fn run_request(
     )
 }
 fn main() -> Result<()> {
+    #[cfg(all(windows, target_arch = "x86_64"))]
+    if !std::is_x86_feature_detected!("avx2") || !std::is_x86_feature_detected!("fma") {
+        bail!("Qwen requires AVX2 and FMA CPU support");
+    }
     let args: Vec<_> = env::args().collect();
     if args.len() < 3 || args.len() > 7 {
         bail!("usage: qwen-speech-worker MODEL_DIR THREADS [--vad-only] [--crop-context] [--aligner-dir DIR]");

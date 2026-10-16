@@ -6,6 +6,55 @@ Linux-only bounded local-file prototype; **NOT integrated with Meetily**. User a
 
 The user subsequently approved completing the Linux MVP, superseding the historical integration hold below **only for Linux opt-in integration**. The app now has a local Qwen adapter, settings and start/stop hooks; existing ASR/defaults remain unchanged. Adapter tests and generated-silence smoke pass, not speech/live/quality acceptance. See `docs/meeting-assistant/QWEN3-ASR-SETUP.md` and `LINUX-MVP.md`. No automatic correction, default replacement, actual capture or cloud tests. Historical failed robustness results remain unchanged.
 
+## Latest Windows scope override: opt-in app and installer
+
+The user subsequently approved Windows x64/MSVC app integration before packaging.
+The adapter gate and lifecycle are now enabled on that target; public Japanese
+WAV recognition/repeat/cleanup passed through the app adapter. ASR defaults and
+known quality limitations are unchanged. See `docs/meeting-assistant/WINDOWS-AUDIT.md`
+for current evidence, and `WINDOWS-INSTALLER.md` for the unsigned CPU NSIS build,
+separate model preparation and Windows-tag Pre-release workflow. Do not treat
+compilation, adapter smoke or packaging as real-meeting/clean-host acceptance.
+
+The extra `qwen-model-init` executable is opt-in (`--features model-preparation
+--bin qwen-model-init`), preserving the existing default Linux/Nix bin set. The
+Windows installer build explicitly enables it; no models are bundled.
+
+## Windows x64/MSVC worker portability baseline (historical)
+
+The engine now lives at `vendor/qwen-asr`, pinned with license/provenance and
+Windows-only OS patches; no external `../runtime` engine is needed. Linux
+Nix packaging uses the same source. This supersedes Linux-only **compilation**
+above, not Windows application integration or recognition acceptance.
+
+Windows debug build, worker tests (17), engine portability tests (6 in both
+scalar and OpenBLAS modes), and
+ready/ping/generated-float32-silence/shutdown pass. ASR weights were not loaded;
+the app's Linux-only Qwen gate deliberately remains until real inference and
+lifecycle tests pass. See `docs/meeting-assistant/WINDOWS-AUDIT.md`.
+
+In a VS x64 developer PowerShell, use an NTFS target directory and process-local
+settings (never point this at the deployed Linux worker):
+
+```powershell
+$env:QWEN_OPENBLAS_LIB_DIR = 'C:\\path\\OpenBLAS-0.3.30-x64\\lib'
+$env:PATH = 'C:\\path\\OpenBLAS-0.3.30-x64\\bin;' + $env:PATH
+$env:OPENBLAS_NUM_THREADS = '6'
+$env:OMP_NUM_THREADS = '6'
+$env:ORT_DYLIB_PATH = 'C:\\path\\onnxruntime-1.22.x\\onnxruntime.dll'
+$env:CARGO_TARGET_DIR = "$env:LOCALAPPDATA\\MeetilyQwenTarget"
+cargo test --locked --manifest-path vendor/qwen-asr/Cargo.toml --no-default-features --test meetily_portability
+cargo test --locked --manifest-path benchmarks/qwen3-asr/worker/Cargo.toml
+cargo build --locked --manifest-path benchmarks/qwen3-asr/worker/Cargo.toml
+```
+
+Use the **LP64** official archive `OpenBLAS-0.3.30-x64.zip`, not `x64-64` (ILP64).
+Its SHA256 is `8b04387766efc05c627e26d24797ec0d4ed4c105ec14fa7400aa84a02db22b66`.
+Retain the OpenBLAS license; stage `libopenblas.dll` alongside the worker for
+standalone testing. ORT remains explicit and must match the supported API.
+Release optimization, ASR quality, installer/DLL redistribution and clean-host
+application acceptance remain separate work.
+
 ## Optional ForcedAligner experiment (not app adoption)
 
 The latest user authorized four isolated public/synthetic alignment tests, with an official implementation control on degradation. The experimental worker accepts `--aligner-dir DIR`, optional `transcribe` field `align:true`, and `{"op":"align","id":"a-1","wav":"/absolute/public.wav","text":"提供文","language":"Japanese"}`. Default transcription remains alignment-free. Current local WAV contract accepts mono16k PCM16 or float32, bounded to30s. Alignment is Japanese-only/max512 Unicode scalars, lazy model/fresh session, preserves raw text/offsets, and always `confirmed:false`/`recognition_verified:false`. Silence transcription skips alignment; supplied-text alignment is explicitly unverified. Diagnostic crop-context with inline alignment rejects.

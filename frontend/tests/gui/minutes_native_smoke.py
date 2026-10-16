@@ -87,9 +87,9 @@ def screenshot(name):
 def start_session():
     return request('POST','/session',{'capabilities':{'alwaysMatch':{'webkitgtk:browserOptions':{'binary':str(wrapper)}}}})['sessionId']
 def view_minutes():
-    wait('return [...document.querySelectorAll("summary")].some(e=>e.textContent.includes("保存済み継続議事録"));')
-    execute('const s=[...document.querySelectorAll("summary")].find(e=>e.textContent.includes("保存済み継続議事録"));s.parentElement.open=true;')
-    wait('return document.body.innerText.includes("根拠: seg_gui_1");')
+    wait('return [...document.querySelectorAll("summary")].some(e=>e.textContent.includes("Saved minutes"));')
+    execute('const s=[...document.querySelectorAll("summary")].find(e=>e.textContent.includes("Saved minutes"));s.parentElement.open=true;')
+    wait('return document.body.innerText.includes("Sources: seg_gui_1");')
 
 try:
     print('PRIVATE_PROFILE='+str(root),flush=True)
@@ -115,14 +115,14 @@ try:
     screenshot('01-recovery.png')
     click('Add saved data to meeting list')
     view_minutes(); screenshot('02-original.png')
-    click('編集')
-    textarea = wait('return document.querySelector("textarea[aria-label=\\"議事録項目の本文\\"]");')
+    click('Edit')
+    textarea = wait('return document.querySelector("textarea[aria-label=\\"Minutes item text\\"]");')
     element = textarea['element-6066-11e4-a52e-4f735466cecf']
     request('POST',f'/session/{session}/element/{element}/clear',{})
     edited = '人工GUI編集：提案は保留。根拠と履歴を保持する。'
     request('POST',f'/session/{session}/element/{element}/value',{'text':edited})
-    click('保存してAI更新から保護')
-    wait('return document.body.innerText.includes("revision 2") && document.body.innerText.includes("ユーザー編集・AI更新保護");')
+    click('Save')
+    wait('return document.body.innerText.includes("revision 2") && document.body.innerText.includes("Edited · protected");')
     saved = json.loads((folder/'live-minutes.json').read_text())
     assert saved['items'][0]['text']==edited and saved['revision']==2 and len(saved['user_edits'])==1
     assert saved['items'][0]['id']=='gui-item-1' and saved['items'][0]['sources']==['seg_gui_1']
@@ -137,7 +137,7 @@ try:
     view_minutes()
     wait('return document.body.innerText.includes("人工GUI編集：提案は保留。根拠と履歴を保持する。");')
     screenshot('04-reopened.png'); events.append('native app restart reopened the protected edit')
-    for label,extension in [('JSON出力','.json'),('Markdown出力','.md')]:
+    for label,extension in [('Export JSON','.json'),('Export Markdown','.md')]:
         click(label); time.sleep(2)
         outputs = list((root/'home/Downloads').glob('*'+extension))
         assert outputs, 'Native export did not create a '+extension+' file in isolated Downloads'

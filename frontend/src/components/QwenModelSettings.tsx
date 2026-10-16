@@ -36,7 +36,9 @@ export function QwenModelSettings({ onSelect }: { onSelect: () => void }) {
       await invoke('set_language_preference', { language: selectedLanguage });
       await invoke('qwen_save_settings', { settings });
       await invoke('qwen_init');
-      // Persist provider only after local setup / handshake succeeds.
+      // Settings-page selection must survive restart, just like other local ASRs.
+      // Persist only after local setup / handshake succeeds; no silent fallback.
+      await invoke('api_save_transcript_config', { provider: 'qwen', model: 'Qwen3-ASR-1.7B-INT8', apiKey: null });
       onSelect();
     } catch (e) { setError(String(e)); }
     finally { setBusy(false); }
@@ -51,7 +53,7 @@ export function QwenModelSettings({ onSelect }: { onSelect: () => void }) {
       <option value="" disabled>Select language</option>
       <option value="ja">Japanese</option><option value="en">English</option><option value="th">Thai</option>
     </select>
-    {!supported && <p className="text-sm">Qwen requires Linux and a prepared local worker.</p>}
+    {!supported && <p className="text-sm">Qwen requires Linux or Windows x64 and a prepared local model.</p>}
     {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
     <Button disabled={busy || !supported || !languageOk} onClick={select}>{busy ? 'Checking local worker…' : 'Validate and select Qwen'}</Button>
   </div>;
