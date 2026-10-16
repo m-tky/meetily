@@ -261,3 +261,9 @@ VMへの起動操作後もrunnerのresultファイルがなく、画面を確認
 - ログイン直後のUI反映遅延で起動文字列の先頭`po`が別のメモ帳bufferへ混入した。対象末尾の2文字だけを除去して148文字・7行目先頭へ戻し、保存操作はしなかった。以降はmodifierを100ms保持し、Run dialog表示確認後に入力した。
 
 証拠はGit外 `../runtime/windows-audit/pc-loopback-evidence/`（capture/guard/post/spectral JSON、合成WAV、試験source/runner、失敗JSON、SHA256 index）。この追加検証で製品installerを再生成・公開しておらず、最終NSISの既存SHAは不変。実機の物理スピーカー/ヘッドホン、Bluetooth切替、GUIから会議保存まで、実マイク/実会議/長時間音声は引き続き未検証。
+
+### 初回GitHub Actionsによる公開試行：RC1のinstall gateで停止
+
+ユーザーのpush承認（Nix含む全変更）により `bc2b831` を `m-tky/meetily:feat/live-minutes` へpush。その後のRelease作成依頼で同commitに `windows-v0.4.1-rc.1` を付け、[Actions run 38841402698](https://github.com/m-tky/meetily/actions/runs/38841402698) を初実行した。Windows2022で固定toolchainの導入と**NSIS生成・native testsを含むbuild stepは成功**（36分）。しかしinstall後のclean-PATH worker起動でstdout応答前に終了し、install gateは失敗、publishはskip、Releaseは未作成。VM成功とCI失敗を混同しない。
+
+初版は失敗時にartifact uploadをskipしており、worker stderr入りJSONを回収できなかった。失敗ログはGit外 `../runtime/windows-audit/prerelease-rc1-failed.log` に保持。原因を推測でDLL/CPU問題に断定せず、次のRCでは(1)高コストな本体buildより前にstaged workerをclean-PATH起動しready/shutdownを検証、(2)processor count・stderr・終了code/hex・runtime inventoryと失敗時のDLL依存を記録、(3)失敗時のみUNVERIFIED diagnostics artifactを保存する。インストール失敗時にもworker stderr/終了codeをconsoleへ出す。publishのbuild成功必須条件・インストールgate・署名/モデルポリシーは緩めない。RC1タグは書き換えない。

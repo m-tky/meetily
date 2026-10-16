@@ -128,6 +128,8 @@ try{
  if(!$SkipTests){Run 'cargo.exe' @('test','--locked','--release','--features','model-preparation','--lib','--bin','qwen-speech-worker')}
 }finally{Pop-Location}
 foreach($exe in @('qwen-speech-worker.exe','qwen-model-init.exe')){Copy-Item (Join-Path $WorkerTargetDirectory ('release\'+$exe)) $qwen -Force}
+# Fail before the expensive app build if the staged worker cannot start without VS/PATH.
+& (Join-Path $PSScriptRoot 'test-windows-qwen-runtime.ps1') -RuntimeDirectory $qwen -ReportPath (Join-Path $OutputDirectory 'qwen-runtime-startup.json')
 $env:CARGO_TARGET_DIR=$NativeTargetDirectory
 Push-Location $repo
 try{Run 'cargo.exe' @('build','--locked','--release','-p','llama-helper')}finally{Pop-Location}

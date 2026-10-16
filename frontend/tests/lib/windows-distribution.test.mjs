@@ -62,11 +62,24 @@ test('release automation is Windows-tag-only, fork-only and never latest/stable'
 test('CI action revisions are full commit pins and installation gates publication',()=>{
   const workflow=text('../../../.github/workflows/windows-prerelease.yml');
   const actions=[...workflow.matchAll(/uses:\s*(actions\/[\w-]+)@(\S+)/g)];
-  assert.equal(actions.length,4);
+  assert.equal(actions.length,5);
   for(const action of actions) assert.match(action[2],/^[a-f0-9]{40}$/);
   assert.ok(workflow.includes('needs: build'));
   assert.ok(workflow.includes("smoke['stage']=='complete' and smoke['keptInstalled'] is False"));
   assert.ok(workflow.includes('test-windows-installer.ps1'));
+});
+test('clean worker startup fails early and failed CI diagnostics cannot bypass publication gates',()=>{
+  const build=text('../../scripts/build-windows-installer.ps1');
+  const probe=text('../../scripts/test-windows-qwen-runtime.ps1');
+  const workflow=text('../../../.github/workflows/windows-prerelease.yml');
+  assert.ok(build.indexOf("'test-windows-qwen-runtime.ps1'")<build.indexOf("'--release','-p','llama-helper'"));
+  assert.ok(probe.includes(String.raw`$si.EnvironmentVariables['Path']=$env:SystemRoot+'\System32;'+$env:SystemRoot`));
+  assert.ok(probe.includes("$ready.threads -ne 6"));
+  assert.ok(probe.includes('exitHex') && probe.includes('$r.stderr=') && probe.includes('/dependents'));
+  assert.ok(workflow.includes('if: failure()'));
+  assert.ok(workflow.includes('name: UNVERIFIED-windows-failure-diagnostics'));
+  assert.ok(workflow.includes('needs: build'));
+  assert.ok(!workflow.includes('continue-on-error:'));
 });
 test('explicit Qwen selection persists only after the worker handshake succeeds',()=>{
   const ui=text('../../src/components/QwenModelSettings.tsx');

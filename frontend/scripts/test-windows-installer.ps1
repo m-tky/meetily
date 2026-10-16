@@ -113,6 +113,6 @@ try{
  $report.stage='complete';Publish
 }catch{$report.stage='failed';$report.error=$_.Exception.Message;Publish;throw}
 finally{
- if($worker){try{if(!$worker.HasExited){$worker.Kill();[void]$worker.WaitForExit(5000)}}catch{};if($stderrTask){try{$report.workerStderr=$stderrTask.GetAwaiter().GetResult();Publish}catch{}};$worker.Dispose()}
+ if($worker){try{if(!$worker.HasExited){$worker.Kill();[void]$worker.WaitForExit(5000)}}catch{};if($stderrTask){try{$report.workerStderr=$stderrTask.GetAwaiter().GetResult();$report.workerExitCode=$worker.ExitCode;$report.workerExitHex=('0x{0:X8}' -f [BitConverter]::ToUInt32([BitConverter]::GetBytes([int]$worker.ExitCode),0));Publish;if($report.stage -eq 'failed'){Write-Host ($report|ConvertTo-Json -Depth 15)}}catch{}};$worker.Dispose()}
  if($temporary -and (Test-Path -LiteralPath $temporary)){Remove-Item -LiteralPath $temporary}
 }
