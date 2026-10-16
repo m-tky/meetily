@@ -269,3 +269,13 @@ VMへの起動操作後もrunnerのresultファイルがなく、画面を確認
 初版は失敗時にartifact uploadをskipしており、worker stderr入りJSONを回収できなかった。失敗ログはGit外 `../runtime/windows-audit/prerelease-rc1-failed.log` に保持。原因を推測でDLL/CPU問題に断定せず、次のRCでは(1)高コストな本体buildより前にstaged workerをclean-PATH起動しready/shutdownを検証、(2)processor count・stderr・終了code/hex・runtime inventoryと失敗時のDLL依存を記録、(3)失敗時のみUNVERIFIED diagnostics artifactを保存する。インストール失敗時にもworker stderr/終了codeをconsoleへ出す。publishのbuild成功必須条件・インストールgate・署名/モデルポリシーは緩めない。RC1タグは書き換えない。
 
 診断追加の `8b3f7b8` / `windows-v0.4.1-rc.2` / [run 38845278807](https://github.com/m-tky/meetily/actions/runs/38845278807) は早期probeで停止し、UNVERIFIED artifact回収に成功。processorCount=4、exit=1、stderr=`BLAS thread count does not match worker threads`。DLL loader crashではなく、環境変数指定だけでは要求6とOpenBLAS起動時countが一致しないことが直接原因と判明した。次のRCではworkerの既存予算を `openblas_set_num_threads` で明示適用してから**引き続き厳密一致を要求**する。requested=6の既定値・protocol・ASR/VADは変更せず、1→6への明示適用と元の値への復元を行うnative回帰testを追加。既存RCタグは書き換えず、公開gateを通過するまでRelease未作成のままとする。修正後LinuxのNix worker buildでlibrary14件＋binary4件（明示BLAS予算回帰を含む）が成功し、別途4論理CPUだけにaffinity制限した実workerでもrequested6/ready→shutdown/exit0を確認した（モデル/音声無し）。Git外 `prerelease-rc3-linux-worker-tests.log` / `prerelease-rc3-four-core-startup.json` に保持。Windowsでの最終判定は次のActions結果で行う。
+
+### RC3：Actions全gate成功・Pre-release公開完了
+
+`d88e815` / `windows-v0.4.1-rc.3` / [Actions run 38846279279](https://github.com/m-tky/meetily/actions/runs/38846279279) は **success**。Windows workerはlibrary14＋binary4件（BLAS予算回帰含む）、app adapter4件、Node15件が成功。staged clean-PATH起動、NSIS生成、installed worker無音/実DLL path、helper ping/shutdown＋CRT、FFmpeg、uninstallの全gateが成功し、publish jobもsuccess。
+
+公開先：[Meetily Local Windows windows-v0.4.1-rc.3](https://github.com/m-tky/meetily/releases/tag/windows-v0.4.1-rc.3)。draft=false / prerelease=true、stable/latestにはしない。annotated tagの実commitは `d88e8156156b21df87708836365531024d5497e2` とAPIで確認。公開4assetsはinstaller / `.exe.sha256` / `windows-build.json` / `installer-smoke.json`、モデル/音声/DBは含めない。
+
+公開installer **`Meetily.Local_0.4.1_x64-setup.exe` / 49,212,462 bytes / SHA256 `cadd2e7fb084a0b16aa963e76a12d92e16ee2ef05b3e59beeb651630654e63e4`**。worker SHA `67c94417c6814d31ac7cb4ae4447734e8bd18005db89132b337cc56c947c86c0`。公開後に全assetsを再downloadし、binary hash・metadata・install/uninstall結果を確認した。
+
+GitHubはasset名の空白を`.`へ正規化するため、初回upload後のchecksum内filenameとmetadata.nameだけが公開名と不一致だった。**installer bytesは変更せず**、Pre-releaseの2つのsidecarのfilename参照だけを公開名へ揃えて再uploadした。元sidecarもGit外に保持。将来のbuildもNSIS成果物を配布用directoryへcopyする段階で同じ正規化を行い、hash/metadataを作る。公開成功log・download物・検証材料はGit外 `prerelease-rc3-success.log` / `prerelease-rc3-release/` / `prerelease-rc3-original-sidecars/`。以前のVM installer SHA `4bd39d…` は過去candidateの証拠であり、このCI版のSHAとは異なる。実機/会議品質等の未検証範囲は前節のまま。

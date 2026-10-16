@@ -2,6 +2,10 @@
 
 This distribution uses `local.meetily.desktop`, separate from upstream Meetily and the synthetic Windows audit profile. Automatic updater endpoints and updater artifacts are disabled. The NSIS `*-setup.exe` installs for the current user. It is **unsigned**: Windows SmartScreen may warn. Do not describe it as a signed/stable release.
 
+## Published pre-release
+
+[windows-v0.4.1-rc.3](https://github.com/m-tky/meetily/releases/tag/windows-v0.4.1-rc.3) provides `Meetily.Local_0.4.1_x64-setup.exe`, its SHA256 sidecar, build metadata and the successful CI install/uninstall report. Installer SHA256: `cadd2e7fb084a0b16aa963e76a12d92e16ee2ef05b3e59beeb651630654e63e4` (49,212,462 bytes). This is the CI-built release, not the earlier VM candidate. Models remain a separate explicit setup below.
+
 ## Local build
 
 Use an NTFS checkout, VS2022 C++/Windows SDK, Rust 1.99.0 MSVC, Node.js 22+, pnpm 10.34.5 and 7-Zip. From the repository root:

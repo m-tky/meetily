@@ -154,7 +154,8 @@ try{
 $version=([IO.File]::ReadAllText((Join-Path $repo 'frontend\src-tauri\tauri.conf.json'))|ConvertFrom-Json).version
 $installers=@(Get-ChildItem -LiteralPath (Join-Path $NativeTargetDirectory 'release\bundle\nsis') -Filter ('Meetily Local_'+$version+'_*setup.exe') -File)
 if($installers.Count -ne 1){throw 'Expected exactly one current-version NSIS installer'}
-$file=Join-Path $OutputDirectory $installers[0].Name;Copy-Item $installers[0].FullName $file -Force
+# GitHub sanitizes spaces in asset names; use that name before hashing metadata.
+$file=Join-Path $OutputDirectory ($installers[0].Name.Replace(' ','.'));Copy-Item $installers[0].FullName $file -Force
 $hash=(Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash.ToLowerInvariant()
 [IO.File]::WriteAllText(($file+'.sha256'),($hash+'  '+[IO.Path]::GetFileName($file)+"`n"))
 $manifest=[ordered]@{version=$version;target='x86_64-pc-windows-msvc';profile='release';identifier='local.meetily.desktop';signed=$false;updater=$false;modelBundled=$false;installer=@{name=[IO.Path]::GetFileName($file);sha256=$hash;bytes=(Get-Item $file).Length};qwen=@{threads=6;precision='decoder-INT8-encoder-prefill-F32';workerSha256=(Get-FileHash (Join-Path $qwen 'qwen-speech-worker.exe')).Hash.ToLowerInvariant()}}

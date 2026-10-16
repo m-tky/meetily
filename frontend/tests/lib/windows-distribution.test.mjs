@@ -45,6 +45,7 @@ test('build pins native tools and includes app-local CRT and OpenMP',()=>{
   assert.ok(script.includes("'--locked'"));
   assert.ok(script.includes("'--frozen-lockfile'"));
   assert.ok(script.includes("'--no-sign'"));
+  assert.ok(script.includes("$installers[0].Name.Replace(' ','.')"));
   const assets=script.indexOf("Run 'pnpm.cmd' @('build')");
   assert.ok(assets>=0 && assets<script.indexOf("'--example','qwen_protocol_fixture'"));
 });
