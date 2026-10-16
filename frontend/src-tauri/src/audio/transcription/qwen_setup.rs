@@ -573,6 +573,36 @@ mod windows_job {
 mod tests {
     use super::{preparation::*, *};
     use sha2::{Digest, Sha256};
+    #[cfg(windows)]
+    #[tokio::test]
+    async fn windows_job_close_terminates_only_the_owned_child() {
+        use std::{path::PathBuf, process::Stdio, time::Duration};
+        let powershell = PathBuf::from(std::env::var_os("SystemRoot").unwrap())
+            .join("System32/WindowsPowerShell/v1.0/powershell.exe");
+        let mut child = tokio::process::Command::new(powershell)
+            .args([
+                "-NoProfile",
+                "-NonInteractive",
+                "-Command",
+                "Start-Sleep -Seconds 60",
+            ])
+            .creation_flags(0x08000000)
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .kill_on_drop(true)
+            .spawn()
+            .unwrap();
+        let job = super::windows_job::Job::attach(child.raw_handle().unwrap()).unwrap();
+        tokio::time::sleep(Duration::from_millis(100)).await;
+        assert!(child.try_wait().unwrap().is_none());
+        drop(job);
+        let status = tokio::time::timeout(Duration::from_secs(5), child.wait())
+            .await
+            .unwrap()
+            .unwrap();
+        assert!(!status.success());
+    }
     #[test]
     fn manifest_is_fixed_and_downloads_are_not_a_ui_parameter() {
         let m = manifest().unwrap();

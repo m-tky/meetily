@@ -145,9 +145,11 @@ jobs:
             cat > release-notes.md <<'NOTES'
           Experimental, unsigned Windows x64/MSVC CPU build of Meetily Local.
 
-          - NSIS per-user installer; no upstream updater and no automatic model downloads.
-          - Qwen3-ASR 1.7B decoder-INT8 (encoder/prefill F32) requires AVX2/FMA. ASR weights are separate; see installed `qwen/SETUP.md` and `qwen/prepare-qwen-model.ps1`.
-          - Existing first-run onboarding is retained. This is not clean-host/full-meeting/recording-quality acceptance; no real meeting or ChatGPT login is exercised by CI.
+          - NSIS per-user installer; no upstream updater. Models are not bundled and nothing is downloaded before explicit consent.
+          - NEW: Welcome and Settings / Transcription / Qwen offer consent-based model download, SHA256 verification, local INT8 initialization, cancellation/retry, and selection after validation. Qwen-only first-run setup does not download Parakeet or a summary model; the original setup path remains available.
+          - Select Japanese, English or Thai, check the consent box, then choose **Agree and set up Qwen**. Allow ~4.7 GB download, ~6.5 GiB free disk space, several GB available RAM, and several minutes of CPU initialization. Qwen3-ASR 1.7B decoder-INT8 (encoder/prefill F32) requires AVX2/FMA.
+          - Manual/offline preparation is still available in installed `qwen/SETUP.md` and `qwen/prepare-qwen-model.ps1`.
+          - CI checks installation/runtime plus synthetic setup/download/controller tests. It does not download model weights or exercise the complete GUI + real HTTPS setup flow. This is not clean-host/full-meeting/recording-quality acceptance; no real meeting or ChatGPT login is exercised by CI.
           - Unsigned executables may trigger SmartScreen. Check the attached SHA256 before installing.
           - Third-party notices and the FFmpeg GPLv3 build/source reference are included.
           NOTES

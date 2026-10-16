@@ -140,7 +140,7 @@ Push-Location (Join-Path $repo 'frontend')
 try{
  if(!$SkipInstall){Run 'pnpm.cmd' @('install','--frozen-lockfile')}
  Run 'pnpm.cmd' @('exec','tsc','--noEmit')
- Run 'node.exe' @('--test','tests/lib/tauri-sidecar.test.mjs','tests/lib/windows-distribution.test.mjs')
+ Run 'node.exe' @('--test','tests/lib/tauri-sidecar.test.mjs','tests/lib/windows-distribution.test.mjs','tests/lib/qwen-setup.test.mjs')
  if(!$SkipTests){
   # A clean checkout needs frontendDist before the custom-protocol fixture build.
   Run 'pnpm.cmd' @('build')
@@ -148,6 +148,8 @@ try{
   Run 'cargo.exe' @('build','--locked','--release','-p','meetily','--features','tauri/custom-protocol','--example','qwen_protocol_fixture')
   $env:MEETILY_QWEN_TEST_WORKER=Join-Path $NativeTargetDirectory 'release\examples\qwen_protocol_fixture.exe'
   Run 'cargo.exe' @('test','--locked','--release','-p','meetily','--features','tauri/custom-protocol','--lib','qwen_provider::tests','--','--include-ignored')
+  Run 'cargo.exe' @('test','--locked','--release','-p','meetily','--features','tauri/custom-protocol','--lib','qwen_setup::tests')
+  Run 'cargo.exe' @('test','--locked','--release','-p','meetily','--features','tauri/custom-protocol','--lib','onboarding::tests')
  }
  Run 'pnpm.cmd' @('exec','tauri','build','--ci','--no-sign','--config','src-tauri/tauri.windows-release.conf.json','--bundles','nsis','--','--locked')
 }finally{Pop-Location}

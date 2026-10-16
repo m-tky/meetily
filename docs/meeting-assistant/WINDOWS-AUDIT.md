@@ -1,5 +1,9 @@
 # Windows対応調査・段階計画
 
+## 後続承認：Qwenセットアップ対応 RC4 の公開準備
+
+ユーザーがpush後の公開も明示承認。既存RC3のtag/assetsは変更せず、`windows-v0.4.1-rc.4` を個人forkへ新規公開する。release notesを新しい同意付きWelcome／Settings導線に合わせ、Windows CIのnative setup／onboardingとNode setupテストを必須化した。Windows Job Objectの実子process終了テスト（NoProfileの固定Start-Sleepのみ、録音／model／cloudなし）を追加。事前TypeScript＋Node25件成功。CIのbuild/install/uninstall/publish成功と公開assets再照合を確認するまでは公開完了と扱わない。新導線の実モデルHTTPS取得／GUI統合受入は別途未検証として維持する。
+
 ## 最新追記：Qwen同意付き初回セットアップ導線（ソース実装、Windows受入は未実施）
 
 ユーザーがWelcome＋Settings両方、Qwen-only初回設定完了を明示選択。固定モデルのHTTPS download／SHA256・容量・排他・no-clobber／隔離cache初期化／キャンセル・子回収／成功後の選択を追加した。既存Parakeet・要約のdownload済み偽装や自動追加downloadは行わない。READMEにもRC3と新ソースの差を記載。Linux合成native・frontend・production export・Nix評価とWindows Job Object API型検査は成功。**新しいWindows build／GUI統合／実HTTPS downloadは未検証で、公開RC3は不変。** 詳細・失敗・残課題：[QWEN-WINDOWS-ONBOARDING.md](QWEN-WINDOWS-ONBOARDING.md)。実音声・ログイン・cloud推論・新releaseは行っていない。後続のユーザー指示で、このソース変更のcommitと個人fork mainへのpushが承認された。
