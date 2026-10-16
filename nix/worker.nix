@@ -22,6 +22,6 @@ in rustPlatform.buildRustPackage {
     ORT_PREFER_DYNAMIC_LINK = "1";
   };
   doCheck = true;
-  cargoTestFlags = [ "--lib" ];
+  cargoTestFlags = [ "--lib" "--bin" "qwen-speech-worker" ];
   meta = { mainProgram = "qwen-speech-worker"; platforms = [ "x86_64-linux" ]; license = lib.licenses.mit; };
 }

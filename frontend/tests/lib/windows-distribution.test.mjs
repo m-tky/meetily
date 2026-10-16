@@ -75,6 +75,10 @@ test('clean worker startup fails early and failed CI diagnostics cannot bypass p
   assert.ok(build.indexOf("'test-windows-qwen-runtime.ps1'")<build.indexOf("'--release','-p','llama-helper'"));
   assert.ok(probe.includes(String.raw`$si.EnvironmentVariables['Path']=$env:SystemRoot+'\System32;'+$env:SystemRoot`));
   assert.ok(probe.includes("$ready.threads -ne 6"));
+  const worker=text('../../../benchmarks/qwen3-asr/worker/src/main.rs');
+  assert.ok(worker.includes('openblas_set_num_threads(threads as std::ffi::c_int)'));
+  assert.ok(worker.includes('if actual != threads as i32'));
+  assert.ok(worker.includes('fn explicit_blas_budget_overrides_startup_count()'));
   assert.ok(probe.includes('exitHex') && probe.includes('$r.stderr=') && probe.includes('/dependents'));
   assert.ok(workflow.includes('if: failure()'));
   assert.ok(workflow.includes('name: UNVERIFIED-windows-failure-diagnostics'));

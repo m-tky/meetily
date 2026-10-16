@@ -58,6 +58,7 @@ impl Request {
 extern "C" {
     fn openblas_get_config() -> *const std::ffi::c_char;
     fn openblas_get_num_threads() -> std::ffi::c_int;
+    fn openblas_set_num_threads(threads: std::ffi::c_int);
 }
 fn check_blas(threads: usize) -> Result<()> {
     unsafe {
@@ -65,8 +66,13 @@ fn check_blas(threads: usize) -> Result<()> {
         if cfg.contains("USE64BITINT") {
             bail!("BLAS ABI mismatch: LP64 required");
         }
-        if openblas_get_num_threads() != threads as i32 {
-            bail!("BLAS thread count does not match worker threads");
+        // OpenBLAS can cap its environment-derived startup count to the CPU
+        // count (e.g. four-core CI), even when six threads were requested.
+        // Apply the existing explicit worker budget, then verify it strictly.
+        openblas_set_num_threads(threads as std::ffi::c_int);
+        let actual = openblas_get_num_threads();
+        if actual != threads as i32 {
+            bail!("BLAS thread count mismatch: requested {threads}, actual {actual}");
         }
     }
     Ok(())
@@ -324,6 +330,18 @@ fn main() -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn explicit_blas_budget_overrides_startup_count() {
+        let saved = unsafe { openblas_get_num_threads() };
+        unsafe { openblas_set_num_threads(1) };
+        let initial = unsafe { openblas_get_num_threads() };
+        let result = check_blas(6);
+        let actual = unsafe { openblas_get_num_threads() };
+        unsafe { openblas_set_num_threads(saved) };
+        assert_eq!(initial, 1);
+        result.unwrap();
+        assert_eq!(actual, 6);
+    }
     #[test]
     fn ids_bounded_and_unique_format() {
         assert!(valid_id("clip-1"));

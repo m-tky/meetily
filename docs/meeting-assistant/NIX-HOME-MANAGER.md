@@ -55,7 +55,7 @@ ChatGPT plan login/model selection remains in Settings. Existing Luna selection 
 
 ## Verification record
 
-- Optimized Nix worker build: 14 library tests passed.
+- Optimized Nix worker build: 14 library + 4 binary tests passed, including explicit OpenBLAS thread-budget application. Four-core-affinity startup/shutdown with the existing six-thread request also passed without loading ASR models or audio.
 - Nix model preparation/settings safety tests: 10 passed (checksums, no-overwrite/offline behavior, atomic settings, original backup, symlink refusal).
 - Existing official model files: all pinned hashes verified read-only; cache presence checked, not a cache-integrity proof.
 - Fresh public-model-only offline cache initialization: passed in a separate runtime directory; no audio/inference.
