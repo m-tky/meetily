@@ -577,6 +577,7 @@ mod tests {
     #[tokio::test]
     async fn windows_job_close_terminates_only_the_owned_child() {
         use std::{path::PathBuf, process::Stdio, time::Duration};
+        use tokio::io::{AsyncBufReadExt, AsyncReadExt, BufReader};
         let powershell = PathBuf::from(std::env::var_os("SystemRoot").unwrap())
             .join("System32/WindowsPowerShell/v1.0/powershell.exe");
         let mut child = tokio::process::Command::new(powershell)
@@ -584,24 +585,46 @@ mod tests {
                 "-NoProfile",
                 "-NonInteractive",
                 "-Command",
-                "Start-Sleep -Seconds 60",
+                "[Console]::Out.WriteLine('READY'); [Threading.Thread]::Sleep(60000); [Console]::Out.WriteLine('UNEXPECTED_NATURAL_EXIT')",
             ])
             .creation_flags(0x08000000)
             .stdin(Stdio::null())
-            .stdout(Stdio::null())
+            .stdout(Stdio::piped())
             .stderr(Stdio::null())
             .kill_on_drop(true)
             .spawn()
             .unwrap();
         let job = super::windows_job::Job::attach(child.raw_handle().unwrap()).unwrap();
-        tokio::time::sleep(Duration::from_millis(100)).await;
-        assert!(child.try_wait().unwrap().is_none());
-        drop(job);
-        let status = tokio::time::timeout(Duration::from_secs(5), child.wait())
+        let mut stdout = BufReader::new(child.stdout.take().unwrap());
+        let mut ready = String::new();
+        tokio::time::timeout(Duration::from_secs(15), stdout.read_line(&mut ready))
             .await
             .unwrap()
             .unwrap();
-        assert!(!status.success());
+        assert_eq!(ready.trim(), "READY");
+        assert!(
+            tokio::time::timeout(Duration::from_millis(250), child.wait())
+                .await
+                .is_err(),
+            "The child must remain alive while the job handle is open"
+        );
+        drop(job);
+        // Windows job-close termination can return exit code 0. Prove that
+        // the known-live 60s sleeper exits within 5s, without its natural-exit
+        // marker, rather than treating an exit-code convention as liveness.
+        tokio::time::timeout(Duration::from_secs(5), child.wait())
+            .await
+            .unwrap()
+            .unwrap();
+        let mut trailing = String::new();
+        tokio::time::timeout(Duration::from_secs(5), stdout.read_to_string(&mut trailing))
+            .await
+            .unwrap()
+            .unwrap();
+        assert!(
+            trailing.trim().is_empty(),
+            "The child must not complete its natural sleep: {trailing}"
+        );
     }
     #[test]
     fn manifest_is_fixed_and_downloads_are_not_a_ui_parameter() {

@@ -1,5 +1,9 @@
 # Windows対応調査・段階計画
 
+## RC4停止とRC5再検証
+
+RC4 run `38863085597` はWindows native build／Node25件／adapter等まで成功し、追加したJob Objectテストで停止した（setup 7passed/1failed）。close後のchild終了が0.15秒以内・exit0であり、`!status.success()` という非ゼロ終了の仮定に失敗した。publishはskip、RC4 releaseは作られていない。tagは不変で保持、failed logは `runtime/windows-audit/prerelease-rc4-failed.log`。製品のJob Object処理は変えず、試験をREADY handshake→handle保持中250ms生存→close後5秒以内終了＋60秒自然終了markerなし、へ変更して終了コードに依存せず強く検証する。`windows-v0.4.1-rc.5` で全gateを再実行する。
+
 ## 後続承認：Qwenセットアップ対応 RC4 の公開準備
 
 ユーザーがpush後の公開も明示承認。既存RC3のtag/assetsは変更せず、`windows-v0.4.1-rc.4` を個人forkへ新規公開する。release notesを新しい同意付きWelcome／Settings導線に合わせ、Windows CIのnative setup／onboardingとNode setupテストを必須化した。Windows Job Objectの実子process終了テスト（NoProfileの固定Start-Sleepのみ、録音／model／cloudなし）を追加。事前TypeScript＋Node25件成功。CIのbuild/install/uninstall/publish成功と公開assets再照合を確認するまでは公開完了と扱わない。新導線の実モデルHTTPS取得／GUI統合受入は別途未検証として維持する。
