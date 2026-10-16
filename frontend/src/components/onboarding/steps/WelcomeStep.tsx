@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { invoke } from '@tauri-apps/api/core';
+import type { QwenSetupInfo } from '@/lib/qwen-setup';
 import { Lock, Sparkles, Cpu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { OnboardingContainer } from '../OnboardingContainer';
 import { useOnboarding } from '@/contexts/OnboardingContext';
 import Link from 'next/link';
+import { QwenModelSettings } from '@/components/QwenModelSettings';
+import { useConfig } from '@/contexts/ConfigContext';
 
-export function WelcomeStep() {
-  const { goNext } = useOnboarding();
+export function WelcomeStep({ onComplete }: { onComplete: () => void }) {
+  const { goNext, completeQwenOnboarding } = useOnboarding();
+  const { setTranscriptModelConfig } = useConfig();
+  const [qwenAvailable, setQwenAvailable] = useState(false);
+  useEffect(() => {
+    let active = true;
+    invoke<QwenSetupInfo>('qwen_setup_info').then(info => { if (active) setQwenAvailable(info.available); }).catch(() => {});
+    return () => { active = false; };
+  }, []);
 
   const features = [
     {
@@ -51,6 +62,14 @@ export function WelcomeStep() {
           })}
         </div>
 
+        {qwenAvailable && <div className="w-full max-w-md">
+          <QwenModelSettings automaticOnly onSelect={async () => {
+            setTranscriptModelConfig({ provider: 'qwen', model: 'Qwen3-ASR-1.7B-INT8', apiKey: null });
+            await completeQwenOnboarding();
+            onComplete();
+          }} />
+        </div>}
+
         <Link href="/settings?tab=summaryModels" className="text-sm underline">ChatGPT settings</Link>
 
         {/* CTA Section */}
@@ -59,9 +78,9 @@ export function WelcomeStep() {
             onClick={goNext}
             className="w-full h-11 bg-gray-900 hover:bg-gray-800 text-white"
           >
-            Get Started
+            {qwenAvailable ? 'Set up Parakeet and local summaries' : 'Get Started'}
           </Button>
-          <p className="text-xs text-center text-gray-500">Takes less than 3 minutes</p>
+          {qwenAvailable && <p className="text-xs text-center text-gray-500">Or choose Qwen above for transcription-only setup on Windows.</p>}
         </div>
       </div>
     </OnboardingContainer>

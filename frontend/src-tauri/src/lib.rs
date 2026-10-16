@@ -671,6 +671,11 @@ pub fn run() {
             audio::transcription::qwen_provider::qwen_is_supported,
             audio::transcription::qwen_provider::qwen_get_settings,
             audio::transcription::qwen_provider::qwen_save_settings,
+            audio::transcription::qwen_provider::qwen_validate_settings,
+            audio::transcription::qwen_setup::qwen_setup_info,
+            audio::transcription::qwen_setup::qwen_setup_start,
+            audio::transcription::qwen_setup::qwen_setup_status,
+            audio::transcription::qwen_setup::qwen_setup_cancel,
             audio::transcription::qwen_provider::qwen_init,
             audio::transcription::qwen_provider::qwen_has_available_models,
             audio::transcription::qwen_provider::qwen_get_available_models,
@@ -839,6 +844,7 @@ pub fn run() {
             onboarding::save_onboarding_status_cmd,
             onboarding::reset_onboarding_status_cmd,
             onboarding::complete_onboarding,
+            onboarding::complete_qwen_onboarding,
             // System settings commands
             #[cfg(target_os = "macos")]
             utils::open_system_settings,

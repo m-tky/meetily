@@ -62,6 +62,7 @@ interface OnboardingContextType {
   setPermissionStatus: (permission: keyof OnboardingPermissions, status: PermissionStatus) => void;
   setPermissionsSkipped: (skipped: boolean) => void;
   completeOnboarding: () => Promise<void>;
+  completeQwenOnboarding: () => Promise<void>;
   startBackgroundDownloads: (options: StartBackgroundDownloadsOptions) => Promise<void>;
   retryParakeetDownload: () => Promise<void>;
 }
@@ -510,6 +511,15 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     }
   };
 
+  const completeQwenOnboarding = async () => {
+    isCompletingRef.current = true;
+    if (saveTimeoutRef.current) { clearTimeout(saveTimeoutRef.current); saveTimeoutRef.current = undefined; }
+    try {
+      await invoke('complete_qwen_onboarding');
+      setCompleted(true);
+    } finally { isCompletingRef.current = false; }
+  };
+
   // Start background downloads for models.
   const startBackgroundDownloads = async ({
     includeParakeet,
@@ -634,6 +644,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
         setPermissionStatus,
         setPermissionsSkipped,
         completeOnboarding,
+        completeQwenOnboarding,
         startBackgroundDownloads,
         retryParakeetDownload,
       }}

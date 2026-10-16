@@ -1,5 +1,9 @@
 # Windows対応調査・段階計画
 
+## 最新追記：Qwen同意付き初回セットアップ導線（ソース実装、Windows受入は未実施）
+
+ユーザーがWelcome＋Settings両方、Qwen-only初回設定完了を明示選択。固定モデルのHTTPS download／SHA256・容量・排他・no-clobber／隔離cache初期化／キャンセル・子回収／成功後の選択を追加した。既存Parakeet・要約のdownload済み偽装や自動追加downloadは行わない。READMEにもRC3と新ソースの差を記載。Linux合成native・frontend・production export・Nix評価とWindows Job Object API型検査は成功。**新しいWindows build／GUI統合／実HTTPS downloadは未検証で、公開RC3は不変。** 詳細・失敗・残課題：[QWEN-WINDOWS-ONBOARDING.md](QWEN-WINDOWS-ONBOARDING.md)。実音声・ログイン・cloud推論・新releaseは行っていない。後続のユーザー指示で、このソース変更のcommitと個人fork mainへのpushが承認された。
+
 ## 初回調査の範囲（後続の実施結果は末尾）
 
 ユーザー決定：まず調査と対応計画のみ。対象は現在の `meetily/`。検証候補としてvirt-manager上にWindows 11がある（CPUアーキテクチャ・割当資源・デバイス構成は未確認）。

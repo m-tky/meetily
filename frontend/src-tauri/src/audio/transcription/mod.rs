@@ -4,6 +4,7 @@
 
 pub mod provider;
 pub mod qwen_provider;
+pub mod qwen_setup;
 pub mod whisper_provider;
 pub mod parakeet_provider;
 pub mod engine;

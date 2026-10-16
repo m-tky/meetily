@@ -390,7 +390,7 @@ pub fn qwen_is_supported() -> bool {
 // Packaged Windows builds keep the worker and its DLLs together. No developer
 // PATH, registry search, download, model selection or provider switch is implied.
 #[cfg(windows)]
-fn bundled_settings<R: Runtime>(app: &tauri::AppHandle<R>) -> Result<QwenSettings, String> {
+pub(super) fn bundled_settings<R: Runtime>(app: &tauri::AppHandle<R>) -> Result<QwenSettings, String> {
     let resources = app
         .path()
         .resource_dir()
@@ -428,6 +428,22 @@ pub fn qwen_get_settings<R: Runtime>(
         }
         Err(_) => Err("Cannot read Qwen settings".into()),
     }
+}
+// Check candidate paths without replacing saved settings or the active engine.
+#[tauri::command]
+pub async fn qwen_validate_settings<R: Runtime>(
+    app: tauri::AppHandle<R>,
+    settings: QwenSettings,
+) -> Result<(), String> {
+    let _guard = crate::audio::common::acquire_engine_lifecycle_lock().await;
+    if crate::audio::recording_commands::is_recording().await {
+        return Err("Stop recording before validating Qwen settings".into());
+    }
+    let cache = app.path().app_cache_dir().map_err(|_| "App cache directory unavailable")?.join("qwen-audio");
+    let provider = QwenProvider::new(settings, cache)?;
+    let result = provider.connect().await;
+    provider.shutdown().await;
+    result
 }
 #[tauri::command]
 pub async fn qwen_save_settings<R: Runtime>(

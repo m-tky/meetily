@@ -84,9 +84,17 @@ pub async fn save_onboarding_status<R: Runtime>(
     info!("Saving onboarding status: step={}, completed={}",
           status.current_step, status.completed);
 
+    // Serialize status commits and reject delayed incomplete autosaves after
+    // either completion route. Reset remains an explicit separate operation.
+    static WRITE: std::sync::LazyLock<tokio::sync::Mutex<()>> = std::sync::LazyLock::new(|| tokio::sync::Mutex::new(()));
+    let _write = WRITE.lock().await;
     // Get or create store
     let store = app.store("onboarding-status.json")
         .map_err(|e| anyhow::anyhow!("Failed to access onboarding store: {}", e))?;
+
+    if stale_incomplete_status(store.get("status"), status) {
+        return Ok(());
+    }
 
     // Update last_updated timestamp
     let mut status = status.clone();
@@ -105,6 +113,16 @@ pub async fn save_onboarding_status<R: Runtime>(
 
     info!("Successfully persisted onboarding status to disk");
     Ok(())
+}
+
+fn stale_incomplete_status(previous: Option<serde_json::Value>, status: &OnboardingStatus) -> bool {
+    !status.completed && previous.and_then(|v| v.get("completed").and_then(|b| b.as_bool())) == Some(true)
+}
+
+fn qwen_completion_status(mut status: OnboardingStatus) -> OnboardingStatus {
+    status.completed = true;
+    status.current_step = 4;
+    status
 }
 
 /// Reset onboarding status (delete from store)
@@ -221,9 +239,51 @@ pub async fn complete_onboarding<R: Runtime>(
     Ok(())
 }
 
+/// Transcription-only setup must not start downloads, configure a summary
+/// provider, or claim that Parakeet/summary weights have been downloaded.
+#[tauri::command]
+pub async fn complete_qwen_onboarding<R: Runtime>(
+    app: AppHandle<R>,
+    state: tauri::State<'_, AppState>,
+) -> Result<(), String> {
+    if !cfg!(windows) { return Err("Qwen-only onboarding is currently available on Windows".into()); }
+    let selected = SettingsRepository::get_transcript_config(state.db_manager.pool())
+        .await.map_err(|e| e.to_string())?.ok_or("Select Qwen before completing setup")?;
+    if selected.provider != "qwen" || selected.model != crate::audio::transcription::qwen_provider::MODEL {
+        return Err("Select the verified Qwen model before completing setup".into());
+    }
+    crate::audio::transcription::qwen_provider::qwen_init(app.clone()).await?;
+    let status = qwen_completion_status(load_onboarding_status(&app).await.map_err(|e| e.to_string())?);
+    save_onboarding_status(&app, &status).await.map_err(|e| e.to_string())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn qwen_completion_does_not_fabricate_model_downloads() {
+        let mut original = OnboardingStatus::default();
+        original.model_status.selected_summary_model = Some("existing-choice".into());
+        for parakeet in ["not_downloaded", "downloading", "downloaded"] {
+            original.model_status.parakeet = parakeet.into();
+            let finished = qwen_completion_status(original.clone());
+            assert!(finished.completed);
+            assert_eq!(finished.current_step, 4);
+            assert_eq!(finished.model_status.parakeet, parakeet);
+            assert_eq!(finished.model_status.summary, "not_downloaded");
+            assert_eq!(finished.model_status.selected_summary_model.as_deref(), Some("existing-choice"));
+        }
+    }
+
+    #[test]
+    fn delayed_autosave_cannot_undo_completion() {
+        let incoming = OnboardingStatus::default();
+        assert!(stale_incomplete_status(Some(serde_json::json!({"completed": true})), &incoming));
+        assert!(!stale_incomplete_status(Some(serde_json::json!({"completed": false})), &incoming));
+        assert!(!stale_incomplete_status(None, &incoming));
+        assert!(!stale_incomplete_status(Some(serde_json::json!({"completed": true})), &qwen_completion_status(incoming)));
+    }
 
     #[test]
     fn onboarding_status_deserializes_without_selected_summary_model() {
