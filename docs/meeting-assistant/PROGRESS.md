@@ -1,5 +1,9 @@
 # 開発状況（2026-10-12）
 
+## 最新：LinuxのQwen自動導入をWindowsと共通化
+
+ユーザーがLinuxにもWindowsと同じQwen自動導入を要求し、Qwen3.5 4B等は不要と明示。Windows限定だったsetup availability／download job／Qwen-only onboardingをLinuxへ接続。Welcome／Settingsの同意付き共通UIでQwen3-ASR 1.7B decoder-INT8をdownload→checksum検証→初期化→worker検証→明示選択し、Parakeet／local summary modelなしで完了できる。既存任意catalog／設定／filesは削除しない。Nix appへ共通initializer・ORT link・CA pathを同梱、manual preparationと同一derivationを共有。native23＋onboarding3（重複1）、Node23／Bun5／TS／Nix評価／initializer build PASS。full Nix debug app build／isolated export成功。初回packageはGUI表示成功でもORT dlopen FAIL（GAppsが.soをwrapper化）を保持、postFixupでlink公開＋実dlopen build gateへ修正。修正候補`/nix/store/pr7b0kc0pf8b88hga8gjycvk6ji5z2h6-meetily-local-0.4.1-local`は再build／実ORT load／fresh native Welcome＋browser reload（同意unchecked・jobなし・model未作成・未録音）PASS。実HTTPS download／準備後選択・native再起動は未検証。モデルdownload／録音再生／推論／auth／通常profile／表示中app変更／releaseなし。詳細：[QWEN-LINUX-ONBOARDING.md](QWEN-LINUX-ONBOARDING.md)。
+
 ## 最新：録音後の要約も共有Luna設定へ接続・反映
 
 ユーザーが別のOllama設定欄を指摘し「Lunaのやつもちゃんと設定して」「continue」。共有ChatGPT/model設定をsaved-meeting Generate/Regenerate Summaryへも接続。旧Ollama設定欄はplan選択時非表示。Nativeはjob作成前にaccount/plan/catalogを検証し固定、既存SIWC Responsesへroute、API keyや他providerへfallbackしない。Cloudのpost-Stop自動生成は明示操作とみなさず二段でblock、手動Generateでのみ開始（明示opt-inのlive minutes Stop-finalは維持）。Native78／frontend36 PASS、TS／isolated frontend export／locked offline debug build／diff check成功。初回Rust/TS列挙漏れcheck失敗は保持・修正。ユーザー再起動承認でidle確認→今回4454だけ再開、同profile・ログイン・Luna保持。新候補 `../runtime/nixos-luna-summary-candidate` → `/nix/store/cvh8dnm02rdyqg07dxfcw4lg0qgmd50x-meetily-local-candidate`。DOM/metadataで設定reload保持／旧欄なし確認、Settings Summaryを開いた。実Generate／推論／本文・音声・native録音log読取／screenshotなし。実アカウントpost-summary推論はユーザー操作待ちで、過去の人工文成功とは別。詳細：[LUNA-SUMMARY.md](LUNA-SUMMARY.md)。

@@ -4,7 +4,7 @@ User decision: add both Welcome and Settings entry points, including Qwen-only f
 
 ## Behavior
 
-- Windows x64 installer resources + AVX2/FMA are required for the automatic entry point. Linux/Nix retain manual setup; the Nix app source filter now carries the small compiled-in model manifest.
+- Windows x64 installer resources + AVX2/FMA are required for the automatic entry point. This checkpoint originally kept Linux/Nix manual-only; the subsequent [Linux parity change](QWEN-LINUX-ONBOARDING.md) shares this entry point with packaged Linux x86_64. The Nix app source filter carries the small compiled-in model manifest.
 - The unchecked consent control explains Hugging Face / Apache-2.0, the fixed model location, ~4.7 GB download, ~6.5 GiB free disk budget, and several minutes of local initialization. Japanese/English/Thai must be selected. Opening, mounting or restoring the UI never starts downloads or selects Qwen.
 - Native `qwen_setup_*` commands accept consent/job ID, never frontend URLs, executable paths or shell strings. The same pinned official revision and nine file hashes as the existing opt-in PowerShell tool are compiled into the application. Production downloads are HTTPS-only with size caps, SHA256 and atomic no-clobber publication.
 - One in-process job and a shared `.meetily-preparation.lock` prevent concurrent preparation (including the manual Windows tool). Existing files are checked before use. Reparse points/linked ancestors, mismatched files and unexpected active weight files are refused, not deleted or overwritten.

@@ -80,7 +80,7 @@ export function WelcomeStep({ onComplete }: { onComplete: () => void }) {
           >
             {qwenAvailable ? 'Set up Parakeet and local summaries' : 'Get Started'}
           </Button>
-          {qwenAvailable && <p className="text-xs text-center text-gray-500">Or choose Qwen above for transcription-only setup on Windows.</p>}
+          {qwenAvailable && <p className="text-xs text-center text-gray-500">Choose Qwen above for transcription-only setup. No local summary model is required.</p>}
         </div>
       </div>
     </OnboardingContainer>

@@ -12,7 +12,7 @@ mock.module('react', () => ({ ...hooks, default: hooks }));
 const calls: string[] = [];
 let nativeStatus: any = null;
 let available = true;
-const settings = { worker_path: 'C:\\qwen\\worker.exe', model_dir: 'C:\\models', ort_library: 'C:\\qwen\\onnxruntime.dll' };
+let settings = { worker_path: 'C:\\qwen\\worker.exe', model_dir: 'C:\\models', ort_library: 'C:\\qwen\\onnxruntime.dll' };
 mock.module('@tauri-apps/api/core', () => ({ invoke: async (name: string) => {
   calls.push(name);
   if (name === 'qwen_setup_info') return { available, model_dir: settings.model_dir, download_bytes: 4700000000, minimum_free_bytes: 7000000000 };
@@ -54,6 +54,21 @@ test('explicit checkbox + start prepares then selects exactly once', async () =>
     expect(h.selected.mock.calls[0][1]()).toBe(true);
     h.close(); expect(h.selected.mock.calls[0][1]()).toBe(false);
   } finally { h.close(); }
+});
+test('Linux uses the same consent UI and selects prepared Linux paths', async () => {
+  const previous = settings;
+  settings = { worker_path: '/app/libexec/qwen-speech-worker', model_dir: '/data/models/Qwen3-ASR-1.7B', ort_library: '/app/libexec/libonnxruntime.so' };
+  nativeStatus = null; const h = await mount();
+  try {
+    const all = elements(h.render());
+    expect(all.find(e => e.type === 'h3')!.props.children).toBe('Set up Qwen locally');
+    expect(all.find(e => e.props.children === 'Agree and set up Qwen')!.props.disabled).toBe(true);
+    expect(calls).not.toContain('qwen_setup_start');
+    all.find(e => e.type === 'input')!.props.onChange({ target: { checked: true } });
+    await elements(h.render()).find(e => e.props.children === 'Agree and set up Qwen')!.props.onClick();
+    expect(h.selected).toHaveBeenCalledTimes(1);
+    expect(h.selected.mock.calls[0][0]).toEqual(settings);
+  } finally { h.close(); settings = previous; }
 });
 test('remounting ready state requires an explicit Use prepared action', async () => {
   nativeStatus = { id: 'old', phase: 'ready', settings, error: null }; const h = await mount();

@@ -52,7 +52,7 @@ export function QwenAutoSetup({ disabled, onPrepared, onBusyChange }: { disabled
     finally { if (active.current) setStarting(false); }
   };
   return <section className="border rounded p-4 space-y-3" aria-label="Automatic Qwen setup">
-    <h3 className="font-medium">Set up Qwen locally (Windows)</h3>
+    <h3 className="font-medium">Set up Qwen locally</h3>
     <p className="text-sm">Download Qwen3-ASR 1.7B from Hugging Face (~{gib(info.download_bytes)} GiB), verify its checksums, and prepare its local INT8 cache. Allow {gib(info.minimum_free_bytes)} GiB free disk space, several GB of available RAM, and several minutes of CPU processing.</p>
     <p className="text-xs break-all">Install to: {info.model_dir}</p>
     <p className="text-sm">Verified files are reused. Different existing files are never overwritten. This selects Qwen after validation; no recording, cloud inference, Parakeet or summary-model download is started.</p>

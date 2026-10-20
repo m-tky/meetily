@@ -246,7 +246,9 @@ pub async fn complete_qwen_onboarding<R: Runtime>(
     app: AppHandle<R>,
     state: tauri::State<'_, AppState>,
 ) -> Result<(), String> {
-    if !cfg!(windows) { return Err("Qwen-only onboarding is currently available on Windows".into()); }
+    if !crate::audio::transcription::qwen_provider::qwen_is_supported() {
+        return Err("Qwen-only onboarding requires Linux or Windows x64".into());
+    }
     let selected = SettingsRepository::get_transcript_config(state.db_manager.pool())
         .await.map_err(|e| e.to_string())?.ok_or("Select Qwen before completing setup")?;
     if selected.provider != "qwen" || selected.model != crate::audio::transcription::qwen_provider::MODEL {

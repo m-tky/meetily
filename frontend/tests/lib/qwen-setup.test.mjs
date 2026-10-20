@@ -59,6 +59,29 @@ test('candidate worker is validated before saving local paths or provider select
   assert.ok(ui.indexOf("invoke('qwen_validate_settings'") < ui.indexOf("invoke('qwen_save_settings'"));
   assert.ok(ui.indexOf("invoke('qwen_init')") < ui.indexOf("invoke('api_save_transcript_config'"));
 });
+test('Linux uses the same explicit Qwen-only entry point without mandatory summary models', async () => {
+  const linux = { worker_path: '/app/libexec/qwen-speech-worker', model_dir: '/data/models/Qwen3-ASR-1.7B', ort_library: '/app/libexec/libonnxruntime.so' };
+  const h = harness([{ ...status('ready'), settings: linux }]);
+  await prepareAndSelectQwen(h.options);
+  assert.deepEqual(h.applied, [linux]);
+  const native = source('../../src-tauri/src/onboarding.rs').split('pub async fn complete_qwen_onboarding')[1].split('#[cfg(test)]')[0];
+  assert.match(native, /qwen_is_supported\(\)/);
+  assert.doesNotMatch(native, /cfg!\(windows\)/);
+  const welcome = source('../../src/components/onboarding/steps/WelcomeStep.tsx');
+  assert.match(welcome, /QwenModelSettings automaticOnly/);
+  assert.match(welcome, /No local summary model is required/);
+  assert.doesNotMatch(source('../../src/components/QwenAutoSetup.tsx'), /locally \(Windows\)/);
+});
+test('Linux package includes the initializer and runtime beside the worker', () => {
+  const pkg = source('../../../nix/package.nix');
+  assert.match(pkg, /initializer.*bin\/qwen-model-init \$out\/libexec\/qwen-model-init/);
+  assert.match(pkg.split('postFixup =')[1], /lib\/libonnxruntime.so \$out\/libexec\/libonnxruntime.so/);
+  assert.doesNotMatch(pkg.split('postFixup =')[0], /ln -s .*\$out\/libexec\/libonnxruntime.so/);
+  assert.match(pkg, /ctypes.CDLL/);
+  assert.match(pkg, /SSL_CERT_FILE/);
+  const provider = source('../../src-tauri/src/audio/transcription/qwen_provider.rs');
+  assert.match(provider, /cfg\(target_os = "linux"\)[\s\S]*current_exe\(\)/);
+});
 test('native setup accepts neither remote URLs nor executable paths from IPC', () => {
   const native = source('../../src-tauri/src/audio/transcription/qwen_setup.rs');
   assert.match(native, /qwen_setup_start<R: Runtime>\(\s*app: tauri::AppHandle<R>,\s*consent: bool,?\s*\)/);

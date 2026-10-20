@@ -1,8 +1,9 @@
 { lib, stdenv, rustPlatform, pnpm_10, fetchPnpmDeps, pnpmConfigHook, nodejs,
   pkg-config, cmake, clang, llvmPackages, python3, makeWrapper, wrapGAppsHook3,
   gtk3, webkitgtk_4_1, libsoup_3, openssl, alsa-lib, pulseaudio, libayatana-appindicator,
-  onnxruntime, ffmpeg_7, source-sans, qwenWorker }:
+  onnxruntime, ffmpeg_7, source-sans, qwenWorker, callPackage, cacert }:
 let
+  initializer = callPackage ./model-initializer.nix { inherit qwenWorker; };
   src = lib.cleanSourceWith {
     src = ../.;
     filter = path: type:
@@ -78,16 +79,24 @@ in rustPlatform.buildRustPackage {
     cp target/${target}/debug/meetily target/${target}/debug/llama-helper $out/libexec/
     ln -s ${ffmpeg_7}/bin/ffmpeg $out/libexec/ffmpeg
     ln -s ${qwenWorker}/bin/qwen-speech-worker $out/libexec/qwen-speech-worker
+    ln -s ${initializer}/bin/qwen-model-init $out/libexec/qwen-model-init
     cp -r frontend/src-tauri/templates $out/libexec/templates
     cp -r frontend/src-tauri/templates $out/lib/meetily/templates
     makeWrapper $out/libexec/meetily $out/libexec/meetily-launch \
       --prefix LD_LIBRARY_PATH : '${lib.makeLibraryPath [ onnxruntime pulseaudio libayatana-appindicator ]}' \
-      --set MEETILY_DISABLE_ANALYTICS 1
+      --set MEETILY_DISABLE_ANALYTICS 1 \
+      --set SSL_CERT_FILE ${cacert}/etc/ssl/certs/ca-bundle.crt
     printf '%s\n' '#!${stdenv.shell}' \
       'case "''${1-}" in --help|--version) printf "%s\\n" "Meetily 0.4.1-local (GUI; launch without flags)"; exit 0;; esac' \
       "exec $out/libexec/meetily-launch \"\$@\"" > $out/bin/meetily
     chmod +x $out/bin/meetily
     runHook postInstall
+  '';
+  # wrapGAppsHook wraps executable-mode libraries in libexec too. Publish this
+  # dlopen target AFTER wrapping, so it remains a real shared library, not a launcher.
+  postFixup = ''
+    ln -s ${onnxruntime}/lib/libonnxruntime.so $out/libexec/libonnxruntime.so
+    ${python3}/bin/python3 -c 'import ctypes, sys; ctypes.CDLL(sys.argv[1])' "$out/libexec/libonnxruntime.so"
   '';
   passthru = { inherit qwenWorker; ortLibrary = "${onnxruntime}/lib/libonnxruntime.so"; };
   meta = { mainProgram = "meetily"; platforms = [ "x86_64-linux" ]; license = lib.licenses.mit; };

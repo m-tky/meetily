@@ -1,4 +1,4 @@
-//! Explicit-consent Windows setup. The frontend cannot supply URLs or executable paths.
+//! Explicit-consent Windows/Linux setup. The frontend cannot supply URLs or executable paths.
 //! Preparation never writes provider, language, summary or onboarding preferences.
 use super::qwen_provider::QwenSettings;
 use serde::{Deserialize, Serialize};
@@ -36,7 +36,7 @@ const CACHE_BYTES: u64 = 1_724_760_064;
 // Pinned engine/model cache payload, independently equal on Linux and Windows
 // (WINDOWS-AUDIT: cold-cache comparison). Bytes 16..24 contain shard mtimes;
 // the initializer additionally validates that identity and the format header.
-#[cfg(any(windows, test))]
+#[cfg(any(windows, target_os = "linux", test))]
 const CACHE_PAYLOAD_SHA256: &str =
     "96e4ad3f590d30941305c4e7350450247ca9109226b7f2d87661cde73758a3dd";
 const HEADROOM: u64 = 512 * 1024 * 1024;
@@ -76,17 +76,15 @@ fn update(id: &str, f: impl FnOnce(&mut SetupStatus)) {
 pub fn qwen_setup_info<R: Runtime>(app: tauri::AppHandle<R>) -> Result<SetupInfo, String> {
     let _ = &app;
     let bytes = manifest()?.files.iter().map(|f| f.bytes).sum();
-    #[cfg(all(windows, target_arch = "x86_64", target_env = "msvc"))]
+    #[cfg(all(
+        target_arch = "x86_64",
+        any(target_os = "linux", all(windows, target_env = "msvc"))
+    ))]
     {
         let settings = super::qwen_provider::bundled_settings(&app)?;
         let available = std::is_x86_feature_detected!("avx2")
             && std::is_x86_feature_detected!("fma")
-            && settings.worker_path.is_file()
-            && settings.ort_library.is_file()
-            && settings
-                .worker_path
-                .with_file_name("qwen-model-init.exe")
-                .is_file();
+            && runtime_present(&settings);
         return Ok(SetupInfo {
             available,
             model_dir: Some(settings.model_dir.to_string_lossy().into()),
@@ -94,7 +92,10 @@ pub fn qwen_setup_info<R: Runtime>(app: tauri::AppHandle<R>) -> Result<SetupInfo
             minimum_free_bytes: bytes + CACHE_BYTES + HEADROOM,
         });
     }
-    #[cfg(not(all(windows, target_arch = "x86_64", target_env = "msvc")))]
+    #[cfg(not(all(
+        target_arch = "x86_64",
+        any(target_os = "linux", all(windows, target_env = "msvc"))
+    )))]
     Ok(SetupInfo {
         available: false,
         model_dir: None,
@@ -134,10 +135,10 @@ pub async fn qwen_setup_start<R: Runtime>(
     }
     if !qwen_setup_info(app.clone())?.available {
         return Err(
-            "Automatic setup requires the Windows x64 installer and an AVX2/FMA CPU".into(),
+            "Automatic setup requires a Linux/Windows x64 package with the Qwen runtime and an AVX2/FMA CPU".into(),
         );
     }
-    #[cfg(windows)]
+    #[cfg(any(windows, target_os = "linux"))]
     {
         let settings = super::qwen_provider::bundled_settings(&app)?;
         let id = uuid::Uuid::new_v4().to_string();
@@ -183,11 +184,28 @@ pub async fn qwen_setup_start<R: Runtime>(
         });
         return Ok(id);
     }
-    #[cfg(not(windows))]
-    Err("Automatic Qwen setup is only available in the Windows installer".into())
+    #[cfg(not(any(windows, target_os = "linux")))]
+    Err("Automatic Qwen setup requires a supported Linux or Windows package".into())
 }
 
-#[cfg(any(windows, test))]
+fn initializer_name() -> &'static str {
+    if cfg!(windows) {
+        "qwen-model-init.exe"
+    } else {
+        "qwen-model-init"
+    }
+}
+
+fn runtime_present(settings: &QwenSettings) -> bool {
+    settings.worker_path.is_file()
+        && settings.ort_library.is_file()
+        && settings
+            .worker_path
+            .with_file_name(initializer_name())
+            .is_file()
+}
+
+#[cfg(any(windows, target_os = "linux", test))]
 mod preparation {
     use super::*;
     use futures_util::StreamExt;
@@ -345,7 +363,7 @@ mod preparation {
                 .map_err(|e| e.to_string())?;
         }
         let mut command = tokio::process::Command::new(
-            settings.worker_path.with_file_name("qwen-model-init.exe"),
+            settings.worker_path.with_file_name(initializer_name()),
         );
         command
             .arg(staging.path())
@@ -519,7 +537,7 @@ mod preparation {
         check_cancel(cancel)
     }
 }
-#[cfg(windows)]
+#[cfg(any(windows, target_os = "linux"))]
 use preparation::prepare;
 
 #[cfg(windows)]
@@ -625,6 +643,29 @@ mod tests {
             trailing.trim().is_empty(),
             "The child must not complete its natural sleep: {trailing}"
         );
+    }
+    #[test]
+    fn setup_requires_all_bundled_tools_but_not_preinstalled_models() {
+        let dir = tempfile::tempdir().unwrap();
+        let settings = QwenSettings {
+            worker_path: dir.path().join("worker"),
+            ort_library: dir.path().join("runtime"),
+            model_dir: dir.path().join("not-downloaded"),
+        };
+        assert!(!runtime_present(&settings));
+        std::fs::write(&settings.worker_path, b"fixture").unwrap();
+        std::fs::write(&settings.ort_library, b"fixture").unwrap();
+        assert!(!runtime_present(&settings));
+        std::fs::write(
+            settings.worker_path.with_file_name(initializer_name()),
+            b"fixture",
+        ).unwrap();
+        assert!(runtime_present(&settings));
+        assert!(!settings.model_dir.exists());
+        #[cfg(target_os = "linux")]
+        assert_eq!(initializer_name(), "qwen-model-init");
+        #[cfg(windows)]
+        assert_eq!(initializer_name(), "qwen-model-init.exe");
     }
     #[test]
     fn manifest_is_fixed_and_downloads_are_not_a_ui_parameter() {
@@ -791,7 +832,7 @@ mod tests {
             std::fs::write(model.join(row.file), b"fixture").unwrap();
         }
         let pid_file = dir.path().join("initializer.pid");
-        let initializer = dir.path().join("qwen-model-init.exe");
+        let initializer = dir.path().join(initializer_name());
         std::fs::write(
             &initializer,
             format!(

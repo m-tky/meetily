@@ -387,15 +387,22 @@ pub fn qwen_is_supported() -> bool {
     ))
 }
 
-// Packaged Windows builds keep the worker and its DLLs together. No developer
-// PATH, registry search, download, model selection or provider switch is implied.
-#[cfg(windows)]
+// Packaged builds keep the worker/runtime together. No PATH search, download,
+// model selection or provider switch is implied.
+#[cfg(any(windows, target_os = "linux"))]
 pub(super) fn bundled_settings<R: Runtime>(app: &tauri::AppHandle<R>) -> Result<QwenSettings, String> {
-    let resources = app
+    #[cfg(windows)]
+    let runtime = app
         .path()
         .resource_dir()
-        .map_err(|_| "App resources unavailable")?;
-    let runtime = resources.join("qwen");
+        .map_err(|_| "App resources unavailable")?
+        .join("qwen");
+    #[cfg(target_os = "linux")]
+    let runtime = std::env::current_exe()
+        .map_err(|_| "App executable unavailable")?
+        .parent()
+        .ok_or("App executable directory unavailable")?
+        .to_path_buf();
     let model_dir = app
         .path()
         .app_local_data_dir()
@@ -403,8 +410,16 @@ pub(super) fn bundled_settings<R: Runtime>(app: &tauri::AppHandle<R>) -> Result<
         .join("models")
         .join("Qwen3-ASR-1.7B");
     Ok(QwenSettings {
-        worker_path: runtime.join("qwen-speech-worker.exe"),
-        ort_library: runtime.join("onnxruntime.dll"),
+        worker_path: runtime.join(if cfg!(windows) {
+            "qwen-speech-worker.exe"
+        } else {
+            "qwen-speech-worker"
+        }),
+        ort_library: runtime.join(if cfg!(windows) {
+            "onnxruntime.dll"
+        } else {
+            "libonnxruntime.so"
+        }),
         model_dir,
     })
 }
@@ -417,11 +432,11 @@ pub fn qwen_get_settings<R: Runtime>(
             .map(Some)
             .map_err(|_| "Invalid saved Qwen settings".into()),
         Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
-            #[cfg(windows)]
+            #[cfg(any(windows, target_os = "linux"))]
             {
                 return bundled_settings(&app).map(Some);
             }
-            #[cfg(not(windows))]
+            #[cfg(not(any(windows, target_os = "linux")))]
             {
                 Ok(None)
             }
