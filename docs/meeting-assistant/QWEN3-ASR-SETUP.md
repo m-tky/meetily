@@ -2,9 +2,15 @@
 
 本体録音用の選択式adapter。既存Whisper/Parakeet/defaultを置換しない。追加の精度研究ではない。**AI草案・要音声確認**。短語・否定語・noiseの既知誤認識は未解決。品質受入・会議／長時間安定性・配布版完成を意味しない。
 
-## ローカル準備
+## 通常のLinux初期設定（更新）
 
-このcheckoutのstandalone workerを使用する。古いPCM16-only workerやcrop/VAD-only workerはready handshakeで拒否する。モデルや共有libraryはアプリへ同梱／自動downloadしない。
+新しいNixパッケージでは、Welcomeの **Set up Qwen locally** で文字起こし言語を選び、同意後に **Agree and set up Qwen** を押す。アプリがQwen3-ASR 1.7Bをdownload・検証・INT8初期化し、worker検証後に選択して初期設定を完了する。**事前の手動インストール、Parakeet、Qwen3.5 4Bなどの要約モデルは不要**。要約は別途SettingsのLuna設定を使う。起動だけではdownloadしない。
+
+旧表示中アプリは自動更新されない。パッケージの検証状況と未検証範囲は [QWEN-LINUX-ONBOARDING.md](QWEN-LINUX-ONBOARDING.md) を参照。
+
+## 開発者向け手動準備（通常の初期設定では不要）
+
+以下は旧previewやcustom workerを使う場合の手順。新パッケージはworker・initializer・共有libraryを同梱し、モデルは同意付きでアプリ内downloadする。古いPCM16-only workerやcrop/VAD-only workerはready handshakeで拒否する。
 
 1. `benchmarks/qwen3-asr/PLAN.md` と `worker/README.md` のpinned source/official 1.7B重み・LP64 OpenBLAS準備を使う。必要ファイルは `config.json`, `model-00001-of-00002.safetensors`, `model-00002-of-00002.safetensors`, `qwen-asr-int8.sidecar`, `vocab.json`, `merges.txt`。0.6B/他モデルを選ばない。decoderだけINT8、encoder/prefillはF32。
 2. frozen standalone worker lockでbuildする。既存app lockfileは変更しない。

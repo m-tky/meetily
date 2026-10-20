@@ -1,6 +1,12 @@
 # 開発状況（2026-10-12）
 
-## 最新：LinuxのQwen自動導入をWindowsと共通化
+## 最新：LinuxはQwen3-ASRだけで初期設定完了・再起動を確認
+
+ユーザーが「Qwen3.5 4BではなくQwen-ASRだけ」と明確化して続行承認。既存の修正済Nix debug候補 `pr7b0kc…` をfresh HOME/XDG/private D-Bus/Xvfb/null ALSA/unavailable Pulseで検証。実HTTPS進捗→UI Cancel→未選択・未完了・partial cleanup PASS。その後は重複約4.7GB転送を避け、既存公開モデルのmanifest9filesだけcopyして明示retry（cache/settings/completion flagsはseedせず）。本体checksum検証→fresh INT8 cache初期化→worker検証・Qwen選択→Qwen-only onboarding完了→native旧PID終了確認→新processで設定・完了状態保持／録音画面到達 PASS。Parakeet／summary download flagsはnot_downloaded、Qwen3.5や別の大型model追加なし、録音なし。完全新規HTTPS download完走とは区別し未検証を維持。
+
+追加Node13／TS／Python compile／diff PASS。初回転送中断・unsupported sessions404・背景SIGINT無効によるowned環境限定cleanup・port/display衝突・cancel domain errorをprotocol errorと誤認したharness失敗・r4 timeoutを保持。harnessのerror envelope／signal handling／startup guard／実button aria-labelを修正、最終r5全成功。`QWEN3-ASR-SETUP.md`の通常手順をアプリ内ASR-onlyへ更新、旧manual準備は開発者用へ分離。本体source／通常profile／実音声・再生・ASR/cloud推論・auth・releaseは変更／実行なし。その後ユーザーの保存済み・閉鎖／反映承認を受け、same `dual-preview-4p61rc4k` :0/4454を `runtime/nixos-asr-only-candidate` → `pr7b0kc…` でpreserve-settings/no-screenshot再開。旧helper不在／port free／profile process0を事前確認。DOM metadataで既存ログイン・Lunaのreload保持／Qwen・JA／自動setupあり同意unchecked／jobなし／未録音を確認し、Settings Transcriptionを開いた。新native executable・owned host capture0も確認。直URL遷移／Radix click／wrapperと実exeの識別・孤立test processによるunique判定の初期検証失敗を保持し、実link・mousedown・exact profile scopeへ検証を修正して成功。timeout試験のowned isolated leftoversをcleanup、旧4453／通常app保持。詳細：[QWEN-LINUX-ONBOARDING.md](QWEN-LINUX-ONBOARDING.md)、log `../logs/meetily-linux-qwen-asr-only-retry-r5.log`。
+
+## 前工程：LinuxのQwen自動導入をWindowsと共通化
 
 ユーザーがLinuxにもWindowsと同じQwen自動導入を要求し、Qwen3.5 4B等は不要と明示。Windows限定だったsetup availability／download job／Qwen-only onboardingをLinuxへ接続。Welcome／Settingsの同意付き共通UIでQwen3-ASR 1.7B decoder-INT8をdownload→checksum検証→初期化→worker検証→明示選択し、Parakeet／local summary modelなしで完了できる。既存任意catalog／設定／filesは削除しない。Nix appへ共通initializer・ORT link・CA pathを同梱、manual preparationと同一derivationを共有。native23＋onboarding3（重複1）、Node23／Bun5／TS／Nix評価／initializer build PASS。full Nix debug app build／isolated export成功。初回packageはGUI表示成功でもORT dlopen FAIL（GAppsが.soをwrapper化）を保持、postFixupでlink公開＋実dlopen build gateへ修正。修正候補`/nix/store/pr7b0kc0pf8b88hga8gjycvk6ji5z2h6-meetily-local-0.4.1-local`は再build／実ORT load／fresh native Welcome＋browser reload（同意unchecked・jobなし・model未作成・未録音）PASS。実HTTPS download／準備後選択・native再起動は未検証。モデルdownload／録音再生／推論／auth／通常profile／表示中app変更／releaseなし。詳細：[QWEN-LINUX-ONBOARDING.md](QWEN-LINUX-ONBOARDING.md)。
 
