@@ -1,4 +1,4 @@
-//! Opt-in Linux / Windows x64 Qwen adapter. No cloud, shell command strings or model fallback.
+//! Exclusive local ASR adapter for Qwen3-ASR 1.7B / 0.6B. No cloud or model fallback.
 //! A request owns its child while in flight: timeout/cancellation drops and kills
 //! it, and the next request starts a fresh process. Failed audio is NOT retried.
 use super::provider::{TranscriptResult, TranscriptionError, TranscriptionProvider};
@@ -19,12 +19,12 @@ use tokio::{
     sync::Mutex,
 };
 
-pub const MODEL: &str = "Qwen3-ASR-1.7B-INT8";
+pub const MODEL: &str = super::qwen_model::LARGE;
 const MAX_SAMPLES: usize = 30 * 16000;
 const MAX_RESPONSE: usize = 128 * 1024;
 static ENGINE: LazyLock<Mutex<Option<Arc<QwenProvider>>>> = LazyLock::new(|| Mutex::new(None));
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct QwenSettings {
     pub worker_path: PathBuf,
@@ -32,7 +32,14 @@ pub struct QwenSettings {
     pub ort_library: PathBuf,
 }
 impl QwenSettings {
-    fn validate(&self) -> Result<(), String> {
+    pub(super) fn model(&self) -> Result<&'static str, String> {
+        let bytes = std::fs::read(self.model_dir.join("config.json"))
+            .map_err(|_| "Qwen model config.json not found")?;
+        let config: Value =
+            serde_json::from_slice(&bytes).map_err(|_| "Invalid Qwen model config")?;
+        super::qwen_model::from_config(&config)
+    }
+    pub(super) fn validate(&self) -> Result<(), String> {
         if !qwen_is_supported() {
             return Err("Qwen ASR requires Linux or Windows x64/MSVC".into());
         }
@@ -44,24 +51,21 @@ impl QwenSettings {
         if !self.worker_path.is_file() || !self.ort_library.is_file() {
             return Err("Qwen worker / ONNX runtime library not found".into());
         }
-        let bytes = std::fs::read(self.model_dir.join("config.json"))
-            .map_err(|_| "Qwen model config.json not found")?;
-        let config: Value =
-            serde_json::from_slice(&bytes).map_err(|_| "Invalid Qwen model config")?;
-        let text = &config["thinker_config"]["text_config"];
-        if config["model_type"] != "qwen3_asr"
-            || text["hidden_size"] != 2048
-            || text["num_hidden_layers"] != 28
+        let model = self.model()?;
+        let weights: &[&str] = if model == MODEL {
+            &[
+                "model-00001-of-00002.safetensors",
+                "model-00002-of-00002.safetensors",
+            ]
+        } else {
+            &["model.safetensors"]
+        };
+        for name in
+            weights
+                .iter()
+                .copied()
+                .chain(["qwen-asr-int8.sidecar", "vocab.json", "merges.txt"])
         {
-            return Err("Select the Qwen3-ASR 1.7B model directory".into());
-        }
-        for name in [
-            "model-00001-of-00002.safetensors",
-            "model-00002-of-00002.safetensors",
-            "qwen-asr-int8.sidecar",
-            "vocab.json",
-            "merges.txt",
-        ] {
             if !self.model_dir.join(name).is_file() {
                 return Err(format!(
                     "Qwen prepared model is missing {name}; follow the local setup guide"
@@ -103,11 +107,11 @@ async fn line<R: AsyncBufRead + Unpin>(reader: &mut R) -> Result<Value, String> 
         }
     }
 }
-fn validate_ready(v: &Value) -> Result<(), String> {
+fn validate_ready_for(v: &Value, model: &str) -> Result<(), String> {
     if v["event"] != "ready"
         || v["protocol"] != 1
         || v["threads"] != 6
-        || v["model"] != "Qwen3-ASR-1.7B"
+        || v["model"] != super::qwen_model::directory(model)?
         || v["precision"] != "decoder-INT8-encoder-prefill-F32"
         || v["recognition_context"] != "full_input"
         || v["vad_only"] != false
@@ -123,7 +127,7 @@ fn validate_ready(v: &Value) -> Result<(), String> {
     }
     Ok(())
 }
-fn language(code: Option<&str>) -> Result<&'static str, String> {
+pub(super) fn language(code: Option<&str>) -> Result<&'static str, String> {
     match code {
         Some("ja"|"Japanese")=>Ok("Japanese"), Some("en"|"English")=>Ok("English"), Some("th"|"Thai")=>Ok("Thai"),
         _=>Err("Qwen requires Japanese (ja), English (en), or Thai (th); automatic detection / translation is not enabled".into()),
@@ -189,6 +193,7 @@ fn response(v: &Value, id: &str) -> Result<TranscriptResult, String> {
 
 pub struct QwenProvider {
     settings: QwenSettings,
+    model: &'static str,
     cache: PathBuf,
     worker: Mutex<Option<Worker>>,
     timeout: Duration,
@@ -196,6 +201,7 @@ pub struct QwenProvider {
 impl QwenProvider {
     pub fn new(settings: QwenSettings, cache: PathBuf) -> Result<Self, String> {
         settings.validate()?;
+        let model = settings.model()?;
         std::fs::create_dir_all(&cache)
             .map_err(|_| "Cannot create private Qwen temporary directory")?;
         #[cfg(unix)]
@@ -206,6 +212,7 @@ impl QwenProvider {
         }
         Ok(Self {
             settings,
+            model,
             cache,
             worker: Mutex::new(None),
             timeout: Duration::from_secs(180),
@@ -215,7 +222,7 @@ impl QwenProvider {
         let mut command = tokio::process::Command::new(&self.settings.worker_path);
         command
             .arg(&self.settings.model_dir)
-            .arg("6")
+            .arg("6") // Retain the two-argument CLI for existing 1.7B workers.
             .env("ORT_DYLIB_PATH", &self.settings.ort_library)
             .env("OPENBLAS_NUM_THREADS", "6")
             .env("OMP_NUM_THREADS", "6")
@@ -242,7 +249,7 @@ impl QwenProvider {
         let ready = tokio::time::timeout(Duration::from_secs(30), line(&mut worker.output))
             .await
             .map_err(|_| "Qwen ready handshake timed out")??;
-        validate_ready(&ready)?;
+        validate_ready_for(&ready, self.model)?;
         Ok(worker)
     }
     pub async fn connect(&self) -> Result<(), String> {
@@ -362,18 +369,23 @@ impl TranscriptionProvider for QwenProvider {
         true
     } // Prepared/ready; weights load lazily on actual speech.
     async fn get_current_model(&self) -> Option<String> {
-        Some(MODEL.into())
+        Some(self.model.into())
     }
     fn provider_name(&self) -> &'static str {
         "Qwen3-ASR (local AI draft)"
     }
 }
-fn config_path<R: Runtime>(app: &tauri::AppHandle<R>) -> Result<PathBuf, String> {
+fn config_path<R: Runtime>(app: &tauri::AppHandle<R>, model: &str) -> Result<PathBuf, String> {
+    super::qwen_model::validate(model)?;
     Ok(app
         .path()
         .app_config_dir()
         .map_err(|_| "App config directory unavailable")?
-        .join("qwen-asr.json"))
+        .join(if model == MODEL {
+            "qwen-asr.json"
+        } else {
+            "qwen-asr-0.6b.json"
+        }))
 }
 #[tauri::command]
 pub fn qwen_is_supported() -> bool {
@@ -390,7 +402,10 @@ pub fn qwen_is_supported() -> bool {
 // Packaged builds keep the worker/runtime together. No PATH search, download,
 // model selection or provider switch is implied.
 #[cfg(any(windows, target_os = "linux"))]
-pub(super) fn bundled_settings<R: Runtime>(app: &tauri::AppHandle<R>) -> Result<QwenSettings, String> {
+pub(super) fn bundled_settings_for<R: Runtime>(
+    app: &tauri::AppHandle<R>,
+    model: &str,
+) -> Result<QwenSettings, String> {
     #[cfg(windows)]
     let runtime = app
         .path()
@@ -408,7 +423,7 @@ pub(super) fn bundled_settings<R: Runtime>(app: &tauri::AppHandle<R>) -> Result<
         .app_local_data_dir()
         .map_err(|_| "App local data directory unavailable")?
         .join("models")
-        .join("Qwen3-ASR-1.7B");
+        .join(super::qwen_model::directory(model)?);
     Ok(QwenSettings {
         worker_path: runtime.join(if cfg!(windows) {
             "qwen-speech-worker.exe"
@@ -426,15 +441,22 @@ pub(super) fn bundled_settings<R: Runtime>(app: &tauri::AppHandle<R>) -> Result<
 #[tauri::command]
 pub fn qwen_get_settings<R: Runtime>(
     app: tauri::AppHandle<R>,
+    model: Option<String>,
 ) -> Result<Option<QwenSettings>, String> {
-    match std::fs::read(config_path(&app)?) {
+    settings_for(&app, model.as_deref().unwrap_or(MODEL))
+}
+pub(super) fn settings_for<R: Runtime>(
+    app: &tauri::AppHandle<R>,
+    model: &str,
+) -> Result<Option<QwenSettings>, String> {
+    match std::fs::read(config_path(app, model)?) {
         Ok(bytes) => serde_json::from_slice(&bytes)
             .map(Some)
             .map_err(|_| "Invalid saved Qwen settings".into()),
         Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
             #[cfg(any(windows, target_os = "linux"))]
             {
-                return bundled_settings(&app).map(Some);
+                return bundled_settings_for(app, model).map(Some);
             }
             #[cfg(not(any(windows, target_os = "linux")))]
             {
@@ -449,12 +471,25 @@ pub fn qwen_get_settings<R: Runtime>(
 pub async fn qwen_validate_settings<R: Runtime>(
     app: tauri::AppHandle<R>,
     settings: QwenSettings,
+    model: Option<String>,
 ) -> Result<(), String> {
-    let _guard = crate::audio::common::acquire_engine_lifecycle_lock().await;
-    if crate::audio::recording_commands::is_recording().await {
-        return Err("Stop recording before validating Qwen settings".into());
+    if let Some(expected) = model {
+        if settings.model()? != super::qwen_model::validate(&expected)? {
+            return Err("Prepared directory does not match selected model".into());
+        }
     }
-    let cache = app.path().app_cache_dir().map_err(|_| "App cache directory unavailable")?.join("qwen-audio");
+    let _guard = crate::audio::common::acquire_engine_lifecycle_lock().await;
+    if crate::audio::recording_commands::is_recording().await
+        || super::batch::is_busy()
+        || super::qwen_setup::is_running()
+    {
+        return Err("Stop audio processing/setup before validating Qwen settings".into());
+    }
+    let cache = app
+        .path()
+        .app_cache_dir()
+        .map_err(|_| "App cache directory unavailable")?
+        .join("qwen-audio");
     let provider = QwenProvider::new(settings, cache)?;
     let result = provider.connect().await;
     provider.shutdown().await;
@@ -466,11 +501,14 @@ pub async fn qwen_save_settings<R: Runtime>(
     settings: QwenSettings,
 ) -> Result<(), String> {
     let _guard = crate::audio::common::acquire_engine_lifecycle_lock().await;
-    if crate::audio::recording_commands::is_recording().await {
-        return Err("Stop recording before changing Qwen settings".into());
+    if crate::audio::recording_commands::is_recording().await
+        || super::batch::is_busy()
+        || super::qwen_setup::is_running()
+    {
+        return Err("Stop audio processing/setup before changing Qwen settings".into());
     }
     settings.validate()?;
-    let path = config_path(&app)?;
+    let path = config_path(&app, settings.model()?)?;
     let parent = path.parent().ok_or("Missing config parent")?;
     std::fs::create_dir_all(parent).map_err(|_| "Cannot create config directory")?;
     let mut file =
@@ -487,12 +525,24 @@ pub async fn qwen_save_settings<R: Runtime>(
 pub async fn initialize<R: Runtime>(
     app: &tauri::AppHandle<R>,
 ) -> Result<Arc<QwenProvider>, String> {
+    initialize_model(app, &super::engine::selected_model(app).await?).await
+}
+pub async fn initialize_model<R: Runtime>(
+    app: &tauri::AppHandle<R>,
+    model: &str,
+) -> Result<Arc<QwenProvider>, String> {
+    let settings = settings_for(app, super::qwen_model::validate(model)?)?
+        .ok_or("Configure the local Qwen worker/model/runtime in transcription settings first")?;
+    if settings.model()? != model {
+        return Err("Qwen model directory does not match the selected model".into());
+    }
     let mut engine = ENGINE.lock().await;
     if let Some(p) = &*engine {
-        return Ok(p.clone());
+        if p.settings == settings && p.model == model {
+            return Ok(p.clone());
+        }
+        p.shutdown().await;
     }
-    let settings = qwen_get_settings(app.clone())?
-        .ok_or("Configure the local Qwen worker/model/runtime in transcription settings first")?;
     let cache = app
         .path()
         .app_cache_dir()
@@ -511,23 +561,36 @@ pub async fn shutdown() {
 #[tauri::command]
 pub async fn qwen_init<R: Runtime>(app: tauri::AppHandle<R>) -> Result<(), String> {
     let _guard = crate::audio::common::acquire_engine_lifecycle_lock().await;
+    if super::batch::is_busy() || super::qwen_setup::is_running() {
+        return Err("Wait for audio import/retranscription/setup to finish".into());
+    }
     validate_language()?;
     initialize(&app).await.map(|_| ())
 }
 #[tauri::command]
+pub fn qwen_get_models_directory<R: Runtime>(app: tauri::AppHandle<R>) -> Result<String, String> {
+    Ok(app
+        .path()
+        .app_local_data_dir()
+        .map_err(|e| e.to_string())?
+        .join("models")
+        .to_string_lossy()
+        .into())
+}
+#[tauri::command]
 pub async fn qwen_has_available_models<R: Runtime>(app: tauri::AppHandle<R>) -> bool {
-    qwen_get_settings(app)
-        .ok()
-        .flatten()
-        .is_some_and(|s| s.validate().is_ok())
+    !qwen_get_available_models(app).await.is_empty()
 }
 #[tauri::command]
 pub async fn qwen_get_available_models<R: Runtime>(app: tauri::AppHandle<R>) -> Vec<Value> {
-    if qwen_has_available_models(app).await {
-        vec![json!({"name":MODEL,"status":"Available"})]
-    } else {
-        vec![]
-    }
+    super::qwen_model::MODELS
+        .iter()
+        .filter_map(|model| {
+            let settings = settings_for(&app, model).ok().flatten()?;
+            (settings.validate().is_ok() && settings.model().ok()? == *model)
+                .then(|| json!({"name":model,"status":"Available","size_mb":0}))
+        })
+        .collect()
 }
 #[cfg(test)]
 mod tests {
@@ -541,7 +604,7 @@ mod tests {
             "vad_only":false,"max_audio_seconds":30,"vad_frame_samples":512,"audio_formats":["float32"]});
         std::fs::write(
             &worker_path,
-            format!("#!/bin/sh\nprintf '%s\\n' '{}'\n{}\n", ready, behavior),
+            format!("#!/bin/sh\ntest \"$#\" -eq 2 || exit 9\nprintf '%s\\n' '{}'\n{}\n", ready, behavior),
         )
         .unwrap();
         std::fs::set_permissions(&worker_path, std::fs::Permissions::from_mode(0o700)).unwrap();
@@ -555,6 +618,7 @@ mod tests {
             },
             cache,
             worker: Mutex::new(None),
+            model: MODEL,
             timeout: Duration::from_millis(150),
         }
     }
@@ -641,6 +705,7 @@ printf '%s\n' '{"id":"request-1","confirmed":false,"text":"","asr_calls":0,"stat
             },
             cache,
             worker: Mutex::new(None),
+            model: MODEL,
             timeout: Duration::from_secs(10),
         }
     }
@@ -718,6 +783,51 @@ printf '%s\n' '{"id":"request-1","confirmed":false,"text":"","asr_calls":0,"stat
         provider.shutdown().await;
         fixture_exited(root.path()).await;
         assert_eq!(std::fs::read_dir(&provider.cache).unwrap().count(), 0);
+    }
+    #[test]
+    fn both_model_layouts_and_handshakes_are_identity_bound() {
+        for (model, hidden, weights) in [
+            (
+                MODEL,
+                2048,
+                vec![
+                    "model-00001-of-00002.safetensors",
+                    "model-00002-of-00002.safetensors",
+                ],
+            ),
+            (
+                super::super::qwen_model::SMALL,
+                1024,
+                vec!["model.safetensors"],
+            ),
+        ] {
+            let root = tempfile::tempdir().unwrap();
+            let settings = QwenSettings {
+                worker_path: root.path().join("worker"),
+                model_dir: root.path().into(),
+                ort_library: root.path().join("ort"),
+            };
+            for name in weights.into_iter().chain([
+                "worker",
+                "ort",
+                "qwen-asr-int8.sidecar",
+                "vocab.json",
+                "merges.txt",
+            ]) {
+                std::fs::write(root.path().join(name), b"fixture").unwrap();
+            }
+            std::fs::write(root.path().join("config.json"), serde_json::to_vec(&json!({"model_type":"qwen3_asr","thinker_config":{"text_config":{"hidden_size":hidden,"num_hidden_layers":28}}})).unwrap()).unwrap();
+            settings.validate().unwrap();
+            assert_eq!(settings.model().unwrap(), model);
+            let ready = json!({"event":"ready","protocol":1,"threads":6,"model":super::super::qwen_model::directory(model).unwrap(),"precision":"decoder-INT8-encoder-prefill-F32","recognition_context":"full_input","vad_only":false,"max_audio_seconds":30,"vad_frame_samples":512,"audio_formats":["float32"]});
+            validate_ready_for(&ready, model).unwrap();
+            let other = if model == MODEL {
+                super::super::qwen_model::SMALL
+            } else {
+                MODEL
+            };
+            assert!(validate_ready_for(&ready, other).is_err());
+        }
     }
     #[test]
     fn float_transport_preserves_tiny_samples_and_checks_bounds() {

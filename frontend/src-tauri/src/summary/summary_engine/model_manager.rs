@@ -1,5 +1,5 @@
 // Model manager for built-in AI models - handles downloads and lifecycle
-// Follows the same pattern as whisper_engine/whisper_engine.rs for consistency
+// Local summary-model catalog management, independent of the Qwen ASR worker.
 
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;

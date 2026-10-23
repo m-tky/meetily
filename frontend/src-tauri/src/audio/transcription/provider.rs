@@ -1,7 +1,7 @@
 // audio/transcription/provider.rs
 //
 // Defines the unified TranscriptionProvider trait and common types for all
-// transcription engines (Whisper, Parakeet, future providers).
+// the Qwen adapter and isolated transcription test fixtures.
 
 use async_trait::async_trait;
 
@@ -45,7 +45,7 @@ pub struct TranscriptResult {
     pub is_partial: bool,
 }
 
-/// Trait for transcription providers (Whisper, Parakeet, future providers)
+/// Shared contract for the Qwen adapter and isolated test fixtures.
 #[async_trait]
 pub trait TranscriptionProvider: Send + Sync {
     /// Transcribe audio samples to text

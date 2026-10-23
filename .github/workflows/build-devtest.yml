@@ -341,14 +341,12 @@ jobs:
 
           # Windows: Use Vulkan for GPU acceleration
           if [[ "${{ matrix.platform }}" == *"windows"* ]]; then
-            FEATURES="--features vulkan"
-            echo "Windows build with Vulkan GPU acceleration"
+            echo "Windows ASR uses the packaged Qwen CPU worker"
           fi
 
           # Linux: Use OpenBLAS for optimized CPU performance
           if [[ "${{ matrix.platform }}" == *"ubuntu"* ]]; then
-            FEATURES="--features openblas"
-            echo "Linux build with OpenBLAS CPU optimization"
+            echo "Linux ASR uses the packaged Qwen CPU worker"
           fi
 
           # macOS: Uses Metal by default, no additional features needed

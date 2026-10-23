@@ -19,7 +19,7 @@ function Receive{
 try{
  $r.runtimeFiles=@(Get-ChildItem -LiteralPath $RuntimeDirectory -File|Where-Object {$_.Extension -in @('.exe','.dll')}|ForEach-Object {@{name=$_.Name;sha256=(Get-FileHash $_.FullName).Hash;version=$_.VersionInfo.FileVersion}})
  Publish
- $si=[Diagnostics.ProcessStartInfo]::new((Join-Path $RuntimeDirectory 'qwen-speech-worker.exe'),('"'+(Join-Path $RuntimeDirectory 'model-not-installed')+'" 6'))
+ $si=[Diagnostics.ProcessStartInfo]::new((Join-Path $RuntimeDirectory 'qwen-speech-worker.exe'),('"'+(Join-Path $RuntimeDirectory 'model-not-installed')+'" 6 --model Qwen3-ASR-1.7B'))
  $si.UseShellExecute=$false;$si.CreateNoWindow=$true;$si.RedirectStandardInput=$true;$si.RedirectStandardOutput=$true;$si.RedirectStandardError=$true
  $si.StandardOutputEncoding=[Text.Encoding]::UTF8;$si.StandardErrorEncoding=[Text.Encoding]::UTF8
  $si.EnvironmentVariables['Path']=$env:SystemRoot+'\System32;'+$env:SystemRoot

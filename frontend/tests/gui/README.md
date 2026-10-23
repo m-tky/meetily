@@ -132,3 +132,20 @@ Audio is decoded and duration checked; cleanup/process exit and file hashes are
 verified. Raw outputs aren't corrected or scored for quality. Full details and
 limits: `docs/meeting-assistant/REAL-QWEN-GUI.md`; latest verification log:
 `../logs/meetily-gui-real-qwen-verified.log`.
+
+## Qwen-only two-model routing
+
+See `docs/meeting-assistant/QWEN-ONLY-ASR.md`. `qwen_batch_native_smoke.py` needs only
+`--binary EMBEDDED_DEBUG_BINARY --driver WEBKIT_DRIVER --espeak ESPEAK`; its default
+private runtime is `/tmp`. It uses deliberately fake prepared model files/workers,
+real file decoding/VAD/native import and retranscription, Settings/dialog selection
+for both sizes, JSON/SQLite equality, failed/cancelled inference preservation,
+conflicting-operation rejection and a verified native PID exit/restart. It does not
+capture or play audio, download models, use credentials/cloud or create screenshots.
+
+The recording smoke now accepts `--model-size 1.7B|0.6B` (default remains 1.7B)
+and `--no-screenshots`. Running it without `--real-*` is **fixture ASR** even when
+actual private virtual capture/VAD/storage succeeds. Each invocation creates a new
+private hardware-disabled profile; never point either harness at an existing profile.
+The worker-only `scripts/check_qwen_worker_catalog.py` checks actual runtime startup
+for both declared identities without loading any weights/audio.

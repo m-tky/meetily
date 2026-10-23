@@ -1,5 +1,9 @@
 # CLAUDE.md
 
+## Current fork ASR policy (supersedes upstream ASR notes below)
+
+ASR is **Qwen3-ASR 1.7B / 0.6B only** (1.7B default). The user explicitly approved removing the original Whisper/Parakeet implementations and dependencies. Recording, audio import and retranscription share `audio/transcription/qwen_provider.rs`; catalog and selection are in `qwen_model.rs` / `engine.rs`, job-owned batch handling in `batch.rs`. Do not restore retired engines, model managers, download commands or GPU feature flags as fallbacks. Existing database fields/files remain for compatibility, not executable ASR routes. Read `docs/meeting-assistant/QWEN-ONLY-ASR.md` and the latest `PROGRESS.md` checkpoint for verification limits. Older Whisper examples below describe upstream, not this fork's supported architecture.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
@@ -12,8 +16,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Key Technology Stack
 - **Desktop App**: Tauri 2.x (Rust) + Next.js 14 + React 18
-- **Audio Processing**: Rust (cpal, whisper-rs, professional audio mixing)
-- **Transcription**: Whisper.cpp / whisper-rs and Parakeet paths in the Tauri app
+- **Audio Processing**: Rust (CPAL / native PulseAudio, source-preserving VAD, audio mixing)
+- **Transcription**: Local Qwen3-ASR 1.7B / 0.6B through the bounded float32 JSONL worker
 - **App API Surface**: Tauri commands and events, not a separate FastAPI service
 - **LLM Integration**: Ollama (local), Claude, Groq, OpenRouter
 
@@ -405,5 +409,6 @@ $env:RUST_LOG="debug"; ./clean_run_windows.bat
 - [frontend/src/app/page.tsx](frontend/src/app/page.tsx) - Main recording interface
 - [frontend/src/components/Sidebar/SidebarProvider.tsx](frontend/src/components/Sidebar/SidebarProvider.tsx) - Global state management
 
-**Whisper Integration**:
-- [frontend/src-tauri/src/whisper_engine/whisper_engine.rs](frontend/src-tauri/src/whisper_engine/whisper_engine.rs) - Whisper model management and transcription
+**Qwen ASR Integration**:
+- [frontend/src-tauri/src/audio/transcription/qwen_provider.rs](frontend/src-tauri/src/audio/transcription/qwen_provider.rs) - shared adapter and per-model settings
+- [frontend/src-tauri/src/audio/transcription/qwen_setup.rs](frontend/src-tauri/src/audio/transcription/qwen_setup.rs) - pinned, consent-based two-model setup

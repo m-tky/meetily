@@ -17,7 +17,11 @@ for name in ['real-worker', 'real-model', 'real-ort']:
 parser.add_argument('--soak-seconds',type=int,default=0,help='Real-ASR-only bounded synthetic repeat run (60..3600 seconds)')
 parser.add_argument('--clean-native-env',action='store_true',help='Strip development library settings from the native app launch')
 parser.add_argument('--expected-origin',help='Require the embedded frontend origin, e.g. tauri://localhost')
+parser.add_argument('--model-size', choices=['1.7B', '0.6B'], default='1.7B')
+parser.add_argument('--no-screenshots', action='store_true')
 args = parser.parse_args()
+model_name = 'Qwen3-ASR-' + args.model_size
+model_id = model_name + '-INT8'
 real_asr = any([args.real_worker,args.real_model,args.real_ort])
 if real_asr and (not all([args.real_worker,args.real_model,args.real_ort]) or args.fault!='none'):
     parser.error('Real ASR requires all three --real-* paths and --fault none')
@@ -52,8 +56,9 @@ if real_asr:
 else:
     # Explicit fake artifacts satisfy path/shape validation, never contain model weights.
     model = root/'fixture-model'
-    (model/'config.json').write_text(json.dumps({'model_type':'qwen3_asr','thinker_config':{'text_config':{'hidden_size':2048,'num_hidden_layers':28}}}))
-    for name in ['model-00001-of-00002.safetensors','model-00002-of-00002.safetensors','qwen-asr-int8.sidecar','vocab.json','merges.txt']:
+    (model/'config.json').write_text(json.dumps({'model_type':'qwen3_asr','thinker_config':{'text_config':{'hidden_size':1024 if args.model_size=='0.6B' else 2048,'num_hidden_layers':28}}}))
+    weights = ['model.safetensors'] if args.model_size=='0.6B' else ['model-00001-of-00002.safetensors','model-00002-of-00002.safetensors']
+    for name in weights + ['qwen-asr-int8.sidecar','vocab.json','merges.txt']:
         (model/name).write_text('SYNTHETIC TEST PLACEHOLDER — NOT MODEL WEIGHTS\n')
     (root/'fixture-ort').write_text('SYNTHETIC TEST PLACEHOLDER — NOT A LIBRARY\n')
     fixture_text = 'SYNTHETIC WORKER FIXTURE: proposal is pending, verify manually.'
@@ -62,7 +67,7 @@ else:
     import json, os, pathlib, struct, sys, time
     root = pathlib.Path(__file__).parent
     assert (root/'.synthetic-gui-test').read_text() == 'synthetic-only\\n'
-    print(json.dumps(dict(event='ready',protocol=1,threads=6,model='Qwen3-ASR-1.7B',precision='decoder-INT8-encoder-prefill-F32',recognition_context='full_input',vad_only=False,max_audio_seconds=30,vad_frame_samples=512,audio_formats=['float32'])),flush=True)
+    print(json.dumps(dict(event='ready',protocol=1,threads=6,model=MODEL_NAME,precision='decoder-INT8-encoder-prefill-F32',recognition_context='full_input',vad_only=False,max_audio_seconds=30,vad_frame_samples=512,audio_formats=['float32'])),flush=True)
     for raw in sys.stdin:
         req=json.loads(raw); wav=pathlib.Path(req['wav']).resolve()
         assert wav.is_relative_to(root/'cache')
@@ -79,7 +84,7 @@ else:
             if time.monotonic()>deadline: sys.exit(8)
             time.sleep(.05)
         print(json.dumps(dict(id=req['id'],confirmed=False,text=TEXT,asr_calls=1,status='recognized',recognition_context='full_input')),flush=True)
-    ''').replace('text=TEXT','text='+repr(fixture_text)))
+    ''').replace('text=TEXT','text='+repr(fixture_text)).replace('MODEL_NAME',repr(model_name)))
     compile(worker.read_text(),str(worker),'exec')  # Catch harness generation errors before native start.
     worker.chmod(0o700)
     if args.fault=='worker-crash': (root/'crash-once').touch()
@@ -136,6 +141,7 @@ def click_label(label):
     element=wait('return [...document.querySelectorAll("button")].find(e=>e.getAttribute("aria-label")=='+json.dumps(label)+'&&!e.disabled)||null;')
     execute('arguments[0].click();',element)
 def screenshot(name):
+    if args.no_screenshots: return
     (root/name).write_bytes(base64.b64decode(request('GET',f'/session/{session}/screenshot')))
 def start_driver():
     driver=spawn([args.driver,f'--port={args.port}','--host=127.0.0.1'],'driver.log')
@@ -165,7 +171,7 @@ try:
         assert origin==args.expected_origin, f'Wrong frontend origin: {origin}'
         (root/'frontend-origin.txt').write_text(origin+'\n')
     invoke('qwen_save_settings',{'settings':{'worker_path':str(worker),'model_dir':str(model),'ort_library':str(ort)}})
-    invoke('api_save_transcript_config',{'provider':'qwen','model':'Qwen3-ASR-1.7B-INT8','apiKey':None})
+    invoke('api_save_transcript_config',{'provider':'qwen','model':model_id,'apiKey':None})
     preferences=invoke('get_recording_preferences')
     preferences.update(auto_save=True,preferred_mic_device=None,preferred_system_device='pulse-monitor:meetily_fixture.monitor (output)')
     invoke('set_recording_preferences',{'preferences':preferences})

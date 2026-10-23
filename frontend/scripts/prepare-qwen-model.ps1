@@ -2,17 +2,21 @@
    app settings or cloud inference. No network unless -Download is supplied. #>
 [CmdletBinding()]
 param(
- [string]$ModelDirectory=(Join-Path $env:LOCALAPPDATA 'local.meetily.desktop\models\Qwen3-ASR-1.7B'),
+ [string]$ModelDirectory='',
+ [ValidateSet('1.7B','0.6B')][string]$ModelSize='1.7B',
  [string]$RuntimeDirectory=$PSScriptRoot,
  [switch]$Download
 )
 $ErrorActionPreference='Stop'
 $ProgressPreference='SilentlyContinue'
+if(!$ModelDirectory){$ModelDirectory=Join-Path $env:LOCALAPPDATA ('local.meetily.desktop\models\Qwen3-ASR-'+$ModelSize)}
 [Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)
 $OutputEncoding=[Console]::OutputEncoding
 $ModelDirectory=[IO.Path]::GetFullPath($ModelDirectory)
-$manifest=[IO.File]::ReadAllText((Join-Path $RuntimeDirectory 'qwen-model.json'))|ConvertFrom-Json
-if($manifest.id -ne 'Qwen/Qwen3-ASR-1.7B' -or $manifest.revision -ne '7278e1e70fe206f11671096ffdd38061171dd6e5'){throw 'Unexpected model manifest'}
+$manifestName=if($ModelSize -eq '0.6B'){'qwen-model-0.6b.json'}else{'qwen-model.json'}
+$revision=if($ModelSize -eq '0.6B'){'5eb144179a02acc5e5ba31e748d22b0cf3e303b0'}else{'7278e1e70fe206f11671096ffdd38061171dd6e5'}
+$manifest=[IO.File]::ReadAllText((Join-Path $RuntimeDirectory $manifestName))|ConvertFrom-Json
+if($manifest.id -ne ('Qwen/Qwen3-ASR-'+$ModelSize) -or $manifest.revision -ne $revision){throw 'Unexpected model manifest'}
 $initializer=Join-Path $RuntimeDirectory 'qwen-model-init.exe'
 if(!(Test-Path -LiteralPath $initializer -PathType Leaf)){throw 'Bundled model initializer is missing'}
 [void][IO.Directory]::CreateDirectory($ModelDirectory)
@@ -38,7 +42,7 @@ try{
    if($item.Length -ne $entry.bytes -or (Get-ModelSha256 $path) -ne $entry.sha256){throw ('Existing model file differs; not overwritten: '+$entry.file)}
    continue
   }
-  if(!$Download){throw ('Missing '+$entry.file+'. Supply -Download to explicitly fetch the public model (~4.7 GB).')}
+  if(!$Download){throw ('Missing '+$entry.file+'. Supply -Download to explicitly fetch the selected public model.')}
   $temporary=Join-Path $ModelDirectory ('.download-'+[Guid]::NewGuid().ToString('N'))
   try{
    Write-Host ('Downloading public model file: '+$entry.file)

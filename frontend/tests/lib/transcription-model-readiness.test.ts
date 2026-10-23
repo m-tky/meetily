@@ -6,23 +6,12 @@ import {
 } from '../../src/lib/transcription-model-readiness';
 
 describe('transcription model readiness', () => {
-  test('uses Whisper commands when Whisper is the configured provider', () => {
-    expect(getProviderCommands('localWhisper')).toEqual({
-      initialize: 'whisper_init',
-      hasAvailableModels: 'whisper_has_available_models',
-      getAvailableModels: 'whisper_get_available_models',
-    });
+  test('retired providers have no executable command path', () => {
+    expect(getProviderCommands('localWhisper')).toBeNull();
+    expect(getProviderCommands('parakeet')).toBeNull();
   });
 
-  test('uses Parakeet commands when Parakeet is the configured provider', () => {
-    expect(getProviderCommands('parakeet')).toEqual({
-      initialize: 'parakeet_init',
-      hasAvailableModels: 'parakeet_has_available_models',
-      getAvailableModels: 'parakeet_get_available_models',
-    });
-  });
-
-  test('uses opt-in Qwen commands without changing existing providers', () => {
+  test('uses only the Qwen command path', () => {
     expect(getProviderCommands('qwen')).toEqual({
       initialize: 'qwen_init',
       hasAvailableModels: 'qwen_has_available_models',
@@ -30,7 +19,7 @@ describe('transcription model readiness', () => {
     });
   });
 
-  test('does not silently treat an unsupported provider as Parakeet', () => {
+  test('rejects unsupported providers without fallback', () => {
     expect(getProviderCommands('deepgram')).toBeNull();
   });
 

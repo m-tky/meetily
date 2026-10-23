@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, ReactNode, useRef } from 'react';
 import { TranscriptModelProps } from '@/components/TranscriptSettings';
+import { DEFAULT_QWEN_MODEL } from '@/lib/qwen-models';
 import { MinutesSettingsProvider } from './MinutesSettingsContext';
 import { SelectedDevices } from '@/components/DeviceSelection';
 import { createRecordingInputPreferenceWriter } from '@/lib/recording-input-preferences';
@@ -116,8 +117,8 @@ export function ConfigProvider({ children }: { children: ReactNode }) {
 
   // Transcript model configuration state
   const [transcriptModelConfig, setTranscriptModelConfig] = useState<TranscriptModelProps>({
-    provider: 'parakeet',
-    model: 'parakeet-tdt-0.6b-v3-int8',
+    provider: 'qwen',
+    model: DEFAULT_QWEN_MODEL,
     apiKey: null
   });
 
@@ -229,9 +230,9 @@ export function ConfigProvider({ children }: { children: ReactNode }) {
         if (config) {
           console.log('[ConfigContext] Loaded saved transcript config:', config);
           setTranscriptModelConfig({
-            provider: config.provider || 'parakeet',
-            model: config.model || 'parakeet-tdt-0.6b-v3-int8',
-            apiKey: config.apiKey || null
+            provider: 'qwen',
+            model: config.model || DEFAULT_QWEN_MODEL,
+            apiKey: null
           });
         }
       } catch (error) {
@@ -474,7 +475,7 @@ export function ConfigProvider({ children }: { children: ReactNode }) {
       // Load storage locations
       const [dbDir, modelsDir, recordingsDir] = await Promise.all([
         invoke<string>('get_database_directory'),
-        invoke<string>('whisper_get_models_directory'),
+        invoke<string>('qwen_get_models_directory'),
         invoke<string>('get_default_recordings_folder_path')
       ]);
 

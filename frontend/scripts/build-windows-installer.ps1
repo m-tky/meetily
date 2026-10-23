@@ -119,6 +119,7 @@ Copy-Item (Join-Path $repo 'vendor\qwen-asr\LICENSE') (Join-Path $qwen 'qwen-asr
 Copy-Item $blasLicense (Join-Path $qwen 'OpenBLAS-LICENSE.txt') -Force
 Copy-Item (Join-Path $blas 'bin\libopenblas.dll') $qwen -Force
 Copy-Item (Join-Path $repo 'nix\qwen-model.json') $qwen -Force
+Copy-Item (Join-Path $repo 'nix\qwen-model-0.6b.json') $qwen -Force
 Copy-Item (Join-Path $PSScriptRoot 'prepare-qwen-model.ps1') $qwen -Force
 Copy-Item (Join-Path $repo 'docs\meeting-assistant\WINDOWS-INSTALLER.md') (Join-Path $qwen 'SETUP.md') -Force
 $env:CARGO_TARGET_DIR=$WorkerTargetDirectory

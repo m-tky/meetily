@@ -14,7 +14,7 @@ function harness(phases, overrides = {}) {
     onStatus: s => seen.push(s.phase), onPrepared: async s => applied.push(s), ...overrides,
   } };
 }
-const status = phase => ({ id: 'run', phase, settings: phase === 'ready' ? settings : null, error: null });
+const status = phase => ({ id: 'run', model: 'Qwen3-ASR-1.7B-INT8', phase, settings: phase === 'ready' ? settings : null, error: null });
 test('no consent means no IPC, downloads or selection', async () => {
   const h = harness([], { consent: false });
   await assert.rejects(prepareAndSelectQwen(h.options), /Consent/);
@@ -23,7 +23,7 @@ test('no consent means no IPC, downloads or selection', async () => {
 test('explicit start selects only after initialization and validation report ready', async () => {
   const h = harness(['checking', 'downloading', 'initializing', 'validating', 'ready'].map(status));
   await prepareAndSelectQwen(h.options);
-  assert.deepEqual(h.calls[0], ['qwen_setup_start', { consent: true }]);
+  assert.deepEqual(h.calls[0], ['qwen_setup_start', { consent: true, model: 'Qwen3-ASR-1.7B-INT8' }]);
   assert.deepEqual(h.seen, ['checking', 'downloading', 'initializing', 'validating', 'ready']);
   assert.deepEqual(h.applied, [settings]);
 });
@@ -42,6 +42,17 @@ test('another job cannot trigger selection for this consent', async () => {
   await assert.rejects(prepareAndSelectQwen(h.options), /Setup changed/);
   assert.deepEqual(h.applied, []);
 });
+test('a different model cannot reuse this setup consent', async () => {
+  const h = harness([{ ...status('ready'), model: 'Qwen3-ASR-0.6B-INT8' }]);
+  await assert.rejects(prepareAndSelectQwen(h.options), /Setup changed/);
+  assert.deepEqual(h.applied, []);
+});
+test('small-model setup is requested explicitly and selects only its prepared result', async () => {
+  const h = harness([{ ...status('ready'), model: 'Qwen3-ASR-0.6B-INT8' }], { model: 'Qwen3-ASR-0.6B-INT8' });
+  await prepareAndSelectQwen(h.options);
+  assert.equal(h.calls[0][1].model, 'Qwen3-ASR-0.6B-INT8');
+  assert.deepEqual(h.applied, [settings]);
+});
 test('selection errors propagate; failed onboarding is retryable', async () => {
   const h = harness([status('ready')], { onPrepared: async () => { throw new Error('store failure'); } });
   await assert.rejects(prepareAndSelectQwen(h.options), /store failure/);
@@ -57,7 +68,8 @@ test('Qwen-only onboarding does not configure summary/defaults or claim other do
 test('candidate worker is validated before saving local paths or provider selection', () => {
   const ui = source('../../src/components/QwenModelSettings.tsx');
   assert.ok(ui.indexOf("invoke('qwen_validate_settings'") < ui.indexOf("invoke('qwen_save_settings'"));
-  assert.ok(ui.indexOf("invoke('qwen_init')") < ui.indexOf("invoke('api_save_transcript_config'"));
+  assert.ok(ui.indexOf("invoke('qwen_validate_settings'") < ui.indexOf("invoke('api_save_transcript_config'"));
+  assert.doesNotMatch(ui, /invoke\('qwen_init'/);
 });
 test('Linux uses the same explicit Qwen-only entry point without mandatory summary models', async () => {
   const linux = { worker_path: '/app/libexec/qwen-speech-worker', model_dir: '/data/models/Qwen3-ASR-1.7B', ort_library: '/app/libexec/libonnxruntime.so' };
@@ -69,7 +81,7 @@ test('Linux uses the same explicit Qwen-only entry point without mandatory summa
   assert.doesNotMatch(native, /cfg!\(windows\)/);
   const welcome = source('../../src/components/onboarding/steps/WelcomeStep.tsx');
   assert.match(welcome, /QwenModelSettings automaticOnly/);
-  assert.match(welcome, /No local summary model is required/);
+  assert.doesNotMatch(welcome, /Parakeet|Whisper|download_model/);
   assert.doesNotMatch(source('../../src/components/QwenAutoSetup.tsx'), /locally \(Windows\)/);
 });
 test('Linux package includes the initializer and runtime beside the worker', () => {
@@ -84,7 +96,7 @@ test('Linux package includes the initializer and runtime beside the worker', () 
 });
 test('native setup accepts neither remote URLs nor executable paths from IPC', () => {
   const native = source('../../src-tauri/src/audio/transcription/qwen_setup.rs');
-  assert.match(native, /qwen_setup_start<R: Runtime>\(\s*app: tauri::AppHandle<R>,\s*consent: bool,?\s*\)/);
+  assert.match(native, /qwen_setup_start<R: Runtime>\(\s*app: tauri::AppHandle<R>,\s*consent: bool,\s*model: Option<String>,?\s*\)/);
   assert.match(native, /https_only\(true\)/); assert.match(native, /persist_noclobber/);
   assert.match(native, /try_lock_exclusive/); assert.match(native, /JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE/);
 });

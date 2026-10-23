@@ -1,3 +1,5 @@
+> **This fork:** transcription uses local **Qwen3-ASR 1.7B / 0.6B only**, including recording, audio import and retranscription. Whisper/Parakeet are retired. See [Qwen-only setup and validation limits](docs/meeting-assistant/QWEN-ONLY-ASR.md). Upstream release badges and ASR instructions below are historical references, not this fork's packages.
+
 <div align="center" style="border-bottom: none">
     <h1>
         <img src="docs/Meetily-6.png" style="border-radius: 10px;" />

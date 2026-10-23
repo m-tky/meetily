@@ -34,7 +34,6 @@ pub mod level_monitor;
 pub mod simple_level_monitor;
 pub mod buffer_pool;
 pub mod post_processor;
-pub mod hardware_detector;
 pub mod async_logger;
 pub mod batch_processor;
 pub mod system_detector;
@@ -60,7 +59,7 @@ pub mod import;
 pub use devices::{
     default_input_device, default_output_device, get_device_and_config, list_audio_devices,
     parse_audio_device, trigger_audio_permission,
-    AudioDevice, AudioTranscriptionEngine, DeviceControl, DeviceType,
+    AudioDevice, DeviceControl, DeviceType,
     LAST_AUDIO_CAPTURE,
 };
 
@@ -101,7 +100,6 @@ pub use recording_saver::RecordingSaver;
 pub use level_monitor::{AudioLevelMonitor, AudioLevelData, AudioLevelUpdate};
 pub use buffer_pool::{AudioBufferPool, PooledBuffer};
 pub use post_processor::{PostProcessor, PostProcessRequest, PostProcessResponse};
-pub use hardware_detector::{HardwareProfile, AdaptiveWhisperConfig, PerformanceTier, GpuType};
 pub use encode::{
     encode_single_audio, AudioInput
 };

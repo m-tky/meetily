@@ -16,7 +16,7 @@ let settings = { worker_path: 'C:\\qwen\\worker.exe', model_dir: 'C:\\models', o
 mock.module('@tauri-apps/api/core', () => ({ invoke: async (name: string) => {
   calls.push(name);
   if (name === 'qwen_setup_info') return { available, model_dir: settings.model_dir, download_bytes: 4700000000, minimum_free_bytes: 7000000000 };
-  if (name === 'qwen_setup_start') { nativeStatus = { id: 'run', phase: 'ready', settings, error: null }; return 'run'; }
+  if (name === 'qwen_setup_start') { nativeStatus = { id: 'run', model: 'Qwen3-ASR-1.7B-INT8', phase: 'ready', settings, error: null }; return 'run'; }
   if (name === 'qwen_setup_status') return nativeStatus;
 } }));
 const { QwenAutoSetup } = await import('../../src/components/QwenAutoSetup');
@@ -28,7 +28,7 @@ const tick = () => new Promise(resolve => setTimeout(resolve, 0));
 async function mount() {
   states = []; refs = []; calls.length = 0; available = true;
   const selected = mock(async (_s: any, _shouldApply: () => boolean) => {}), busy = mock((_b: boolean) => {});
-  const props = { disabled: false, onPrepared: selected, onBusyChange: busy };
+  const props = { model: 'Qwen3-ASR-1.7B-INT8', disabled: false, onPrepared: selected, onBusyChange: busy };
   const render = () => { stateIndex = 0; refIndex = 0; effects = []; return QwenAutoSetup(props); };
   render(); const cleanups = effects.map(e => e()).filter(e => typeof e === 'function'); await tick();
   return { selected, busy, render, close: () => cleanups.forEach(f => f()) };
@@ -71,7 +71,7 @@ test('Linux uses the same consent UI and selects prepared Linux paths', async ()
   } finally { h.close(); settings = previous; }
 });
 test('remounting ready state requires an explicit Use prepared action', async () => {
-  nativeStatus = { id: 'old', phase: 'ready', settings, error: null }; const h = await mount();
+  nativeStatus = { id: 'old', model: 'Qwen3-ASR-1.7B-INT8', phase: 'ready', settings, error: null }; const h = await mount();
   try {
     expect(h.selected).not.toHaveBeenCalled();
     const use = elements(h.render()).find(e => e.props.children === 'Use prepared Qwen')!;
@@ -80,7 +80,7 @@ test('remounting ready state requires an explicit Use prepared action', async ()
   } finally { h.close(); }
 });
 test('a restored running setup exposes cancellation and locks consent', async () => {
-  nativeStatus = { id: 'old', phase: 'initializing', downloaded: 4, total: 4, error: null }; const h = await mount();
+  nativeStatus = { id: 'old', model: 'Qwen3-ASR-1.7B-INT8', phase: 'initializing', downloaded: 4, total: 4, error: null }; const h = await mount();
   try {
     const all = elements(h.render());
     expect(all.find(e => e.type === 'input')!.props.disabled).toBe(true);

@@ -16,7 +16,7 @@ if not isinstance(saved, dict):
     raise SystemExit('Meetily: invalid ASR settings; refusing replacement')
 if path.exists():
     try:
-        os.link(path, path.with_name('qwen-asr.pre-home-manager.json'))
+        os.link(path, path.with_name(path.stem + '.pre-home-manager.json'))
     except FileExistsError:
         pass
 saved.update(worker_path=str(worker), model_dir=str(model), ort_library=str(ort))

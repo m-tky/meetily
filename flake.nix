@@ -7,9 +7,11 @@
     worker = pkgs.callPackage ./nix/worker.nix { };
     app = pkgs.callPackage ./nix/package.nix { qwenWorker = worker; };
     prepare = pkgs.callPackage ./nix/model-preparation.nix { qwenWorker = worker; };
+    prepareSmall = pkgs.callPackage ./nix/model-preparation.nix { qwenWorker = worker; modelSize = "0.6b"; };
   in {
-    packages.${system} = { default = app; meetily = app; qwen-speech-worker = worker; prepare-qwen-model = prepare; };
+    packages.${system} = { default = app; meetily = app; qwen-speech-worker = worker; prepare-qwen-model = prepare; prepare-qwen-model-0_6b = prepareSmall; };
     apps.${system}.prepare-qwen-model = { type = "app"; program = "${prepare}/bin/prepare-qwen-model"; };
+    apps.${system}.prepare-qwen-model-0_6b = { type = "app"; program = "${prepareSmall}/bin/prepare-qwen-model"; };
     homeManagerModules.default = import ./nix/home-manager.nix;
   };
 }

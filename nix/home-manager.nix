@@ -41,14 +41,16 @@ let
       exec ${cfg.package}/bin/meetily "$@"
     '';
   };
-  qwenConfig = if privateProfile then "${profile}/config/com.meetily.ai/qwen-asr.json" else "${config.xdg.configHome}/com.meetily.ai/qwen-asr.json";
+  qwenSettingsFile = if cfg.qwenModelSize == "0.6b" then "qwen-asr-0.6b.json" else "qwen-asr.json";
+  qwenConfig = if privateProfile then "${profile}/config/com.meetily.ai/${qwenSettingsFile}" else "${config.xdg.configHome}/com.meetily.ai/${qwenSettingsFile}";
 in {
   options.programs.meetily = {
     enable = lib.mkEnableOption "Meetily with source-built local Qwen and ChatGPT plan support";
     package = lib.mkOption { type = lib.types.package; default = defaultPackage; };
     # Strings deliberately: credentials/models must never be copied into the Nix store.
     profileDirectory = lib.mkOption { type = lib.types.nullOr lib.types.str; default = null; description = "Reuse an existing isolated app profile without moving credentials or recordings."; };
-    qwenModelDirectory = lib.mkOption { type = lib.types.nullOr lib.types.str; default = null; description = "Writable prepared official Qwen3-ASR 1.7B directory, outside the Nix store."; };
+    qwenModelSize = lib.mkOption { type = lib.types.enum [ "1.7b" "0.6b" ]; default = "1.7b"; description = "Size of the optional preprepared Qwen ASR directory. Does not select or download a model."; };
+    qwenModelDirectory = lib.mkOption { type = lib.types.nullOr lib.types.str; default = null; description = "Writable prepared official Qwen3-ASR directory, outside the Nix store. App setup supports both sizes without this option."; };
     microphoneSource = lib.mkOption { type = lib.types.str; default = "EchoCancel_Mic"; };
   };
   config = lib.mkIf cfg.enable {

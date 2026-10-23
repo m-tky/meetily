@@ -5,7 +5,6 @@ import { listen } from '@tauri-apps/api/event';
 import { toast } from 'sonner';
 import { X, Download, Check, Loader2, ArrowBigDownDash } from 'lucide-react';
 import { getDownloadTotalMb } from '@/lib/onboarding-summary-model';
-import type { ParakeetDownloadProgressEvent } from '@/lib/parakeet';
 
 interface DownloadProgress {
   modelName: string;
@@ -219,79 +218,6 @@ export function useDownloadProgressToast() {
       showDownloadToast(download);
     });
   }, [downloads, dismissedModels, showDownloadToast]);
-
-  // Listen to Parakeet download events
-  useEffect(() => {
-    const unlistenProgress = listen<ParakeetDownloadProgressEvent>(
-      'parakeet-model-download-progress',
-      (event) => {
-        const { modelName, progress, downloaded_mb, total_mb, speed_mbps, status } = event.payload;
-        const downloadData: DownloadProgress = {
-          modelName,
-          displayName: 'Transcription Model (Parakeet)',
-          progress,
-          downloadedMb: downloaded_mb ?? 0,
-          totalMb: total_mb ?? 670,
-          speedMbps: speed_mbps ?? 0,
-          status: status === 'cancelled'
-            ? 'cancelled'
-            : status === 'completed'
-              ? 'completed'
-              : 'downloading',
-        };
-
-        updateDownload(modelName, downloadData);
-        if (downloadData.status === 'cancelled') {
-          cleanupDownload(modelName, 6000);
-        }
-      }
-    );
-
-    const unlistenComplete = listen<{ modelName: string }>(
-      'parakeet-model-download-complete',
-      (event) => {
-        const { modelName } = event.payload;
-        const downloadData: DownloadProgress = {
-          modelName,
-          displayName: 'Transcription Model (Parakeet)',
-          progress: 100,
-          downloadedMb: 670,
-          totalMb: 670,
-          speedMbps: 0,
-          status: 'completed',
-        };
-        updateDownload(modelName, downloadData);
-        // Clean up after 4 seconds (completion toast duration is 3s + 1s buffer)
-        cleanupDownload(modelName, 4000);
-      }
-    );
-
-    const unlistenError = listen<{ modelName: string; error: string }>(
-      'parakeet-model-download-error',
-      (event) => {
-        const { modelName, error } = event.payload;
-        const downloadData: DownloadProgress = {
-          modelName,
-          displayName: 'Transcription Model (Parakeet)',
-          progress: 0,
-          downloadedMb: 0,
-          totalMb: 670,
-          speedMbps: 0,
-          status: 'error',
-          error: categorizeError(error),
-        };
-        updateDownload(modelName, downloadData);
-        // Clean up after 11 seconds (error toast duration is 10s + 1s buffer)
-        cleanupDownload(modelName, 11000);
-      }
-    );
-
-    return () => {
-      unlistenProgress.then((fn) => fn());
-      unlistenComplete.then((fn) => fn());
-      unlistenError.then((fn) => fn());
-    };
-  }, [updateDownload, cleanupDownload]);
 
   // Listen to Built-in AI summary model download events
   useEffect(() => {

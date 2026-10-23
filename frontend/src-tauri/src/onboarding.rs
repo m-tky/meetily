@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use tauri::{AppHandle, Runtime};
 use tauri_plugin_store::StoreExt;
-use log::{info, warn, error};
+use log::{info, warn};
 use anyhow::Result;
 
 use crate::state::AppState;
@@ -191,52 +191,8 @@ pub async fn complete_onboarding<R: Runtime>(
     state: tauri::State<'_, AppState>,
     model: String,
 ) -> Result<(), String> {
-    info!("Completing onboarding with builtin-ai model: {}", model);
-
-    // Step 1: Save model configuration to SQLite database FIRST
-    let pool = state.db_manager.pool();
-
-    // Onboarding always uses builtin-ai (local LLM)
-    if let Err(e) = SettingsRepository::save_model_config(
-        pool,
-        "builtin-ai",
-        &model,
-        "large-v3",
-        None,
-    ).await {
-        error!("Failed to save builtin-ai model config: {}", e);
-        return Err(format!("Failed to save builtin-ai model config: {}", e));
-    }
-    info!("Saved builtin-ai model config: model={}", model);
-
-    // Save transcription model config (parakeet provider) - always parakeet
-    if let Err(e) = SettingsRepository::save_transcript_config(
-        pool,
-        "parakeet",
-        crate::config::DEFAULT_PARAKEET_MODEL,
-    ).await {
-        error!("Failed to save transcription model config: {}", e);
-        return Err(format!("Failed to save transcription model config: {}", e));
-    }
-    info!("Saved transcription model config: provider=parakeet, model={}", crate::config::DEFAULT_PARAKEET_MODEL);
-
-    // Step 2: Only NOW mark onboarding as complete (after DB operations succeed)
-    let mut status = load_onboarding_status(&app)
-        .await
-        .map_err(|e| format!("Failed to load onboarding status: {}", e))?;
-
-    status.completed = true;
-    status.current_step = 4; // Max step (4 on macOS with permissions, 3 on other platforms)
-    status.model_status.parakeet = "downloaded".to_string();
-    status.model_status.summary = "downloaded".to_string();
-    status.model_status.selected_summary_model = Some(model.clone());
-
-    save_onboarding_status(&app, &status)
-        .await
-        .map_err(|e| format!("Failed to save completed onboarding status: {}", e))?;
-
-    info!("Onboarding completed successfully with model: {}", model);
-    Ok(())
+    let _ = model; // Legacy command delegates to verified ASR-only completion.
+    complete_qwen_onboarding(app, state).await
 }
 
 /// Transcription-only setup must not start downloads, configure a summary
@@ -251,7 +207,7 @@ pub async fn complete_qwen_onboarding<R: Runtime>(
     }
     let selected = SettingsRepository::get_transcript_config(state.db_manager.pool())
         .await.map_err(|e| e.to_string())?.ok_or("Select Qwen before completing setup")?;
-    if selected.provider != "qwen" || selected.model != crate::audio::transcription::qwen_provider::MODEL {
+    if selected.provider != "qwen" || crate::audio::transcription::qwen_model::validate(&selected.model).is_err() {
         return Err("Select the verified Qwen model before completing setup".into());
     }
     crate::audio::transcription::qwen_provider::qwen_init(app.clone()).await?;

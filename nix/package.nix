@@ -11,7 +11,7 @@ let
           top = builtins.head (lib.splitString "/" relative);
           name = baseNameOf path;
       in (builtins.elem top [ "Cargo.toml" "Cargo.lock" "frontend" "llama-helper" ]
-          || relative == "nix" || relative == "nix/qwen-model.json")
+          || relative == "nix" || builtins.elem relative [ "nix/qwen-model.json" "nix/qwen-model-0.6b.json" ])
         && relative != "frontend/tests"
         && !(lib.hasPrefix ".env" name)
         && !(builtins.elem name [ ".git" "node_modules" "target" ".next" "out" "binaries" "__pycache__" "official-siwc" ]);

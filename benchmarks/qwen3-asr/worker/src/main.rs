@@ -124,8 +124,16 @@ fn run_request(
     let newly_loaded = model.is_none();
     if newly_loaded {
         let m = QwenModel::load(model_dir).context("model_load_failed")?;
-        if m.config.dec_hidden != 2048 || m.config.dec_layers != 28 {
-            bail!("expected_qwen3_asr_1_7b");
+        let config: Value =
+            serde_json::from_slice(&std::fs::read(Path::new(model_dir).join("config.json"))?)?;
+        let declared = qwen_speech_worker::model_identity(&config)?;
+        let hidden = if declared == "Qwen3-ASR-0.6B" {
+            1024
+        } else {
+            2048
+        };
+        if m.config.dec_hidden != hidden || m.config.dec_layers != 28 {
+            bail!("model_tensor_identity_does_not_match_config");
         }
         *model = Some(m);
     }
@@ -179,14 +187,26 @@ fn main() -> Result<()> {
         bail!("Qwen requires AVX2 and FMA CPU support");
     }
     let args: Vec<_> = env::args().collect();
-    if args.len() < 3 || args.len() > 7 {
-        bail!("usage: qwen-speech-worker MODEL_DIR THREADS [--vad-only] [--crop-context] [--aligner-dir DIR]");
+    if args.len() < 3 || args.len() > 9 {
+        bail!("usage: qwen-speech-worker MODEL_DIR THREADS [--model Qwen3-ASR-1.7B|Qwen3-ASR-0.6B] [--vad-only] [--crop-context] [--aligner-dir DIR]");
     }
     let threads: usize = args[2].parse()?;
     if !(1..=12).contains(&threads) {
         bail!("invalid_threads");
     }
     let mut flags = args[3..].to_vec();
+    let mut requested_model = None;
+    if let Some(pos) = flags.iter().position(|s| s == "--model") {
+        let name = flags
+            .get(pos + 1)
+            .context("missing_model_identity")?
+            .clone();
+        if !["Qwen3-ASR-1.7B", "Qwen3-ASR-0.6B"].contains(&name.as_str()) {
+            bail!("unsupported_model_identity");
+        }
+        requested_model = Some(name);
+        flags.drain(pos..pos + 2);
+    }
     let mut aligner_dir = None;
     if let Some(pos) = flags.iter().position(|s| s == "--aligner-dir") {
         let dir = flags
@@ -215,8 +235,25 @@ fn main() -> Result<()> {
     let ort_path = env::var("ORT_DYLIB_PATH")
         .context("ORT_DYLIB_PATH is required for this isolated worker")?;
     ort::init_from(ort_path).commit()?;
+    let config_path = Path::new(&args[1]).join("config.json");
+    let model_name = if config_path.exists() {
+        let config: Value = serde_json::from_slice(&std::fs::read(config_path)?)?;
+        let detected = qwen_speech_worker::model_identity(&config)?;
+        if requested_model
+            .as_deref()
+            .is_some_and(|name| name != detected)
+        {
+            bail!("requested_model_does_not_match_config");
+        }
+        detected.to_string()
+    } else {
+        // An explicit identity permits a no-weights runtime startup probe. This
+        // never claims weights are loaded; actual inference still requires config
+        // and matching tensors. Never infer a size from an absent directory.
+        requested_model.context("model_config_missing_select_explicit_model_for_runtime_probe")?
+    };
     emit(
-        json!({"event":"ready","protocol":1,"model":"Qwen3-ASR-1.7B","precision":"decoder-INT8-encoder-prefill-F32","threads":threads,"max_audio_seconds":30,"max_request_bytes":4096,"audio_formats":["pcm16","float32"],"model_loaded":false,"vad_only":vad_only,"vad_model":"silero-v4","vad_frame_samples":512,"recognition_context":if crop_context{"vad_envelope"}else{"full_input"},"alignment_enabled":aligner_dir.is_some(),"alignment_unit":"unicode_scalar","max_alignment_chars":512}),
+        json!({"event":"ready","protocol":1,"model":model_name,"precision":"decoder-INT8-encoder-prefill-F32","threads":threads,"max_audio_seconds":30,"max_request_bytes":4096,"audio_formats":["pcm16","float32"],"model_loaded":false,"vad_only":vad_only,"vad_model":"silero-v4","vad_frame_samples":512,"recognition_context":if crop_context{"vad_envelope"}else{"full_input"},"alignment_enabled":aligner_dir.is_some(),"alignment_unit":"unicode_scalar","max_alignment_chars":512}),
     )?;
     let stdin = io::stdin();
     let mut input = stdin.lock();

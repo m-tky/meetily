@@ -1,5 +1,21 @@
 # 開発状況（2026-10-12）
 
+## エージェント引き継ぎcheckpoint
+
+ユーザー依頼に従い、Qwen-onlyの実装＋両サイズfixture batch/live GUI回帰完了を区切りに [HANDOFF-QWEN-ONLY.md](HANDOFF-QWEN-ONLY.md) を作成。現在地、コード入口、最終log、再開順、未検証項目と承認境界を集約した。引き継ぎsessionでは最終logを再確認し、Node46/46とdiff checkを再実行成功。native／GUIは前session最終結果であり今回再実行とは区別する。source／tests／manifest／文書だけを `feat/live-minutes` にcommit／pushする。tag／release／workflow dispatch／表示中app更新は行わない。
+
+## 最新：ASR全経路をQwen3-ASR 1.7B／0.6Bの二択へ置換
+
+ユーザーが「元のASR経路を削除し、Qwenの大／小だけにし、音声インポートも経路全体を置換」と依頼。小型は**0.6B**と確認し、ask_userで **旧実装・依存まで削除** を明示選択。既定1.7B維持、Whisper／Parakeet／cloud-ASR選択・native登録コマンド・provider・model管理UI・旧onboarding download・不要な旧STT/backupを撤去。直接依存と不要な9 packagesをCargo lockから削除し、残存package versions／pnpm lock／worker lockは不変。ONNXは既存Silero VAD用に残す。録音・import・retranscriptionを同じQwen adapterへ接続し、両モデルを独立した設定／manifest／保存先で管理する。旧providerだけ条件付きSQLで1.7Bへ移行し、明示的Small選択や旧key／filesを上書きしない。DB schema／録音・ASR前処理／言語・gain・VAD／Luna認証・要約経路は変更しない。
+
+Batchはjob所有worker・固定model/language・録音／他batch／setupとのnative排他・実行中取消・temporary float WAV cleanup、失敗／空認識で旧本文を保持。unknown Qwen IDはfallbackなしで拒否。既存float32/full-input 1.7B workerの2引数CLIを維持し、model-bound handshakeでSmall誤接続を拒否。新workerは0.6B/1.7Bをconfigから識別、実推論時tensor shapeも照合する。明示`--model`はweightsなしruntime probe用にも使えるがmodel_loaded=falseを保持。Small setupはverified official weightsからstagingでcacheを新規生成して既存cacheと比較、無断置換しない。WelcomeはQwen-only、ローカル要約model不要。Nix二manifest／Small準備app／Home Manager `qwenModelSize`と個別backup、Windows manual `-ModelSize`を追加。
+
+**検証：Native59PASS＋既存import fixture1ignore、worker19PASS、実debug worker起動6条件PASS、Node46＋isolated Bun65＝frontend111PASS、TS／隔離Next export／locked offline embedded-debug build／Nix derivation評価／Python compile／diff check PASS。** Nativeは設定移行2・transcription23・retranscription17・import14・onboarding3。fake ASR＋人工eSpeakファイルのfresh HOME/XDG/private D-Bus/Xvfb GUIで、両modelのSettings選択→他model overrideでimport→選択modelで再文字起こし→JSON/SQLite一致・unknown origin→異常／実行中cancelで本文保全→native旧PID退出・新PID再起動保持PASS。held inference中のmodel/path/setup変更と録音preflight拒否もPASS。さらに各size独立private Pulse/null sink・実capture/VAD・fixture ASRでStart→manager除去後Stop-tail→音声／event/raw/DB保存→worker/tmp cleanup→native restart/reopen PASS。**認識器は意図的なfake worker、実weightsなし。実0.6B推論／認識品質の合格ではない。**
+
+初回のcold cache/Git・jni metadata欠如、不要なchannel toolchain取得、Nix vendor取得中断、helper sidecar欠如、開発shellのBLAS link失敗を保持・修正。公開metadataとchecksum照合済み固定crate archivesだけbuild cacheへ取得し、model weightsなし。初回TSの旧provider比較／新model prop漏れ、Windows source guardの旧qwen_init期待も修正。GUI harnessのselector引用符／HSTSをDBと誤認／Settings anchor誤認／閉じかけRadix操作はtest側のみ修正し、全失敗logを保持。最後に旧1.7B worker CLI互換も固定し、最終compat build＋全GUIを再実行成功。
+
+最新log `/home/user/logs/meetily-qwen-only/{native-tests-r4,worker-tests-r2,worker-probes-r1,node-complete,compat-native-gui,nix-eval-final}.log`。本体debug exeは`target/debug/meetily`、frontendは`/tmp/meetily-qwen-only-frontend-iMMhiW/frontend/out`をembed、worker debugは`/tmp/meetily-qwen-worker-target/debug`。**通常／表示中アプリの置換・再起動、Home Manager switch、実mic／host desktop／physical speaker、実本文・資格情報読取、cloud推論、release／公開なし。** 本番profileの移行実行、実0.6B speech／新規HTTPS model download完走・初期化、Windows／clean-host／長時間は未検証。反映は保存・閉鎖確認と別承認後。詳細・再現・失敗：[QWEN-ONLY-ASR.md](QWEN-ONLY-ASR.md)。過去のWhisper/Parakeet維持・Qwen batch未対応という記録はこの決定でsupersede。
+
 ## 最新：LinuxはQwen3-ASRだけで初期設定完了・再起動を確認
 
 ユーザーが「Qwen3.5 4BではなくQwen-ASRだけ」と明確化して続行承認。既存の修正済Nix debug候補 `pr7b0kc…` をfresh HOME/XDG/private D-Bus/Xvfb/null ALSA/unavailable Pulseで検証。実HTTPS進捗→UI Cancel→未選択・未完了・partial cleanup PASS。その後は重複約4.7GB転送を避け、既存公開モデルのmanifest9filesだけcopyして明示retry（cache/settings/completion flagsはseedせず）。本体checksum検証→fresh INT8 cache初期化→worker検証・Qwen選択→Qwen-only onboarding完了→native旧PID終了確認→新processで設定・完了状態保持／録音画面到達 PASS。Parakeet／summary download flagsはnot_downloaded、Qwen3.5や別の大型model追加なし、録音なし。完全新規HTTPS download完走とは区別し未検証を維持。

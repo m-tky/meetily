@@ -24,7 +24,7 @@ pub struct SaveTranscriptConfigRequest {
 
 pub struct SettingsRepository;
 
-// Transcript providers: localWhisper, deepgram, elevenLabs, groq, openai
+// ASR uses Qwen only; legacy API-key columns remain for data compatibility.
 // Summary providers: openai, claude, ollama, groq, added openrouter
 // NOTE: Handle data exclusion in the higher layer as this is database abstraction layer(using SELECT *)
 
@@ -147,7 +147,17 @@ impl SettingsRepository {
                 .fetch_optional(pool)
                 .await?;
         Ok(setting)
+    }
 
+    /// Atomic conditional migration: a concurrent explicit Qwen selection wins.
+    /// Retain all existing API-key columns and all recording/model files.
+    pub async fn migrate_retired_transcript_config(
+        pool: &SqlitePool,
+    ) -> std::result::Result<(), sqlx::Error> {
+        sqlx::query("UPDATE transcript_settings SET provider = 'qwen', model = ? WHERE id = '1' AND provider <> 'qwen'")
+            .bind(crate::audio::transcription::qwen_model::LARGE)
+            .execute(pool).await?;
+        Ok(())
     }
 
     pub async fn save_transcript_config(
@@ -172,6 +182,8 @@ impl SettingsRepository {
         Ok(())
     }
 
+    // Legacy schema fixtures only; no production ASR API-key route remains.
+    #[cfg(test)]
     pub async fn save_transcript_api_key(
         pool: &SqlitePool,
         provider: &str,
@@ -194,17 +206,20 @@ impl SettingsRepository {
         let query = format!(
             r#"
             INSERT INTO transcript_settings (id, provider, model, "{}")
-            VALUES ('1', 'parakeet', '{}', $1)
+            VALUES ('1', 'qwen', '{}', $1)
             ON CONFLICT(id) DO UPDATE SET
                 "{}" = $1
             "#,
-            api_key_column, crate::config::DEFAULT_PARAKEET_MODEL, api_key_column
+            api_key_column,
+            crate::audio::transcription::qwen_model::LARGE,
+            api_key_column
         );
         sqlx::query(&query).bind(api_key).execute(pool).await?;
 
         Ok(())
     }
 
+    #[cfg(test)]
     pub async fn get_transcript_api_key(
         pool: &SqlitePool,
         provider: &str,
@@ -285,7 +300,7 @@ impl SettingsRepository {
             FROM settings
             WHERE id = '1'
             LIMIT 1
-            "#
+            "#,
         )
         .fetch_optional(pool)
         .await?;
@@ -296,10 +311,11 @@ impl SettingsRepository {
 
                 if let Some(json) = config_json {
                     // Parse JSON into CustomOpenAIConfig
-                    let config: CustomOpenAIConfig = serde_json::from_str(&json)
-                        .map_err(|e| sqlx::Error::Protocol(
-                            format!("Invalid JSON in customOpenAIConfig: {}", e).into()
-                        ))?;
+                    let config: CustomOpenAIConfig = serde_json::from_str(&json).map_err(|e| {
+                        sqlx::Error::Protocol(
+                            format!("Invalid JSON in customOpenAIConfig: {}", e).into(),
+                        )
+                    })?;
 
                     Ok(Some(config))
                 } else {
@@ -324,10 +340,9 @@ impl SettingsRepository {
         config: &CustomOpenAIConfig,
     ) -> std::result::Result<(), sqlx::Error> {
         // Serialize config to JSON
-        let config_json = serde_json::to_string(config)
-            .map_err(|e| sqlx::Error::Protocol(
-                format!("Failed to serialize config to JSON: {}", e).into()
-            ))?;
+        let config_json = serde_json::to_string(config).map_err(|e| {
+            sqlx::Error::Protocol(format!("Failed to serialize config to JSON: {}", e).into())
+        })?;
 
         // Upsert into settings table
         sqlx::query(

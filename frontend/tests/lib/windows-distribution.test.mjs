@@ -88,9 +88,9 @@ test('clean worker startup fails early and failed CI diagnostics cannot bypass p
 });
 test('explicit Qwen selection persists only after the worker handshake succeeds',()=>{
   const ui=text('../../src/components/QwenModelSettings.tsx');
-  const handshake=ui.indexOf("invoke('qwen_init')");
+  const handshake=ui.indexOf("invoke('qwen_validate_settings'");
   const persist=ui.indexOf("invoke('api_save_transcript_config'");
-  const select=ui.indexOf('onSelect();');
+  const select=ui.indexOf('onSelect(model);');
   assert.ok(handshake>=0 && persist>handshake && select>persist);
 });
 test('extra model initializer stays opt-in, preserving the default Linux worker bin set',()=>{

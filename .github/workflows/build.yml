@@ -516,14 +516,12 @@ jobs:
 
           # Windows: Use Vulkan for GPU acceleration
           if [[ "${{ inputs.platform }}" == *"windows"* ]]; then
-            FEATURES="--features vulkan"
-            echo "Windows build with Vulkan GPU acceleration"
+            echo "Windows ASR uses the packaged Qwen CPU worker"
           fi
 
           # Linux: Use OpenBLAS for optimized CPU performance
           if [[ "${{ inputs.platform }}" == *"ubuntu"* ]]; then
-            FEATURES="--features openblas"
-            echo "Linux build with OpenBLAS CPU optimization"
+            echo "Linux ASR uses the packaged Qwen CPU worker"
           fi
 
           # macOS: Uses Metal by default, no additional features needed
@@ -539,7 +537,7 @@ jobs:
         run: |
           # Build llama-helper without GPU features (CPU-only)
           # Note: Vulkan build has CMake race condition issues with llama-cpp-sys-2
-          # The Tauri app itself uses whisper-rs with Vulkan for transcription
+          # ASR is provided by the separately packaged Qwen CPU worker
           # llama-helper is for LLM inference and works fine on CPU
           Write-Host "Building llama-helper sidecar (CPU-only)..."
 

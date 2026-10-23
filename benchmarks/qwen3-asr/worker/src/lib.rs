@@ -4,6 +4,29 @@ use serde::Serialize;
 use std::{io::BufRead, path::Path};
 pub mod alignment;
 pub mod vad;
+
+/// Identify the requested weights before ready, without loading tensors.
+pub fn model_identity(config: &serde_json::Value) -> anyhow::Result<&'static str> {
+    let text = &config["thinker_config"]["text_config"];
+    if config["model_type"] == "qwen3_asr" && text["num_hidden_layers"] == 28 {
+        match text["hidden_size"].as_u64() {
+            Some(2048) => return Ok("Qwen3-ASR-1.7B"),
+            Some(1024) => return Ok("Qwen3-ASR-0.6B"),
+            _ => {}
+        }
+    }
+    anyhow::bail!("expected_qwen3_asr_0_6b_or_1_7b")
+}
+#[cfg(test)]
+mod model_identity_tests {
+    #[test]
+    fn exactly_two_model_identities_before_tensor_loading() {
+        for (hidden, name) in [(2048, "Qwen3-ASR-1.7B"), (1024, "Qwen3-ASR-0.6B")] {
+            assert_eq!(super::model_identity(&serde_json::json!({"model_type":"qwen3_asr","thinker_config":{"text_config":{"hidden_size":hidden,"num_hidden_layers":28}}})).unwrap(),name);
+        }
+        assert!(super::model_identity(&serde_json::json!({"model_type":"other"})).is_err());
+    }
+}
 pub use vad::speech_intervals;
 pub const RATE: usize = 16000;
 pub const MAX_SAMPLES: usize = 30 * RATE;

@@ -263,7 +263,7 @@ async fn get_current_recording_state() -> RecordingState {
 /// Check if recording is allowed based on onboarding status and transcription model availability
 /// Returns true if:
 /// - Onboarding is complete (user may prefer Whisper later), OR
-/// - Parakeet transcription model is ready (downloaded)
+/// - A prepared Qwen transcription model is available
 async fn check_can_record<R: Runtime>(app: &AppHandle<R>) -> bool {
     // First check if onboarding is complete
     let onboarding_complete = match crate::onboarding::load_onboarding_status(app).await {
@@ -275,19 +275,12 @@ async fn check_can_record<R: Runtime>(app: &AppHandle<R>) -> bool {
     };
 
     // If onboarding is complete, always allow recording
-    // (user may prefer Whisper or have their own transcription setup)
+    // The native Start command still revalidates the exact Qwen selection.
     if onboarding_complete {
         return true;
     }
 
-    // During onboarding, check if Parakeet transcription model is ready
-    match crate::parakeet_engine::commands::parakeet_has_available_models().await {
-        Ok(has_models) => has_models,
-        Err(e) => {
-            log::warn!("Tray: Failed to check Parakeet models: {}, assuming not ready", e);
-            false
-        }
-    }
+    crate::audio::transcription::qwen_provider::qwen_has_available_models(app.clone()).await
 }
 
 pub async fn update_tray_menu_async<R: Runtime>(app: &AppHandle<R>) {

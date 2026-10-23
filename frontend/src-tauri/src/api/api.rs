@@ -608,6 +608,7 @@ pub async fn api_get_transcript_config<R: Runtime>(
 ) -> Result<Option<TranscriptConfig>, String> {
     log_info!("api_get_transcript_config called (native)");
     let pool = state.db_manager.pool();
+    SettingsRepository::migrate_retired_transcript_config(pool).await.map_err(|e| e.to_string())?;
 
     match SettingsRepository::get_transcript_config(pool).await {
         Ok(Some(config)) => {
@@ -616,30 +617,14 @@ pub async fn api_get_transcript_config<R: Runtime>(
                 &config.provider,
                 &config.model
             );
-            match SettingsRepository::get_transcript_api_key(pool, &config.provider).await {
-                Ok(api_key) => {
-                    log_info!("Successfully retrieved transcript config and API key.");
-                    Ok(Some(TranscriptConfig {
-                        provider: config.provider,
-                        model: config.model,
-                        api_key,
-                    }))
-                }
-                Err(e) => {
-                    log_error!(
-                        "Failed to get transcript API key for provider {}: {}",
-                        &config.provider,
-                        e
-                    );
-                    Err(e.to_string())
-                }
-            }
+            let model = crate::audio::transcription::qwen_model::configured(&config.provider, &config.model)?;
+            Ok(Some(TranscriptConfig { provider: "qwen".into(), model, api_key: None }))
         }
         Ok(None) => {
             log_info!("No transcript config found, returning default.");
             Ok(Some(TranscriptConfig {
-                provider: "parakeet".to_string(),
-                model: crate::config::DEFAULT_PARAKEET_MODEL.to_string(),
+                provider: "qwen".to_string(),
+                model: crate::audio::transcription::qwen_model::LARGE.to_string(),
                 api_key: None,
             }))
         }
@@ -659,10 +644,11 @@ pub async fn api_save_transcript_config<R: Runtime>(
     api_key: Option<String>,
     _auth_token: Option<String>,
 ) -> Result<serde_json::Value, String> {
-    log_info!(
-        "api_save_transcript_config called (native) for provider '{}'",
-        &provider
-    );
+    if provider != "qwen" { return Err("Only Qwen ASR is supported".into()); }
+    crate::audio::transcription::qwen_model::validate(&model)?;
+    if api_key.as_ref().is_some_and(|key| !key.is_empty()) { return Err("Local Qwen ASR does not use API keys".into()); }
+    let _lock = crate::audio::common::acquire_engine_lifecycle_lock().await;
+    if crate::audio::recording_commands::is_recording().await || crate::audio::transcription::batch::is_busy() || crate::audio::transcription::qwen_setup::is_running() { return Err("Stop audio processing/setup before changing ASR model".into()); }
     let pool = state.db_manager.pool();
 
     if let Err(e) = SettingsRepository::save_transcript_config(pool, &provider, &model).await {
@@ -670,51 +656,10 @@ pub async fn api_save_transcript_config<R: Runtime>(
         return Err(e.to_string());
     }
 
-    if let Some(key) = api_key {
-        if !key.is_empty() {
-            log_info!("API key provided, saving for transcript provider...");
-            if let Err(e) = SettingsRepository::save_transcript_api_key(pool, &provider, &key).await
-            {
-                log_error!("Failed to save transcript API key: {}", e);
-                return Err(e.to_string());
-            }
-        }
-    }
-
     log_info!("Successfully saved transcript configuration.");
     Ok(
         serde_json::json!({ "status": "success", "message": "Transcript configuration saved successfully" }),
     )
-}
-
-#[tauri::command]
-pub async fn api_get_transcript_api_key<R: Runtime>(
-    _app: AppHandle<R>,
-    state: tauri::State<'_, AppState>,
-    provider: String,
-    _auth_token: Option<String>,
-) -> Result<String, String> {
-    log_info!(
-        "api_get_transcript_api_key called (native) for provider '{}'",
-        &provider
-    );
-    match SettingsRepository::get_transcript_api_key(&state.db_manager.pool(), &provider).await {
-        Ok(key) => {
-            log_info!(
-                "Successfully retrieved transcript API key for provider '{}'.",
-                &provider
-            );
-            Ok(key.unwrap_or_default())
-        }
-        Err(e) => {
-            log_error!(
-                "Failed to get transcript API key for provider '{}': {}",
-                &provider,
-                e
-            );
-            Err(e.to_string())
-        }
-    }
 }
 
 #[tauri::command]

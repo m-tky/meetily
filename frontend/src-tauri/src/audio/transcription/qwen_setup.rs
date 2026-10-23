@@ -1,6 +1,6 @@
 //! Explicit-consent Windows/Linux setup. The frontend cannot supply URLs or executable paths.
 //! Preparation never writes provider, language, summary or onboarding preferences.
-use super::qwen_provider::QwenSettings;
+use super::{qwen_model, qwen_provider::QwenSettings};
 use serde::{Deserialize, Serialize};
 use std::sync::{LazyLock, Mutex};
 use tauri::Runtime;
@@ -16,6 +16,7 @@ pub struct SetupInfo {
 #[derive(Clone, Serialize)]
 pub struct SetupStatus {
     pub id: String,
+    pub model: String,
     pub phase: String,
     pub file: String,
     pub downloaded: u64,
@@ -52,10 +53,38 @@ struct ModelFile {
     bytes: u64,
     sha256: String,
 }
+#[cfg(test)]
 fn manifest() -> Result<Manifest, String> {
-    let m: Manifest = serde_json::from_str(MANIFEST).map_err(|_| "Invalid bundled manifest")?;
-    if m.id != "Qwen/Qwen3-ASR-1.7B"
-        || m.revision != "7278e1e70fe206f11671096ffdd38061171dd6e5"
+    manifest_for(qwen_model::LARGE)
+}
+fn cache_bytes(model: &str) -> u64 {
+    if model == qwen_model::SMALL {
+        599_834_624
+    } else {
+        CACHE_BYTES
+    }
+}
+fn manifest_for(model: &str) -> Result<Manifest, String> {
+    qwen_model::validate(model)?;
+    let (source, id, revision) = if model == qwen_model::SMALL {
+        (
+            include_str!(concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/../../nix/qwen-model-0.6b.json"
+            )),
+            "Qwen/Qwen3-ASR-0.6B",
+            "5eb144179a02acc5e5ba31e748d22b0cf3e303b0",
+        )
+    } else {
+        (
+            MANIFEST,
+            "Qwen/Qwen3-ASR-1.7B",
+            "7278e1e70fe206f11671096ffdd38061171dd6e5",
+        )
+    };
+    let m: Manifest = serde_json::from_str(source).map_err(|_| "Invalid bundled manifest")?;
+    if m.id != id
+        || m.revision != revision
         || m.files.iter().any(|f| {
             f.file.is_empty() || f.file.contains(['/', '\\', ':']) || f.file.starts_with('.')
         })
@@ -67,21 +96,31 @@ fn manifest() -> Result<Manifest, String> {
 fn active(phase: &str) -> bool {
     !matches!(phase, "ready" | "failed" | "cancelled")
 }
+pub(crate) fn is_running() -> bool {
+    RUN.lock()
+        .unwrap()
+        .as_ref()
+        .is_some_and(|run| active(&run.status.phase))
+}
 fn update(id: &str, f: impl FnOnce(&mut SetupStatus)) {
     if let Some(run) = RUN.lock().unwrap().as_mut().filter(|r| r.status.id == id) {
         f(&mut run.status);
     }
 }
 #[tauri::command]
-pub fn qwen_setup_info<R: Runtime>(app: tauri::AppHandle<R>) -> Result<SetupInfo, String> {
+pub fn qwen_setup_info<R: Runtime>(
+    app: tauri::AppHandle<R>,
+    model: Option<String>,
+) -> Result<SetupInfo, String> {
+    let model = model.as_deref().unwrap_or(qwen_model::LARGE);
     let _ = &app;
-    let bytes = manifest()?.files.iter().map(|f| f.bytes).sum();
+    let bytes = manifest_for(model)?.files.iter().map(|f| f.bytes).sum();
     #[cfg(all(
         target_arch = "x86_64",
         any(target_os = "linux", all(windows, target_env = "msvc"))
     ))]
     {
-        let settings = super::qwen_provider::bundled_settings(&app)?;
+        let settings = super::qwen_provider::bundled_settings_for(&app, model)?;
         let available = std::is_x86_feature_detected!("avx2")
             && std::is_x86_feature_detected!("fma")
             && runtime_present(&settings);
@@ -89,7 +128,7 @@ pub fn qwen_setup_info<R: Runtime>(app: tauri::AppHandle<R>) -> Result<SetupInfo
             available,
             model_dir: Some(settings.model_dir.to_string_lossy().into()),
             download_bytes: bytes,
-            minimum_free_bytes: bytes + CACHE_BYTES + HEADROOM,
+            minimum_free_bytes: bytes + cache_bytes(model) + HEADROOM,
         });
     }
     #[cfg(not(all(
@@ -100,7 +139,7 @@ pub fn qwen_setup_info<R: Runtime>(app: tauri::AppHandle<R>) -> Result<SetupInfo
         available: false,
         model_dir: None,
         download_bytes: bytes,
-        minimum_free_bytes: bytes + CACHE_BYTES + HEADROOM,
+        minimum_free_bytes: bytes + cache_bytes(model) + HEADROOM,
     })
 }
 #[tauri::command]
@@ -126,21 +165,25 @@ pub fn qwen_setup_cancel(id: String) -> Result<(), String> {
 pub async fn qwen_setup_start<R: Runtime>(
     app: tauri::AppHandle<R>,
     consent: bool,
+    model: Option<String>,
 ) -> Result<String, String> {
+    let model = model.unwrap_or_else(|| qwen_model::LARGE.into());
+    qwen_model::validate(&model)?;
     if !consent {
         return Err("Explicit download and local initialization consent is required".into());
     }
-    if crate::audio::recording_commands::is_recording().await {
-        return Err("Stop recording before Qwen setup".into());
+    let _lifecycle = crate::audio::common::acquire_engine_lifecycle_lock().await;
+    if crate::audio::recording_commands::is_recording().await || super::batch::is_busy() {
+        return Err("Stop audio processing before Qwen setup".into());
     }
-    if !qwen_setup_info(app.clone())?.available {
+    if !qwen_setup_info(app.clone(), Some(model.clone()))?.available {
         return Err(
             "Automatic setup requires a Linux/Windows x64 package with the Qwen runtime and an AVX2/FMA CPU".into(),
         );
     }
     #[cfg(any(windows, target_os = "linux"))]
     {
-        let settings = super::qwen_provider::bundled_settings(&app)?;
+        let settings = super::qwen_provider::bundled_settings_for(&app, &model)?;
         let id = uuid::Uuid::new_v4().to_string();
         let cancel = CancellationToken::new();
         {
@@ -151,10 +194,11 @@ pub async fn qwen_setup_start<R: Runtime>(
             *runs = Some(Run {
                 status: SetupStatus {
                     id: id.clone(),
+                    model: model.clone(),
                     phase: "checking".into(),
                     file: String::new(),
                     downloaded: 0,
-                    total: manifest()?.files.iter().map(|f| f.bytes).sum(),
+                    total: manifest_for(&model)?.files.iter().map(|f| f.bytes).sum(),
                     error: None,
                     settings: None,
                 },
@@ -163,7 +207,7 @@ pub async fn qwen_setup_start<R: Runtime>(
         }
         let job_id = id.clone();
         tauri::async_runtime::spawn(async move {
-            let result = prepare(&settings, &cancel, &job_id).await;
+            let result = prepare_model(&settings, &cancel, &job_id, &model).await;
             update(&job_id, |s| {
                 if cancel.is_cancelled() {
                     s.phase = "cancelled".into();
@@ -348,7 +392,8 @@ mod preparation {
             .prefix(".meetily-setup-")
             .tempdir_in(&settings.model_dir)
             .map_err(|e| e.to_string())?;
-        for row in manifest()?.files {
+        let model = settings.model()?;
+        for row in manifest_for(model)?.files {
             fs::hard_link(
                 settings.model_dir.join(&row.file),
                 staging.path().join(row.file),
@@ -357,14 +402,13 @@ mod preparation {
         }
         let cache = settings.model_dir.join("qwen-asr-int8.sidecar");
         no_links(&cache)?;
-        if cache.exists() {
+        if cache.exists() && model == qwen_model::LARGE {
             verify_cache(&cache, cancel)?;
             fs::hard_link(&cache, staging.path().join("qwen-asr-int8.sidecar"))
                 .map_err(|e| e.to_string())?;
         }
-        let mut command = tokio::process::Command::new(
-            settings.worker_path.with_file_name(initializer_name()),
-        );
+        let mut command =
+            tokio::process::Command::new(settings.worker_path.with_file_name(initializer_name()));
         command
             .arg(staging.path())
             .env("OPENBLAS_NUM_THREADS", "6")
@@ -399,11 +443,15 @@ mod preparation {
         if fs::metadata(&prepared)
             .map_err(|_| "Initializer did not create its cache")?
             .len()
-            != CACHE_BYTES
+            != cache_bytes(model)
         {
             return Err("Unexpected local cache size".into());
         }
-        verify_cache(&prepared, cancel)?;
+        // For 0.6B regenerate from verified weights, never trust an existing
+        // unpinned payload. Compare any old cache against this fresh result.
+        if model == qwen_model::LARGE {
+            verify_cache(&prepared, cancel)?;
+        }
         if cache.exists() {
             if sha256(&cache, cancel)? != sha256(&prepared, cancel)? {
                 return Err("Existing INT8 cache differs; not overwritten".into());
@@ -451,10 +499,11 @@ mod preparation {
         }
         Ok(())
     }
-    pub(super) async fn prepare(
+    pub(super) async fn prepare_model(
         settings: &QwenSettings,
         cancel: &CancellationToken,
         id: &str,
+        model: &str,
     ) -> Result<(), String> {
         no_links(&settings.model_dir)?;
         fs::create_dir_all(&settings.model_dir).map_err(|e| e.to_string())?;
@@ -470,7 +519,7 @@ mod preparation {
         fs2::FileExt::try_lock_exclusive(&lease).map_err(|_| {
             "Another Qwen preparation is running. Wait for it to finish.".to_string()
         })?;
-        let m = manifest()?;
+        let m = manifest_for(model)?;
         check_weight_set(&settings.model_dir, &m)?;
         let mut missing = 0;
         for row in &m.files {
@@ -490,7 +539,7 @@ mod preparation {
         }
         // Include an isolated replacement cache even when an old cache exists.
         if fs2::available_space(&settings.model_dir).map_err(|e| e.to_string())?
-            < missing + CACHE_BYTES + HEADROOM
+            < missing + cache_bytes(model) + HEADROOM
         {
             return Err(
                 "Not enough free disk space for the remaining files and local INT8 initialization"
@@ -538,7 +587,7 @@ mod preparation {
     }
 }
 #[cfg(any(windows, target_os = "linux"))]
-use preparation::prepare;
+use preparation::prepare_model;
 
 #[cfg(windows)]
 mod windows_job {
@@ -659,7 +708,8 @@ mod tests {
         std::fs::write(
             settings.worker_path.with_file_name(initializer_name()),
             b"fixture",
-        ).unwrap();
+        )
+        .unwrap();
         assert!(runtime_present(&settings));
         assert!(!settings.model_dir.exists());
         #[cfg(target_os = "linux")]
@@ -686,6 +736,7 @@ mod tests {
         *RUN.lock().unwrap() = Some(Run {
             status: SetupStatus {
                 id: id.into(),
+                model: qwen_model::LARGE.into(),
                 phase: "ready".into(),
                 file: String::new(),
                 downloaded: 0,
@@ -700,6 +751,11 @@ mod tests {
             cancel: CancellationToken::new(),
         });
         assert!(qwen_setup_cancel("other".into()).is_err());
+        assert!(!is_running());
+        update(id, |status| status.phase = "initializing".into());
+        assert!(is_running());
+        update(id, |status| status.phase = "ready".into());
+        assert!(!is_running());
         assert_eq!(qwen_setup_status().unwrap().phase, "ready");
         qwen_setup_cancel(id.into()).unwrap();
         let state = qwen_setup_status().unwrap();
@@ -831,6 +887,7 @@ mod tests {
         for row in manifest().unwrap().files {
             std::fs::write(model.join(row.file), b"fixture").unwrap();
         }
+        std::fs::write(model.join("config.json"), br#"{"model_type":"qwen3_asr","thinker_config":{"text_config":{"hidden_size":2048,"num_hidden_layers":28}}}"#).unwrap();
         let pid_file = dir.path().join("initializer.pid");
         let initializer = dir.path().join(initializer_name());
         std::fs::write(
@@ -859,6 +916,23 @@ mod tests {
         let pid = std::fs::read_to_string(pid_file).unwrap();
         assert!(!std::path::Path::new("/proc").join(pid).exists());
         assert_eq!(std::fs::read_dir(model).unwrap().count(), 9);
+    }
+    #[test]
+    fn small_model_has_independent_manifest_budget_and_weight_set() {
+        let small = manifest_for(qwen_model::SMALL).unwrap();
+        assert_eq!(small.id, "Qwen/Qwen3-ASR-0.6B");
+        assert_eq!(small.files.len(), 7);
+        assert!(small.files.iter().any(|f| f.file == "model.safetensors"));
+        assert!(manifest_for("untrusted").is_err());
+        assert_eq!(cache_bytes(qwen_model::SMALL), 599_834_624);
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(dir.path().join("model.safetensors"), b"keep").unwrap();
+        assert!(check_weight_set(dir.path(), &small).is_ok());
+        assert!(check_weight_set(dir.path(), &manifest().unwrap()).is_err());
+        assert_eq!(
+            std::fs::read(dir.path().join("model.safetensors")).unwrap(),
+            b"keep"
+        );
     }
     #[test]
     fn unexpected_active_weights_are_refused_but_never_deleted() {

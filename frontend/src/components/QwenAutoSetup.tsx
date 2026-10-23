@@ -3,8 +3,9 @@ import { invoke } from '@tauri-apps/api/core';
 import { Button } from './ui/button';
 import { prepareAndSelectQwen, setupActive, type QwenSettings, type QwenSetupInfo, type QwenSetupStatus } from '@/lib/qwen-setup';
 
+import { qwenLabel } from '@/lib/qwen-models';
 const gib = (bytes: number) => (bytes / 1024 ** 3).toFixed(1);
-export function QwenAutoSetup({ disabled, onPrepared, onBusyChange }: { disabled: boolean; onPrepared: (settings: QwenSettings, shouldApply: () => boolean) => Promise<void>; onBusyChange: (busy: boolean) => void }) {
+export function QwenAutoSetup({ model, disabled, onPrepared, onBusyChange }: { model: string; disabled: boolean; onPrepared: (settings: QwenSettings, shouldApply: () => boolean) => Promise<void>; onBusyChange: (busy: boolean) => void }) {
   const [info, setInfo] = useState<QwenSetupInfo | null>(null);
   const [status, setStatus] = useState<QwenSetupStatus | null>(null);
   const [consent, setConsent] = useState(false);
@@ -19,14 +20,14 @@ export function QwenAutoSetup({ disabled, onPrepared, onBusyChange }: { disabled
     const poll = async () => {
       try {
         const value = await invoke<QwenSetupStatus | null>('qwen_setup_status');
-        if (active.current) setStatus(value);
+        if (active.current) setStatus(value?.model === model ? value : null);
       } catch (e) { if (active.current) setError(String(e)); }
       if (active.current) timer = setTimeout(poll, 1000);
     };
-    invoke<QwenSetupInfo>('qwen_setup_info').then(value => { if (active.current) setInfo(value); }).catch(e => { if (active.current) setError(String(e)); });
+    invoke<QwenSetupInfo>('qwen_setup_info', { model }).then(value => { if (active.current) setInfo(value); }).catch(e => { if (active.current) setError(String(e)); });
     void poll();
     return () => { active.current = false; clearTimeout(timer); };
-  }, []);
+  }, [model]);
   const running = setupActive(status);
   useEffect(() => { onBusyChange(starting || running); }, [starting, running, onBusyChange]);
   useEffect(() => () => onBusyChange(false), [onBusyChange]);
@@ -37,7 +38,7 @@ export function QwenAutoSetup({ disabled, onPrepared, onBusyChange }: { disabled
     cancelRequested.current = false;
     setStarting(true); setError(''); setSelected(false);
     try {
-      await prepareAndSelectQwen({ consent, invoke, onStatus: s => { if (active.current) setStatus(s); },
+      await prepareAndSelectQwen({ consent, model, invoke, onStatus: s => { if (active.current) setStatus(s); },
         onPrepared: async settings => { await onPrepared(settings, () => active.current && !cancelRequested.current); if (active.current && !cancelRequested.current) setSelected(true); },
         isActive: () => active.current && !cancelRequested.current, wait: () => new Promise(resolve => setTimeout(resolve, 750)) });
     } catch (e) { if (active.current) setError(String(e)); }
@@ -53,9 +54,9 @@ export function QwenAutoSetup({ disabled, onPrepared, onBusyChange }: { disabled
   };
   return <section className="border rounded p-4 space-y-3" aria-label="Automatic Qwen setup">
     <h3 className="font-medium">Set up Qwen locally</h3>
-    <p className="text-sm">Download Qwen3-ASR 1.7B from Hugging Face (~{gib(info.download_bytes)} GiB), verify its checksums, and prepare its local INT8 cache. Allow {gib(info.minimum_free_bytes)} GiB free disk space, several GB of available RAM, and several minutes of CPU processing.</p>
+    <p className="text-sm">Download {qwenLabel(model)} from Hugging Face (~{gib(info.download_bytes)} GiB), verify its checksums, and prepare its local INT8 cache. Allow {gib(info.minimum_free_bytes)} GiB free disk space, several GB of available RAM, and several minutes of CPU processing.</p>
     <p className="text-xs break-all">Install to: {info.model_dir}</p>
-    <p className="text-sm">Verified files are reused. Different existing files are never overwritten. This selects Qwen after validation; no recording, cloud inference, Parakeet or summary-model download is started.</p>
+    <p className="text-sm">Verified files are reused. Different existing files are never overwritten. This selects Qwen after validation; no recording, cloud inference or summary-model download is started.</p>
     <label className="flex items-start gap-2 text-sm">
       <input type="checkbox" checked={consent} disabled={locked} onChange={e => setConsent(e.target.checked)} />
       I agree to download the public Apache-2.0 model, prepare it locally, and use Qwen for transcription.

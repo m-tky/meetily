@@ -1,6 +1,8 @@
-# Linux opt-in Qwen ASR setup
+# Qwen ASR setup
 
-本体録音用の選択式adapter。既存Whisper/Parakeet/defaultを置換しない。追加の精度研究ではない。**AI草案・要音声確認**。短語・否定語・noiseの既知誤認識は未解決。品質受入・会議／長時間安定性・配布版完成を意味しない。
+**最新のユーザー決定でASR全体をQwen3-ASR 1.7B／0.6Bの二択へ移行中。旧Whisper／Parakeet経路の維持・batch未対応という以下の過去記録は更新対象で、現状・検証範囲は [QWEN-ONLY-ASR.md](QWEN-ONLY-ASR.md) を参照。**
+
+以下は以前のLinux選択式adapter導入時の記録。追加の精度研究ではない。**AI草案・要音声確認**。短語・否定語・noiseの既知誤認識は未解決。品質受入・会議／長時間安定性・配布版完成を意味しない。
 
 ## 通常のLinux初期設定（更新）
 
@@ -68,4 +70,4 @@ private Pulse＋eSpeak人工音声と固定応答fixture-worker（実weightsな�
 
 ## 残る製品作業
 
-Linux monitor capture、停止後tailの最終議事録、編集保護、export/reopen、stop timeout後のtask lifecycleとcrash復旧、配布package／モデル導入UX、全体操作のsynthetic sink試験は `LINUX-MVP.md` の未完項目。batch import/retranscriptionは現時点で既存Whisper/Parakeet専用であり、Qwenをbatchの選択肢に追加していない。app crashで残った一時音声のcleanupは未実装。実録音・cloud試験は未実施。
+Linux monitor capture、停止後tailの最終議事録、編集保護、export/reopen、stop timeout後のtask lifecycleとcrash復旧、配布package／モデル導入UX、全体操作のsynthetic sink試験は `LINUX-MVP.md` の未完項目。batch import/retranscriptionが旧Whisper/Parakeet専用だった点は、最新のQwen-only移行で共通adapterへ置換した（実GUI受入とは区別する）。app crashで残った一時音声のcleanupは未実装。実録音・cloud試験は未実施。

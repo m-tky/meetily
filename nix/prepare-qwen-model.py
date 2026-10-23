@@ -65,7 +65,7 @@ def prepare(directory, manifest, initializer, *, check=False, offline=False):
     subprocess.run([initializer, str(directory)], check=True)
     if not (directory / 'qwen-asr-int8.sidecar').is_file():
         raise SystemExit('Local INT8 cache was not created.')
-    print('Prepared pinned Qwen3-ASR 1.7B; no audio/transcript was read or sent.')
+    print(f"Prepared pinned {manifest['id']}; no audio/transcript was read or sent.")
 
 
 def main():
