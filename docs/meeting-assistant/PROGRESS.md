@@ -1,5 +1,9 @@
 # 開発状況（2026-10-12）
 
+## 最新：Qwen-only checkpointの実行再検証
+
+ユーザーが実テストとWindows同等機能の確認を依頼。`3187df6` を現在のLinux hostで再build／再実行し、Node46・native59（既存ignore1）・worker19・実startup probe6・TS・隔離Next export・embedded debug build成功。両sizeのfixture batch/live GUI（import／再文字起こし／失敗・取消保全／Stop-tail／保存／native再起動）成功。既存両size公式weightsをmanifest全SHA照合→専用reflink copy、実workerで公開JA2音声＋無音＋repeat／shutdown成功。既存metricsで1.7Bは0/74文字誤り、0.6Bは9/74（12.16%）：Smallは実際に誤認識し、品質同等ではない。0.6B／1.7Bそれぞれの実モデル＋private virtual人工音声live GUIもStop-tail／保存／cleanup／再起動成功。debug速度は性能評価に使わない。Windowsは共通実装と専用installerの両manifest同梱を確認したが、VM停止中・起動せず、最新Qwen-only版のWindows実行受入は未実施。旧汎用Windows workflowのQwen未同梱・専用CIのbatch/Small検証不足・Windows device resolverの部分一致／default fallbackを未解消の確認事項として記録。実mic／host desktop／物理再生／ユーザー本文・資格情報／cloud／表示中app反映／releaseなし。詳細と初回runner失敗：[QWEN-ONLY-RETEST.md](QWEN-ONLY-RETEST.md)、log `../logs/qwen-only-retest/`。
+
 ## エージェント引き継ぎcheckpoint
 
 ユーザー依頼に従い、Qwen-onlyの実装＋両サイズfixture batch/live GUI回帰完了を区切りに [HANDOFF-QWEN-ONLY.md](HANDOFF-QWEN-ONLY.md) を作成。現在地、コード入口、最終log、再開順、未検証項目と承認境界を集約した。引き継ぎsessionでは最終logを再確認し、Node46/46とdiff checkを再実行成功。native／GUIは前session最終結果であり今回再実行とは区別する。source／tests／manifest／文書だけを `feat/live-minutes` にcommit／pushする。tag／release／workflow dispatch／表示中app更新は行わない。
