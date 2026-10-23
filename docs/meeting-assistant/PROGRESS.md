@@ -1,5 +1,9 @@
 # 開発状況（2026-10-12）
 
+## 最新：Windows RC6公開を承認、更新機能は追加せずローカルbuildを準備
+
+ユーザーが既知の精度制限を受け入れreleaseを明示依頼し、updaterは今は不要・前回Actions約39分より速ければ手元buildを希望。個人forkのWindows `windows-v0.4.1-rc.6` Pre-release（stable/latest／upstream／既存RC5更新なし）。VM preflightで通常Local profile／install／実行中appなし、既存native/worker/tool/node_modules cacheあり、空き約2.5GB確認。専用scriptの検証を省略せずローカルNSIS build→隔離install/uninstall→artifact SHA/metadata検証→手動公開予定。現時点は準備で、公開済みとはしない。no updater変更／新録音再生／cloud／model download／通常app置換。手元成果物であることと認識誤り・未検証範囲をrelease notesに明記する。詳細：[WINDOWS-RC6-RELEASE.md](WINDOWS-RC6-RELEASE.md)。
+
 ## 最新：import音声経路を切り分け、有限resampler末尾欠落を修正（語誤認識は残る）
 
 ユーザーが精度問題の限定切り分け＋発見不具合の改善を承認。既存公開WAV／仮想録音AAC2件のみ、録音・再生・実mic／desktop／cloud／model downloadなし。finite sinc helperが1回processのみで末尾lookahead未回収、48→16kで86frames（約5.375ms）短縮、17入力frames→0／末尾6ms marker消失をnative回帰3pass2FAILで再現。EOF kernel幅zero供給後、実入力の有理比durationへ厳密trimし修正（filter／phase不変、output_delay二重除去せず）。新SRC6tests＋61s chunk境界／末尾の回帰を追加、Windows CIにもSRC／decoder gate。Linux124unique／Windows121unique native（各import既存ignore1）、Node各48、PS parser0成功。実ASR：Linux14＋Windows8＋同一入力交互4／逆順fresh2、修正版GUI4＝32 requests。AAC native展開は1024@48kの遅延を揃えるとFFmpeg比125–133dB程度で近似、重大なcodec劣化は検出せず（gapless汎用対応は未修正）。Windows全体Aは正解、切出Aはワカシ；同じWindows workerでhost/Windows crop間max1.19e-7差でも正誤変化、順序／fresh反復も各結果を再現。**末尾修正前後の既存PCM prefix／VAD WAVが両OS bit一致し、先の語誤認識は解消していない。** 場当たり的な丸め／VAD余白／gain／decoder切替／text補正／model変更は採用しない。新candidate72af39fd…（baseline1a99712＋patch9ddc83ff…）で実4/4 import→指定先新規meeting／音声copy SHA一致／原本不変／JSON-SQLite一致／worker-temp cleanup／新PID7724→3740 reopen保持成功、選択Large／private prefs復元。公式model全file／copy cache hash不変、元実行物復元hash確認、owned app/workers/debug閉鎖。通常app／release未反映、精度合格ではない。詳細：[IMPORT-AUDIO-DIAGNOSIS.md](IMPORT-AUDIO-DIAGNOSIS.md)、Git外 `../runtime/import-audio-diagnosis/evidence/final-summary.json`。初回guest dumpの4byte/virtiofs低速／owned-only停止／partial保持／BufWriter修正等のharness失敗も保持。
