@@ -154,7 +154,7 @@ try{
   Run 'cargo.exe' @('test','--locked','--release','-p','meetily','--features','tauri/custom-protocol','--lib','qwen_setup::tests')
   Run 'cargo.exe' @('test','--locked','--release','-p','meetily','--features','tauri/custom-protocol','--lib','onboarding::tests')
   # Keep selected-folder routing and Windows writable-handle sync regressions gated.
-  foreach($filter in @('save_folder_tests','audio::recording_saver','audio::checkpoint_audio','audio::incremental_saver')){
+  foreach($filter in @('save_folder_tests','audio::recording_saver','audio::checkpoint_audio','audio::incremental_saver','audio::import')){
    Run 'cargo.exe' @('test','--locked','--release','-p','meetily','--features','tauri/custom-protocol','--lib',$filter,'--','--test-threads=1')
   }
  }

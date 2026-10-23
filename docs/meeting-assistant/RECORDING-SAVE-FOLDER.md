@@ -1,5 +1,7 @@
 # Recording destination and Windows file-sync repair
 
+Follow-up: [RECORDED-AAC-IMPORT.md](RECORDED-AAC-IMPORT.md) fixes the separate import destination omission and tests these saved AAC recordings through actual import. Its workflow passes do not establish error-free recognition.
+
 ## Decision and scope
 
 The user approved fixing the save-folder failure found in the Windows VM, then separately approved the newly reproduced Windows file-sync failure. Retest was explicitly **virtual audio only**. No database/schema migration, old-recording move, audio-format/ASR/model/language/gain/VAD change, normal application replacement, installer publication or release/tag operation.

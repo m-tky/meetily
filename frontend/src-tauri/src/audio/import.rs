@@ -17,7 +17,7 @@ use uuid::Uuid;
 use super::audio_processing::create_meeting_folder;
 use super::common::{create_transcript_segments, split_segment_at_silence, write_transcripts_json};
 use super::constants::AUDIO_EXTENSIONS;
-use super::recording_preferences::get_default_recordings_folder;
+use super::recording_preferences::load_recording_preferences;
 
 /// Global flag to track if import is in progress
 static IMPORT_IN_PROGRESS: AtomicBool = AtomicBool::new(false);
@@ -301,6 +301,13 @@ pub async fn start_import<R: Runtime>(
     result
 }
 
+// Import uses the same selected destination as live recordings. Keep the
+// snapshot local to the job; never redirect a failed import to Music/Documents.
+fn create_import_meeting_folder(save_folder: &PathBuf, title: &str) -> Result<PathBuf> {
+    anyhow::ensure!(save_folder.is_absolute(), "Import save folder must be an absolute path");
+    create_meeting_folder(save_folder, title, false)
+}
+
 /// Internal function to run import
 async fn run_import<R: Runtime>(
     app: AppHandle<R>,
@@ -322,6 +329,9 @@ async fn run_import<R: Runtime>(
         title, source_path, language, model, provider
     );
 
+    // Snapshot the configured destination before worker initialization/awaits.
+    let save_folder = load_recording_preferences(&app).await?.save_folder;
+
     // Freeze the job's model/language before creating a folder or touching data.
     let session = BatchSession::open(&app, provider.as_deref(), model.as_deref(), language.as_deref(), &IMPORT_CANCELLED).await.map_err(|e| anyhow!(e))?;
 
@@ -332,9 +342,8 @@ async fn run_import<R: Runtime>(
         return Err(anyhow!("Import cancelled"));
     }
 
-    // Create meeting folder
-    let base_folder = get_default_recordings_folder();
-    let meeting_folder = create_meeting_folder(&base_folder, &title, false)?;
+    // Create only in the snapshotted destination; errors must not fall back.
+    let meeting_folder = create_import_meeting_folder(&save_folder, &title)?;
 
     // Copy audio file to meeting folder
     emit_progress(&app, "copying", 10, "Copying audio file...");
@@ -856,6 +865,32 @@ mod tests {
         assert!(AUDIO_EXTENSIONS.contains(&"wav"));
         assert!(AUDIO_EXTENSIONS.contains(&"mp3"));
         assert!(!AUDIO_EXTENSIONS.contains(&"txt"));
+    }
+
+    #[test]
+    fn import_honors_selected_unicode_folder_without_reusing_existing_meetings() {
+        let root = tempfile::tempdir().unwrap();
+        let selected = root.path().join("日本語 O'Brien 空白").join("selected imports");
+        let first = create_import_meeting_folder(&selected, "same recorded audio").unwrap();
+        std::fs::write(first.join("audio.mp4"), b"existing synthetic evidence").unwrap();
+        let second = create_import_meeting_folder(&selected, "same recorded audio").unwrap();
+        assert_eq!(first.parent(), Some(selected.as_path()));
+        assert_eq!(second.parent(), Some(selected.as_path()));
+        assert_ne!(first, second);
+        assert!(!second.join(".checkpoints").exists());
+        assert_eq!(std::fs::read(first.join("audio.mp4")).unwrap(), b"existing synthetic evidence");
+    }
+
+    #[test]
+    fn import_rejects_blocked_or_relative_destination_without_fallback() {
+        let root = tempfile::tempdir().unwrap();
+        let blocked = root.path().join("existing file");
+        std::fs::write(&blocked, b"preserve fixture").unwrap();
+        assert!(create_import_meeting_folder(&blocked, "synthetic import").is_err());
+        let error = create_import_meeting_folder(&PathBuf::from("relative import"), "synthetic import").unwrap_err();
+        assert!(error.to_string().contains("absolute"));
+        assert_eq!(std::fs::read(&blocked).unwrap(), b"preserve fixture");
+        assert_eq!(std::fs::read_dir(root.path()).unwrap().count(), 1);
     }
 
     #[test]

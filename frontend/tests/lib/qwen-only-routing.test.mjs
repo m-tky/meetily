@@ -18,6 +18,15 @@ test('live, import and retranscription resolve the shared Qwen adapter without o
   assert.match(batch,/QwenProvider::new/);assert.match(batch,/qwen_model::validate/);assert.match(batch,/compare_exchange/);assert.match(batch,/tokio::select!/);
   assert.match(read('../../src-tauri/src/audio/transcription/engine.rs'),/initialize_model/);
 });
+test('import freezes and uses the selected destination rather than the default folder',()=>{
+  const source=read('../../src-tauri/src/audio/import.rs');
+  assert.doesNotMatch(source,/get_default_recordings_folder/);
+  const snapshot=source.indexOf('let save_folder = load_recording_preferences(&app).await?.save_folder;');
+  const worker=source.indexOf('let session = BatchSession::open');
+  const destination=source.indexOf('create_import_meeting_folder(&save_folder, &title)?');
+  assert.ok(snapshot>=0&&worker>snapshot&&destination>worker);
+  assert.match(source,/save_folder\.is_absolute\(\)/);
+});
 test('both setup manifests are independently pinned; no arbitrary download sources',()=>{
   const big=JSON.parse(read('../../../nix/qwen-model.json')),small=JSON.parse(read('../../../nix/qwen-model-0.6b.json'));
   assert.equal(big.id,'Qwen/Qwen3-ASR-1.7B');assert.equal(small.id,'Qwen/Qwen3-ASR-0.6B');
