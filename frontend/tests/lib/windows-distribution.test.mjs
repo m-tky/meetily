@@ -51,7 +51,7 @@ test('build pins native tools and includes app-local CRT and OpenMP',()=>{
 });
 test('Windows packaging gates selected-folder and writable-handle save regressions',()=>{
   const script=text('../../scripts/build-windows-installer.ps1');
-  for(const filter of ['save_folder_tests','audio::recording_saver','audio::checkpoint_audio','audio::incremental_saver','audio::import']) {
+  for(const filter of ['save_folder_tests','audio::recording_saver','audio::checkpoint_audio','audio::incremental_saver','audio::import','audio::audio_processing::resample_integrity_tests','audio::decoder']) {
     assert.ok(script.includes(`'${filter}'`),`Missing Windows native regression: ${filter}`);
   }
   assert.ok(script.includes("$env:Path=(Join-Path $ffmpegRoot 'bin')+';'+$env:Path"));

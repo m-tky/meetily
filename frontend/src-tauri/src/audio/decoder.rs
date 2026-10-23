@@ -677,6 +677,22 @@ mod tests {
     }
 
     #[test]
+    fn chunked_resample_preserves_duration_and_boundary_marker() {
+        // Force the production 60s chunk path without a >5min fixture. Finite
+        // sinc lookahead must not shorten every chunk and shift later evidence.
+        let mut input = vec![0.0; 48000 * 61];
+        input[48000 * 60 - 144..48000 * 60 + 144].fill(0.5);
+        input[48000 * 61 - 288..].fill(0.5);
+        let output = chunked_resample_with_progress(&input, 48000, 16000, None);
+        assert_eq!(output.len(), 16000 * 61);
+        let boundary_energy: f32 = output[16000 * 60 - 48..16000 * 60 + 48]
+            .iter().map(|s| s * s).sum();
+        assert!(boundary_energy > 15.0, "boundary marker shifted/lost: {boundary_energy}");
+        let tail_energy: f32 = output[16000 * 61 - 80..].iter().map(|s| s * s).sum();
+        assert!(tail_energy > 10.0, "final marker lost: {tail_energy}");
+    }
+
+    #[test]
     fn test_chunked_resample_same_rate() {
         let input = vec![0.1, 0.2, 0.3, 0.4, 0.5];
         let result = chunked_resample_with_progress(&input, 16000, 16000, None);

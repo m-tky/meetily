@@ -1,5 +1,7 @@
 # Import of actually saved Windows recordings
 
+Follow-up: [IMPORT-AUDIO-DIAGNOSIS.md](IMPORT-AUDIO-DIAGNOSIS.md) diagnoses these files, repairs finite sinc EOF loss and repeats Windows imports. The repair preserves existing speech-window bytes; the lexical errors below still reproduce.
+
 ## Scope and correction
 
 User clarified the request was **importing recorded audio**, not another recording test, then approved correcting the import destination before verification. Inputs are the two `audio.mp4` AAC files actually captured/saved in the preceding Windows virtual-only test, not the original source WAV and not a fake worker. No new recording, playback, microphone capture, cloud inference, model download, normal profile/application replacement, Calibre deletion, installer or release operation.

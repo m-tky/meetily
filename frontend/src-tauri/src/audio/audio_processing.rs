@@ -509,6 +509,7 @@ pub fn audio_to_mono(audio: &[f32], channels: u16) -> Vec<f32> {
 ///
 /// Supports all common sample rates: 8kHz, 16kHz, 24kHz, 44.1kHz, 48kHz, etc.
 pub fn resample(input: &[f32], from_sample_rate: u32, to_sample_rate: u32) -> Result<Vec<f32>> {
+    anyhow::ensure!(from_sample_rate > 0 && to_sample_rate > 0, "Sample rates must be positive");
     if input.is_empty() {
         return Ok(Vec::new());
     }
@@ -578,22 +579,41 @@ pub fn resample(input: &[f32], from_sample_rate: u32, to_sample_rate: u32) -> Re
         window: WindowFunction::BlackmanHarris2,  // Best window for audio
     };
 
+    // This helper processes a finite interval, not a continuing stream. Sinc
+    // interpolation needs future input: a single unpadded process() leaves the
+    // final half-kernel unreturned (even all of a short input). Supply EOF zeros
+    // so every real sample can contribute, then exclude synthetic EOF duration.
+    // Keep the existing filter/phase; do not remove output_delay() here: the
+    // pinned interpolator already places the interior impulse at its input time.
+    let padded_len = input.len().checked_add(sinc_len)
+        .ok_or_else(|| anyhow::anyhow!("Resampling input length overflow"))?;
+    let expected_len = usize::try_from(
+        (input.len() as u128 * to_sample_rate as u128 + from_sample_rate as u128 / 2)
+            / from_sample_rate as u128,
+    )?;
+    let mut padded = input.to_vec();
+    padded.resize(padded_len, 0.0);
     let mut resampler = SincFixedIn::<f32>::new(
         ratio,
         2.0,  // Maximum relative deviation
         params,
-        input.len(),
+        padded_len,
         1,    // Mono
     )?;
 
-    let waves_in = vec![input.to_vec()];
-    let waves_out = resampler.process(&waves_in, None)?;
+    let mut output = resampler.process(&[padded], None)?.remove(0);
+    anyhow::ensure!(output.len() >= expected_len, "Resampler did not drain the finite input");
+    output.truncate(expected_len);
 
     debug!("Resampling complete: {} samples → {} samples",
-           input.len(), waves_out[0].len());
+           input.len(), output.len());
 
-    Ok(waves_out.into_iter().next().unwrap())
+    Ok(output)
 }
+
+#[cfg(test)]
+#[path = "resample_integrity_tests.rs"]
+mod resample_integrity_tests;
 
 // Alias for compatibility with existing code
 pub fn resample_audio(input: &[f32], from_sample_rate: u32, to_sample_rate: u32) -> Vec<f32> {
