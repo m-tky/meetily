@@ -1,5 +1,7 @@
 # Qwen-only checkpoint: independent local retest
 
+Subsequent current-source Windows VM execution: [QWEN-ONLY-WINDOWS-RETEST.md](QWEN-ONLY-WINDOWS-RETEST.md). The Windows-not-executed statements below describe this earlier Linux retest checkpoint, not the later VM results.
+
 Tested source: `3187df6`, branch `feat/live-minutes`, checkout under `/home/user/Code/meeting-assistant-research/meetily`. This is a fresh execution of tests, not reuse of the previous handoff's logs. No release, tag, workflow dispatch, visible application replacement, real microphone/desktop capture, physical playback, user-content access, login or cloud inference.
 
 ## Executed successfully

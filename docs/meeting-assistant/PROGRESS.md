@@ -1,5 +1,9 @@
 # 開発状況（2026-10-12）
 
+## 最新：Qwen-only版をWindows VMで実行検証
+
+ユーザーのvirt-manager検証依頼でwin11を起動・許可されたログイン。初回debug領域は容量安全guardで停止し、ユーザーが既存releaseキャッシュ再利用を明示承認。現source `9d37569` を専用source／identifier／WebView／録音先でbuild、Node46・worker19・native57 unique（既存import ignore1）・SIWC人工14・TS／frontend export／native build／clean-PATH startup/refusal6条件成功。両サイズの実weights＋公開JA音声で、実GUI onboarding選択→import→retranscription→raw/SQLite一致→native PID変更再起動／Small保持／本文保全成功。両サイズの実Rust adapterもfloat32無音3言語／公開JA repeat／Unicode temporary cleanup成功。モデルは既存公式manifest全SHA確認済み専用CoWコピー（Windows FileTime用にコピーだけmtime／cache identity調整、payload不変）、新規download／Windows cold初期化は行わず。元cacheのtop-level本体／worker／DLLはhash一致復元、通常app／profileは保持。Calibre削除許可も得たが削除不要で未実施。録音・再生・実mic／PC取得・実会議・実アカウントauth／cloud・NSIS生成／公開は未実施。**Windowsの録音→Stop-tail→保存という一連の動作は今回まだ未検証**。初回source archiveの.github欠落によるNode失敗を保持・修正し全gate再成功。詳細：[QWEN-ONLY-WINDOWS-RETEST.md](QWEN-ONLY-WINDOWS-RETEST.md)、Git外証拠 `../runtime/windows-qwen-only-retest/evidence/`。
+
 ## 最新：Qwen-only checkpointの実行再検証
 
 ユーザーが実テストとWindows同等機能の確認を依頼。`3187df6` を現在のLinux hostで再build／再実行し、Node46・native59（既存ignore1）・worker19・実startup probe6・TS・隔離Next export・embedded debug build成功。両sizeのfixture batch/live GUI（import／再文字起こし／失敗・取消保全／Stop-tail／保存／native再起動）成功。既存両size公式weightsをmanifest全SHA照合→専用reflink copy、実workerで公開JA2音声＋無音＋repeat／shutdown成功。既存metricsで1.7Bは0/74文字誤り、0.6Bは9/74（12.16%）：Smallは実際に誤認識し、品質同等ではない。0.6B／1.7Bそれぞれの実モデル＋private virtual人工音声live GUIもStop-tail／保存／cleanup／再起動成功。debug速度は性能評価に使わない。Windowsは共通実装と専用installerの両manifest同梱を確認したが、VM停止中・起動せず、最新Qwen-only版のWindows実行受入は未実施。旧汎用Windows workflowのQwen未同梱・専用CIのbatch/Small検証不足・Windows device resolverの部分一致／default fallbackを未解消の確認事項として記録。実mic／host desktop／物理再生／ユーザー本文・資格情報／cloud／表示中app反映／releaseなし。詳細と初回runner失敗：[QWEN-ONLY-RETEST.md](QWEN-ONLY-RETEST.md)、log `../logs/qwen-only-retest/`。
