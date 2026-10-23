@@ -1,5 +1,17 @@
 # Qwen-only: current-source Windows VM execution
 
+## LATEST: virtual recording trial found a real save-folder bug
+
+After the acceptance below, the user explicitly authorized virtual audio only. Read-only preflight found PWEC virtual output plus emulated ICH9 Line In; no physical host device passthrough exists. Native input pickers persisted these explicit selections across reload. The owned virt-manager console was closed and the host watchdog confirmed **zero SPICE clients/audio forwarding** before capture was allowed. No other guest render session was active.
+
+The trial **FAILED before public playback**: native `get_recording_preferences` returned the private configured `save_folder`, but Start created a new test meeting under the default `%USERPROFILE%\\Music\\meetily-recordings` instead. The isolation assertion stopped the test; the public audio player was never called. Code confirms `RecordingSaver::initialize_meeting_folder` in `audio/recording_saver.rs` unconditionally calls `get_default_recordings_folder()` instead of honoring the selected folder. This is shared saver code, not proven Windows-exclusive. Do not describe Windows recording or custom-folder behavior as accepted.
+
+The first harness abort cleanup omitted the required `stop_recording.args` object and also incorrectly marked cleanup complete after catching that error. A separate PID/executable-verified cleanup supplied the correct arguments, stopped the virtual session and closed only the owned native PID 13676 and loopback listener. `recording-cleanup-result.json` confirms recording=false. The exact newly created trial folder was moved into the private test root (not deleted); a first relocation telemetry summation failed **after** move/hash verification, then an independent read-only verification passed. The archived trial contains **one 456-byte metadata file**, no saved audio/transcript. Existing user recordings and Calibre were not deleted or inspected. Source folder absence and owned process/listener closure are independently confirmed in `relocation-verified-result.json`. SPICE remained disconnected, VM running.
+
+Evidence: `recording-result.json`, `recording-cleanup-result.json`, `audio-preflight-result.json`, `relocation-result.json`, `relocation-verified-result.json` in the existing test share; host `../runtime/windows-qwen-only-retest/audio-gate-result.json` records the forwarding-isolation checks. Original failure logs/scripts are retained. Production code has **not** been repaired yet; next step is user-authorized save-folder plumbing/failure regression and another virtual-only recording trial. Earlier file-based Windows ASR/import/retranscription/SQLite/restart passes below remain valid.
+
+## Earlier successful file-based/runtime acceptance
+
 Source: `9d37569` (application code is the Qwen-only checkpoint `3187df6`). The user requested virt-manager Windows testing, authorized VM login, and explicitly approved reuse of the existing release build cache after the isolated debug build's disk safety gate stopped. No installer/tag/release publication, workflow dispatch or normal application/profile replacement.
 
 ## Environment and isolation

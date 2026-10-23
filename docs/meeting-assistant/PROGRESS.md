@@ -1,5 +1,9 @@
 # 開発状況（2026-10-12）
 
+## 最新の実不具合：録音が設定済み保存先を無視する
+
+ユーザーが仮想音声だけの試験を明示承認。Windowsの仮想PWEC出力／エミュレートLine Inを実UIで選択・reload保持確認し、owned virt-manager接続を切断、host watchdogがSPICE全channelなし・物理passthroughなしを確認してStart。**公開音声再生前にFAIL**：native preferencesの専用save_folderではなく既定Music/meetily-recordingsに試験folderを作成。`recording_saver.rs::initialize_meeting_folder` が常にget_default_recordings_folderを使う実装を確認（共通コード、Windows限定とはしない）。本体未修正。初回harnessのabort cleanupは必須stop_recording.args漏れと誤ったcleanup_complete表示を含んだため、別helperで正しいargs・PID/exe照合→停止・owned app/listener閉鎖を確認。今回だけの正確なfolderを専用領域へMove/hash照合、telemetry集計ミス後の独立検証も成功（metadata1件456bytesのみ、音声／transcript保存なし）。既存録音・Calibre未削除／未読取。以前のfile-based実モデルbatch検証PASSは維持するが、録音／custom-folder正常動作とは絶対に扱わない。詳細・全失敗：[QWEN-ONLY-WINDOWS-RETEST.md](QWEN-ONLY-WINDOWS-RETEST.md)。次は保存先伝達の修正承認と回帰／仮想限定再試験。
+
 ## 最新：Qwen-only版をWindows VMで実行検証
 
 ユーザーのvirt-manager検証依頼でwin11を起動・許可されたログイン。初回debug領域は容量安全guardで停止し、ユーザーが既存releaseキャッシュ再利用を明示承認。現source `9d37569` を専用source／identifier／WebView／録音先でbuild、Node46・worker19・native57 unique（既存import ignore1）・SIWC人工14・TS／frontend export／native build／clean-PATH startup/refusal6条件成功。両サイズの実weights＋公開JA音声で、実GUI onboarding選択→import→retranscription→raw/SQLite一致→native PID変更再起動／Small保持／本文保全成功。両サイズの実Rust adapterもfloat32無音3言語／公開JA repeat／Unicode temporary cleanup成功。モデルは既存公式manifest全SHA確認済み専用CoWコピー（Windows FileTime用にコピーだけmtime／cache identity調整、payload不変）、新規download／Windows cold初期化は行わず。元cacheのtop-level本体／worker／DLLはhash一致復元、通常app／profileは保持。Calibre削除許可も得たが削除不要で未実施。録音・再生・実mic／PC取得・実会議・実アカウントauth／cloud・NSIS生成／公開は未実施。**Windowsの録音→Stop-tail→保存という一連の動作は今回まだ未検証**。初回source archiveの.github欠落によるNode失敗を保持・修正し全gate再成功。詳細：[QWEN-ONLY-WINDOWS-RETEST.md](QWEN-ONLY-WINDOWS-RETEST.md)、Git外証拠 `../runtime/windows-qwen-only-retest/evidence/`。
