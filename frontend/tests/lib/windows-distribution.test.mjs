@@ -58,6 +58,15 @@ test('Windows packaging gates selected-folder and writable-handle save regressio
   assert.ok(script.includes("'--lib',$filter,'--','--test-threads=1'"));
   assert.ok(script.indexOf("'audio::recording_saver'")<script.indexOf("'exec','tauri','build'"));
 });
+test('installed no-weights probes explicitly bind both Qwen models and require Small resources',()=>{
+  const smoke=text('../../scripts/test-windows-installer.ps1');
+  assert.ok(smoke.includes("foreach($model in @('Qwen3-ASR-1.7B','Qwen3-ASR-0.6B'))"));
+  assert.ok(smoke.includes('6 --model '));
+  assert.ok(smoke.includes('$ready.model -ne $model'));
+  assert.ok(smoke.includes(String.raw`qwen\qwen-model-0.6b.json`));
+  assert.ok(smoke.includes('$report.modelProbes+='));
+  assert.ok(smoke.includes("$answer.status -ne 'no_speech'"));
+});
 test('release automation is Windows-tag-only, fork-only and never latest/stable',()=>{
   const workflow=text('../../../.github/workflows/windows-prerelease.yml');
   assert.ok(workflow.includes("- 'windows-v*'"));

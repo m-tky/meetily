@@ -49,7 +49,7 @@ try{
  # NSIS requires /D= last and unquoted, including when the path has spaces.
  $setup=Start-Owned $Installer ('/S /D='+$InstallationDirectory)
  try{if(!$setup.WaitForExit(180000)){$setup.Kill();throw 'Owned NSIS installer timed out'};if($setup.ExitCode -ne 0){throw 'NSIS installation failed'}}finally{$setup.Dispose()}
- foreach($name in @('meetily.exe','onnxruntime.dll','onnxruntime_providers_shared.dll','ffmpeg.exe','llama-helper.exe','vcruntime140.dll','vcomp140.dll','templates','third-party\FFmpeg-GPLv3.txt','third-party\FFmpeg-build-and-source.txt','qwen\qwen-speech-worker.exe','qwen\qwen-model-init.exe','qwen\libopenblas.dll','qwen\onnxruntime.dll','qwen\onnxruntime_providers_shared.dll','qwen\prepare-qwen-model.ps1','qwen\qwen-model.json','qwen\OpenBLAS-LICENSE.txt','qwen\qwen-asr-LICENSE.txt')){
+ foreach($name in @('meetily.exe','onnxruntime.dll','onnxruntime_providers_shared.dll','ffmpeg.exe','llama-helper.exe','vcruntime140.dll','vcomp140.dll','templates','third-party\FFmpeg-GPLv3.txt','third-party\FFmpeg-build-and-source.txt','qwen\qwen-speech-worker.exe','qwen\qwen-model-init.exe','qwen\libopenblas.dll','qwen\onnxruntime.dll','qwen\onnxruntime_providers_shared.dll','qwen\prepare-qwen-model.ps1','qwen\qwen-model.json','qwen\qwen-model-0.6b.json','qwen\OpenBLAS-LICENSE.txt','qwen\qwen-asr-LICENSE.txt')){
   if(!(Test-Path -LiteralPath (Join-Path $InstallationDirectory $name))){throw ('Installed resource missing: '+$name)}
  }
  $metadata=[IO.File]::ReadAllText((Join-Path (Split-Path $Installer) 'windows-build.json'))|ConvertFrom-Json
@@ -64,14 +64,16 @@ try{
   $w.Write([Text.Encoding]::ASCII.GetBytes('fact'));$w.Write([uint32]4);$w.Write([uint32]16000);$w.Write([Text.Encoding]::ASCII.GetBytes('data'));$w.Write([uint32]64000);$w.Write([byte[]]::new(64000))
  }finally{$w.Dispose()}
  $runtime=Join-Path $InstallationDirectory 'qwen'
- $si=[Diagnostics.ProcessStartInfo]::new((Join-Path $runtime 'qwen-speech-worker.exe'),('"'+(Join-Path $InstallationDirectory 'model-not-installed')+'" 6'))
+ $report.modelProbes=@()
+ foreach($model in @('Qwen3-ASR-1.7B','Qwen3-ASR-0.6B')){
+ $si=[Diagnostics.ProcessStartInfo]::new((Join-Path $runtime 'qwen-speech-worker.exe'),('"'+(Join-Path $InstallationDirectory 'model-not-installed')+'" 6 --model '+$model))
  $si.UseShellExecute=$false;$si.CreateNoWindow=$true;$si.RedirectStandardInput=$true;$si.RedirectStandardOutput=$true;$si.RedirectStandardError=$true
  $si.StandardOutputEncoding=[Text.Encoding]::UTF8;$si.StandardErrorEncoding=[Text.Encoding]::UTF8
  $si.EnvironmentVariables['Path']=$env:SystemRoot+'\System32;'+$env:SystemRoot
  $si.EnvironmentVariables['ORT_DYLIB_PATH']=Join-Path $runtime 'onnxruntime.dll'
  $si.EnvironmentVariables['OPENBLAS_NUM_THREADS']='6';$si.EnvironmentVariables['OMP_NUM_THREADS']='6';$si.EnvironmentVariables['MKL_NUM_THREADS']='6'
  $worker=[Diagnostics.Process]::new();$worker.StartInfo=$si;[void]$worker.Start();$stderrTask=$worker.StandardError.ReadToEndAsync()
- $ready=Receive $worker;if($ready.event -ne 'ready' -or $ready.model_loaded -or $ready.threads -ne 6){throw 'Installed worker handshake failed'}
+ $ready=Receive $worker;if($ready.event -ne 'ready' -or $ready.model -ne $model -or $ready.model_loaded -or $ready.threads -ne 6){throw 'Installed worker handshake failed'}
  Send $worker @{op='transcribe';id='installed-silence';wav=$temporary;language='Japanese'}
  $answer=Receive $worker
  if($answer.status -ne 'no_speech' -or $answer.text -ne '' -or $answer.asr_calls -ne 0 -or $answer.model_loaded){throw 'Installed silence contract failed'}
@@ -83,6 +85,11 @@ try{
  Send $worker @{op='shutdown';id='installed-bye'};$bye=Receive $worker
  if($bye.status -ne 'bye' -or !$worker.WaitForExit(10000) -or $worker.ExitCode -ne 0){throw 'Installed worker shutdown failed'}
  $report.workerExitCode=$worker.ExitCode;$report.silence=$answer;$report.dllPathsVerified=$true;$report.developerPathRemoved=$true
+ $report.modelProbes+=@{model=$model;silence=$answer;exitCode=$worker.ExitCode;dllPathsVerified=$true}
+ $report.workerStderr=$stderrTask.GetAwaiter().GetResult()
+ $worker.Dispose();$worker=$null;$stderrTask=$null
+ Publish
+ }
  Remove-Item -LiteralPath $temporary;$temporary=$null
  # Root tools must work without the developer PATH too (no models/inference).
  $probe=Start-CleanConsole (Join-Path $InstallationDirectory 'llama-helper.exe') ''

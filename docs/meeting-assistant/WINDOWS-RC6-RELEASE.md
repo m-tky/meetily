@@ -14,6 +14,14 @@ Initial preparation push was rejected because the existing OAuth credential lack
 
 Release notes explicitly preserve recognition errors (also 1.7B), context/numeric sensitivity, precision/gapless/long-duration/crash/device-loss/natural-meeting limits and unsigned SmartScreen warning. Prior VM actual-model candidate tests are not represented as real-model inference acceptance of the exact CI installer. No accuracy assertions or test gates are weakened.
 
+## Installer probe correction (no runtime payload change)
+
+The locally built NSIS completed from `7160806217498dcd971cd436e6695d46f32dfad7` after all dedicated worker/frontend/native gates. Initial install smoke failed before a worker handshake with `model_config_missing_select_explicit_model_for_runtime_probe`: the old test supplied no model/config for an intentionally weightless runtime probe. The dual-model worker requires explicit `--model` in that case. The application/audio/worker runtime is not changed to bypass this guard.
+
+Correct `test-windows-installer.ps1` to probe BOTH explicitly bound model IDs, assert the returned identity, require the packaged Small manifest, and retain all silence/DLL/no-developer-PATH/helper/FFmpeg/uninstall assertions. The original failing report/logs remain. Clean up only the exact owned failed smoke installation after matching its worker SHA to the installer metadata; then perform a fresh install/uninstall with the corrected versioned harness. The release tag may include this verification-only correction: `windows-build.json.source.commit` must continue identifying the actual compiled `7160806` input, while a separate `verification.commit` identifies the corrected test/tag. Confirm all tag changes since the compiled commit are non-runtime/non-bundled files; do not relabel or rebuild an untested binary invisibly.
+
+Earlier preparation failures are retained: literal-path hashing was needed for bracketed Next.js filenames, and unattended pnpm paused for permission to recreate the cached developer node_modules junction. Only the owned stalled install was stopped, original top-level artifacts restored, and the next invocation used `CI=true` with live logs. No production tests were skipped. The explicit Rust1.99 toolchain also needed a first-time local installation despite an identical stable compiler version. Local execution therefore did NOT deliver the initially hoped-for short elapsed time.
+
 ## Status
 
 Release preparation committed before source push/archive; local installer build/publication and post-download asset checks are pending. This paragraph is a preparation record, not a claim that an installer has already passed. Follow-up records will contain the actual run/tag commit, public URL, checksums and results, or an explicit retained failure. Do not retarget an already published tag to hide a failed run.
