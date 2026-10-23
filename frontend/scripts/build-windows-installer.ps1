@@ -112,6 +112,8 @@ $ffmpegZip=Download 'ffmpeg-8.0.1-essentials_build.zip' 'https://github.com/Zack
 $ffmpeg=Join-Path $CacheDirectory 'ffmpeg-8.0.1';Unzip $ffmpegZip $ffmpeg
 $ffmpegRoot=Join-Path $ffmpeg 'ffmpeg-8.0.1-essentials_build'
 Copy-Item (Join-Path $ffmpegRoot 'bin\ffmpeg.exe') (Join-Path $bin 'ffmpeg-x86_64-pc-windows-msvc.exe') -Force
+# Native save regressions must use this verified tool, not auto-install FFmpeg.
+$env:Path=(Join-Path $ffmpegRoot 'bin')+';'+$env:Path
 Copy-Item (Join-Path $ffmpegRoot 'LICENSE') (Join-Path $notices 'FFmpeg-GPLv3.txt') -Force
 Copy-Item (Join-Path $ffmpegRoot 'README.txt') (Join-Path $notices 'FFmpeg-build-and-source.txt') -Force
 Copy-Item (Join-Path $repo 'LICENSE.md') (Join-Path $notices 'Meetily-LICENSE.md') -Force
@@ -151,6 +153,10 @@ try{
   Run 'cargo.exe' @('test','--locked','--release','-p','meetily','--features','tauri/custom-protocol','--lib','qwen_provider::tests','--','--include-ignored')
   Run 'cargo.exe' @('test','--locked','--release','-p','meetily','--features','tauri/custom-protocol','--lib','qwen_setup::tests')
   Run 'cargo.exe' @('test','--locked','--release','-p','meetily','--features','tauri/custom-protocol','--lib','onboarding::tests')
+  # Keep selected-folder routing and Windows writable-handle sync regressions gated.
+  foreach($filter in @('save_folder_tests','audio::recording_saver','audio::checkpoint_audio','audio::incremental_saver')){
+   Run 'cargo.exe' @('test','--locked','--release','-p','meetily','--features','tauri/custom-protocol','--lib',$filter,'--','--test-threads=1')
+  }
  }
  Run 'pnpm.cmd' @('exec','tauri','build','--ci','--no-sign','--config','src-tauri/tauri.windows-release.conf.json','--bundles','nsis','--','--locked')
 }finally{Pop-Location}

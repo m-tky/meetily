@@ -225,10 +225,11 @@ impl RecordingSaver {
         &mut self,
         auto_save: bool,
         receiver: mpsc::UnboundedReceiver<AudioChunk>,
+        save_folder: &PathBuf,
     ) -> Result<()> {
         let name = self.meeting_name.clone().ok_or_else(|| anyhow::anyhow!("Meeting name is required for durable saving"))?;
-        // Fail before capture rather than silently running without a writable folder.
-        self.initialize_meeting_folder(&name, auto_save)?;
+        // Fail before capture rather than silently using a different destination.
+        self.initialize_meeting_folder(&name, auto_save, save_folder)?;
         self.accumulation = Some(accumulate(receiver, self.incremental_saver.clone(), auto_save, self.warning.clone()));
         Ok(())
     }
@@ -238,12 +239,13 @@ impl RecordingSaver {
     /// # Arguments
     /// * `meeting_name` - Name of the meeting
     /// * `create_checkpoints` - Whether to create .checkpoints/ directory and IncrementalAudioSaver
-    fn initialize_meeting_folder(&mut self, meeting_name: &str, create_checkpoints: bool) -> Result<()> {
-        // Load preferences to get base recordings folder
-        let base_folder = super::recording_preferences::get_default_recordings_folder();
+    fn initialize_meeting_folder(&mut self, meeting_name: &str, create_checkpoints: bool, save_folder: &PathBuf) -> Result<()> {
+        // The command supplies a snapshot of the selected preferences. Never
+        // silently fall back to Music/Documents when that destination fails.
+        anyhow::ensure!(save_folder.is_absolute(), "Recording save folder must be an absolute path");
 
         // Create meeting folder structure (with or without .checkpoints/ subdirectory)
-        let meeting_folder = create_meeting_folder(&base_folder, meeting_name, create_checkpoints)?;
+        let meeting_folder = create_meeting_folder(save_folder, meeting_name, create_checkpoints)?;
 
         // Only initialize incremental saver if checkpoints are needed (auto_save is true)
         if create_checkpoints {
@@ -574,3 +576,7 @@ mod transcript_sink_tests {
         assert_eq!(disk(&folder)["total_segments"], 2);
     }
 }
+
+#[cfg(test)]
+#[path = "recording_save_folder_tests.rs"]
+mod save_folder_tests;

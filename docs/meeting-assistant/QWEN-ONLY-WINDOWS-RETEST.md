@@ -1,6 +1,10 @@
 # Qwen-only: current-source Windows VM execution
 
-## LATEST: virtual recording trial found a real save-folder bug
+## Latest: user-approved repair and both-model virtual recording PASS
+
+The save-folder bug below and the subsequently reproduced Windows read-only file-sync error are now repaired. Both real model sizes passed actual virtual capture/VAD/Stop-tail/selected-folder save/SQLite/native restart tests with the same repaired candidate. See [RECORDING-SAVE-FOLDER.md](RECORDING-SAVE-FOLDER.md) for source changes, final gates, retained failures and remaining limitations. This file's earlier failures/unverified statements are historical checkpoints, not the current repair status.
+
+## Historical: virtual recording trial found a real save-folder bug
 
 After the acceptance below, the user explicitly authorized virtual audio only. Read-only preflight found PWEC virtual output plus emulated ICH9 Line In; no physical host device passthrough exists. Native input pickers persisted these explicit selections across reload. The owned virt-manager console was closed and the host watchdog confirmed **zero SPICE clients/audio forwarding** before capture was allowed. No other guest render session was active.
 

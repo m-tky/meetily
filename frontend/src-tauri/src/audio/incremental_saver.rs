@@ -97,8 +97,8 @@ impl IncrementalAudioSaver {
         // directory plus no-clobber publication protects prior checkpoints.
         let temp = tempfile::Builder::new().prefix(".encoding-").tempdir_in(&self.checkpoints_dir)?;
         let encoded = temp.path().join("checkpoint.wav");
+        // The writer flushes and syncs its writable handle on every platform.
         write_float_checkpoint(&encoded, &audio_data, self.sample_rate)?;
-        std::fs::File::open(&encoded)?.sync_all()?;
         // Atomic no-clobber publication on the same filesystem. TempDir cleans
         // the private encoder copy; the published hard link owns the data.
         std::fs::hard_link(&encoded, &checkpoint_path)?;
@@ -220,7 +220,8 @@ impl IncrementalAudioSaver {
         if std::fs::metadata(temp.path())?.len() == 0 {
             return Err(anyhow!("Merged audio file is empty"));
         }
-        std::fs::File::open(temp.path())?.sync_all()?;
+        // Keep write access for Windows FlushFileBuffers; do not reopen read-only.
+        temp.as_file().sync_all()?;
         temp.persist(output)?;
         #[cfg(unix)] std::fs::File::open(parent)?.sync_all()?;
 

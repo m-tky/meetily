@@ -44,6 +44,9 @@ pub(crate) fn write_float_checkpoint(path: &Path, samples: &[f32], rate: u32) ->
         out.write_all(&sample.to_le_bytes())?;
     }
     out.flush()?;
+    // Windows FlushFileBuffers requires write access. Sync this writer, not a
+    // subsequently reopened read-only handle, before publishing the checkpoint.
+    out.get_ref().sync_all()?;
     Ok(())
 }
 

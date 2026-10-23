@@ -225,11 +225,13 @@ impl RecordingManager {
     /// * `microphone_device` - Optional microphone device to use
     /// * `system_device` - Optional system audio device to use
     /// * `auto_save` - Whether to save audio checkpoints (true) or just transcripts/metadata (false)
+    /// * `save_folder` - Selected absolute destination, frozen for this session
     pub(crate) async fn start_recording(
         &mut self,
         microphone_device: Option<Arc<AudioDevice>>,
         system_device: Option<Arc<AudioDevice>>,
         auto_save: bool,
+        save_folder: std::path::PathBuf,
     ) -> std::result::Result<mpsc::UnboundedReceiver<AudioChunk>, RecordingStartError> {
         info!("Starting recording manager (auto_save: {})", auto_save);
 
@@ -258,8 +260,10 @@ impl RecordingManager {
             ("No System Audio".to_string(), super::device_detection::InputDeviceKind::Unknown)
         };
 
-        self.recording_saver.start_accumulation(auto_save, recording_receiver)
-            .map_err(RecordingStartError::Other)?;
+        if let Err(error) = self.recording_saver.start_accumulation(auto_save, recording_receiver, &save_folder) {
+            self.state.stop_recording();
+            return Err(RecordingStartError::Other(error));
+        }
 
         // Start the audio processing pipeline with FFmpeg adaptive mixer
         // Pipeline will: 1) Mix mic+system audio with adaptive buffering, 2) Send mixed to recording_sender,
@@ -638,5 +642,29 @@ mod wake_tests {
         // Nonexistent device name fails at the `find` step — no audio hardware needed.
         // Asserts the wake is non-fatal (returns Err, does not panic).
         assert!(wake_audio_connection_sync("__no_such_device__").is_err());
+    }
+}
+
+#[cfg(test)]
+mod save_folder_tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn invalid_destination_resets_state_before_any_capture_or_pipeline() {
+        let root = tempfile::tempdir().unwrap();
+        let blocked = root.path().join("existing file");
+        std::fs::write(&blocked, b"preserve fixture").unwrap();
+        for folder in [blocked, std::path::PathBuf::from("relative fixture")] {
+            for auto_save in [false, true] {
+                let mut manager = RecordingManager::new();
+                manager.set_meeting_name(Some("synthetic fixture".into()));
+                let result = manager.start_recording(None, None, auto_save, folder.clone()).await;
+                assert!(matches!(result, Err(RecordingStartError::Other(_))));
+                assert!(!manager.state.is_recording());
+                assert_eq!(manager.stream_manager.active_stream_count(), 0);
+                assert!(manager.get_meeting_folder().is_none());
+            }
+        }
+        assert_eq!(std::fs::read_dir(root.path()).unwrap().count(), 1);
     }
 }

@@ -49,6 +49,15 @@ test('build pins native tools and includes app-local CRT and OpenMP',()=>{
   const assets=script.indexOf("Run 'pnpm.cmd' @('build')");
   assert.ok(assets>=0 && assets<script.indexOf("'--example','qwen_protocol_fixture'"));
 });
+test('Windows packaging gates selected-folder and writable-handle save regressions',()=>{
+  const script=text('../../scripts/build-windows-installer.ps1');
+  for(const filter of ['save_folder_tests','audio::recording_saver','audio::checkpoint_audio','audio::incremental_saver']) {
+    assert.ok(script.includes(`'${filter}'`),`Missing Windows native regression: ${filter}`);
+  }
+  assert.ok(script.includes("$env:Path=(Join-Path $ffmpegRoot 'bin')+';'+$env:Path"));
+  assert.ok(script.includes("'--lib',$filter,'--','--test-threads=1'"));
+  assert.ok(script.indexOf("'audio::recording_saver'")<script.indexOf("'exec','tauri','build'"));
+});
 test('release automation is Windows-tag-only, fork-only and never latest/stable',()=>{
   const workflow=text('../../../.github/workflows/windows-prerelease.yml');
   assert.ok(workflow.includes("- 'windows-v*'"));
