@@ -1,5 +1,9 @@
 # 開発状況（2026-10-12）
 
+## 最新：Windows RC6公開・4asset再download照合完了（ローカルbuild、精度制限あり）
+
+[windows-v0.4.1-rc.6](https://github.com/m-tky/meetily/releases/tag/windows-v0.4.1-rc.6) を個人forkでPre-release公開（未署名・updater無効・stable/latestでない）。exe48,556,912bytes／SHA256 `71f3e8a9b9ff6d633177a7905ee29869fbd93661cd126847f120f58188e69085`。実compile7160806＋archivec598d25a…、tag a0e75fbは検証script・Node guard・release記録のみ更新しruntime/bundled source同一、metadataにsource／verificationを分離記載。専用手元build worker19／app82unique(+import1ignore)／Node30／TS／2exports成功。最後のinstaller無音probeで旧harnessが明示modelを渡さず失敗したため、大小両方の--model・返却identity・Small manifestを必須に修正、Node49両OS／PS parser0／同一exeでfresh install→両size無音／DLL／cleanPATH／helper／FFmpeg→uninstall成功。初回失敗・専有install cleanup記録保持、通常app／profile／model／音声未変更、cache実行物復元hash一致。build最終試行28m51s＋先行pnpm確認待ち15m33sがあり、総時間の短縮成功とは扱わない。tag refsAPI作成でもActions39967170054が起動したため同一tag/shaを確認して重複CIをcancel、完了確認後に手元4assetのみ公開。draft／公開後／認証なしで全asset再downloadしAPI digest＋local SHA一致、RC5不変。認識誤りは残りrelease notesに明記。詳細：[WINDOWS-RC6-RELEASE.md](WINDOWS-RC6-RELEASE.md)、Git外 `../runtime/release-rc6/public-verification.json`。通常app反映／自動更新設定／実録音再生／cloudなし。
+
 ## 最新：Windows RC6公開を承認、更新機能は追加せずローカルbuildを準備
 
 ユーザーが既知の精度制限を受け入れreleaseを明示依頼し、updaterは今は不要・前回Actions約39分より速ければ手元buildを希望。個人forkのWindows `windows-v0.4.1-rc.6` Pre-release（stable/latest／upstream／既存RC5更新なし）。VM preflightで通常Local profile／install／実行中appなし、既存native/worker/tool/node_modules cacheあり、空き約2.5GB確認。専用scriptの検証を省略せずローカルNSIS build→隔離install/uninstall→artifact SHA/metadata検証→手動公開予定。現時点は準備で、公開済みとはしない。no updater変更／新録音再生／cloud／model download／通常app置換。手元成果物であることと認識誤り・未検証範囲をrelease notesに明記する。詳細：[WINDOWS-RC6-RELEASE.md](WINDOWS-RC6-RELEASE.md)。

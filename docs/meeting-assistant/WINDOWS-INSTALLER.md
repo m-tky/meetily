@@ -2,7 +2,13 @@
 
 This distribution uses `local.meetily.desktop`, separate from upstream Meetily and the synthetic Windows audit profile. Automatic updater endpoints and updater artifacts are disabled. The NSIS `*-setup.exe` installs for the current user. It is **unsigned**: Windows SmartScreen may warn. Do not describe it as a signed/stable release.
 
-## Published pre-release
+## Current published pre-release: RC6
+
+[windows-v0.4.1-rc.6](https://github.com/m-tky/meetily/releases/tag/windows-v0.4.1-rc.6) is a **locally built and tested**, unsigned Windows x64 Pre-release, not a GitHub-hosted CI artifact or stable/latest release. Qwen3-ASR **1.7B default / 0.6B optional only**; selected recording/import destinations, Windows writable-handle sync and finite sinc EOF preservation are repaired. Recognition errors remain even with Large; natural-meeting/long-duration/gapless quality is not accepted. Manual installer update only; updater remains disabled.
+
+Installer SHA256: `71f3e8a9b9ff6d633177a7905ee29869fbd93661cd126847f120f58188e69085` (48,556,912 bytes). Four assets include checksum/build metadata/corrected successful install-uninstall report; all publicly re-downloaded and hash-verified without authentication. Compiled commit7160806 and verification/tag a0e75fb are separated in metadata; runtime/bundled sources match. See [WINDOWS-RC6-RELEASE.md](WINDOWS-RC6-RELEASE.md) for preserved failures, both-model installed silence checks, local timings and the deliberately cancelled duplicate CI run. RC6 was built before this documentation refresh, so its bundled setup guide retains the historical RC5 publication header below. No fresh full model download or natural meeting is claimed by installer checks.
+
+## Previous published pre-release: RC5
 
 [windows-v0.4.1-rc.5](https://github.com/m-tky/meetily/releases/tag/windows-v0.4.1-rc.5) includes the consent-based first-run/Settings setup described below. Assets: `Meetily.Local_0.4.1_x64-setup.exe`, its SHA256 sidecar, build metadata and the successful CI install/uninstall report. Installer SHA256: `2e8bbea30a314a8a70734f65a051811795aff8254f19836dbac885bd681cf875` (49,269,792 bytes). All four public assets were independently re-downloaded and checked against GitHub API digests and metadata. This is the CI-built release, not the earlier VM candidate. Models remain separate and require explicit consent. RC3 remains available unchanged; RC4 failed its test gate and was not released.
 
